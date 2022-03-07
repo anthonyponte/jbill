@@ -93,8 +93,7 @@ public class SummaryController {
                 new SwingWorker<Integer, Void>() {
                   @Override
                   protected Integer doInBackground() throws Exception {
-                    int enviados = 1;
-
+                    int enviados = 0;
                     if (!selectionModel.isSelectionEmpty()) {
                       EventList<Summary> selected = selectionModel.getSelected();
 

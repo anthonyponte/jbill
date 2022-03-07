@@ -5,6 +5,7 @@
 package com.anthonyponte.jbillservice.controller;
 
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
+import com.anthonyponte.jbillservice.custom.MyFileCreator;
 import com.anthonyponte.jbillservice.idao.ComunicacionBajaDaoImpl;
 import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
@@ -49,7 +50,6 @@ public class ComunicacionBajaController {
   private SummaryDao summaryDao;
   private Preferences preferences;
   private ComunicacionBaja comunicacionBaja;
-  private File zip;
 
   public ComunicacionBajaController(MainFrame frame, ComunicacionBajaIFrame iFrame) {
     this.frame = frame;
@@ -257,67 +257,83 @@ public class ComunicacionBajaController {
                   "Guardar");
 
           if (input == JOptionPane.YES_OPTION) {
-            dialog.setVisible(true);
-            dialog.setLocationRelativeTo(iFrame);
+            File jks = new File(preferences.get(UsuarioController.FIRMA_JKS, ""));
+            if (jks.exists()) {
+              dialog.setVisible(true);
+              dialog.setLocationRelativeTo(iFrame);
 
-            SwingWorker worker =
-                new SwingWorker<Void, Void>() {
-                  @Override
-                  protected Void doInBackground() throws Exception {
-                    DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
-                    List<ComunicacionBajaDetalle> comunicacionBajaDetalles = new ArrayList<>();
-                    for (int i = 0; i < model.getRowCount(); i++) {
-                      ComunicacionBajaDetalle comunicacionBajaDetalle =
-                          new ComunicacionBajaDetalle();
-                      Documento documento = new Documento();
+              SwingWorker worker =
+                  new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                      DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
+                      List<ComunicacionBajaDetalle> comunicacionBajaDetalles = new ArrayList<>();
+                      for (int i = 0; i < model.getRowCount(); i++) {
+                        ComunicacionBajaDetalle comunicacionBajaDetalle =
+                            new ComunicacionBajaDetalle();
+                        Documento documento = new Documento();
 
-                      String tipo = model.getValueAt(i, 0).toString();
-                      String serie = model.getValueAt(i, 1).toString();
-                      int correlativo = Integer.parseInt(model.getValueAt(i, 2).toString());
-                      String motivo = model.getValueAt(i, 3).toString();
+                        String tipo = model.getValueAt(i, 0).toString();
+                        String serie = model.getValueAt(i, 1).toString();
+                        int correlativo = Integer.parseInt(model.getValueAt(i, 2).toString());
+                        String motivo = model.getValueAt(i, 3).toString();
 
-                      comunicacionBajaDetalle.setNumero(i + 1);
+                        comunicacionBajaDetalle.setNumero(i + 1);
 
-                      documento.setTipo(getCodigoTipoDocumento(tipo));
-                      documento.setSerie(serie);
-                      documento.setCorrelativo(correlativo);
-                      comunicacionBajaDetalle.setDocumento(documento);
+                        documento.setTipo(getCodigoTipoDocumento(tipo));
+                        documento.setSerie(serie);
+                        documento.setCorrelativo(correlativo);
+                        comunicacionBajaDetalle.setDocumento(documento);
 
-                      comunicacionBajaDetalle.setMotivo(motivo);
+                        comunicacionBajaDetalle.setMotivo(motivo);
 
-                      comunicacionBajaDetalles.add(comunicacionBajaDetalle);
+                        comunicacionBajaDetalles.add(comunicacionBajaDetalle);
+                      }
+                      comunicacionBaja.setComunicacionBajaDetalles(comunicacionBajaDetalles);
+
+                      VoidedDocuments voided = new VoidedDocuments();
+                      File zip = voided.getStructure(comunicacionBaja);
+
+                      if (zip != null) {
+                        byte[] byteArray = Files.readAllBytes(zip.toPath());
+                        comunicacionBaja.setNombreZip(zip.getName());
+                        comunicacionBaja.setZip(byteArray);
+
+                        int id = summaryDao.create(comunicacionBaja);
+                        comunicacionBajaDao.create(id, comunicacionBajaDetalles);
+
+                        zip.delete();
+                      } else {
+                        cancel(true);
+                      }
+
+                      return null;
                     }
-                    comunicacionBaja.setComunicacionBajaDetalles(comunicacionBajaDetalles);
 
-                    VoidedDocuments voided = new VoidedDocuments();
-                    zip = voided.getStructure(comunicacionBaja);
-                    byte[] byteArray = Files.readAllBytes(zip.toPath());
-                    comunicacionBaja.setNombreZip(zip.getName());
-                    comunicacionBaja.setZip(byteArray);
+                    @Override
+                    protected void done() {
+                      dialog.dispose();
 
-                    int id = summaryDao.create(comunicacionBaja);
-                    comunicacionBajaDao.create(id, comunicacionBajaDetalles);
+                      JOptionPane.showMessageDialog(
+                          iFrame,
+                          comunicacionBaja.getNombreZip() + " guardado",
+                          "Guardado",
+                          JOptionPane.INFORMATION_MESSAGE);
 
-                    return null;
-                  }
+                      initComponents();
+                    }
+                  };
 
-                  @Override
-                  protected void done() {
-                    JOptionPane.showMessageDialog(
-                        iFrame,
-                        comunicacionBaja.getNombreZip() + " guardado",
-                        "Guardado",
-                        JOptionPane.INFORMATION_MESSAGE);
+              worker.execute();
 
-                    zip.delete();
-
-                    dialog.dispose();
-
-                    initComponents();
-                  }
-                };
-
-            worker.execute();
+            } else {
+              JOptionPane.showMessageDialog(
+                  null,
+                  "No se encuentra el archivo JKS en la ruta "
+                      + preferences.get(UsuarioController.FIRMA_JKS, ""),
+                  ComunicacionBajaController.class.getName(),
+                  JOptionPane.ERROR_MESSAGE);
+            }
           }
         });
 
