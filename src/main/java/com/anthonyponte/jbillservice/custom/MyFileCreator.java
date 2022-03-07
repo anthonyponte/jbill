@@ -27,6 +27,7 @@ import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import javax.swing.JOptionPane;
 import javax.xml.crypto.MarshalException;
 import javax.xml.crypto.dsig.CanonicalizationMethod;
 import javax.xml.crypto.dsig.DigestMethod;
@@ -88,86 +89,100 @@ public class MyFileCreator {
       return xml;
     } catch (FileNotFoundException ex) {
       Logger.getLogger(MyFileCreator.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(
+          null, ex.getMessage(), MyFileCreator.class.getName(), JOptionPane.ERROR_MESSAGE);
     } catch (IOException ex) {
       Logger.getLogger(MyFileCreator.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(
+          null, ex.getMessage(), MyFileCreator.class.getName(), JOptionPane.ERROR_MESSAGE);
     }
 
     return xml;
   }
 
   public static File sign(String tipo, String serie, int correlativo, File file) {
-    try {
-      XMLSignatureFactory fac = XMLSignatureFactory.getInstance("DOM");
+    File jks = new File(UsuarioController.FIRMA_JKS);
+    if (jks.exists()) {
+      try {
+        XMLSignatureFactory fac = XMLSignatureFactory.getInstance("DOM");
 
-      Reference ref =
-          fac.newReference(
-              "",
-              fac.newDigestMethod(DigestMethod.SHA1, null),
-              Collections.singletonList(
-                  fac.newTransform(Transform.ENVELOPED, (TransformParameterSpec) null)),
-              null,
-              null);
+        Reference ref =
+            fac.newReference(
+                "",
+                fac.newDigestMethod(DigestMethod.SHA1, null),
+                Collections.singletonList(
+                    fac.newTransform(Transform.ENVELOPED, (TransformParameterSpec) null)),
+                null,
+                null);
 
-      SignedInfo si =
-          fac.newSignedInfo(
-              fac.newCanonicalizationMethod(
-                  CanonicalizationMethod.INCLUSIVE, (C14NMethodParameterSpec) null),
-              fac.newSignatureMethod(SignatureMethod.RSA_SHA1, null),
-              Collections.singletonList(ref));
+        SignedInfo si =
+            fac.newSignedInfo(
+                fac.newCanonicalizationMethod(
+                    CanonicalizationMethod.INCLUSIVE, (C14NMethodParameterSpec) null),
+                fac.newSignatureMethod(SignatureMethod.RSA_SHA1, null),
+                Collections.singletonList(ref));
 
-      KeyStore ks = KeyStore.getInstance("JKS");
-      KeyStore.PrivateKeyEntry keyEntry;
-      FileInputStream ksfis = new FileInputStream(PREFS.get(UsuarioController.FIRMA_JKS, ""));
-      ks.load(ksfis, PREFS.get(UsuarioController.FIRMA_CONTRASENA, "").toCharArray());
-      keyEntry =
-          (KeyStore.PrivateKeyEntry)
-              ks.getEntry(
-                  PREFS.get(UsuarioController.FIRMA_USUARIO, ""),
-                  new KeyStore.PasswordProtection(
-                      PREFS.get(UsuarioController.FIRMA_CONTRASENA, "").toCharArray()));
-      X509Certificate cert = (X509Certificate) keyEntry.getCertificate();
-      KeyInfoFactory kif = fac.getKeyInfoFactory();
-      ArrayList<Object> x509Content = new ArrayList<>();
-      x509Content.add(cert.getSubjectX500Principal().getName());
-      x509Content.add(cert);
-      X509Data xd = kif.newX509Data(x509Content);
-      KeyInfo ki = kif.newKeyInfo(Collections.singletonList(xd));
+        KeyStore ks = KeyStore.getInstance("JKS");
+        KeyStore.PrivateKeyEntry keyEntry;
+        FileInputStream ksfis = new FileInputStream(PREFS.get(UsuarioController.FIRMA_JKS, ""));
+        ks.load(ksfis, PREFS.get(UsuarioController.FIRMA_CONTRASENA, "").toCharArray());
+        keyEntry =
+            (KeyStore.PrivateKeyEntry)
+                ks.getEntry(
+                    PREFS.get(UsuarioController.FIRMA_USUARIO, ""),
+                    new KeyStore.PasswordProtection(
+                        PREFS.get(UsuarioController.FIRMA_CONTRASENA, "").toCharArray()));
+        X509Certificate cert = (X509Certificate) keyEntry.getCertificate();
+        KeyInfoFactory kif = fac.getKeyInfoFactory();
+        ArrayList<Object> x509Content = new ArrayList<>();
+        x509Content.add(cert.getSubjectX500Principal().getName());
+        x509Content.add(cert);
+        X509Data xd = kif.newX509Data(x509Content);
+        KeyInfo ki = kif.newKeyInfo(Collections.singletonList(xd));
 
-      DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-      dbf.setNamespaceAware(true);
-      org.w3c.dom.Document doc;
-      FileInputStream fis = new FileInputStream(file);
-      doc = (org.w3c.dom.Document) dbf.newDocumentBuilder().parse(fis);
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setNamespaceAware(true);
+        org.w3c.dom.Document doc;
+        FileInputStream fis = new FileInputStream(file);
+        doc = (org.w3c.dom.Document) dbf.newDocumentBuilder().parse(fis);
 
-      DOMSignContext dsc =
-          new DOMSignContext(
-              keyEntry.getPrivateKey(),
-              (Node) doc.getDocumentElement().getFirstChild().getLastChild().getLastChild());
-      dsc.setDefaultNamespacePrefix("ds");
-      XMLSignature xMLSignature =
-          fac.newXMLSignature(
-              si, ki, null, "SIGN-" + PREFS.get(UsuarioController.FIRMA_USUARIO, ""), null);
-      xMLSignature.sign(dsc);
+        DOMSignContext dsc =
+            new DOMSignContext(
+                keyEntry.getPrivateKey(),
+                (Node) doc.getDocumentElement().getFirstChild().getLastChild().getLastChild());
+        dsc.setDefaultNamespacePrefix("ds");
+        XMLSignature xMLSignature =
+            fac.newXMLSignature(
+                si, ki, null, "SIGN-" + PREFS.get(UsuarioController.FIRMA_USUARIO, ""), null);
+        xMLSignature.sign(dsc);
 
-      try (OutputStream os = new FileOutputStream(file, false)) {
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer trans = tf.newTransformer();
-        trans.transform(new DOMSource((Node) doc), new StreamResult(os));
-        os.flush();
+        try (OutputStream os = new FileOutputStream(file, false)) {
+          TransformerFactory tf = TransformerFactory.newInstance();
+          Transformer trans = tf.newTransformer();
+          trans.transform(new DOMSource((Node) doc), new StreamResult(os));
+          os.flush();
+        }
+
+      } catch (NoSuchAlgorithmException
+          | InvalidAlgorithmParameterException
+          | KeyStoreException
+          | IOException
+          | ParserConfigurationException
+          | SAXException
+          | TransformerException
+          | MarshalException
+          | XMLSignatureException
+          | CertificateException
+          | UnrecoverableEntryException ex) {
+        Logger.getLogger(MyFileCreator.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(
+            null, ex.getMessage(), MyFileCreator.class.getName(), JOptionPane.ERROR_MESSAGE);
       }
-
-    } catch (NoSuchAlgorithmException
-        | InvalidAlgorithmParameterException
-        | KeyStoreException
-        | IOException
-        | ParserConfigurationException
-        | SAXException
-        | TransformerException
-        | MarshalException
-        | XMLSignatureException
-        | CertificateException
-        | UnrecoverableEntryException ex) {
-      Logger.getLogger(MyFileCreator.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(
+          null,
+          "No se encuentra el archivo JKS en la ruta " + PREFS.get(UsuarioController.FIRMA_JKS, ""),
+          MyFileCreator.class.getName(),
+          JOptionPane.ERROR_MESSAGE);
     }
 
     return file;
@@ -197,6 +212,8 @@ public class MyFileCreator {
       zos.flush();
     } catch (IOException ex) {
       Logger.getLogger(MyFileCreator.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(
+          null, ex.getMessage(), MyFileCreator.class.getName(), JOptionPane.ERROR_MESSAGE);
     }
 
     return zipFile;
