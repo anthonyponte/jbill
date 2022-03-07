@@ -293,19 +293,14 @@ public class ComunicacionBajaController {
 
                       VoidedDocuments voided = new VoidedDocuments();
                       File zip = voided.getStructure(comunicacionBaja);
+                      byte[] byteArray = Files.readAllBytes(zip.toPath());
+                      comunicacionBaja.setNombreZip(zip.getName());
+                      comunicacionBaja.setZip(byteArray);
 
-                      if (zip != null) {
-                        byte[] byteArray = Files.readAllBytes(zip.toPath());
-                        comunicacionBaja.setNombreZip(zip.getName());
-                        comunicacionBaja.setZip(byteArray);
+                      int id = summaryDao.create(comunicacionBaja);
+                      comunicacionBajaDao.create(id, comunicacionBajaDetalles);
 
-                        int id = summaryDao.create(comunicacionBaja);
-                        comunicacionBajaDao.create(id, comunicacionBajaDetalles);
-
-                        zip.delete();
-                      } else {
-                        cancel(true);
-                      }
+                      zip.delete();
 
                       return null;
                     }
@@ -328,7 +323,7 @@ public class ComunicacionBajaController {
 
             } else {
               JOptionPane.showMessageDialog(
-                  null,
+                  iFrame,
                   "No se encuentra el archivo JKS en la ruta "
                       + preferences.get(UsuarioController.FIRMA_JKS, ""),
                   ComunicacionBajaController.class.getName(),
