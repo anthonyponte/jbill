@@ -11,7 +11,6 @@ import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
 import com.anthonyponte.jbillservice.model.Documento;
 import com.anthonyponte.jbillservice.view.ComunicacionBajaIFrame;
 import java.awt.event.ActionEvent;
-import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,7 +25,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
-import javax.swing.text.NumberFormatter;
 import com.anthonyponte.jbillservice.maindoc.VoidedDocuments;
 import com.anthonyponte.jbillservice.model.Empresa;
 import java.io.File;
@@ -221,10 +219,10 @@ public class ComunicacionBajaController {
                   try {
                     iFrame.tfDocumentoSerie.setFormatterFactory(
                         new DefaultFormatterFactory(new MaskFormatter("FAAA")));
-
-                    iFrame.tfDocumentoCorrelativo.setFormatterFactory(
-                        new DefaultFormatterFactory(
-                            new NumberFormatter(new DecimalFormat("####"))));
+//
+//                    iFrame.tfDocumentoCorrelativo.setFormatterFactory(
+//                        new DefaultFormatterFactory(
+//                            new NumberFormatter(new DecimalFormat("####"))));
                   } catch (ParseException ex) {
                     Logger.getLogger(ComunicacionBajaController.class.getName())
                         .log(Level.SEVERE, null, ex);
@@ -378,7 +376,7 @@ public class ComunicacionBajaController {
     iFrame.dpDocumentoFecha.setDate(null);
     iFrame.cbxDocumentoTipo.removeAllItems();
     iFrame.tfDocumentoSerie.setValue("");
-    iFrame.tfDocumentoCorrelativo.setValue(null);
+//    iFrame.tfDocumentoCorrelativo.setValue(null);
     iFrame.tfDocumentoMotivo.setText("");
     DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
     model.getDataVector().removeAllElements();

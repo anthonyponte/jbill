@@ -14,27 +14,30 @@ import javax.swing.text.DocumentFilter;
 public class IntegerFilter extends DocumentFilter {
   private final Pattern regexCheck = Pattern.compile("[0-9]+");
 
+  private final int maxLength;
+
+  public IntegerFilter(int maxLength) {
+    this.maxLength = maxLength;
+  }
+
   @Override
   public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
       throws BadLocationException {
-    if (string == null) {
-      return;
-    }
-
-    if (regexCheck.matcher(string).matches() && (string.length()) <= 11) {
-      super.insertString(fb, offset, string, attr);
+    if (fb.getDocument().getLength() + string.length() < maxLength + 1) {
+      if (regexCheck.matcher(string).matches()) {
+        super.insertString(fb, offset, string, attr);
+      }
     }
   }
 
   @Override
   public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
       throws BadLocationException {
-    if (text == null) {
-      return;
-    }
-
-    if (regexCheck.matcher(text).matches()) {
-      fb.replace(offset, length, text, attrs);
+    int documentLength = fb.getDocument().getLength();
+    if (documentLength - length + text.length() < maxLength + 1) {
+      if (regexCheck.matcher(text).matches()) {
+        super.replace(fb, offset, length, text.toUpperCase(), attrs);
+      }
     }
   }
 }

@@ -16,7 +16,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AbstractDocument;
-import javax.swing.text.DocumentFilter;
 
 public class UsuarioController {
 
@@ -31,8 +30,6 @@ public class UsuarioController {
   public static final String RAZON_SOCIAL = "RAZON_SOCIAL";
   public static final String CLAVE_SOL_USUARIO = "CLAVE_SOL_USUARIO";
   public static final String CLAVE_SOL_CONTRASENA = "CLAVE_SOL_CONTRASENA";
-  private final DocumentFilter filterUpperCase;
-  private final DocumentFilter filterInt;
   private final String firmaJks;
   private final String firmaUsuario;
   private final String firmaContrasena;
@@ -45,8 +42,6 @@ public class UsuarioController {
     this.frame = frame;
     this.iFrame = iFrame;
     this.preferences = Preferences.userRoot().node(MainController.class.getPackageName());
-    this.filterUpperCase = new UppercaseFilter();
-    this.filterInt = new IntegerFilter();
     this.firmaJks = preferences.get(FIRMA_JKS, "");
     this.firmaUsuario = preferences.get(FIRMA_USUARIO, "");
     this.firmaContrasena = preferences.get(FIRMA_CONTRASENA, "");
@@ -132,13 +127,13 @@ public class UsuarioController {
         });
 
     AbstractDocument docRuc = (AbstractDocument) iFrame.tfRuc.getDocument();
-    docRuc.setDocumentFilter(filterInt);
+    docRuc.setDocumentFilter(new IntegerFilter(11));
 
     AbstractDocument douRazonSocial = (AbstractDocument) iFrame.tfRazonSocial.getDocument();
-    douRazonSocial.setDocumentFilter(filterUpperCase);
+    douRazonSocial.setDocumentFilter(new UppercaseFilter());
 
     AbstractDocument docClaveSolUsuario = (AbstractDocument) iFrame.tfClaveSolUsuario.getDocument();
-    docClaveSolUsuario.setDocumentFilter(filterUpperCase);
+    docClaveSolUsuario.setDocumentFilter(new UppercaseFilter());
 
     iFrame.tfFirmaJks.getDocument().addDocumentListener(dl);
     iFrame.tfFirmaUsuario.getDocument().addDocumentListener(dl);
@@ -187,7 +182,7 @@ public class UsuarioController {
     iFrame.tfClaveSolUsuario.putClientProperty("JTextField.showClearButton", true);
 
     iFrame.tfFirmaJks.setEditable(false);
-    
+
     enableBtnEntrar();
   }
 
