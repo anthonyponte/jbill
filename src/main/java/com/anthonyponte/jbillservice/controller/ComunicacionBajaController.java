@@ -242,22 +242,23 @@ public class ComunicacionBajaController {
 
     iFrame.btnGuardar.addActionListener(
         (arg0) -> {
-          int input =
-              JOptionPane.showOptionDialog(
-                  iFrame,
-                  "Seguro que desea guardar esta "
-                      + iFrame.cbxTipo.getSelectedItem().toString()
-                      + "?",
-                  "Guardar",
-                  JOptionPane.YES_NO_OPTION,
-                  JOptionPane.QUESTION_MESSAGE,
-                  null,
-                  new Object[] {"Guardar", "Cancelar"},
-                  "Guardar");
+          File jks = new File(preferences.get(UsuarioController.FIRMA_JKS, ""));
+          if (jks.exists()) {
 
-          if (input == JOptionPane.YES_OPTION) {
-            File jks = new File(preferences.get(UsuarioController.FIRMA_JKS, ""));
-            if (jks.exists()) {
+            int input =
+                JOptionPane.showOptionDialog(
+                    iFrame,
+                    "Seguro que desea guardar esta "
+                        + iFrame.cbxTipo.getSelectedItem().toString()
+                        + "?",
+                    "Guardar",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    new Object[] {"Guardar", "Cancelar"},
+                    "Guardar");
+
+            if (input == JOptionPane.YES_OPTION) {
               dialog.setVisible(true);
               dialog.setLocationRelativeTo(iFrame);
 
@@ -319,15 +320,15 @@ public class ComunicacionBajaController {
                   };
 
               worker.execute();
-
-            } else {
-              JOptionPane.showMessageDialog(
-                  iFrame,
-                  "No se encuentra el archivo JKS en la ruta "
-                      + preferences.get(UsuarioController.FIRMA_JKS, ""),
-                  ComunicacionBajaController.class.getName(),
-                  JOptionPane.ERROR_MESSAGE);
             }
+
+          } else {
+            JOptionPane.showMessageDialog(
+                iFrame,
+                "No se encuentra el archivo JKS en la ruta "
+                    + preferences.get(UsuarioController.FIRMA_JKS, ""),
+                ComunicacionBajaController.class.getName(),
+                JOptionPane.ERROR_MESSAGE);
           }
         });
 
