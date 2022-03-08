@@ -5,7 +5,6 @@
 package com.anthonyponte.jbillservice.controller;
 
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
-import com.anthonyponte.jbillservice.custom.MyFileCreator;
 import com.anthonyponte.jbillservice.idao.ComunicacionBajaDaoImpl;
 import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;

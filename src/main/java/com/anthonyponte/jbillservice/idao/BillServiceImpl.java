@@ -26,8 +26,11 @@ import pe.gob.sunat.StatusResponseAR;
 /** @author anthony */
 public class BillServiceImpl implements BillService {
 
-  private static final Preferences preferences =
+  private static final Preferences PREFERENCES =
       Preferences.userRoot().node(MainController.class.getPackageName());
+  private final String RUC = PREFERENCES.get(UsuarioController.RUC, "");
+  private final String USUARIO = PREFERENCES.get(UsuarioController.CLAVE_SOL_USUARIO, "");
+  private final String CONTRASENA = PREFERENCES.get(UsuarioController.CLAVE_SOL_CONTRASENA, "");
 
   @Override
   public StatusResponse getStatus(String ticket) {
@@ -40,11 +43,7 @@ public class BillServiceImpl implements BillService {
 
       @SuppressWarnings("rawtypes")
       List<Handler> handlers = new ArrayList<>();
-      SOAPHandler<SOAPMessageContext> handler =
-          new SOAPHanlderImpl(
-              preferences.get(UsuarioController.RUC, "")
-                  + preferences.get(UsuarioController.CLAVE_SOL_USUARIO, ""),
-              preferences.get(UsuarioController.CLAVE_SOL_CONTRASENA, ""));
+      SOAPHandler<SOAPMessageContext> handler = new SOAPHanlderImpl(RUC + USUARIO, CONTRASENA);
       handlers.add(handler);
       binding.getBinding().setHandlerChain(handlers);
 
@@ -90,11 +89,7 @@ public class BillServiceImpl implements BillService {
 
       @SuppressWarnings("rawtypes")
       List<Handler> handlers = new ArrayList<>();
-      SOAPHandler<SOAPMessageContext> handler =
-          new SOAPHanlderImpl(
-              preferences.get(UsuarioController.RUC, "")
-                  + preferences.get(UsuarioController.CLAVE_SOL_USUARIO, ""),
-              preferences.get(UsuarioController.CLAVE_SOL_CONTRASENA, ""));
+      SOAPHandler<SOAPMessageContext> handler = new SOAPHanlderImpl(RUC + USUARIO, CONTRASENA);
       handlers.add(handler);
       binding.getBinding().setHandlerChain(handlers);
 
