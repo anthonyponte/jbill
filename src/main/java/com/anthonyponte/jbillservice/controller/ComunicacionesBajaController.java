@@ -265,6 +265,7 @@ public class ComunicacionesBajaController {
         new ImageIcon(
             getClass().getResource("/com/anthonyponte/jbillservice/img/filter_16px.png")));
 
+    iFrame.dpMesAno.getEditor().setEditable(false);
     iFrame.dpMesAno.requestFocus();
   }
 

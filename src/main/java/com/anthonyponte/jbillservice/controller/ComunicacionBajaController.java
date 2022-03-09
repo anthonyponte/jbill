@@ -4,6 +4,7 @@
  */
 package com.anthonyponte.jbillservice.controller;
 
+import com.anthonyponte.jbillservice.custom.IntegerFilter;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
 import com.anthonyponte.jbillservice.idao.ComunicacionBajaDaoImpl;
 import com.anthonyponte.jbillservice.model.ComunicacionBaja;
@@ -36,6 +37,7 @@ import com.anthonyponte.jbillservice.idao.SummaryDaoImpl;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.MainFrame;
+import javax.swing.text.AbstractDocument;
 
 /** @author anthony */
 public class ComunicacionBajaController {
@@ -219,10 +221,10 @@ public class ComunicacionBajaController {
                   try {
                     iFrame.tfDocumentoSerie.setFormatterFactory(
                         new DefaultFormatterFactory(new MaskFormatter("FAAA")));
-//
-//                    iFrame.tfDocumentoCorrelativo.setFormatterFactory(
-//                        new DefaultFormatterFactory(
-//                            new NumberFormatter(new DecimalFormat("####"))));
+                    //
+                    //                    iFrame.tfDocumentoCorrelativo.setFormatterFactory(
+                    //                        new DefaultFormatterFactory(
+                    //                            new NumberFormatter(new DecimalFormat("####"))));
                   } catch (ParseException ex) {
                     Logger.getLogger(ComunicacionBajaController.class.getName())
                         .log(Level.SEVERE, null, ex);
@@ -352,6 +354,7 @@ public class ComunicacionBajaController {
     iFrame.cbxTipo.setEditable(false);
     iFrame.tfSerie.setEditable(false);
     iFrame.tfCorrelativo.setEditable(false);
+    iFrame.dpDocumentoFecha.getEditor().setEditable(false);
 
     iFrame.tfFecha.setEnabled(false);
     iFrame.cbxTipo.setEnabled(false);
@@ -376,11 +379,14 @@ public class ComunicacionBajaController {
     iFrame.dpDocumentoFecha.setDate(null);
     iFrame.cbxDocumentoTipo.removeAllItems();
     iFrame.tfDocumentoSerie.setValue("");
-//    iFrame.tfDocumentoCorrelativo.setValue(null);
+    iFrame.tfDocumentoCorrelativo.setText("");
     iFrame.tfDocumentoMotivo.setText("");
     DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
     model.getDataVector().removeAllElements();
     model.fireTableDataChanged();
+
+    AbstractDocument docRuc = (AbstractDocument) iFrame.tfDocumentoCorrelativo.getDocument();
+    docRuc.setDocumentFilter(new IntegerFilter(8));
 
     iFrame.tfDocumentoSerie.putClientProperty("JTextField.showClearButton", true);
     iFrame.tfDocumentoCorrelativo.putClientProperty("JTextField.showClearButton", true);

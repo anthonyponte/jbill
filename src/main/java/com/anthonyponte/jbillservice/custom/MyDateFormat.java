@@ -22,8 +22,7 @@ public class MyDateFormat {
   public static String yyyyMMdd(Date fecha) {
     return yyyyMMdd.format(fecha);
   }
-  
-  
+
   public static String yyyy_MM_dd(Date fecha) {
     return yyyy_MM_dd.format(fecha);
   }

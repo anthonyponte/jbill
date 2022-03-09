@@ -1,7 +1,7 @@
 package com.anthonyponte.jbillservice.controller;
 
 import com.anthonyponte.jbillservice.custom.IntegerFilter;
-import com.anthonyponte.jbillservice.custom.UppercaseFilter;
+import com.anthonyponte.jbillservice.custom.UpperCaseFilter;
 import com.anthonyponte.jbillservice.view.MainFrame;
 import com.anthonyponte.jbillservice.view.UsuarioIFrame;
 import java.awt.event.ActionEvent;
@@ -55,27 +55,12 @@ public class UsuarioController {
   public void start() {
     iFrame.tabbed.addChangeListener(
         (ChangeEvent ce) -> {
-          if (iFrame.tabbed.getSelectedIndex() == 0) {
-            if (firmaJks.isEmpty()
-                && firmaUsuario.isEmpty()
-                && ruc.isEmpty()
-                && razonSocial.isEmpty()
-                && claveSolUsuario.isEmpty()) {
-              iFrame.btnFirmaJks.requestFocus();
-            } else {
-              iFrame.btnEntrar.requestFocus();
-            }
-          } else if (iFrame.tabbed.getSelectedIndex() == 1) {
-            if (firmaJks.isEmpty()
-                && firmaUsuario.isEmpty()
-                && ruc.isEmpty()
-                && razonSocial.isEmpty()
-                && claveSolUsuario.isEmpty()) {
-              iFrame.tfRuc.requestFocus();
-            } else {
-              iFrame.btnEntrar.requestFocus();
-            }
-          }
+          if (iFrame.tabbed.getSelectedIndex() == 0)
+            if (isEmpty()) iFrame.btnFirmaJks.requestFocus();
+            else iFrame.btnEntrar.requestFocus();
+          else if (iFrame.tabbed.getSelectedIndex() == 1)
+            if (isEmpty()) iFrame.tfRuc.requestFocus();
+            else iFrame.btnEntrar.requestFocus();
         });
 
     iFrame.btnFirmaJks.addActionListener(
@@ -130,10 +115,10 @@ public class UsuarioController {
     docRuc.setDocumentFilter(new IntegerFilter(11));
 
     AbstractDocument douRazonSocial = (AbstractDocument) iFrame.tfRazonSocial.getDocument();
-    douRazonSocial.setDocumentFilter(new UppercaseFilter());
+    douRazonSocial.setDocumentFilter(new UpperCaseFilter());
 
     AbstractDocument docClaveSolUsuario = (AbstractDocument) iFrame.tfClaveSolUsuario.getDocument();
-    docClaveSolUsuario.setDocumentFilter(new UppercaseFilter());
+    docClaveSolUsuario.setDocumentFilter(new UpperCaseFilter());
 
     iFrame.tfFirmaJks.getDocument().addDocumentListener(dl);
     iFrame.tfFirmaUsuario.getDocument().addDocumentListener(dl);
@@ -147,21 +132,14 @@ public class UsuarioController {
   private void initComponents() {
     iFrame.show();
 
-    if (firmaJks.isEmpty()
-        && firmaUsuario.isEmpty()
-        && ruc.isEmpty()
-        && razonSocial.isEmpty()
-        && claveSolUsuario.isEmpty()) {
+    if (isEmpty()) {
       iFrame.cbRecordar.setSelected(false);
       iFrame.btnEntrar.setEnabled(false);
 
-      iFrame.btnFirmaJks.requestFocus();
+      iFrame.tfFirmaJks.requestFocus();
     } else {
       File file = new File(firmaJks);
-      if (file.exists()) {
-        iFrame.tfFirmaJks.setText(firmaJks);
-      }
-
+      if (file.exists()) iFrame.tfFirmaJks.setText(firmaJks);
       iFrame.tfFirmaUsuario.setText(firmaUsuario);
       iFrame.tfFirmaContrasena.setText(firmaContrasena);
       iFrame.tfRuc.setText(ruc);
@@ -216,5 +194,15 @@ public class UsuarioController {
     } else {
       iFrame.btnEntrar.setEnabled(true);
     }
+  }
+
+  private boolean isEmpty() {
+    boolean isEmpty =
+        firmaJks.isEmpty()
+            && firmaUsuario.isEmpty()
+            && ruc.isEmpty()
+            && razonSocial.isEmpty()
+            && claveSolUsuario.isEmpty();
+    return isEmpty;
   }
 }

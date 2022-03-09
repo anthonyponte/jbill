@@ -297,33 +297,24 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="btnAgregar" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="lblDocumentoMotivo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblDocumentoNumero" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblDocumentoSerie" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblDocumentoTipo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblDocumentoFecha" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="btnAgregar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="spane" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="tfDocumentoSerie" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="cbxDocumentoTipo" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="dpDocumentoFecha" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="tfDocumentoMotivo" alignment="1" pref="0" max="32767" attributes="0"/>
-                                  <Component id="tfDocumentoCorrelativo" alignment="1" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lblDocumentoMotivo" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDocumentoNumero" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDocumentoSerie" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDocumentoTipo" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDocumentoFecha" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="spane" alignment="1" max="32767" attributes="0"/>
+                          <Component id="tfDocumentoSerie" alignment="0" max="32767" attributes="0"/>
+                          <Component id="cbxDocumentoTipo" alignment="0" max="32767" attributes="0"/>
+                          <Component id="dpDocumentoFecha" alignment="0" max="32767" attributes="0"/>
+                          <Component id="tfDocumentoMotivo" alignment="1" pref="0" max="32767" attributes="0"/>
+                          <Component id="tfDocumentoCorrelativo" alignment="1" max="32767" attributes="0"/>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
