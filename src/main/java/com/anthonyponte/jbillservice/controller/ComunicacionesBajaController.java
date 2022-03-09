@@ -19,6 +19,7 @@ import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThr
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
+import com.anthonyponte.jbillservice.custom.MyFontIconPack;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
@@ -44,6 +45,8 @@ import org.joda.time.DateTime;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.MainFrame;
+import org.kordamp.ikonli.remixicon.RemixiconAL;
+import org.kordamp.ikonli.remixicon.RemixiconMZ;
 
 /** @author AnthonyPonte */
 public class ComunicacionesBajaController {
@@ -166,6 +169,11 @@ public class ComunicacionesBajaController {
 
     iFrame.show();
 
+    MyFontIconPack iconPack = new MyFontIconPack();
+    iFrame.setFrameIcon(iconPack.getIcon(RemixiconMZ.SEARCH_LINE));
+    iFrame.tfFiltrar.putClientProperty(
+        "JTextField.leadingIcon", iconPack.getIcon(RemixiconAL.FILTER_LINE));
+
     eventList = new BasicEventList<>();
 
     Comparator comparator =
@@ -260,10 +268,6 @@ public class ComunicacionesBajaController {
 
     iFrame.tfFiltrar.putClientProperty("JTextField.placeholderText", "Filtrar");
     iFrame.tfFiltrar.putClientProperty("JTextField.showClearButton", true);
-    iFrame.tfFiltrar.putClientProperty(
-        "JTextField.leadingIcon",
-        new ImageIcon(
-            getClass().getResource("/com/anthonyponte/jbillservice/img/filter_16px.png")));
 
     iFrame.dpMesAno.getEditor().setEditable(false);
     iFrame.dpMesAno.requestFocus();
