@@ -6,7 +6,6 @@ package com.anthonyponte.jbillservice.view;
 
 import java.awt.Dimension;
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
@@ -49,7 +48,6 @@ public class SummaryIFrame extends JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Summary");
-        setFrameIcon(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/sent_16px.png"))); // NOI18N
         setMaximumSize(null);
         setMinimumSize(new Dimension(800, 600));
         setPreferredSize(new Dimension(800, 600));
@@ -69,7 +67,6 @@ public class SummaryIFrame extends JInternalFrame {
         table.getTableHeader().setReorderingAllowed(false);
         scrllPane.setViewportView(table);
 
-        btnEnviar.setIcon(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/sent_16px.png"))); // NOI18N
         btnEnviar.setText("Enviar");
         btnEnviar.setMinimumSize(new Dimension(150, 30));
         btnEnviar.setPreferredSize(new Dimension(150, 30));
