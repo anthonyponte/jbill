@@ -84,7 +84,7 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setTitle("Comunicacion de baja");
-        setFrameIcon(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/add_new_16px.png"))); // NOI18N
+        setFrameIcon(null);
         setMaximumSize(null);
         setMinimumSize(null);
 
@@ -161,7 +161,7 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
                 .addContainerGap())
         );
 
-        tabbed.addTab("Encabezado", new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/document_header_16px.png")), pnlEncabezado); // NOI18N
+        tabbed.addTab("Encabezado", null, pnlEncabezado, "");
 
         pnlDetalle.setMaximumSize(null);
 
@@ -202,13 +202,11 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         tfDocumentoMotivo.setMinimumSize(null);
         tfDocumentoMotivo.setPreferredSize(new Dimension(150, 30));
 
-        btnAgregar.setIcon(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/add_row_16px.png"))); // NOI18N
         btnAgregar.setText("Agregar");
         btnAgregar.setMinimumSize(new Dimension(150, 30));
         btnAgregar.setName(""); // NOI18N
         btnAgregar.setPreferredSize(new Dimension(150, 30));
 
-        btnEliminar.setIcon(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/delete_row_16px.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setMinimumSize(new Dimension(150, 30));
         btnEliminar.setPreferredSize(new Dimension(150, 30));
@@ -306,23 +304,20 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
                 .addContainerGap())
         );
 
-        tabbed.addTab("Detalle", new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/details_16px.png")), pnlDetalle); // NOI18N
+        tabbed.addTab("Detalle", null, pnlDetalle, "");
 
         separator.setMaximumSize(null);
         separator.setMinimumSize(null);
         separator.setPreferredSize(new Dimension(5, 5));
 
-        btnNuevo.setIcon(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/add_new_16px.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
         btnNuevo.setMinimumSize(new Dimension(150, 30));
         btnNuevo.setPreferredSize(new Dimension(150, 30));
 
-        btnGuardar.setIcon(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/save_16px.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.setMinimumSize(new Dimension(150, 30));
         btnGuardar.setPreferredSize(new Dimension(150, 30));
 
-        btnLimpiar.setIcon(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/erase_16px.png"))); // NOI18N
         btnLimpiar.setText("Limpiar");
         btnLimpiar.setMinimumSize(new Dimension(150, 30));
         btnLimpiar.setPreferredSize(new Dimension(150, 30));

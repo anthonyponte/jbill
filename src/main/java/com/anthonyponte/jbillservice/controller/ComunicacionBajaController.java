@@ -6,6 +6,7 @@ package com.anthonyponte.jbillservice.controller;
 
 import com.anthonyponte.jbillservice.filter.IntegerFilter;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
+import com.anthonyponte.jbillservice.custom.MyFontIconPack;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
@@ -38,6 +39,8 @@ import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.MainFrame;
 import javax.swing.text.AbstractDocument;
+import org.kordamp.ikonli.remixicon.RemixiconAL;
+import org.kordamp.ikonli.remixicon.RemixiconMZ;
 
 /** @author anthony */
 public class ComunicacionBajaController {
@@ -343,6 +346,16 @@ public class ComunicacionBajaController {
   }
 
   private void initComponents() {
+    MyFontIconPack iconPack = new MyFontIconPack();
+    iFrame.setFrameIcon(iconPack.getIcon(RemixiconAL.ADD_LINE));
+    iFrame.tabbed.setIconAt(0, iconPack.getIcon(RemixiconAL.FILE_LIST_LINE));
+    iFrame.tabbed.setIconAt(1, iconPack.getIcon(RemixiconAL.LIST_ORDERED));
+    iFrame.btnAgregar.setIcon(iconPack.getIcon(RemixiconAL.INSERT_ROW_BOTTOM));
+    iFrame.btnEliminar.setIcon(iconPack.getIcon(RemixiconAL.DELETE_ROW));
+    iFrame.btnNuevo.setIcon(iconPack.getIcon(RemixiconAL.ADD_LINE));
+    iFrame.btnGuardar.setIcon(iconPack.getIcon(RemixiconMZ.SAVE_LINE));
+    iFrame.btnLimpiar.setIcon(iconPack.getIcon(RemixiconAL.ERASER_LINE));
+
     dialog = new LoadingDialog(frame, false);
     comunicacionBajaDao = new IComunicacionBajaDao();
     summaryDao = new ISummaryDao();
