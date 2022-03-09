@@ -1,5 +1,6 @@
 package com.anthonyponte.jbillservice.controller;
 
+import com.anthonyponte.jbillservice.custom.MyFontIconPack;
 import com.anthonyponte.jbillservice.filter.IntegerFilter;
 import com.anthonyponte.jbillservice.filter.UpperCaseFilter;
 import com.anthonyponte.jbillservice.view.MainFrame;
@@ -11,14 +12,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AbstractDocument;
-import org.kordamp.ikonli.hawcons.HawconsStroke;
+import org.kordamp.ikonli.remixicon.RemixiconAL;
 import org.kordamp.ikonli.swing.FontIcon;
 
 public class UsuarioController {
@@ -136,6 +136,13 @@ public class UsuarioController {
   private void initComponents() {
     iFrame.show();
 
+    MyFontIconPack iconPack = new MyFontIconPack();
+    iFrame.setFrameIcon(iconPack.getIcon(RemixiconAL.LOGIN_BOX_LINE));
+    iFrame.tabbed.setIconAt(0, iconPack.getIcon(RemixiconAL.FILE_LOCK_LINE));
+    iFrame.tabbed.setIconAt(1, iconPack.getIcon(RemixiconAL.LOCK_PASSWORD_LINE));
+    iFrame.btnEntrar.setIcon(iconPack.getIcon(RemixiconAL.LOGIN_BOX_LINE));
+    iFrame.btnFirmaJks.setIcon(iconPack.getIcon(RemixiconAL.FOLDER_2_LINE));
+
     if (isEmpty()) {
       iFrame.cbRecordar.setSelected(false);
       iFrame.btnEntrar.setEnabled(false);
@@ -155,10 +162,6 @@ public class UsuarioController {
 
       iFrame.btnEntrar.requestFocus();
     }
-    FontIcon icon = FontIcon.of(HawconsStroke.ANGRY_FACE);
-    icon.setIconSize(24);
-    icon.setIconColor(Color.decode("#FFFFFF"));
-    iFrame.btnEntrar.setIcon(icon);
 
     iFrame.tfFirmaJks.putClientProperty("JTextField.trailingComponent", iFrame.btnFirmaJks);
     iFrame.btnFirmaJks.putClientProperty("JButton.buttonType", "square");

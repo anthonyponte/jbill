@@ -66,7 +66,6 @@ public class UsuarioIFrame extends JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setTitle("Entrar");
-        setFrameIcon(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/enter_16px.png"))); // NOI18N
         setMaximumSize(null);
         setMinimumSize(null);
         setName(""); // NOI18N
@@ -74,7 +73,6 @@ public class UsuarioIFrame extends JInternalFrame {
         lblFirmaJks.setFont(lblFirmaJks.getFont().deriveFont(lblFirmaJks.getFont().getStyle() | Font.BOLD, lblFirmaJks.getFont().getSize()-2));
         lblFirmaJks.setText("JKS");
 
-        btnFirmaJks.setIcon(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/folder_16px.png"))); // NOI18N
         btnFirmaJks.setMaximumSize(new Dimension(30, 30));
         btnFirmaJks.setMinimumSize(new Dimension(30, 30));
         btnFirmaJks.setPreferredSize(new Dimension(30, 30));
@@ -137,7 +135,7 @@ public class UsuarioIFrame extends JInternalFrame {
                 .addContainerGap())
         );
 
-        tabbed.addTab("Firma Digital", new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/signature_16px.png")), pnlFirmaDigital); // NOI18N
+        tabbed.addTab("Firma Digital", pnlFirmaDigital);
 
         lblRuc.setFont(lblRuc.getFont().deriveFont(lblRuc.getFont().getStyle() | Font.BOLD, lblRuc.getFont().getSize()-2));
         lblRuc.setText("RUC");
@@ -208,7 +206,7 @@ public class UsuarioIFrame extends JInternalFrame {
                 .addContainerGap())
         );
 
-        tabbed.addTab("Clave SOL", new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/password_16px.png")), pnlClaveSol); // NOI18N
+        tabbed.addTab("Clave SOL", pnlClaveSol);
 
         cbRecordar.setText("Recordar");
         cbRecordar.setMaximumSize(new Dimension(150, 30));
