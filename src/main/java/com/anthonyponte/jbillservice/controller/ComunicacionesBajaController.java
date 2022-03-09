@@ -19,7 +19,7 @@ import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThr
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
-import com.anthonyponte.jbillservice.idao.ComunicacionBajaDaoImpl;
+import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
 import com.anthonyponte.jbillservice.view.ComunicacionesBajaIFrame;
@@ -162,7 +162,7 @@ public class ComunicacionesBajaController {
 
   private void initComponents() {
     dialog = new LoadingDialog(frame, false);
-    dao = new ComunicacionBajaDaoImpl();
+    dao = new IComunicacionBajaDao();
 
     iFrame.show();
 

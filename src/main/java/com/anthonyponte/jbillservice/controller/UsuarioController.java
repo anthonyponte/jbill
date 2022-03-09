@@ -1,21 +1,25 @@
 package com.anthonyponte.jbillservice.controller;
 
-import com.anthonyponte.jbillservice.custom.IntegerFilter;
-import com.anthonyponte.jbillservice.custom.UpperCaseFilter;
+import com.anthonyponte.jbillservice.filter.IntegerFilter;
+import com.anthonyponte.jbillservice.filter.UpperCaseFilter;
 import com.anthonyponte.jbillservice.view.MainFrame;
 import com.anthonyponte.jbillservice.view.UsuarioIFrame;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AbstractDocument;
+import org.kordamp.ikonli.hawcons.HawconsStroke;
+import org.kordamp.ikonli.swing.FontIcon;
 
 public class UsuarioController {
 
@@ -151,6 +155,10 @@ public class UsuarioController {
 
       iFrame.btnEntrar.requestFocus();
     }
+    FontIcon icon = FontIcon.of(HawconsStroke.ANGRY_FACE);
+    icon.setIconSize(24);
+    icon.setIconColor(Color.decode("#FFFFFF"));
+    iFrame.btnEntrar.setIcon(icon);
 
     iFrame.tfFirmaJks.putClientProperty("JTextField.trailingComponent", iFrame.btnFirmaJks);
     iFrame.btnFirmaJks.putClientProperty("JButton.buttonType", "square");

@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package com.anthonyponte.jbillservice.custom;
+package com.anthonyponte.jbillservice.filter;
 
 import java.util.regex.Pattern;
 import javax.swing.text.AttributeSet;

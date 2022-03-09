@@ -216,7 +216,6 @@ public class UsuarioIFrame extends JInternalFrame {
         cbRecordar.setName(""); // NOI18N
         cbRecordar.setPreferredSize(new Dimension(150, 30));
 
-        btnEntrar.setIcon(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/enter_16px.png"))); // NOI18N
         btnEntrar.setText("Entrar");
         btnEntrar.setName(""); // NOI18N
         btnEntrar.setPreferredSize(new Dimension(300, 30));

@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package com.anthonyponte.jbillservice.idao;
+package com.anthonyponte.jbillservice.custom;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,7 +16,7 @@ import org.hsqldb.persist.HsqlProperties;
 import org.hsqldb.server.ServerAcl;
 
 /** @author anthony */
-public class HSQLDatabase {
+public class MyHsqldbConnection {
   private final String ALIAS = "jbs";
   private final String DATABASE = "jbillservice";
   private final String USER = "SA";
@@ -38,7 +38,7 @@ public class HSQLDatabase {
 
       connection = DriverManager.getConnection(URL, USER, PASS);
     } catch (IOException | ServerAcl.AclFormatException | SQLException ex) {
-      Logger.getLogger(HSQLDatabase.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(MyHsqldbConnection.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
 
@@ -47,7 +47,7 @@ public class HSQLDatabase {
       connection.close();
       server.stop();
     } catch (SQLException ex) {
-      Logger.getLogger(HSQLDatabase.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(MyHsqldbConnection.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
 

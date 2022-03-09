@@ -5,6 +5,7 @@
 
 package com.anthonyponte.jbillservice.idao;
 
+import com.anthonyponte.jbillservice.custom.MyHsqldbConnection;
 import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
 import java.sql.PreparedStatement;
@@ -21,12 +22,12 @@ import org.joda.time.DateTime;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 
 /** @author anthony */
-public class ComunicacionBajaDaoImpl implements ComunicacionBajaDao {
+public class IComunicacionBajaDao implements ComunicacionBajaDao {
 
-  private final HSQLDatabase database;
+  private final MyHsqldbConnection database;
 
-  public ComunicacionBajaDaoImpl() {
-    this.database = new HSQLDatabase();
+  public IComunicacionBajaDao() {
+    this.database = new MyHsqldbConnection();
   }
 
   @Override
@@ -59,11 +60,10 @@ public class ComunicacionBajaDaoImpl implements ComunicacionBajaDao {
       database.disconnect();
 
     } catch (SQLException ex) {
-      Logger.getLogger(ComunicacionBajaDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null,
+      Logger.getLogger(IComunicacionBajaDao.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(null,
           ex.getErrorCode() + " - " + ex.getMessage(),
-          ComunicacionBajaDaoImpl.class.getName(),
+          IComunicacionBajaDao.class.getName(),
           JOptionPane.ERROR_MESSAGE);
     }
   }
@@ -110,11 +110,10 @@ public class ComunicacionBajaDaoImpl implements ComunicacionBajaDao {
 
       database.disconnect();
     } catch (SQLException ex) {
-      Logger.getLogger(ComunicacionBajaDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null,
+      Logger.getLogger(IComunicacionBajaDao.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(null,
           ex.getErrorCode() + " - " + ex.getMessage(),
-          ComunicacionBajaDaoImpl.class.getName(),
+          IComunicacionBajaDao.class.getName(),
           JOptionPane.ERROR_MESSAGE);
     }
 
@@ -162,11 +161,10 @@ public class ComunicacionBajaDaoImpl implements ComunicacionBajaDao {
 
       database.disconnect();
     } catch (SQLException ex) {
-      Logger.getLogger(ComunicacionBajaDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null,
+      Logger.getLogger(IComunicacionBajaDao.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(null,
           ex.getErrorCode() + " - " + ex.getMessage(),
-          ComunicacionBajaDaoImpl.class.getName(),
+          IComunicacionBajaDao.class.getName(),
           JOptionPane.ERROR_MESSAGE);
     }
 
@@ -188,11 +186,11 @@ public class ComunicacionBajaDaoImpl implements ComunicacionBajaDao {
       database.disconnect();
 
     } catch (SQLException ex) {
-      Logger.getLogger(SummaryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
       JOptionPane.showMessageDialog(
           null,
           ex.getErrorCode() + " - " + ex.getMessage(),
-          SummaryDaoImpl.class.getName(),
+          ISummaryDao.class.getName(),
           JOptionPane.ERROR_MESSAGE);
     }
   }

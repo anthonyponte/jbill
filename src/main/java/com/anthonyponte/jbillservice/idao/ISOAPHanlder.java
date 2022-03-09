@@ -14,12 +14,12 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.xml.namespace.QName;
 
-public class SOAPHanlderImpl implements SOAPHandler<SOAPMessageContext> {
+public class ISOAPHanlder implements SOAPHandler<SOAPMessageContext> {
 
   private final String username;
   private final String password;
 
-  public SOAPHanlderImpl(String username, String password) {
+  public ISOAPHanlder(String username, String password) {
     this.username = username;
     this.password = password;
   }
@@ -53,9 +53,8 @@ public class SOAPHanlderImpl implements SOAPHandler<SOAPMessageContext> {
         tagUsername.addTextNode(this.username);
         tagPassword.addTextNode(this.password);
       } catch (SOAPException ex) {
-        Logger.getLogger(SOAPHanlderImpl.class.getName()).log(Level.SEVERE, null, ex);
-        JOptionPane.showMessageDialog(
-            null, ex.getMessage(), SOAPHanlderImpl.class.getName(), JOptionPane.ERROR_MESSAGE);
+        Logger.getLogger(ISOAPHanlder.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(null, ex.getMessage(), ISOAPHanlder.class.getName(), JOptionPane.ERROR_MESSAGE);
       }
     }
 
@@ -67,10 +66,9 @@ public class SOAPHanlderImpl implements SOAPHandler<SOAPMessageContext> {
     Boolean isRequest = (Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
     if (isRequest) {
       SOAPMessage message = context.getMessage();
-      JOptionPane.showMessageDialog(
-          null,
+      JOptionPane.showMessageDialog(null,
           message.getContentDescription(),
-          SOAPHanlderImpl.class.getName(),
+          ISOAPHanlder.class.getName(),
           JOptionPane.ERROR_MESSAGE);
     }
     return true;

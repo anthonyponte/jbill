@@ -24,7 +24,7 @@ import pe.gob.sunat.StatusResponse;
 import pe.gob.sunat.StatusResponseAR;
 
 /** @author anthony */
-public class BillServiceImpl implements BillService {
+public class IBillService implements BillService {
 
   private static final Preferences PREFERENCES =
       Preferences.userRoot().node(MainController.class.getPackageName());
@@ -43,13 +43,13 @@ public class BillServiceImpl implements BillService {
 
       @SuppressWarnings("rawtypes")
       List<Handler> handlers = new ArrayList<>();
-      SOAPHandler<SOAPMessageContext> handler = new SOAPHanlderImpl(RUC + USUARIO, CONTRASENA);
+      SOAPHandler<SOAPMessageContext> handler = new ISOAPHanlder(RUC + USUARIO, CONTRASENA);
       handlers.add(handler);
       binding.getBinding().setHandlerChain(handlers);
 
       statusResponse = port.getStatus(ticket);
     } catch (Exception ex) {
-      Logger.getLogger(BillServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(IBillService.class.getName()).log(Level.SEVERE, null, ex);
       JOptionPane.showMessageDialog(null, ex.getMessage(), ticket, JOptionPane.ERROR_MESSAGE);
     }
 
@@ -89,13 +89,13 @@ public class BillServiceImpl implements BillService {
 
       @SuppressWarnings("rawtypes")
       List<Handler> handlers = new ArrayList<>();
-      SOAPHandler<SOAPMessageContext> handler = new SOAPHanlderImpl(RUC + USUARIO, CONTRASENA);
+      SOAPHandler<SOAPMessageContext> handler = new ISOAPHanlder(RUC + USUARIO, CONTRASENA);
       handlers.add(handler);
       binding.getBinding().setHandlerChain(handlers);
 
       ticket = port.sendSummary(fileName, contentFile, partyType);
     } catch (Exception ex) {
-      Logger.getLogger(BillServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(IBillService.class.getName()).log(Level.SEVERE, null, ex);
       JOptionPane.showMessageDialog(null, ex.getMessage(), fileName, JOptionPane.ERROR_MESSAGE);
     }
 

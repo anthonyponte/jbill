@@ -35,9 +35,9 @@ import javax.swing.event.ListSelectionEvent;
 import pe.gob.sunat.BillService;
 import pe.gob.sunat.StatusResponse;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
-import com.anthonyponte.jbillservice.idao.BillServiceImpl;
-import com.anthonyponte.jbillservice.idao.ComunicacionBajaDaoImpl;
-import com.anthonyponte.jbillservice.idao.SummaryDaoImpl;
+import com.anthonyponte.jbillservice.idao.IBillService;
+import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
+import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.model.Summary;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.MainFrame;
@@ -233,9 +233,9 @@ public class SummaryController {
 
   private void initComponents() {
     dialog = new LoadingDialog(frame, false);
-    summaryDao = new SummaryDaoImpl();
-    comunicacionBajaDao = new ComunicacionBajaDaoImpl();
-    service = new BillServiceImpl();
+    summaryDao = new ISummaryDao();
+    comunicacionBajaDao = new IComunicacionBajaDao();
+    service = new IBillService();
 
     iFrame.show();
 

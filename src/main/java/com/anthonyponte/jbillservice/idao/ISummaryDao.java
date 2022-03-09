@@ -17,6 +17,7 @@
 
 package com.anthonyponte.jbillservice.idao;
 
+import com.anthonyponte.jbillservice.custom.MyHsqldbConnection;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.model.Empresa;
 import com.anthonyponte.jbillservice.model.Summary;
@@ -31,12 +32,12 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /** @author AnthonyPonte */
-public class SummaryDaoImpl implements SummaryDao {
+public class ISummaryDao implements SummaryDao {
 
-  private final HSQLDatabase database;
+  private final MyHsqldbConnection database;
 
-  public SummaryDaoImpl() {
-    this.database = new HSQLDatabase();
+  public ISummaryDao() {
+    this.database = new MyHsqldbConnection();
   }
 
   @Override
@@ -81,11 +82,10 @@ public class SummaryDaoImpl implements SummaryDao {
       database.disconnect();
 
     } catch (SQLException ex) {
-      Logger.getLogger(SummaryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null,
+      Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(null,
           ex.getErrorCode() + " - " + ex.getMessage(),
-          SummaryDaoImpl.class.getName(),
+          ISummaryDao.class.getName(),
           JOptionPane.ERROR_MESSAGE);
     }
 
@@ -127,11 +127,10 @@ public class SummaryDaoImpl implements SummaryDao {
 
       database.disconnect();
     } catch (SQLException ex) {
-      Logger.getLogger(SummaryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null,
+      Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(null,
           ex.getErrorCode() + " - " + ex.getMessage(),
-          SummaryDaoImpl.class.getName(),
+          ISummaryDao.class.getName(),
           JOptionPane.ERROR_MESSAGE);
     }
 
@@ -159,11 +158,10 @@ public class SummaryDaoImpl implements SummaryDao {
       database.disconnect();
 
     } catch (SQLException ex) {
-      Logger.getLogger(SummaryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null,
+      Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(null,
           ex.getErrorCode() + " - " + ex.getMessage(),
-          SummaryDaoImpl.class.getName(),
+          ISummaryDao.class.getName(),
           JOptionPane.ERROR_MESSAGE);
     }
 
@@ -194,11 +192,10 @@ public class SummaryDaoImpl implements SummaryDao {
       database.disconnect();
 
     } catch (SQLException ex) {
-      Logger.getLogger(SummaryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null,
+      Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(null,
           ex.getErrorCode() + " - " + ex.getMessage(),
-          SummaryDaoImpl.class.getName(),
+          ISummaryDao.class.getName(),
           JOptionPane.ERROR_MESSAGE);
     }
   }
@@ -218,11 +215,10 @@ public class SummaryDaoImpl implements SummaryDao {
       database.disconnect();
 
     } catch (SQLException ex) {
-      Logger.getLogger(SummaryDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null,
+      Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(null,
           ex.getErrorCode() + " - " + ex.getMessage(),
-          SummaryDaoImpl.class.getName(),
+          ISummaryDao.class.getName(),
           JOptionPane.ERROR_MESSAGE);
     }
   }

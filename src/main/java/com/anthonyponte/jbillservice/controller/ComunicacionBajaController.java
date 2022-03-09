@@ -4,9 +4,9 @@
  */
 package com.anthonyponte.jbillservice.controller;
 
-import com.anthonyponte.jbillservice.custom.IntegerFilter;
+import com.anthonyponte.jbillservice.filter.IntegerFilter;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
-import com.anthonyponte.jbillservice.idao.ComunicacionBajaDaoImpl;
+import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
 import com.anthonyponte.jbillservice.model.Documento;
@@ -33,7 +33,7 @@ import java.nio.file.Files;
 import java.util.prefs.Preferences;
 import javax.swing.SwingWorker;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
-import com.anthonyponte.jbillservice.idao.SummaryDaoImpl;
+import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.MainFrame;
@@ -344,8 +344,8 @@ public class ComunicacionBajaController {
 
   private void initComponents() {
     dialog = new LoadingDialog(frame, false);
-    comunicacionBajaDao = new ComunicacionBajaDaoImpl();
-    summaryDao = new SummaryDaoImpl();
+    comunicacionBajaDao = new IComunicacionBajaDao();
+    summaryDao = new ISummaryDao();
     preferences = Preferences.userRoot().node(MainController.class.getPackageName());
 
     iFrame.show();
