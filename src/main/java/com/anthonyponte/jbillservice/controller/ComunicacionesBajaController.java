@@ -19,7 +19,6 @@ import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThr
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
-import com.anthonyponte.jbillservice.custom.MyFontIconPack;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
@@ -37,42 +36,43 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 import org.joda.time.DateTime;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
-import com.anthonyponte.jbillservice.view.MainFrame;
+import java.awt.Color;
 import org.kordamp.ikonli.remixicon.RemixiconAL;
 import org.kordamp.ikonli.remixicon.RemixiconMZ;
+import org.kordamp.ikonli.swing.FontIcon;
 
 /** @author AnthonyPonte */
 public class ComunicacionesBajaController {
 
-  private final MainFrame frame;
   private final ComunicacionesBajaIFrame iFrame;
-  private LoadingDialog dialog;
+  private final LoadingDialog dialog;
   private ComunicacionBajaDao dao;
   private EventList<ComunicacionBaja> eventList;
   private SortedList<ComunicacionBaja> sortedList;
   private AdvancedListSelectionModel<ComunicacionBaja> selectionModel;
   private AdvancedTableModel<ComunicacionBaja> tableModel;
 
-  public ComunicacionesBajaController(MainFrame frame, ComunicacionesBajaIFrame iFrame) {
-    this.frame = frame;
+  public ComunicacionesBajaController(ComunicacionesBajaIFrame iFrame, LoadingDialog dialog) {
     this.iFrame = iFrame;
+    this.dialog = dialog;
     initComponents();
   }
 
   public void start() {
+    dao = new IComunicacionBajaDao();
+    // addActionListener
     iFrame.dpMesAno.addActionListener(
         (ActionEvent e) -> {
           Date date = iFrame.dpMesAno.getDate();
           getData(date);
         });
-
+    // addMouseListener
     iFrame.tblEncabezado.addMouseListener(
         new MouseAdapter() {
           @Override
@@ -164,16 +164,20 @@ public class ComunicacionesBajaController {
   }
 
   private void initComponents() {
-    dialog = new LoadingDialog(frame, false);
-    dao = new IComunicacionBajaDao();
-
+    // show
     iFrame.show();
-
-    MyFontIconPack iconPack = new MyFontIconPack();
-    iFrame.setFrameIcon(iconPack.getIcon(RemixiconMZ.SEARCH_LINE));
+    // setIcon
+    iFrame.setFrameIcon(FontIcon.of(RemixiconMZ.SEARCH_LINE, 16, Color.decode("#FFFFFF")));
     iFrame.tfFiltrar.putClientProperty(
-        "JTextField.leadingIcon", iconPack.getIcon(RemixiconAL.FILTER_LINE));
-
+        "JTextField.leadingIcon",
+        FontIcon.of(RemixiconAL.FILTER_LINE, 16, Color.decode("#FFFFFF")));
+    // placeholderText
+    iFrame.tfFiltrar.putClientProperty("JTextField.placeholderText", "Filtrar");
+    // showClearButton
+    iFrame.tfFiltrar.putClientProperty("JTextField.showClearButton", true);
+    // setEditable
+    iFrame.dpMesAno.getEditor().setEditable(false);
+    // GlazedLists
     eventList = new BasicEventList<>();
 
     Comparator comparator =
@@ -253,24 +257,18 @@ public class ComunicacionesBajaController {
         };
 
     tableModel = eventTableModelWithThreadProxyList(filterList, tableFormat);
-
     selectionModel = new DefaultEventSelectionModel<>(filterList);
 
     iFrame.tblEncabezado.setModel(tableModel);
-
     iFrame.tblEncabezado.setSelectionModel(selectionModel);
 
     TableComparatorChooser.install(
         iFrame.tblEncabezado, sortedList, TableComparatorChooser.SINGLE_COLUMN);
-
+    // requestFocus
+    iFrame.dpMesAno.requestFocus();
+    // getData
     Date date = iFrame.dpMesAno.getDate();
     getData(date);
-
-    iFrame.tfFiltrar.putClientProperty("JTextField.placeholderText", "Filtrar");
-    iFrame.tfFiltrar.putClientProperty("JTextField.showClearButton", true);
-
-    iFrame.dpMesAno.getEditor().setEditable(false);
-    iFrame.dpMesAno.requestFocus();
   }
 
   private void getData(Date date) {
@@ -300,7 +298,6 @@ public class ComunicacionesBajaController {
             }
           }
         };
-
     worker.execute();
   }
 }

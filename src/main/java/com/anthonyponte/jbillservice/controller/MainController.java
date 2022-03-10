@@ -9,6 +9,7 @@ import com.anthonyponte.jbillservice.view.MainFrame;
 import com.anthonyponte.jbillservice.view.UsuarioIFrame;
 import com.anthonyponte.jbillservice.view.ComunicacionBajaIFrame;
 import com.anthonyponte.jbillservice.view.ComunicacionesBajaIFrame;
+import com.anthonyponte.jbillservice.view.LoadingDialog;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -27,6 +28,7 @@ public class MainController {
   private ComunicacionBajaIFrame comunicacionBajaIFrame;
   private SummaryIFrame summaryIFrame;
   private ComunicacionesBajaIFrame comunicacionesBajaIFrame;
+  private LoadingDialog dialog;
 
   public MainController(MainFrame frame) {
     this.frame = frame;
@@ -34,10 +36,13 @@ public class MainController {
   }
 
   public void start() {
+    dialog = new LoadingDialog(frame, false);
+
+    // addActionListener
     frame.menuEntrar.addActionListener(
         (ActionEvent arg0) -> {
           if (isIframeClosed(usuarioIFrame)) {
-            this.usuarioIFrame = new UsuarioIFrame();
+            usuarioIFrame = new UsuarioIFrame();
             frame.dpane.add(usuarioIFrame);
             usuarioIFrame.setLocation(centerIFrame(usuarioIFrame));
             new UsuarioController(frame, usuarioIFrame).start();
@@ -49,10 +54,10 @@ public class MainController {
     frame.miComunicacionBaja.addActionListener(
         (ActionEvent arg0) -> {
           if (isIframeClosed(comunicacionBajaIFrame)) {
-            this.comunicacionBajaIFrame = new ComunicacionBajaIFrame();
+            comunicacionBajaIFrame = new ComunicacionBajaIFrame();
             frame.dpane.add(comunicacionBajaIFrame);
             comunicacionBajaIFrame.setLocation(centerIFrame(comunicacionBajaIFrame));
-            new ComunicacionBajaController(frame, comunicacionBajaIFrame).start();
+            new ComunicacionBajaController(comunicacionBajaIFrame, dialog).start();
           } else {
             iframeClosed(comunicacionBajaIFrame);
           }
@@ -61,10 +66,10 @@ public class MainController {
     frame.miComunicacionesBaja.addActionListener(
         (ActionEvent arg0) -> {
           if (isIframeClosed(comunicacionesBajaIFrame)) {
-            this.comunicacionesBajaIFrame = new ComunicacionesBajaIFrame();
+            comunicacionesBajaIFrame = new ComunicacionesBajaIFrame();
             frame.dpane.add(comunicacionesBajaIFrame);
             comunicacionesBajaIFrame.setLocation(centerIFrame(comunicacionesBajaIFrame));
-            new ComunicacionesBajaController(frame, comunicacionesBajaIFrame).start();
+            new ComunicacionesBajaController(comunicacionesBajaIFrame, dialog).start();
           } else {
             iframeClosed(comunicacionesBajaIFrame);
           }
@@ -76,7 +81,7 @@ public class MainController {
             this.summaryIFrame = new SummaryIFrame();
             frame.dpane.add(summaryIFrame);
             summaryIFrame.setLocation(centerIFrame(summaryIFrame));
-            new SummaryController(frame, summaryIFrame).start();
+            new SummaryController(summaryIFrame, dialog).start();
           } else {
             iframeClosed(summaryIFrame);
           }
@@ -99,7 +104,15 @@ public class MainController {
   }
 
   private void initComponents() {
+    // setVisible
     frame.setVisible(true);
+    // setEnabled
+    frame.menuNuevo.setEnabled(false);
+    frame.menuVer.setEnabled(false);
+    frame.menuBillService.setEnabled(false);
+    frame.miComunicacionBaja.setEnabled(false);
+    frame.miComunicacionesBaja.setEnabled(false);
+    frame.miSummary.setEnabled(false);
 
     if (isIframeClosed(usuarioIFrame)) {
       this.usuarioIFrame = new UsuarioIFrame();
@@ -109,13 +122,6 @@ public class MainController {
     } else {
       iframeClosed(usuarioIFrame);
     }
-
-    frame.menuNuevo.setEnabled(false);
-    frame.menuVer.setEnabled(false);
-    frame.menuBillService.setEnabled(false);
-    frame.miComunicacionBaja.setEnabled(false);
-    frame.miComunicacionesBaja.setEnabled(false);
-    frame.miSummary.setEnabled(false);
   }
 
   private Point centerIFrame(JInternalFrame jif) {

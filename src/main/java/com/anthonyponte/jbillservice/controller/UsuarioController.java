@@ -5,6 +5,7 @@ import com.anthonyponte.jbillservice.filter.IntegerFilter;
 import com.anthonyponte.jbillservice.filter.UpperCaseFilter;
 import com.anthonyponte.jbillservice.view.MainFrame;
 import com.anthonyponte.jbillservice.view.UsuarioIFrame;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.logging.Level;
@@ -18,6 +19,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AbstractDocument;
 import org.kordamp.ikonli.remixicon.RemixiconAL;
+import org.kordamp.ikonli.swing.FontIcon;
 
 public class UsuarioController {
 
@@ -55,6 +57,7 @@ public class UsuarioController {
   }
 
   public void start() {
+    // addChangeListener
     iFrame.tabbed.addChangeListener(
         (ChangeEvent ce) -> {
           if (iFrame.tabbed.getSelectedIndex() == 0)
@@ -64,7 +67,7 @@ public class UsuarioController {
             if (isEmpty()) iFrame.tfRuc.requestFocus();
             else iFrame.btnEntrar.requestFocus();
         });
-
+    // addActionListener
     iFrame.btnFirmaJks.addActionListener(
         (ActionEvent arg0) -> {
           JFileChooser chooser = new JFileChooser();
@@ -112,16 +115,7 @@ public class UsuarioController {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
           }
         });
-
-    AbstractDocument docRuc = (AbstractDocument) iFrame.tfRuc.getDocument();
-    docRuc.setDocumentFilter(new IntegerFilter(11));
-
-    AbstractDocument douRazonSocial = (AbstractDocument) iFrame.tfRazonSocial.getDocument();
-    douRazonSocial.setDocumentFilter(new UpperCaseFilter());
-
-    AbstractDocument docClaveSolUsuario = (AbstractDocument) iFrame.tfClaveSolUsuario.getDocument();
-    docClaveSolUsuario.setDocumentFilter(new UpperCaseFilter());
-
+    // addDocumentListener
     iFrame.tfFirmaJks.getDocument().addDocumentListener(dl);
     iFrame.tfFirmaUsuario.getDocument().addDocumentListener(dl);
     iFrame.tfFirmaContrasena.getDocument().addDocumentListener(dl);
@@ -132,21 +126,50 @@ public class UsuarioController {
   }
 
   private void initComponents() {
+    // show
     iFrame.show();
-
-    MyFontIconPack iconPack = new MyFontIconPack();
-    iFrame.setFrameIcon(iconPack.getIcon(RemixiconAL.LOGIN_BOX_LINE));
-    iFrame.tabbed.setIconAt(0, iconPack.getIcon(RemixiconAL.FILE_LOCK_LINE));
-    iFrame.tabbed.setIconAt(1, iconPack.getIcon(RemixiconAL.LOCK_PASSWORD_LINE));
-    iFrame.btnEntrar.setIcon(iconPack.getIcon(RemixiconAL.LOGIN_BOX_LINE));
-    iFrame.btnFirmaJks.setIcon(iconPack.getIcon(RemixiconAL.FOLDER_2_LINE));
+    // setIcon
+    iFrame.setFrameIcon(FontIcon.of(RemixiconAL.LOGIN_BOX_LINE, 16, Color.decode("#FFFFFF")));
+    iFrame.setFrameIcon(FontIcon.of(RemixiconAL.LOGIN_BOX_LINE, 16, Color.decode("#FFFFFF")));
+    iFrame.tabbed.setIconAt(
+        0, FontIcon.of(RemixiconAL.FILE_LOCK_LINE, 16, Color.decode("#FFFFFF")));
+    iFrame.tabbed.setIconAt(
+        1, FontIcon.of(RemixiconAL.LOCK_PASSWORD_LINE, 16, Color.decode("#FFFFFF")));
+    iFrame.btnEntrar.setIcon(FontIcon.of(RemixiconAL.LOGIN_BOX_LINE, 16, Color.decode("#FFFFFF")));
+    iFrame.btnFirmaJks.setIcon(FontIcon.of(RemixiconAL.FOLDER_2_LINE, 16, Color.decode("#FFFFFF")));
+    // showClearButton
+    iFrame.tfFirmaUsuario.putClientProperty("JTextField.showClearButton", true);
+    iFrame.tfRazonSocial.putClientProperty("JTextField.showClearButton", true);
+    iFrame.tfClaveSolUsuario.putClientProperty("JTextField.showClearButton", true);
+    // trailingComponent
+    iFrame.tfFirmaJks.putClientProperty("JTextField.trailingComponent", iFrame.btnFirmaJks);
+    // buttonType
+    iFrame.btnFirmaJks.putClientProperty("JButton.buttonType", "square");
+    // setDocumentFilter
+    AbstractDocument docRuc = (AbstractDocument) iFrame.tfRuc.getDocument();
+    docRuc.setDocumentFilter(new IntegerFilter(11));
+    AbstractDocument douRazonSocial = (AbstractDocument) iFrame.tfRazonSocial.getDocument();
+    douRazonSocial.setDocumentFilter(new UpperCaseFilter());
+    AbstractDocument docClaveSolUsuario = (AbstractDocument) iFrame.tfClaveSolUsuario.getDocument();
+    docClaveSolUsuario.setDocumentFilter(new UpperCaseFilter());
+    // setEditable
+    iFrame.tfFirmaJks.setEditable(false);
+    // setEnabled
+    enabled();
 
     if (isEmpty()) {
-      iFrame.cbRecordar.setSelected(false);
+      // setEnabled
       iFrame.btnEntrar.setEnabled(false);
-
+      // setSelected
+      iFrame.cbRecordar.setSelected(false);
+      // requestFocus
       iFrame.tfFirmaJks.requestFocus();
     } else {
+      // setEnabled
+      iFrame.btnEntrar.setEnabled(true);
+      // setSelected
+      iFrame.cbRecordar.setSelected(true);
+      // setText
       File file = new File(firmaJks);
       if (file.exists()) iFrame.tfFirmaJks.setText(firmaJks);
       iFrame.tfFirmaUsuario.setText(firmaUsuario);
@@ -155,43 +178,30 @@ public class UsuarioController {
       iFrame.tfRazonSocial.setText(razonSocial);
       iFrame.tfClaveSolUsuario.setText(claveSolUsuario);
       iFrame.tfClaveSolContrasena.setText(claveSolContrasena);
-      iFrame.cbRecordar.setSelected(true);
-      iFrame.btnEntrar.setEnabled(true);
-
+      // requestFocus
       iFrame.btnEntrar.requestFocus();
     }
-
-    iFrame.tfFirmaJks.putClientProperty("JTextField.trailingComponent", iFrame.btnFirmaJks);
-    iFrame.btnFirmaJks.putClientProperty("JButton.buttonType", "square");
-
-    iFrame.tfFirmaUsuario.putClientProperty("JTextField.showClearButton", true);
-    iFrame.tfRazonSocial.putClientProperty("JTextField.showClearButton", true);
-    iFrame.tfClaveSolUsuario.putClientProperty("JTextField.showClearButton", true);
-
-    iFrame.tfFirmaJks.setEditable(false);
-
-    enableBtnEntrar();
   }
 
   private final DocumentListener dl =
       new DocumentListener() {
         @Override
         public void insertUpdate(DocumentEvent arg0) {
-          enableBtnEntrar();
+          enabled();
         }
 
         @Override
         public void removeUpdate(DocumentEvent arg0) {
-          enableBtnEntrar();
+          enabled();
         }
 
         @Override
         public void changedUpdate(DocumentEvent arg0) {
-          enableBtnEntrar();
+          enabled();
         }
       };
 
-  private void enableBtnEntrar() {
+  private void enabled() {
     if (iFrame.tfFirmaJks.getText().isEmpty()
         || iFrame.tfFirmaUsuario.getText().length() < 6
         || iFrame.tfFirmaContrasena.getPassword().length < 7

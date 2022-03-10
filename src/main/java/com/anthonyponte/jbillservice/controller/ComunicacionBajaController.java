@@ -6,7 +6,6 @@ package com.anthonyponte.jbillservice.controller;
 
 import com.anthonyponte.jbillservice.filter.IntegerFilter;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
-import com.anthonyponte.jbillservice.custom.MyFontIconPack;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
@@ -37,29 +36,33 @@ import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
-import com.anthonyponte.jbillservice.view.MainFrame;
+import java.awt.Color;
 import javax.swing.text.AbstractDocument;
 import org.kordamp.ikonli.remixicon.RemixiconAL;
 import org.kordamp.ikonli.remixicon.RemixiconMZ;
+import org.kordamp.ikonli.swing.FontIcon;
 
 /** @author anthony */
 public class ComunicacionBajaController {
 
-  private final MainFrame frame;
   private final ComunicacionBajaIFrame iFrame;
-  private LoadingDialog dialog;
+  private final LoadingDialog dialog;
   private ComunicacionBajaDao comunicacionBajaDao;
   private SummaryDao summaryDao;
   private Preferences preferences;
   private ComunicacionBaja comunicacionBaja;
 
-  public ComunicacionBajaController(MainFrame frame, ComunicacionBajaIFrame iFrame) {
-    this.frame = frame;
+  public ComunicacionBajaController(ComunicacionBajaIFrame iFrame, LoadingDialog dialog) {
     this.iFrame = iFrame;
+    this.dialog = dialog;
     initComponents();
   }
 
   public void start() {
+    comunicacionBajaDao = new IComunicacionBajaDao();
+    summaryDao = new ISummaryDao();
+    preferences = Preferences.userRoot().node(MainController.class.getPackageName());
+    // addActionListener
     iFrame.cbxTipo.addActionListener(
         (ActionEvent arg0) -> {
           if (iFrame.cbxTipo.getSelectedIndex() == 0) {
@@ -148,19 +151,6 @@ public class ComunicacionBajaController {
             iFrame.btnGuardar.setEnabled(false);
           }
         });
-
-    iFrame
-        .table
-        .getSelectionModel()
-        .addListSelectionListener(
-            (ListSelectionEvent arg0) -> {
-              int selectedRow = iFrame.table.getSelectedRow();
-              if (selectedRow >= 0) {
-                iFrame.btnEliminar.setEnabled(true);
-              } else {
-                iFrame.btnEliminar.setEnabled(false);
-              }
-            });
 
     iFrame.btnNuevo.addActionListener(
         (ActionEvent arg0) -> {
@@ -339,36 +329,53 @@ public class ComunicacionBajaController {
         (arg0) -> {
           initComponents();
         });
-
+    // addListSelectionListener
+    iFrame
+        .table
+        .getSelectionModel()
+        .addListSelectionListener(
+            (ListSelectionEvent arg0) -> {
+              int selectedRow = iFrame.table.getSelectedRow();
+              if (selectedRow >= 0) {
+                iFrame.btnEliminar.setEnabled(true);
+              } else {
+                iFrame.btnEliminar.setEnabled(false);
+              }
+            });
+    // addDocumentListener
     iFrame.tfDocumentoSerie.getDocument().addDocumentListener(dl);
     iFrame.tfDocumentoCorrelativo.getDocument().addDocumentListener(dl);
     iFrame.tfDocumentoMotivo.getDocument().addDocumentListener(dl);
   }
 
   private void initComponents() {
-    MyFontIconPack iconPack = new MyFontIconPack();
-    iFrame.setFrameIcon(iconPack.getIcon(RemixiconAL.ADD_LINE));
-    iFrame.tabbed.setIconAt(0, iconPack.getIcon(RemixiconAL.FILE_LIST_LINE));
-    iFrame.tabbed.setIconAt(1, iconPack.getIcon(RemixiconAL.LIST_ORDERED));
-    iFrame.btnAgregar.setIcon(iconPack.getIcon(RemixiconAL.INSERT_ROW_BOTTOM));
-    iFrame.btnEliminar.setIcon(iconPack.getIcon(RemixiconAL.DELETE_ROW));
-    iFrame.btnNuevo.setIcon(iconPack.getIcon(RemixiconAL.ADD_LINE));
-    iFrame.btnGuardar.setIcon(iconPack.getIcon(RemixiconMZ.SAVE_LINE));
-    iFrame.btnLimpiar.setIcon(iconPack.getIcon(RemixiconAL.ERASER_LINE));
-
-    dialog = new LoadingDialog(frame, false);
-    comunicacionBajaDao = new IComunicacionBajaDao();
-    summaryDao = new ISummaryDao();
-    preferences = Preferences.userRoot().node(MainController.class.getPackageName());
-
+    // show
     iFrame.show();
-
+    // setIcon
+    iFrame.setFrameIcon(FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode("#FFFFFF")));
+    iFrame.tabbed.setIconAt(
+        0, FontIcon.of(RemixiconAL.FILE_LIST_LINE, 16, Color.decode("#FFFFFF")));
+    iFrame.tabbed.setIconAt(1, FontIcon.of(RemixiconAL.LIST_ORDERED, 16, Color.decode("#FFFFFF")));
+    iFrame.btnAgregar.setIcon(
+        FontIcon.of(RemixiconAL.INSERT_ROW_BOTTOM, 16, Color.decode("#FFFFFF")));
+    iFrame.btnEliminar.setIcon(FontIcon.of(RemixiconAL.DELETE_ROW, 16, Color.decode("#FFFFFF")));
+    iFrame.btnNuevo.setIcon(FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode("#FFFFFF")));
+    iFrame.btnGuardar.setIcon(FontIcon.of(RemixiconMZ.SAVE_LINE, 16, Color.decode("#FFFFFF")));
+    iFrame.btnLimpiar.setIcon(FontIcon.of(RemixiconAL.ERASER_LINE, 16, Color.decode("#FFFFFF")));
+    // showClearButton
+    iFrame.tfDocumentoSerie.putClientProperty("JTextField.showClearButton", true);
+    iFrame.tfDocumentoCorrelativo.putClientProperty("JTextField.showClearButton", true);
+    iFrame.tfDocumentoMotivo.putClientProperty("JTextField.showClearButton", true);
+    // setDocumentFilter
+    AbstractDocument docRuc = (AbstractDocument) iFrame.tfDocumentoCorrelativo.getDocument();
+    docRuc.setDocumentFilter(new IntegerFilter(8));
+    // setEditable
     iFrame.tfFecha.setEditable(false);
     iFrame.cbxTipo.setEditable(false);
     iFrame.tfSerie.setEditable(false);
     iFrame.tfCorrelativo.setEditable(false);
     iFrame.dpDocumentoFecha.getEditor().setEditable(false);
-
+    // setEnabled
     iFrame.tfFecha.setEnabled(false);
     iFrame.cbxTipo.setEnabled(false);
     iFrame.tfSerie.setEnabled(false);
@@ -384,28 +391,23 @@ public class ComunicacionBajaController {
     iFrame.btnNuevo.setEnabled(true);
     iFrame.btnGuardar.setEnabled(false);
     iFrame.btnLimpiar.setEnabled(false);
-
+    // setText
     iFrame.tfFecha.setText("");
-    iFrame.cbxTipo.removeAllItems();
     iFrame.tfSerie.setText("");
     iFrame.tfCorrelativo.setText("");
     iFrame.dpDocumentoFecha.setDate(null);
-    iFrame.cbxDocumentoTipo.removeAllItems();
     iFrame.tfDocumentoSerie.setValue("");
     iFrame.tfDocumentoCorrelativo.setText("");
     iFrame.tfDocumentoMotivo.setText("");
+    // removeAllItems
+    iFrame.cbxTipo.removeAllItems();
+    iFrame.cbxDocumentoTipo.removeAllItems();
     DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
     model.getDataVector().removeAllElements();
     model.fireTableDataChanged();
-
-    AbstractDocument docRuc = (AbstractDocument) iFrame.tfDocumentoCorrelativo.getDocument();
-    docRuc.setDocumentFilter(new IntegerFilter(8));
-
-    iFrame.tfDocumentoSerie.putClientProperty("JTextField.showClearButton", true);
-    iFrame.tfDocumentoCorrelativo.putClientProperty("JTextField.showClearButton", true);
-    iFrame.tfDocumentoMotivo.putClientProperty("JTextField.showClearButton", true);
-
+    // setSelectedIndex
     iFrame.tabbed.setSelectedIndex(0);
+    // requestFocus
     iFrame.btnNuevo.requestFocus();
   }
 
@@ -413,21 +415,21 @@ public class ComunicacionBajaController {
       new DocumentListener() {
         @Override
         public void insertUpdate(DocumentEvent arg0) {
-          enableBtnAgregar();
+          enabled();
         }
 
         @Override
         public void removeUpdate(DocumentEvent arg0) {
-          enableBtnAgregar();
+          enabled();
         }
 
         @Override
         public void changedUpdate(DocumentEvent arg0) {
-          enableBtnAgregar();
+          enabled();
         }
       };
 
-  private void enableBtnAgregar() {
+  private void enabled() {
     if (iFrame.tfDocumentoSerie.getText().length() < 4
         || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
         || iFrame.tfDocumentoMotivo.getText().length() < 15) {
@@ -439,7 +441,6 @@ public class ComunicacionBajaController {
 
   private String getCodigoTipoDocumento(String descripcion) {
     String codigo = "";
-
     if (descripcion.equalsIgnoreCase("Factura")) {
       codigo = "01";
     } else if (descripcion.equalsIgnoreCase("Nota de crédito")) {
@@ -449,7 +450,6 @@ public class ComunicacionBajaController {
     } else if (descripcion.equalsIgnoreCase("Comprobante de retención")) {
       codigo = "20";
     }
-
     return codigo;
   }
 }
