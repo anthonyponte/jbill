@@ -20,6 +20,7 @@
             <Menu class="javax.swing.JMenu" name="menuNuevo">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nuevo"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -28,6 +29,7 @@
                 <MenuItem class="javax.swing.JMenuItem" name="miComunicacionBaja">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Comunicacion de baja"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -38,6 +40,7 @@
             <Menu class="javax.swing.JMenu" name="menuVer">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ver"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -46,6 +49,7 @@
                 <MenuItem class="javax.swing.JMenuItem" name="miComunicacionesBaja">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Comunicaciones de baja"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
@@ -56,11 +60,13 @@
             <Menu class="javax.swing.JMenu" name="menuBillService">
               <Properties>
                 <Property name="text" type="java.lang.String" value="BillService"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="miSummary">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Summary"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </MenuItem>
               </SubComponents>

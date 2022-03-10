@@ -69,22 +69,28 @@ public class MainFrame extends JFrame {
         menuMain.add(menuEntrar);
 
         menuNuevo.setText("Nuevo");
+        menuNuevo.setEnabled(false);
 
         miComunicacionBaja.setText("Comunicacion de baja");
+        miComunicacionBaja.setEnabled(false);
         menuNuevo.add(miComunicacionBaja);
 
         menuMain.add(menuNuevo);
 
         menuVer.setText("Ver");
+        menuVer.setEnabled(false);
 
         miComunicacionesBaja.setText("Comunicaciones de baja");
+        miComunicacionesBaja.setEnabled(false);
         menuVer.add(miComunicacionesBaja);
 
         menuMain.add(menuVer);
 
         menuBillService.setText("BillService");
+        menuBillService.setEnabled(false);
 
         miSummary.setText("Summary");
+        miSummary.setEnabled(false);
         menuBillService.add(miSummary);
 
         menuMain.add(menuBillService);

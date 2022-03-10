@@ -19,7 +19,7 @@ public class Main {
           FlatLaf.registerCustomDefaultsSource("com.anthonyponte.jbillservice.theme");
           FlatDarkLaf.setup();
           MainFrame mainFrame = new MainFrame();
-          new MainController(mainFrame).start();
+          new MainController(mainFrame).init();
         });
   }
 }

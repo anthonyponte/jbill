@@ -35,18 +35,10 @@ public class MainController {
     initComponents();
   }
 
-  public void start() {
-    // addActionListener
+  public void init() {
     frame.menuEntrar.addActionListener(
         (ActionEvent arg0) -> {
-          if (isIframeClosed(usuarioIFrame)) {
-            usuarioIFrame = new UsuarioIFrame();
-            frame.dpane.add(usuarioIFrame);
-            usuarioIFrame.setLocation(centerIFrame(usuarioIFrame));
-            new UsuarioController(frame, usuarioIFrame).start();
-          } else {
-            iframeClosed(usuarioIFrame);
-          }
+          usuarioIFrame();
         });
 
     frame.miComunicacionBaja.addActionListener(
@@ -94,7 +86,6 @@ public class MainController {
                   "Salir",
                   JOptionPane.YES_NO_OPTION,
                   JOptionPane.QUESTION_MESSAGE);
-
           if (input == JOptionPane.YES_OPTION) {
             frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
           }
@@ -103,18 +94,13 @@ public class MainController {
 
   private void initComponents() {
     dialog = new LoadingDialog(frame, false);
-    // setVisible
     frame.setVisible(true);
-    // setEnabled
-    frame.menuNuevo.setEnabled(false);
-    frame.menuVer.setEnabled(false);
-    frame.menuBillService.setEnabled(false);
-    frame.miComunicacionBaja.setEnabled(false);
-    frame.miComunicacionesBaja.setEnabled(false);
-    frame.miSummary.setEnabled(false);
+    usuarioIFrame();
+  }
 
+  private void usuarioIFrame() {
     if (isIframeClosed(usuarioIFrame)) {
-      this.usuarioIFrame = new UsuarioIFrame();
+      usuarioIFrame = new UsuarioIFrame();
       frame.dpane.add(usuarioIFrame);
       usuarioIFrame.setLocation(centerIFrame(usuarioIFrame));
       new UsuarioController(frame, usuarioIFrame).start();

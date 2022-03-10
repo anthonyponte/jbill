@@ -201,7 +201,7 @@ public class SummaryController {
                         new SwingWorker<Integer, Void>() {
                           @Override
                           protected Integer doInBackground() throws Exception {
-                            int eliminados = 1;
+                            int eliminados = 0;
                             EventList<Summary> selected = selectionModel.getSelected();
                             for (int i = 0; i < selected.size(); i++) {
                               Summary get = selected.get(i);
