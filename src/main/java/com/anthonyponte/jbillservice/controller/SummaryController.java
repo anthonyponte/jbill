@@ -71,9 +71,6 @@ public class SummaryController {
   }
 
   public void start() {
-    summaryDao = new ISummaryDao();
-    comunicacionBajaDao = new IComunicacionBajaDao();
-    service = new IBillService();
     // addActionListener
     iFrame.btnEnviar.addActionListener(
         (var e) -> {
@@ -242,6 +239,9 @@ public class SummaryController {
   }
 
   private void initComponents() {
+    summaryDao = new ISummaryDao();
+    comunicacionBajaDao = new IComunicacionBajaDao();
+    service = new IBillService();
     // show
     iFrame.show();
     // setIcon

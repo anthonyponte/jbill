@@ -65,7 +65,6 @@ public class ComunicacionesBajaController {
   }
 
   public void start() {
-    dao = new IComunicacionBajaDao();
     // addActionListener
     iFrame.dpMesAno.addActionListener(
         (ActionEvent e) -> {
@@ -164,6 +163,7 @@ public class ComunicacionesBajaController {
   }
 
   private void initComponents() {
+    dao = new IComunicacionBajaDao();
     // show
     iFrame.show();
     // setIcon

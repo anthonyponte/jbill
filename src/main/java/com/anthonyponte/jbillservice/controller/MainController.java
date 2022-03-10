@@ -36,7 +36,6 @@ public class MainController {
   }
 
   public void start() {
-    dialog = new LoadingDialog(frame, false);
     // addActionListener
     frame.menuEntrar.addActionListener(
         (ActionEvent arg0) -> {
@@ -103,6 +102,7 @@ public class MainController {
   }
 
   private void initComponents() {
+    dialog = new LoadingDialog(frame, false);
     // setVisible
     frame.setVisible(true);
     // setEnabled

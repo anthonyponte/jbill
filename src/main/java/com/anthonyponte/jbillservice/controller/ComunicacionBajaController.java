@@ -59,9 +59,6 @@ public class ComunicacionBajaController {
   }
 
   public void start() {
-    comunicacionBajaDao = new IComunicacionBajaDao();
-    summaryDao = new ISummaryDao();
-    preferences = Preferences.userRoot().node(MainController.class.getPackageName());
     // addActionListener
     iFrame.cbxTipo.addActionListener(
         (ActionEvent arg0) -> {
@@ -349,6 +346,9 @@ public class ComunicacionBajaController {
   }
 
   private void initComponents() {
+    comunicacionBajaDao = new IComunicacionBajaDao();
+    summaryDao = new ISummaryDao();
+    preferences = Preferences.userRoot().node(MainController.class.getPackageName());
     // show
     iFrame.show();
     // setIcon
