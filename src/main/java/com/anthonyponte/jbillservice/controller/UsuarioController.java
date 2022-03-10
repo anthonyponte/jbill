@@ -1,6 +1,5 @@
 package com.anthonyponte.jbillservice.controller;
 
-import com.anthonyponte.jbillservice.custom.MyFontIconPack;
 import com.anthonyponte.jbillservice.filter.IntegerFilter;
 import com.anthonyponte.jbillservice.filter.UpperCaseFilter;
 import com.anthonyponte.jbillservice.view.MainFrame;
