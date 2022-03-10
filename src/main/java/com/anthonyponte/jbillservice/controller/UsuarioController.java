@@ -4,7 +4,6 @@ import com.anthonyponte.jbillservice.filter.IntegerFilter;
 import com.anthonyponte.jbillservice.filter.UpperCaseFilter;
 import com.anthonyponte.jbillservice.view.MainFrame;
 import com.anthonyponte.jbillservice.view.UsuarioIFrame;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.logging.Level;
@@ -17,14 +16,11 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AbstractDocument;
-import org.kordamp.ikonli.remixicon.RemixiconAL;
-import org.kordamp.ikonli.swing.FontIcon;
 
 public class UsuarioController {
 
   private final MainFrame frame;
   private final UsuarioIFrame iFrame;
-  private final Preferences preferences;
   public static final String FIRMA_JKS = "FIRMA_JKS";
   public static final String FIRMA_USUARIO = "FIRMA_USUARIO";
   public static final String FIRMA_CONTRASENA = "FIRMA_CONTRASENA";
@@ -33,30 +29,22 @@ public class UsuarioController {
   public static final String RAZON_SOCIAL = "RAZON_SOCIAL";
   public static final String CLAVE_SOL_USUARIO = "CLAVE_SOL_USUARIO";
   public static final String CLAVE_SOL_CONTRASENA = "CLAVE_SOL_CONTRASENA";
-  private final String firmaJks;
-  private final String firmaUsuario;
-  private final String firmaContrasena;
-  private final String ruc;
-  private final String razonSocial;
-  private final String claveSolUsuario;
-  private final String claveSolContrasena;
+  private Preferences preferences;
+  private String firmaJks;
+  private String firmaUsuario;
+  private String firmaContrasena;
+  private String ruc;
+  private String razonSocial;
+  private String claveSolUsuario;
+  private String claveSolContrasena;
 
   public UsuarioController(MainFrame frame, UsuarioIFrame iFrame) {
     this.frame = frame;
     this.iFrame = iFrame;
-    this.preferences = Preferences.userRoot().node(MainController.class.getPackageName());
-    this.firmaJks = preferences.get(FIRMA_JKS, "");
-    this.firmaUsuario = preferences.get(FIRMA_USUARIO, "");
-    this.firmaContrasena = preferences.get(FIRMA_CONTRASENA, "");
-    this.ruc = preferences.get(RUC, "");
-    this.razonSocial = preferences.get(RAZON_SOCIAL, "");
-    this.claveSolUsuario = preferences.get(CLAVE_SOL_USUARIO, "");
-    this.claveSolContrasena = preferences.get(CLAVE_SOL_CONTRASENA, "");
     initComponents();
   }
 
-  public void start() {
-    // addChangeListener
+  public void init() {
     iFrame.tabbed.addChangeListener(
         (ChangeEvent ce) -> {
           if (iFrame.tabbed.getSelectedIndex() == 0)
@@ -66,7 +54,7 @@ public class UsuarioController {
             if (isEmpty()) iFrame.tfRuc.requestFocus();
             else iFrame.btnEntrar.requestFocus();
         });
-    // addActionListener
+
     iFrame.btnFirmaJks.addActionListener(
         (ActionEvent arg0) -> {
           JFileChooser chooser = new JFileChooser();
@@ -75,7 +63,6 @@ public class UsuarioController {
           chooser.setAcceptAllFileFilterUsed(false);
           chooser.addChoosableFileFilter(new FileNameExtensionFilter("JKS", "jks"));
           chooser.setCurrentDirectory(new File("."));
-
           int result = chooser.showOpenDialog(iFrame);
           if (result == JFileChooser.APPROVE_OPTION) {
             File jks = chooser.getSelectedFile();
@@ -101,9 +88,7 @@ public class UsuarioController {
             } else {
               preferences.clear();
             }
-
             iFrame.dispose();
-
             frame.menuNuevo.setEnabled(true);
             frame.menuVer.setEnabled(true);
             frame.menuBillService.setEnabled(true);
@@ -114,7 +99,7 @@ public class UsuarioController {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
           }
         });
-    // addDocumentListener
+
     iFrame.tfFirmaJks.getDocument().addDocumentListener(dl);
     iFrame.tfFirmaUsuario.getDocument().addDocumentListener(dl);
     iFrame.tfFirmaContrasena.getDocument().addDocumentListener(dl);
@@ -125,50 +110,31 @@ public class UsuarioController {
   }
 
   private void initComponents() {
-    // show
+    preferences = Preferences.userRoot().node(MainController.class.getPackageName());
+    firmaJks = preferences.get(FIRMA_JKS, "");
+    firmaUsuario = preferences.get(FIRMA_USUARIO, "");
+    firmaContrasena = preferences.get(FIRMA_CONTRASENA, "");
+    ruc = preferences.get(RUC, "");
+    razonSocial = preferences.get(RAZON_SOCIAL, "");
+    claveSolUsuario = preferences.get(CLAVE_SOL_USUARIO, "");
+    claveSolContrasena = preferences.get(CLAVE_SOL_CONTRASENA, "");
+
     iFrame.show();
-    // setIcon
-    iFrame.setFrameIcon(FontIcon.of(RemixiconAL.LOGIN_BOX_LINE, 16, Color.decode("#FFFFFF")));
-    iFrame.setFrameIcon(FontIcon.of(RemixiconAL.LOGIN_BOX_LINE, 16, Color.decode("#FFFFFF")));
-    iFrame.tabbed.setIconAt(
-        0, FontIcon.of(RemixiconAL.FILE_LOCK_LINE, 16, Color.decode("#FFFFFF")));
-    iFrame.tabbed.setIconAt(
-        1, FontIcon.of(RemixiconAL.LOCK_PASSWORD_LINE, 16, Color.decode("#FFFFFF")));
-    iFrame.btnEntrar.setIcon(FontIcon.of(RemixiconAL.LOGIN_BOX_LINE, 16, Color.decode("#FFFFFF")));
-    iFrame.btnFirmaJks.setIcon(FontIcon.of(RemixiconAL.FOLDER_2_LINE, 16, Color.decode("#FFFFFF")));
-    // showClearButton
-    iFrame.tfFirmaUsuario.putClientProperty("JTextField.showClearButton", true);
-    iFrame.tfRazonSocial.putClientProperty("JTextField.showClearButton", true);
-    iFrame.tfClaveSolUsuario.putClientProperty("JTextField.showClearButton", true);
-    // trailingComponent
-    iFrame.tfFirmaJks.putClientProperty("JTextField.trailingComponent", iFrame.btnFirmaJks);
-    // buttonType
-    iFrame.btnFirmaJks.putClientProperty("JButton.buttonType", "square");
-    // setDocumentFilter
+
     AbstractDocument docRuc = (AbstractDocument) iFrame.tfRuc.getDocument();
     docRuc.setDocumentFilter(new IntegerFilter(11));
+
     AbstractDocument douRazonSocial = (AbstractDocument) iFrame.tfRazonSocial.getDocument();
     douRazonSocial.setDocumentFilter(new UpperCaseFilter());
+
     AbstractDocument docClaveSolUsuario = (AbstractDocument) iFrame.tfClaveSolUsuario.getDocument();
     docClaveSolUsuario.setDocumentFilter(new UpperCaseFilter());
-    // setEditable
-    iFrame.tfFirmaJks.setEditable(false);
-    // setEnabled
-    enabled();
 
     if (isEmpty()) {
-      // setEnabled
-      iFrame.btnEntrar.setEnabled(false);
-      // setSelected
-      iFrame.cbRecordar.setSelected(false);
-      // requestFocus
       iFrame.tfFirmaJks.requestFocus();
+      iFrame.cbRecordar.setSelected(false);
+      iFrame.btnEntrar.setEnabled(false);
     } else {
-      // setEnabled
-      iFrame.btnEntrar.setEnabled(true);
-      // setSelected
-      iFrame.cbRecordar.setSelected(true);
-      // setText
       File file = new File(firmaJks);
       if (file.exists()) iFrame.tfFirmaJks.setText(firmaJks);
       iFrame.tfFirmaUsuario.setText(firmaUsuario);
@@ -177,7 +143,8 @@ public class UsuarioController {
       iFrame.tfRazonSocial.setText(razonSocial);
       iFrame.tfClaveSolUsuario.setText(claveSolUsuario);
       iFrame.tfClaveSolContrasena.setText(claveSolContrasena);
-      // requestFocus
+      iFrame.cbRecordar.setSelected(true);
+      iFrame.btnEntrar.setEnabled(true);
       iFrame.btnEntrar.requestFocus();
     }
   }

@@ -47,7 +47,7 @@ public class MainController {
             comunicacionBajaIFrame = new ComunicacionBajaIFrame();
             frame.dpane.add(comunicacionBajaIFrame);
             comunicacionBajaIFrame.setLocation(centerIFrame(comunicacionBajaIFrame));
-            new ComunicacionBajaController(comunicacionBajaIFrame, dialog).start();
+            new ComunicacionBajaController(comunicacionBajaIFrame, dialog).init();
           } else {
             iframeClosed(comunicacionBajaIFrame);
           }
@@ -103,7 +103,7 @@ public class MainController {
       usuarioIFrame = new UsuarioIFrame();
       frame.dpane.add(usuarioIFrame);
       usuarioIFrame.setLocation(centerIFrame(usuarioIFrame));
-      new UsuarioController(frame, usuarioIFrame).start();
+      new UsuarioController(frame, usuarioIFrame).init();
     } else {
       iframeClosed(usuarioIFrame);
     }

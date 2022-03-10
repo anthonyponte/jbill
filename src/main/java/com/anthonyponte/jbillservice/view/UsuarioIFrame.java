@@ -4,10 +4,10 @@
  */
 package com.anthonyponte.jbillservice.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.GroupLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JInternalFrame;
@@ -18,6 +18,8 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
+import org.kordamp.ikonli.remixicon.RemixiconAL;
+import org.kordamp.ikonli.swing.FontIcon;
 
 /**
  *
@@ -66,6 +68,7 @@ public class UsuarioIFrame extends JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setTitle("Entrar");
+        setFrameIcon(FontIcon.of(RemixiconAL.LOGIN_BOX_LINE, 16, Color.decode("#FFFFFF")));
         setMaximumSize(null);
         setMinimumSize(null);
         setName(""); // NOI18N
@@ -73,14 +76,18 @@ public class UsuarioIFrame extends JInternalFrame {
         lblFirmaJks.setFont(lblFirmaJks.getFont().deriveFont(lblFirmaJks.getFont().getStyle() | Font.BOLD, lblFirmaJks.getFont().getSize()-2));
         lblFirmaJks.setText("JKS");
 
+        btnFirmaJks.setIcon(FontIcon.of(RemixiconAL.FOLDER_2_LINE, 16, Color.decode("#FFFFFF")));
         btnFirmaJks.setMaximumSize(new Dimension(30, 30));
         btnFirmaJks.setMinimumSize(new Dimension(30, 30));
         btnFirmaJks.setPreferredSize(new Dimension(30, 30));
+        btnFirmaJks.putClientProperty("JButton.buttonType", "square");
 
         tfFirmaJks.setMaximumSize(null);
         tfFirmaJks.setMinimumSize(null);
         tfFirmaJks.setName(""); // NOI18N
         tfFirmaJks.setPreferredSize(new Dimension(300, 30));
+        tfFirmaJks.setEditable(false);
+        tfFirmaJks.putClientProperty("JTextField.trailingComponent", btnFirmaJks);
 
         lblFirmaUsuario.setFont(lblFirmaUsuario.getFont().deriveFont(lblFirmaUsuario.getFont().getStyle() | Font.BOLD, lblFirmaUsuario.getFont().getSize()-2));
         lblFirmaUsuario.setText("Usuario");
@@ -135,7 +142,7 @@ public class UsuarioIFrame extends JInternalFrame {
                 .addContainerGap())
         );
 
-        tabbed.addTab("Firma Digital", pnlFirmaDigital);
+        tabbed.addTab("Firma Digital", FontIcon.of(RemixiconAL.FILE_LOCK_LINE, 16, Color.decode("#FFFFFF")), pnlFirmaDigital);
 
         lblRuc.setFont(lblRuc.getFont().deriveFont(lblRuc.getFont().getStyle() | Font.BOLD, lblRuc.getFont().getSize()-2));
         lblRuc.setText("RUC");
@@ -206,7 +213,7 @@ public class UsuarioIFrame extends JInternalFrame {
                 .addContainerGap())
         );
 
-        tabbed.addTab("Clave SOL", pnlClaveSol);
+        tabbed.addTab("Clave SOL",  FontIcon.of(RemixiconAL.LOCK_PASSWORD_LINE, 16, Color.decode("#FFFFFF")), pnlClaveSol);
 
         cbRecordar.setText("Recordar");
         cbRecordar.setMaximumSize(new Dimension(150, 30));
@@ -214,6 +221,7 @@ public class UsuarioIFrame extends JInternalFrame {
         cbRecordar.setName(""); // NOI18N
         cbRecordar.setPreferredSize(new Dimension(150, 30));
 
+        btnEntrar.setIcon(FontIcon.of(RemixiconAL.LOGIN_BOX_LINE, 16, Color.decode("#FFFFFF")));
         btnEntrar.setText("Entrar");
         btnEntrar.setName(""); // NOI18N
         btnEntrar.setPreferredSize(new Dimension(300, 30));

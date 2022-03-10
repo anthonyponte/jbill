@@ -36,11 +36,6 @@ import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
-import java.awt.Color;
-import javax.swing.text.AbstractDocument;
-import org.kordamp.ikonli.remixicon.RemixiconAL;
-import org.kordamp.ikonli.remixicon.RemixiconMZ;
-import org.kordamp.ikonli.swing.FontIcon;
 
 /** @author anthony */
 public class ComunicacionBajaController {
@@ -58,57 +53,85 @@ public class ComunicacionBajaController {
     initComponents();
   }
 
-  public void start() {
-    // addActionListener
+  public void init() {
     iFrame.cbxTipo.addActionListener(
         (ActionEvent arg0) -> {
+          dialog.setVisible(true);
+          dialog.setLocationRelativeTo(iFrame);
+
           if (iFrame.cbxTipo.getSelectedIndex() == 0) {
-            comunicacionBaja.setTipo("RA");
-            int count = summaryDao.read(comunicacionBaja);
-            comunicacionBaja.setCorrelativo(count + 1);
+            SwingWorker worker =
+                new SwingWorker<Void, Void>() {
+                  @Override
+                  protected Void doInBackground() throws Exception {
+                    comunicacionBaja.setTipo("RA");
+                    int count = summaryDao.read(comunicacionBaja);
+                    comunicacionBaja.setCorrelativo(count + 1);
+                    return null;
+                  }
 
-            iFrame.tfCorrelativo.setText(String.valueOf(comunicacionBaja.getCorrelativo()));
+                  @Override
+                  protected void done() {
+                    try {
+                      dialog.dispose();
 
-            iFrame.cbxDocumentoTipo.setModel(
-                new DefaultComboBoxModel<>(
-                    new String[] {"Factura", "Nota de crédito", "Nota de débito"}));
+                      iFrame.tabbed.setSelectedIndex(1);
 
-            iFrame.cbxDocumentoTipo.setEnabled(true);
+                      iFrame.tfCorrelativo.setText(
+                          String.valueOf(comunicacionBaja.getCorrelativo()));
 
-            try {
-              iFrame.tfDocumentoSerie.setValue("");
-              iFrame.tfDocumentoSerie.setFormatterFactory(
-                  new DefaultFormatterFactory(new MaskFormatter("FAAA")));
-            } catch (ParseException ex) {
-              Logger.getLogger(ComunicacionBajaController.class.getName())
-                  .log(Level.SEVERE, null, ex);
-            }
+                      iFrame.cbxDocumentoTipo.setModel(
+                          new DefaultComboBoxModel<>(
+                              new String[] {"Factura", "Nota de crédito", "Nota de débito"}));
+                      iFrame.cbxDocumentoTipo.setEnabled(true);
+                      iFrame.cbxDocumentoTipo.requestFocus();
 
-            iFrame.tabbed.setSelectedIndex(1);
-            iFrame.cbxDocumentoTipo.requestFocus();
+                      iFrame.tfDocumentoSerie.setValue("");
+                      iFrame.tfDocumentoSerie.setFormatterFactory(
+                          new DefaultFormatterFactory(new MaskFormatter("FAAA")));
+                    } catch (ParseException ex) {
+                      Logger.getLogger(ComunicacionBajaController.class.getName())
+                          .log(Level.SEVERE, null, ex);
+                    }
+                  }
+                };
+            worker.execute();
           } else if (iFrame.cbxTipo.getSelectedIndex() == 1) {
-            comunicacionBaja.setTipo("RR");
-            int count = summaryDao.read(comunicacionBaja);
-            comunicacionBaja.setCorrelativo(count + 1);
+            SwingWorker worker =
+                new SwingWorker<Void, Void>() {
+                  @Override
+                  protected Void doInBackground() throws Exception {
+                    comunicacionBaja.setTipo("RR");
+                    int count = summaryDao.read(comunicacionBaja);
+                    comunicacionBaja.setCorrelativo(count + 1);
+                    return null;
+                  }
 
-            iFrame.tfCorrelativo.setText(String.valueOf(comunicacionBaja.getCorrelativo()));
+                  @Override
+                  protected void done() {
+                    try {
+                      dialog.dispose();
 
-            iFrame.cbxDocumentoTipo.setModel(
-                new DefaultComboBoxModel<>(new String[] {"Comprobante de retención"}));
+                      iFrame.tabbed.setSelectedIndex(1);
 
-            iFrame.cbxDocumentoTipo.setEnabled(false);
+                      iFrame.tfCorrelativo.setText(
+                          String.valueOf(comunicacionBaja.getCorrelativo()));
 
-            try {
-              iFrame.tfDocumentoSerie.setValue("");
-              iFrame.tfDocumentoSerie.setFormatterFactory(
-                  new DefaultFormatterFactory(new MaskFormatter("RAAA")));
-            } catch (ParseException ex) {
-              Logger.getLogger(ComunicacionBajaController.class.getName())
-                  .log(Level.SEVERE, null, ex);
-            }
+                      iFrame.cbxDocumentoTipo.setModel(
+                          new DefaultComboBoxModel<>(new String[] {"Comprobante de retención"}));
+                      iFrame.cbxDocumentoTipo.setEnabled(false);
 
-            iFrame.tabbed.setSelectedIndex(1);
-            iFrame.tfDocumentoSerie.requestFocus();
+                      iFrame.tfDocumentoSerie.setValue("");
+                      iFrame.tfDocumentoSerie.setFormatterFactory(
+                          new DefaultFormatterFactory(new MaskFormatter("RAAA")));
+                      iFrame.tfDocumentoSerie.requestFocus();
+                    } catch (ParseException ex) {
+                      Logger.getLogger(ComunicacionBajaController.class.getName())
+                          .log(Level.SEVERE, null, ex);
+                    }
+                  }
+                };
+            worker.execute();
           }
         });
 
@@ -174,56 +197,49 @@ public class ComunicacionBajaController {
                   emisor.setTipo(preferences.getInt(UsuarioController.RUC_TIPO, 0));
                   emisor.setRazonSocial(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
                   comunicacionBaja.setEmisor(emisor);
-
                   return comunicacionBaja;
                 }
 
                 @Override
                 protected void done() {
-                  iFrame.tfFecha.setEnabled(true);
-                  iFrame.cbxTipo.setEnabled(true);
-                  iFrame.tfSerie.setEnabled(true);
-                  iFrame.tfCorrelativo.setEnabled(true);
-                  iFrame.dpDocumentoFecha.setEnabled(true);
-                  iFrame.cbxDocumentoTipo.setEnabled(true);
-                  iFrame.tfDocumentoSerie.setEnabled(true);
-                  iFrame.tfDocumentoCorrelativo.setEnabled(true);
-                  iFrame.tfDocumentoMotivo.setEnabled(true);
-                  iFrame.btnAgregar.setEnabled(false);
-                  iFrame.btnEliminar.setEnabled(false);
-                  iFrame.table.setEnabled(true);
-                  iFrame.btnNuevo.setEnabled(false);
-                  iFrame.btnGuardar.setEnabled(false);
-                  iFrame.btnLimpiar.setEnabled(true);
-
-                  iFrame.tfFecha.setText(MyDateFormat.d_MMMM_Y(comunicacionBaja.getFechaEmision()));
-                  iFrame.tfSerie.setText(comunicacionBaja.getSerie());
-                  iFrame.tfCorrelativo.setText(String.valueOf(comunicacionBaja.getCorrelativo()));
-                  iFrame.dpDocumentoFecha.setDate(new Date());
-
-                  iFrame.cbxTipo.setModel(
-                      new DefaultComboBoxModel<>(
-                          new String[] {"Comunicacion de baja", "Resumen de reversiones"}));
-                  iFrame.cbxDocumentoTipo.setModel(
-                      new DefaultComboBoxModel<>(
-                          new String[] {"Factura", "Nota de crédito", "Nota de débito"}));
-
-                  try {
-                    iFrame.tfDocumentoSerie.setFormatterFactory(
-                        new DefaultFormatterFactory(new MaskFormatter("FAAA")));
-                    //
-                    //                    iFrame.tfDocumentoCorrelativo.setFormatterFactory(
-                    //                        new DefaultFormatterFactory(
-                    //                            new NumberFormatter(new DecimalFormat("####"))));
-                  } catch (ParseException ex) {
-                    Logger.getLogger(ComunicacionBajaController.class.getName())
-                        .log(Level.SEVERE, null, ex);
-                  }
+                  dialog.dispose();
 
                   iFrame.tabbed.setSelectedIndex(0);
+
+                  iFrame.tfFecha.setEnabled(true);
+                  iFrame.tfFecha.setText(MyDateFormat.d_MMMM_Y(comunicacionBaja.getFechaEmision()));
+
+                  iFrame.cbxTipo.setEnabled(true);
                   iFrame.cbxTipo.requestFocus();
 
-                  dialog.dispose();
+                  iFrame.tfSerie.setEnabled(true);
+                  iFrame.tfSerie.setText(comunicacionBaja.getSerie());
+
+                  iFrame.tfCorrelativo.setEnabled(true);
+                  iFrame.tfCorrelativo.setText(String.valueOf(comunicacionBaja.getCorrelativo()));
+
+                  iFrame.dpDocumentoFecha.setEnabled(true);
+                  iFrame.dpDocumentoFecha.setDate(new Date());
+
+                  iFrame.cbxDocumentoTipo.setEnabled(true);
+
+                  iFrame.tfDocumentoSerie.setEnabled(true);
+
+                  iFrame.tfDocumentoCorrelativo.setEnabled(true);
+
+                  iFrame.tfDocumentoMotivo.setEnabled(true);
+
+                  iFrame.btnAgregar.setEnabled(false);
+
+                  iFrame.btnEliminar.setEnabled(false);
+
+                  iFrame.table.setEnabled(true);
+
+                  iFrame.btnNuevo.setEnabled(false);
+
+                  iFrame.btnGuardar.setEnabled(false);
+
+                  iFrame.btnLimpiar.setEnabled(true);
                 }
               };
 
@@ -234,7 +250,6 @@ public class ComunicacionBajaController {
         (arg0) -> {
           File jks = new File(preferences.get(UsuarioController.FIRMA_JKS, ""));
           if (jks.exists()) {
-
             int input =
                 JOptionPane.showOptionDialog(
                     iFrame,
@@ -251,7 +266,6 @@ public class ComunicacionBajaController {
             if (input == JOptionPane.YES_OPTION) {
               dialog.setVisible(true);
               dialog.setLocationRelativeTo(iFrame);
-
               SwingWorker worker =
                   new SwingWorker<Void, Void>() {
                     @Override
@@ -262,49 +276,38 @@ public class ComunicacionBajaController {
                         ComunicacionBajaDetalle comunicacionBajaDetalle =
                             new ComunicacionBajaDetalle();
                         Documento documento = new Documento();
-
                         String tipo = model.getValueAt(i, 0).toString();
                         String serie = model.getValueAt(i, 1).toString();
                         int correlativo = Integer.parseInt(model.getValueAt(i, 2).toString());
                         String motivo = model.getValueAt(i, 3).toString();
-
                         comunicacionBajaDetalle.setNumero(i + 1);
-
                         documento.setTipo(getCodigoTipoDocumento(tipo));
                         documento.setSerie(serie);
                         documento.setCorrelativo(correlativo);
                         comunicacionBajaDetalle.setDocumento(documento);
-
                         comunicacionBajaDetalle.setMotivo(motivo);
-
                         comunicacionBajaDetalles.add(comunicacionBajaDetalle);
                       }
                       comunicacionBaja.setComunicacionBajaDetalles(comunicacionBajaDetalles);
-
                       VoidedDocuments voided = new VoidedDocuments();
                       File zip = voided.getStructure(comunicacionBaja);
                       byte[] byteArray = Files.readAllBytes(zip.toPath());
                       comunicacionBaja.setNombreZip(zip.getName());
                       comunicacionBaja.setZip(byteArray);
-
                       int id = summaryDao.create(comunicacionBaja);
                       comunicacionBajaDao.create(id, comunicacionBajaDetalles);
-
                       zip.delete();
-
                       return null;
                     }
 
                     @Override
                     protected void done() {
                       dialog.dispose();
-
                       JOptionPane.showMessageDialog(
                           iFrame,
                           comunicacionBaja.getNombreZip() + " guardado",
                           "Guardado",
                           JOptionPane.INFORMATION_MESSAGE);
-
                       initComponents();
                     }
                   };
@@ -319,14 +322,16 @@ public class ComunicacionBajaController {
                     + preferences.get(UsuarioController.FIRMA_JKS, ""),
                 ComunicacionBajaController.class.getName(),
                 JOptionPane.ERROR_MESSAGE);
+
+            start();
           }
         });
 
     iFrame.btnLimpiar.addActionListener(
         (arg0) -> {
-          initComponents();
+          start();
         });
-    // addListSelectionListener
+
     iFrame
         .table
         .getSelectionModel()
@@ -339,7 +344,7 @@ public class ComunicacionBajaController {
                 iFrame.btnEliminar.setEnabled(false);
               }
             });
-    // addDocumentListener
+
     iFrame.tfDocumentoSerie.getDocument().addDocumentListener(dl);
     iFrame.tfDocumentoCorrelativo.getDocument().addDocumentListener(dl);
     iFrame.tfDocumentoMotivo.getDocument().addDocumentListener(dl);
@@ -349,66 +354,69 @@ public class ComunicacionBajaController {
     comunicacionBajaDao = new IComunicacionBajaDao();
     summaryDao = new ISummaryDao();
     preferences = Preferences.userRoot().node(MainController.class.getPackageName());
-    // show
+
     iFrame.show();
-    // setIcon
-    iFrame.setFrameIcon(FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode("#FFFFFF")));
-    iFrame.tabbed.setIconAt(
-        0, FontIcon.of(RemixiconAL.FILE_LIST_LINE, 16, Color.decode("#FFFFFF")));
-    iFrame.tabbed.setIconAt(1, FontIcon.of(RemixiconAL.LIST_ORDERED, 16, Color.decode("#FFFFFF")));
-    iFrame.btnAgregar.setIcon(
-        FontIcon.of(RemixiconAL.INSERT_ROW_BOTTOM, 16, Color.decode("#FFFFFF")));
-    iFrame.btnEliminar.setIcon(FontIcon.of(RemixiconAL.DELETE_ROW, 16, Color.decode("#FFFFFF")));
-    iFrame.btnNuevo.setIcon(FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode("#FFFFFF")));
-    iFrame.btnGuardar.setIcon(FontIcon.of(RemixiconMZ.SAVE_LINE, 16, Color.decode("#FFFFFF")));
-    iFrame.btnLimpiar.setIcon(FontIcon.of(RemixiconAL.ERASER_LINE, 16, Color.decode("#FFFFFF")));
-    // showClearButton
-    iFrame.tfDocumentoSerie.putClientProperty("JTextField.showClearButton", true);
-    iFrame.tfDocumentoCorrelativo.putClientProperty("JTextField.showClearButton", true);
-    iFrame.tfDocumentoMotivo.putClientProperty("JTextField.showClearButton", true);
-    // setDocumentFilter
-    AbstractDocument docRuc = (AbstractDocument) iFrame.tfDocumentoCorrelativo.getDocument();
-    docRuc.setDocumentFilter(new IntegerFilter(8));
-    // setEditable
-    iFrame.tfFecha.setEditable(false);
-    iFrame.cbxTipo.setEditable(false);
-    iFrame.tfSerie.setEditable(false);
-    iFrame.tfCorrelativo.setEditable(false);
-    iFrame.dpDocumentoFecha.getEditor().setEditable(false);
-    // setEnabled
-    iFrame.tfFecha.setEnabled(false);
-    iFrame.cbxTipo.setEnabled(false);
-    iFrame.tfSerie.setEnabled(false);
-    iFrame.tfCorrelativo.setEnabled(false);
-    iFrame.dpDocumentoFecha.setEnabled(false);
-    iFrame.cbxDocumentoTipo.setEnabled(false);
-    iFrame.tfDocumentoSerie.setEnabled(false);
-    iFrame.tfDocumentoCorrelativo.setEnabled(false);
-    iFrame.tfDocumentoMotivo.setEnabled(false);
-    iFrame.btnAgregar.setEnabled(false);
-    iFrame.btnEliminar.setEnabled(false);
-    iFrame.table.setEnabled(false);
-    iFrame.btnNuevo.setEnabled(true);
-    iFrame.btnGuardar.setEnabled(false);
-    iFrame.btnLimpiar.setEnabled(false);
-    // setText
-    iFrame.tfFecha.setText("");
-    iFrame.tfSerie.setText("");
-    iFrame.tfCorrelativo.setText("");
-    iFrame.dpDocumentoFecha.setDate(null);
-    iFrame.tfDocumentoSerie.setValue("");
-    iFrame.tfDocumentoCorrelativo.setText("");
-    iFrame.tfDocumentoMotivo.setText("");
-    // removeAllItems
-    iFrame.cbxTipo.removeAllItems();
-    iFrame.cbxDocumentoTipo.removeAllItems();
-    DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
-    model.getDataVector().removeAllElements();
-    model.fireTableDataChanged();
-    // setSelectedIndex
-    iFrame.tabbed.setSelectedIndex(0);
-    // requestFocus
+
     iFrame.btnNuevo.requestFocus();
+  }
+
+  private void start() {
+    try {
+      iFrame.tabbed.setSelectedIndex(0);
+
+      iFrame.tfFecha.setEnabled(false);
+      iFrame.tfFecha.setText("");
+
+      iFrame.cbxTipo.setEnabled(false);
+      iFrame.cbxTipo.removeAllItems();
+      iFrame.cbxTipo.setModel(
+          new DefaultComboBoxModel<>(
+              new String[] {"Comunicacion de baja", "Resumen de reversiones"}));
+
+      iFrame.tfSerie.setEnabled(false);
+      iFrame.tfSerie.setText("");
+
+      iFrame.tfCorrelativo.setEnabled(false);
+      iFrame.tfCorrelativo.setText("");
+
+      iFrame.dpDocumentoFecha.setEnabled(false);
+      iFrame.dpDocumentoFecha.setDate(null);
+
+      iFrame.cbxDocumentoTipo.setEnabled(false);
+      iFrame.cbxDocumentoTipo.removeAllItems();
+      iFrame.cbxDocumentoTipo.setModel(
+          new DefaultComboBoxModel<>(
+              new String[] {"Factura", "Nota de crédito", "Nota de débito"}));
+
+      iFrame.tfDocumentoSerie.setEnabled(false);
+      iFrame.tfDocumentoSerie.setValue("");
+      iFrame.tfDocumentoSerie.setFormatterFactory(
+          new DefaultFormatterFactory(new MaskFormatter("FAAA")));
+
+      iFrame.tfDocumentoCorrelativo.setEnabled(false);
+      iFrame.tfDocumentoCorrelativo.setText("");
+
+      iFrame.tfDocumentoMotivo.setEnabled(true);
+      iFrame.tfDocumentoMotivo.setText("");
+
+      iFrame.btnAgregar.setEnabled(false);
+
+      iFrame.btnEliminar.setEnabled(false);
+
+      iFrame.table.setEnabled(false);
+      DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
+      model.getDataVector().removeAllElements();
+      model.fireTableDataChanged();
+
+      iFrame.btnNuevo.setEnabled(true);
+      iFrame.btnNuevo.requestFocus();
+
+      iFrame.btnGuardar.setEnabled(false);
+
+      iFrame.btnLimpiar.setEnabled(false);
+    } catch (ParseException ex) {
+      Logger.getLogger(ComunicacionBajaController.class.getName()).log(Level.SEVERE, null, ex);
+    }
   }
 
   private final DocumentListener dl =

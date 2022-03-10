@@ -4,10 +4,13 @@
  */
 package com.anthonyponte.jbillservice.view;
 
+import com.anthonyponte.jbillservice.filter.IntegerFilter;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,9 +26,13 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
 import org.jdesktop.swingx.JXDatePicker;
+import org.kordamp.ikonli.remixicon.RemixiconAL;
+import org.kordamp.ikonli.remixicon.RemixiconMZ;
+import org.kordamp.ikonli.swing.FontIcon;
 
 /**
  *
@@ -82,7 +89,7 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setTitle("Comunicacion de baja");
-        setFrameIcon(null);
+        setFrameIcon(FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode("#FFFFFF")));
         setMaximumSize(null);
         setMinimumSize(null);
 
@@ -93,24 +100,29 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         lblFecha.setFont(lblFecha.getFont().deriveFont(lblFecha.getFont().getStyle() | Font.BOLD, lblFecha.getFont().getSize()-2));
         lblFecha.setText("Fecha");
 
+        tfFecha.setEnabled(false);
         tfFecha.setMaximumSize(null);
         tfFecha.setMinimumSize(null);
         tfFecha.setPreferredSize(new Dimension(150, 30));
+        tfFecha.setEditable(false);
 
         lblTipo.setFont(lblTipo.getFont().deriveFont(lblTipo.getFont().getStyle() | Font.BOLD, lblTipo.getFont().getSize()-2));
         lblTipo.setText("Tipo");
 
+        cbxTipo.setModel(new DefaultComboBoxModel<>(new String[] { "Comunicacion de baja", "Resumen de reversiones" }));
+        cbxTipo.setEnabled(false);
         cbxTipo.setMaximumSize(null);
-        cbxTipo.setMinimumSize(null);
         cbxTipo.setPreferredSize(new Dimension(150, 30));
 
         lblCorrelativo.setFont(lblCorrelativo.getFont().deriveFont(lblCorrelativo.getFont().getStyle() | Font.BOLD, lblCorrelativo.getFont().getSize()-2));
         lblCorrelativo.setText("Correlativo");
         lblCorrelativo.setName(""); // NOI18N
 
+        tfCorrelativo.setEnabled(false);
         tfCorrelativo.setMaximumSize(null);
         tfCorrelativo.setMinimumSize(null);
         tfCorrelativo.setPreferredSize(new Dimension(150, 30));
+        tfCorrelativo.setEditable(false);
 
         lblSerie.setFont(lblSerie.getFont().deriveFont(lblSerie.getFont().getStyle() | Font.BOLD, lblSerie.getFont().getSize()-2));
         lblSerie.setText("Serie");
@@ -118,9 +130,11 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         lblSerie.setMinimumSize(null);
         lblSerie.setPreferredSize(null);
 
+        tfSerie.setEnabled(false);
         tfSerie.setMaximumSize(null);
         tfSerie.setMinimumSize(null);
         tfSerie.setPreferredSize(new Dimension(150, 30));
+        tfSerie.setEditable(false);
 
         GroupLayout pnlEncabezadoLayout = new GroupLayout(pnlEncabezado);
         pnlEncabezado.setLayout(pnlEncabezadoLayout);
@@ -159,23 +173,26 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
                 .addContainerGap())
         );
 
-        tabbed.addTab("Encabezado", null, pnlEncabezado, "");
+        tabbed.addTab("Encabezado", FontIcon.of(RemixiconAL.FILE_LIST_LINE, 16, Color.decode("#FFFFFF")), pnlEncabezado, "");
 
         pnlDetalle.setMaximumSize(null);
 
         lblDocumentoFecha.setFont(lblDocumentoFecha.getFont().deriveFont(lblDocumentoFecha.getFont().getStyle() | Font.BOLD, lblDocumentoFecha.getFont().getSize()-2));
         lblDocumentoFecha.setText("Fecha Documento");
 
+        dpDocumentoFecha.setEnabled(false);
         dpDocumentoFecha.setFormats(new SimpleDateFormat("d MMMM y"));
         dpDocumentoFecha.setMaximumSize(null);
         dpDocumentoFecha.setMinimumSize(null);
         dpDocumentoFecha.setPreferredSize(new Dimension(150, 30));
+        dpDocumentoFecha.getEditor().setEditable(false);
 
         lblDocumentoTipo.setFont(lblDocumentoTipo.getFont().deriveFont(lblDocumentoTipo.getFont().getStyle() | Font.BOLD, lblDocumentoTipo.getFont().getSize()-2));
         lblDocumentoTipo.setText("Tipo Documento");
 
+        cbxDocumentoTipo.setModel(new DefaultComboBoxModel<>(new String[] { "Factura", "Nota de crédito", "Nota de débito" }));
+        cbxDocumentoTipo.setEnabled(false);
         cbxDocumentoTipo.setMaximumSize(null);
-        cbxDocumentoTipo.setMinimumSize(null);
         cbxDocumentoTipo.setPreferredSize(new Dimension(150, 30));
 
         lblDocumentoSerie.setFont(lblDocumentoSerie.getFont().deriveFont(lblDocumentoSerie.getFont().getStyle() | Font.BOLD, lblDocumentoSerie.getFont().getSize()-2));
@@ -186,6 +203,7 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
+        tfDocumentoSerie.setEnabled(false);
         tfDocumentoSerie.setMaximumSize(null);
         tfDocumentoSerie.setMinimumSize(null);
         tfDocumentoSerie.setPreferredSize(new Dimension(150, 30));
@@ -196,16 +214,21 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         lblDocumentoMotivo.setFont(lblDocumentoMotivo.getFont().deriveFont(lblDocumentoMotivo.getFont().getStyle() | Font.BOLD, lblDocumentoMotivo.getFont().getSize()-2));
         lblDocumentoMotivo.setText("Motivo Baja");
 
+        tfDocumentoMotivo.setEnabled(false);
         tfDocumentoMotivo.setMaximumSize(null);
         tfDocumentoMotivo.setMinimumSize(null);
         tfDocumentoMotivo.setPreferredSize(new Dimension(150, 30));
 
+        btnAgregar.setIcon(FontIcon.of(RemixiconAL.INSERT_ROW_BOTTOM, 16, Color.decode("#FFFFFF")));
         btnAgregar.setText("Agregar");
+        btnAgregar.setEnabled(false);
         btnAgregar.setMinimumSize(new Dimension(150, 30));
         btnAgregar.setName(""); // NOI18N
         btnAgregar.setPreferredSize(new Dimension(150, 30));
 
+        btnEliminar.setIcon(FontIcon.of(RemixiconAL.DELETE_ROW, 16, Color.decode("#FFFFFF")));
         btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
         btnEliminar.setMinimumSize(new Dimension(150, 30));
         btnEliminar.setPreferredSize(new Dimension(150, 30));
 
@@ -230,6 +253,7 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
             }
         });
         table.setColumnSelectionAllowed(true);
+        table.setEnabled(false);
         table.setMaximumSize(null);
         table.setMinimumSize(null);
         table.setName(""); // NOI18N
@@ -244,9 +268,12 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
             table.getColumnModel().getColumn(3).setResizable(false);
         }
 
+        tfDocumentoCorrelativo.setEnabled(false);
         tfDocumentoCorrelativo.setMaximumSize(null);
         tfDocumentoCorrelativo.setMinimumSize(null);
         tfDocumentoCorrelativo.setPreferredSize(new Dimension(150, 30));
+        AbstractDocument docRuc = (AbstractDocument) tfDocumentoCorrelativo.getDocument();
+        docRuc.setDocumentFilter(new IntegerFilter(8));
 
         GroupLayout pnlDetalleLayout = new GroupLayout(pnlDetalle);
         pnlDetalle.setLayout(pnlDetalleLayout);
@@ -302,21 +329,26 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
                 .addContainerGap())
         );
 
-        tabbed.addTab("Detalle", null, pnlDetalle, "");
+        tabbed.addTab("Detalle", FontIcon.of(RemixiconAL.LIST_ORDERED, 16, Color.decode("#FFFFFF")), pnlDetalle, "");
 
         separator.setMaximumSize(null);
         separator.setMinimumSize(null);
         separator.setPreferredSize(new Dimension(5, 5));
 
+        btnNuevo.setIcon(FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode("#FFFFFF")));
         btnNuevo.setText("Nuevo");
         btnNuevo.setMinimumSize(new Dimension(150, 30));
         btnNuevo.setPreferredSize(new Dimension(150, 30));
 
+        btnGuardar.setIcon(FontIcon.of(RemixiconMZ.SAVE_LINE, 16, Color.decode("#FFFFFF")));
         btnGuardar.setText("Guardar");
+        btnGuardar.setEnabled(false);
         btnGuardar.setMinimumSize(new Dimension(150, 30));
         btnGuardar.setPreferredSize(new Dimension(150, 30));
 
+        btnLimpiar.setIcon(FontIcon.of(RemixiconAL.ERASER_LINE, 16, Color.decode("#FFFFFF")));
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.setEnabled(false);
         btnLimpiar.setMinimumSize(new Dimension(150, 30));
         btnLimpiar.setPreferredSize(new Dimension(150, 30));
 
