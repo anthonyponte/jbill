@@ -4,7 +4,6 @@
  */
 package com.anthonyponte.jbillservice.controller;
 
-import com.anthonyponte.jbillservice.filter.IntegerFilter;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.model.ComunicacionBaja;
