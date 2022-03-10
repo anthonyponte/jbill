@@ -37,7 +37,6 @@ public class MainController {
 
   public void start() {
     dialog = new LoadingDialog(frame, false);
-
     // addActionListener
     frame.menuEntrar.addActionListener(
         (ActionEvent arg0) -> {
@@ -78,7 +77,7 @@ public class MainController {
     frame.miSummary.addActionListener(
         (ActionEvent arg0) -> {
           if (isIframeClosed(summaryIFrame)) {
-            this.summaryIFrame = new SummaryIFrame();
+            summaryIFrame = new SummaryIFrame();
             frame.dpane.add(summaryIFrame);
             summaryIFrame.setLocation(centerIFrame(summaryIFrame));
             new SummaryController(summaryIFrame, dialog).start();

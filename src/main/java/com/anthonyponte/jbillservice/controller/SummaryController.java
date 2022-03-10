@@ -168,6 +168,11 @@ public class SummaryController {
                 iFrame.btnEnviar.setEnabled(true);
               }
             });
+    // getInputMap.put
+    iFrame
+        .table
+        .getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
+        .put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, KeyEvent.CTRL_DOWN_MASK), "DELETE");
     // getActionMap().put
     iFrame
         .table
@@ -325,11 +330,6 @@ public class SummaryController {
     iFrame.table.setSelectionModel(selectionModel);
 
     TableComparatorChooser.install(iFrame.table, sortedList, TableComparatorChooser.SINGLE_COLUMN);
-
-    iFrame
-        .table
-        .getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
-        .put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, KeyEvent.CTRL_DOWN_MASK), "DELETE");
     // requestFocus
     iFrame.btnEnviar.requestFocus();
     // getData

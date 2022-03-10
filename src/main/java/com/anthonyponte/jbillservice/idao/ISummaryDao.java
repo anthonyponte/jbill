@@ -83,7 +83,8 @@ public class ISummaryDao implements SummaryDao {
 
     } catch (SQLException ex) {
       Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(null,
+      JOptionPane.showMessageDialog(
+          null,
           ex.getErrorCode() + " - " + ex.getMessage(),
           ISummaryDao.class.getName(),
           JOptionPane.ERROR_MESSAGE);
@@ -124,15 +125,19 @@ public class ISummaryDao implements SummaryDao {
           }
         }
       }
+      System.out.println("com.anthonyponte.jbillservice.idao.ISummaryDao.read() " + list.size());
 
       database.disconnect();
     } catch (SQLException ex) {
       Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(null,
+      JOptionPane.showMessageDialog(
+          null,
           ex.getErrorCode() + " - " + ex.getMessage(),
           ISummaryDao.class.getName(),
           JOptionPane.ERROR_MESSAGE);
     }
+
+    System.out.println("com.anthonyponte.jbillservice.idao.ISummaryDao.read() " + list.size());
 
     return list;
   }
@@ -159,7 +164,8 @@ public class ISummaryDao implements SummaryDao {
 
     } catch (SQLException ex) {
       Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(null,
+      JOptionPane.showMessageDialog(
+          null,
           ex.getErrorCode() + " - " + ex.getMessage(),
           ISummaryDao.class.getName(),
           JOptionPane.ERROR_MESSAGE);
@@ -193,7 +199,8 @@ public class ISummaryDao implements SummaryDao {
 
     } catch (SQLException ex) {
       Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(null,
+      JOptionPane.showMessageDialog(
+          null,
           ex.getErrorCode() + " - " + ex.getMessage(),
           ISummaryDao.class.getName(),
           JOptionPane.ERROR_MESSAGE);
@@ -216,7 +223,8 @@ public class ISummaryDao implements SummaryDao {
 
     } catch (SQLException ex) {
       Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(null,
+      JOptionPane.showMessageDialog(
+          null,
           ex.getErrorCode() + " - " + ex.getMessage(),
           ISummaryDao.class.getName(),
           JOptionPane.ERROR_MESSAGE);

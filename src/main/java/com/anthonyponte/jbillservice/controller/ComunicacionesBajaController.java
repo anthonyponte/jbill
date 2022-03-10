@@ -287,9 +287,9 @@ public class ComunicacionesBajaController {
           @Override
           protected void done() {
             try {
-              List<ComunicacionBaja> list = get();
+              List<ComunicacionBaja> get = get();
               eventList.clear();
-              eventList.addAll(list);
+              eventList.addAll(get);
 
               dialog.dispose();
             } catch (InterruptedException | ExecutionException ex) {

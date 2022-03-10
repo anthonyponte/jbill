@@ -37,11 +37,11 @@ public class SummaryIFrame extends JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        separator = new JSeparator();
-        tfFiltrar = new JTextField();
-        scrllPane = new JScrollPane();
-        table = new JTable();
-        btnEnviar = new JButton();
+        separator = new javax.swing.JSeparator();
+        tfFiltrar = new javax.swing.JTextField();
+        scrllPane = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
+        btnEnviar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -49,14 +49,14 @@ public class SummaryIFrame extends JInternalFrame {
         setResizable(true);
         setTitle("Summary");
         setMaximumSize(null);
-        setMinimumSize(new Dimension(800, 600));
-        setPreferredSize(new Dimension(800, 600));
+        setMinimumSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         tfFiltrar.setMaximumSize(null);
-        tfFiltrar.setMinimumSize(new Dimension(150, 30));
-        tfFiltrar.setPreferredSize(new Dimension(150, 30));
+        tfFiltrar.setMinimumSize(new java.awt.Dimension(150, 30));
+        tfFiltrar.setPreferredSize(new java.awt.Dimension(150, 30));
 
-        table.setModel(new DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -68,34 +68,36 @@ public class SummaryIFrame extends JInternalFrame {
         scrllPane.setViewportView(table);
 
         btnEnviar.setText("Enviar");
-        btnEnviar.setMinimumSize(new Dimension(150, 30));
-        btnEnviar.setPreferredSize(new Dimension(150, 30));
+        btnEnviar.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnEnviar.setPreferredSize(new java.awt.Dimension(150, 30));
 
-        GroupLayout layout = new GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(scrllPane, GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
-                    .addComponent(tfFiltrar, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(separator, GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrllPane, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+                    .addComponent(tfFiltrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(separator, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnEnviar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnEnviar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfFiltrar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrllPane, GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
+                .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrllPane, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -104,10 +106,10 @@ public class SummaryIFrame extends JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public JButton btnEnviar;
-    public JScrollPane scrllPane;
-    public JSeparator separator;
-    public JTable table;
-    public JTextField tfFiltrar;
+    public javax.swing.JButton btnEnviar;
+    public javax.swing.JScrollPane scrllPane;
+    public javax.swing.JSeparator separator;
+    public javax.swing.JTable table;
+    public javax.swing.JTextField tfFiltrar;
     // End of variables declaration//GEN-END:variables
 }
