@@ -39,13 +39,17 @@ import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.model.Summary;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
+import com.google.common.util.concurrent.Uninterruptibles;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import javax.swing.Timer;
 
 /** @author anthony */
 public class SummaryController {
@@ -71,9 +75,6 @@ public class SummaryController {
     iFrame.btnEnviar.addActionListener(
         (var e) -> {
           int seleccionados = selectionModel.getSelected().size();
-          System.out.println(
-              "com.anthonyponte.jbillservice.controller.SummaryController.init() " + seleccionados);
-
           int input =
               JOptionPane.showOptionDialog(
                   iFrame,
@@ -96,19 +97,18 @@ public class SummaryController {
                     int enviados = 0;
                     if (!selectionModel.isSelectionEmpty()) {
                       EventList<Summary> selected = selectionModel.getSelected();
-                      for (Iterator<Summary> iterator = selected.iterator(); iterator.hasNext(); ) {
-                        Summary next = iterator.next();
-
+                      List<Summary> list = new ArrayList<>();
+                      for (Summary next : selected) {
+                        System.out.println(".doInBackground() " + next);
                         DataSource source =
                             new ByteArrayDataSource(next.getZip(), "application/zip");
                         DataHandler handler = new DataHandler(source);
 
-                        Thread.sleep(10000);
                         String ticket =
                             service.sendSummary(next.getNombreZip(), handler, next.getTipo());
 
                         if (ticket != null) {
-                          Thread.sleep(10000);
+                          Uninterruptibles.sleepUninterruptibly(10, TimeUnit.SECONDS);
                           StatusResponse response = service.getStatus(ticket);
 
                           if (response.getStatusCode().equals("0")) {
@@ -119,14 +119,13 @@ public class SummaryController {
 
                             summaryDao.update(next.getId(), next);
 
-                            selected.remove(next);
-
+                            list.add(next);
                             enviados++;
                           }
                         }
                       }
+                      eventList.removeAll(list);
                     }
-
                     return enviados;
                   }
 
@@ -201,13 +200,15 @@ public class SummaryController {
                           protected Integer doInBackground() throws Exception {
                             int eliminados = 0;
                             EventList<Summary> selected = selectionModel.getSelected();
+                            List<Summary> list = new ArrayList<>();
                             for (int i = 0; i < selected.size(); i++) {
                               Summary get = selected.get(i);
                               comunicacionBajaDao.delete(get.getId());
                               summaryDao.delete(get.getId());
-                              selected.remove(get);
+                              list.add(get);
                               eliminados++;
                             }
+                            eventList.removeAll(list);
                             return eliminados;
                           }
 
@@ -317,7 +318,6 @@ public class SummaryController {
     iFrame.show();
 
     iFrame.btnEnviar.requestFocus();
-
     start();
   }
 

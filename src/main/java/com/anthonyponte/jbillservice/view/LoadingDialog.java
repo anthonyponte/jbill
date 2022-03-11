@@ -18,7 +18,6 @@ package com.anthonyponte.jbillservice.view;
 
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.Window;
 import javax.swing.GroupLayout;
 import javax.swing.JDialog;
 import javax.swing.JProgressBar;

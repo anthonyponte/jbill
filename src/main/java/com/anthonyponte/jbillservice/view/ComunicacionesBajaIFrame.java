@@ -20,7 +20,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.JXDatePicker;
 import org.kordamp.ikonli.remixicon.RemixiconAL;
-import org.kordamp.ikonli.remixicon.RemixiconMZ;
 import org.kordamp.ikonli.swing.FontIcon;
 
 /**
@@ -59,7 +58,7 @@ public class ComunicacionesBajaIFrame extends JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Comunicaciones de baja");
-        setFrameIcon(FontIcon.of(RemixiconMZ.SEARCH_LINE, 16, Color.decode("#FFFFFF")));
+        setFrameIcon(FontIcon.of(RemixiconAL.CALENDAR_2_LINE, 16, Color.decode("#FFFFFF")));
         setMaximumSize(null);
         setMinimumSize(new Dimension(800, 600));
         setPreferredSize(new Dimension(800, 600));
@@ -154,7 +153,6 @@ public class ComunicacionesBajaIFrame extends JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public JXDatePicker dpMesAno;

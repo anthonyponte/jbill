@@ -8,7 +8,7 @@
     <Property name="resizable" type="boolean" value="true"/>
     <Property name="title" type="java.lang.String" value="Comunicaciones de baja"/>
     <Property name="frameIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-      <Connection code="FontIcon.of(RemixiconMZ.SEARCH_LINE, 16, Color.decode(&quot;#FFFFFF&quot;))" type="code"/>
+      <Connection code="FontIcon.of(RemixiconAL.CALENDAR_2_LINE, 16, Color.decode(&quot;#FFFFFF&quot;))" type="code"/>
     </Property>
     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="null"/>
