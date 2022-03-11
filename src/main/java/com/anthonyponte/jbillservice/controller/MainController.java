@@ -38,7 +38,7 @@ public class MainController {
   public void init() {
     frame.menuEntrar.addActionListener(
         (ActionEvent arg0) -> {
-          usuarioIFrame();
+          start();
         });
 
     frame.miComunicacionBaja.addActionListener(
@@ -59,7 +59,7 @@ public class MainController {
             comunicacionesBajaIFrame = new ComunicacionesBajaIFrame();
             frame.dpane.add(comunicacionesBajaIFrame);
             comunicacionesBajaIFrame.setLocation(centerIFrame(comunicacionesBajaIFrame));
-            new ComunicacionesBajaController(comunicacionesBajaIFrame, dialog).start();
+            new ComunicacionesBajaController(comunicacionesBajaIFrame, dialog).init();
           } else {
             iframeClosed(comunicacionesBajaIFrame);
           }
@@ -71,7 +71,7 @@ public class MainController {
             summaryIFrame = new SummaryIFrame();
             frame.dpane.add(summaryIFrame);
             summaryIFrame.setLocation(centerIFrame(summaryIFrame));
-            new SummaryController(summaryIFrame, dialog).start();
+            new SummaryController(summaryIFrame, dialog).init();
           } else {
             iframeClosed(summaryIFrame);
           }
@@ -95,10 +95,10 @@ public class MainController {
   private void initComponents() {
     dialog = new LoadingDialog(frame, false);
     frame.setVisible(true);
-    usuarioIFrame();
+    start();
   }
 
-  private void usuarioIFrame() {
+  private void start() {
     if (isIframeClosed(usuarioIFrame)) {
       usuarioIFrame = new UsuarioIFrame();
       frame.dpane.add(usuarioIFrame);

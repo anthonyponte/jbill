@@ -55,10 +55,10 @@ public class ComunicacionBajaController {
   public void init() {
     iFrame.cbxTipo.addActionListener(
         (ActionEvent arg0) -> {
-          dialog.setVisible(true);
-          dialog.setLocationRelativeTo(iFrame);
-
           if (iFrame.cbxTipo.getSelectedIndex() == 0) {
+            dialog.setVisible(true);
+            dialog.setLocationRelativeTo(iFrame);
+
             SwingWorker worker =
                 new SwingWorker<Void, Void>() {
                   @Override
@@ -96,6 +96,9 @@ public class ComunicacionBajaController {
                 };
             worker.execute();
           } else if (iFrame.cbxTipo.getSelectedIndex() == 1) {
+            dialog.setVisible(true);
+            dialog.setLocationRelativeTo(iFrame);
+
             SwingWorker worker =
                 new SwingWorker<Void, Void>() {
                   @Override
@@ -301,13 +304,15 @@ public class ComunicacionBajaController {
 
                     @Override
                     protected void done() {
-                      dialog.dispose();
                       JOptionPane.showMessageDialog(
                           iFrame,
                           comunicacionBaja.getNombreZip() + " guardado",
                           "Guardado",
                           JOptionPane.INFORMATION_MESSAGE);
-                      initComponents();
+
+                      dialog.dispose();
+
+                      start();
                     }
                   };
 
@@ -321,8 +326,6 @@ public class ComunicacionBajaController {
                     + preferences.get(UsuarioController.FIRMA_JKS, ""),
                 ComunicacionBajaController.class.getName(),
                 JOptionPane.ERROR_MESSAGE);
-
-            start();
           }
         });
 

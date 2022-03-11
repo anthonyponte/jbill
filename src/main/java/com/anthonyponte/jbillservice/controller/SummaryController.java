@@ -70,8 +70,7 @@ public class SummaryController {
     initComponents();
   }
 
-  public void start() {
-    // addActionListener
+  public void init() {
     iFrame.btnEnviar.addActionListener(
         (var e) -> {
           int seleccionados = selectionModel.getSelected().size();
@@ -153,7 +152,7 @@ public class SummaryController {
             worker.execute();
           }
         });
-    // addListSelectionListener
+
     iFrame
         .table
         .getSelectionModel()
@@ -165,12 +164,12 @@ public class SummaryController {
                 iFrame.btnEnviar.setEnabled(true);
               }
             });
-    // getInputMap.put
+
     iFrame
         .table
         .getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT)
         .put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, KeyEvent.CTRL_DOWN_MASK), "DELETE");
-    // getActionMap().put
+
     iFrame
         .table
         .getActionMap()
@@ -242,21 +241,6 @@ public class SummaryController {
     summaryDao = new ISummaryDao();
     comunicacionBajaDao = new IComunicacionBajaDao();
     service = new IBillService();
-    // show
-    iFrame.show();
-    // setIcon
-    iFrame.setFrameIcon(FontIcon.of(RemixiconMZ.SEND_PLANE_LINE, 16, Color.decode("#FFFFFF")));
-    iFrame.btnEnviar.setIcon(FontIcon.of(RemixiconMZ.SEND_PLANE_LINE, 16, Color.decode("#FFFFFF")));
-    iFrame.tfFiltrar.putClientProperty(
-        "JTextField.leadingIcon",
-        FontIcon.of(RemixiconAL.FILTER_LINE, 16, Color.decode("#FFFFFF")));
-    // placeholderText
-    iFrame.tfFiltrar.putClientProperty("JTextField.placeholderText", "Filtrar");
-    // showClearButton
-    iFrame.tfFiltrar.putClientProperty("JTextField.showClearButton", true);
-    // setEnabled
-    iFrame.btnEnviar.setEnabled(false);
-    // GlazedLists
     eventList = new BasicEventList<>();
     proxyList = swingThreadProxyList(eventList);
 
@@ -330,13 +314,15 @@ public class SummaryController {
     iFrame.table.setSelectionModel(selectionModel);
 
     TableComparatorChooser.install(iFrame.table, sortedList, TableComparatorChooser.SINGLE_COLUMN);
-    // requestFocus
+
+    iFrame.show();
+
     iFrame.btnEnviar.requestFocus();
-    // getData
-    getData();
+
+    start();
   }
 
-  private void getData() {
+  private void start() {
     dialog.setVisible(true);
     dialog.setLocationRelativeTo(iFrame);
 
@@ -351,11 +337,11 @@ public class SummaryController {
           @Override
           protected void done() {
             try {
+              dialog.dispose();
+
               List<Summary> get = get();
               proxyList.clear();
               proxyList.addAll(get);
-
-              dialog.dispose();
             } catch (InterruptedException | ExecutionException ex) {
               Logger.getLogger(SummaryController.class.getName()).log(Level.SEVERE, null, ex);
             }

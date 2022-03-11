@@ -80,14 +80,12 @@ public class UsuarioIFrame extends JInternalFrame {
         btnFirmaJks.setMaximumSize(new Dimension(30, 30));
         btnFirmaJks.setMinimumSize(new Dimension(30, 30));
         btnFirmaJks.setPreferredSize(new Dimension(30, 30));
-        btnFirmaJks.putClientProperty("JButton.buttonType", "square");
 
         tfFirmaJks.setMaximumSize(null);
         tfFirmaJks.setMinimumSize(null);
         tfFirmaJks.setName(""); // NOI18N
         tfFirmaJks.setPreferredSize(new Dimension(300, 30));
         tfFirmaJks.setEditable(false);
-        tfFirmaJks.putClientProperty("JTextField.trailingComponent", btnFirmaJks);
 
         lblFirmaUsuario.setFont(lblFirmaUsuario.getFont().deriveFont(lblFirmaUsuario.getFont().getStyle() | Font.BOLD, lblFirmaUsuario.getFont().getSize()-2));
         lblFirmaUsuario.setText("Usuario");

@@ -7,8 +7,8 @@
     <Property name="maximizable" type="boolean" value="true"/>
     <Property name="resizable" type="boolean" value="true"/>
     <Property name="title" type="java.lang.String" value="Comunicaciones de baja"/>
-    <Property name="frameIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-      <Image iconType="0" name="null"/>
+    <Property name="frameIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+      <Connection code="FontIcon.of(RemixiconMZ.SEARCH_LINE, 16, Color.decode(&quot;#FFFFFF&quot;))" type="code"/>
     </Property>
     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="null"/>
@@ -89,6 +89,9 @@
           <Dimension value="[150, 30]"/>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="dpMesAno.getEditor().setEditable(false);"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JSeparator" name="separator">
     </Component>
@@ -102,6 +105,7 @@
         </Property>
       </Properties>
       <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tfFiltrar.putClientProperty(&quot;JTextField.leadingIcon&quot;, FontIcon.of(RemixiconAL.FILTER_LINE, 16, Color.decode(&quot;#FFFFFF&quot;)));&#xa;tfFiltrar.putClientProperty(&quot;JTextField.placeholderText&quot;, &quot;Filtrar&quot;);&#xa;tfFiltrar.putClientProperty(&quot;JTextField.showClearButton&quot;, true);"/>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>
     </Component>

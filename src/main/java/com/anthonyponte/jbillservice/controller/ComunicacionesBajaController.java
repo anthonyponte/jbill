@@ -42,10 +42,6 @@ import javax.swing.table.DefaultTableModel;
 import org.joda.time.DateTime;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
-import java.awt.Color;
-import org.kordamp.ikonli.remixicon.RemixiconAL;
-import org.kordamp.ikonli.remixicon.RemixiconMZ;
-import org.kordamp.ikonli.swing.FontIcon;
 
 /** @author AnthonyPonte */
 public class ComunicacionesBajaController {
@@ -64,14 +60,13 @@ public class ComunicacionesBajaController {
     initComponents();
   }
 
-  public void start() {
-    // addActionListener
+  public void init() {
     iFrame.dpMesAno.addActionListener(
         (ActionEvent e) -> {
           Date date = iFrame.dpMesAno.getDate();
-          getData(date);
+          start(date);
         });
-    // addMouseListener
+
     iFrame.tblEncabezado.addMouseListener(
         new MouseAdapter() {
           @Override
@@ -128,6 +123,8 @@ public class ComunicacionesBajaController {
                       @Override
                       protected void done() {
                         try {
+                          dialog.dispose();
+
                           DefaultTableModel model =
                               (DefaultTableModel) iFrame.tblDetalle.getModel();
 
@@ -146,8 +143,6 @@ public class ComunicacionesBajaController {
                             row = new Object[] {tipo, serie, correlativo, motivo};
                           }
                           model.addRow(row);
-
-                          dialog.dispose();
                         } catch (InterruptedException | ExecutionException ex) {
                           Logger.getLogger(ComunicacionesBajaController.class.getName())
                               .log(Level.SEVERE, null, ex);
@@ -164,20 +159,6 @@ public class ComunicacionesBajaController {
 
   private void initComponents() {
     dao = new IComunicacionBajaDao();
-    // show
-    iFrame.show();
-    // setIcon
-    iFrame.setFrameIcon(FontIcon.of(RemixiconMZ.SEARCH_LINE, 16, Color.decode("#FFFFFF")));
-    iFrame.tfFiltrar.putClientProperty(
-        "JTextField.leadingIcon",
-        FontIcon.of(RemixiconAL.FILTER_LINE, 16, Color.decode("#FFFFFF")));
-    // placeholderText
-    iFrame.tfFiltrar.putClientProperty("JTextField.placeholderText", "Filtrar");
-    // showClearButton
-    iFrame.tfFiltrar.putClientProperty("JTextField.showClearButton", true);
-    // setEditable
-    iFrame.dpMesAno.getEditor().setEditable(false);
-    // GlazedLists
     eventList = new BasicEventList<>();
 
     Comparator comparator =
@@ -194,7 +175,7 @@ public class ComunicacionesBajaController {
         };
 
     MatcherEditor<ComunicacionBaja> matcherEditor =
-        new TextComponentMatcherEditor<>(this.iFrame.tfFiltrar, filterator);
+        new TextComponentMatcherEditor<>(iFrame.tfFiltrar, filterator);
 
     FilterList<ComunicacionBaja> filterList = new FilterList<>(sortedList, matcherEditor);
 
@@ -264,14 +245,16 @@ public class ComunicacionesBajaController {
 
     TableComparatorChooser.install(
         iFrame.tblEncabezado, sortedList, TableComparatorChooser.SINGLE_COLUMN);
-    // requestFocus
+
+    iFrame.show();
+
     iFrame.dpMesAno.requestFocus();
-    // getData
+
     Date date = iFrame.dpMesAno.getDate();
-    getData(date);
+    start(date);
   }
 
-  private void getData(Date date) {
+  private void start(Date date) {
     dialog.setVisible(true);
     dialog.setLocationRelativeTo(iFrame);
 
@@ -287,11 +270,11 @@ public class ComunicacionesBajaController {
           @Override
           protected void done() {
             try {
+              dialog.dispose();
+
               List<ComunicacionBaja> get = get();
               eventList.clear();
               eventList.addAll(get);
-
-              dialog.dispose();
             } catch (InterruptedException | ExecutionException ex) {
               Logger.getLogger(ComunicacionesBajaController.class.getName())
                   .log(Level.SEVERE, null, ex);
