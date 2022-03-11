@@ -313,13 +313,13 @@ public class ComunicacionBajaController {
 
                     @Override
                     protected void done() {
+                      dialog.dispose();
+
                       JOptionPane.showMessageDialog(
                           iFrame,
                           comunicacionBaja.getNombreZip() + " guardado",
                           "Guardado",
                           JOptionPane.INFORMATION_MESSAGE);
-
-                      dialog.dispose();
 
                       start();
                     }
