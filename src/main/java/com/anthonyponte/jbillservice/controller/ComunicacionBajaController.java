@@ -35,6 +35,7 @@ import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
+import javax.swing.text.BadLocationException;
 
 /** @author anthony */
 public class ComunicacionBajaController {
@@ -145,19 +146,27 @@ public class ComunicacionBajaController {
 
     iFrame.btnAgregar.addActionListener(
         (arg0) -> {
-          String tipo = iFrame.cbxDocumentoTipo.getSelectedItem().toString();
-          String serie = iFrame.tfDocumentoSerie.getText();
-          int numero = Integer.parseInt(iFrame.tfDocumentoCorrelativo.getText());
-          String motivo = iFrame.tfDocumentoMotivo.getText();
+          try {
+            String tipo = iFrame.cbxDocumentoTipo.getSelectedItem().toString();
+            String serie = iFrame.tfDocumentoSerie.getText();
+            int numero = Integer.parseInt(iFrame.tfDocumentoCorrelativo.getText());
+            String motivo = iFrame.tfDocumentoMotivo.getText();
 
-          DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
-          model.addRow(new Object[] {tipo, serie, numero, motivo});
+            DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
+            model.addRow(new Object[] {tipo, serie, numero, motivo});
 
-          iFrame.tfDocumentoSerie.setText("");
-          iFrame.tfDocumentoCorrelativo.setText("");
-          iFrame.tfDocumentoMotivo.setText("");
+            iFrame.tfDocumentoSerie.setText("");
+            iFrame
+                .tfDocumentoCorrelativo
+                .getDocument()
+                .remove(0, iFrame.tfDocumentoCorrelativo.getText().length());
+            iFrame.tfDocumentoMotivo.setText("");
 
-          iFrame.btnGuardar.setEnabled(true);
+            iFrame.btnGuardar.setEnabled(true);
+          } catch (BadLocationException ex) {
+            Logger.getLogger(ComunicacionBajaController.class.getName())
+                .log(Level.SEVERE, null, ex);
+          }
         });
 
     iFrame.btnEliminar.addActionListener(
@@ -396,7 +405,10 @@ public class ComunicacionBajaController {
           new DefaultFormatterFactory(new MaskFormatter("FAAA")));
 
       iFrame.tfDocumentoCorrelativo.setEnabled(false);
-      iFrame.tfDocumentoCorrelativo.setText("");
+      iFrame
+          .tfDocumentoCorrelativo
+          .getDocument()
+          .remove(0, iFrame.tfDocumentoCorrelativo.getText().length());
 
       iFrame.tfDocumentoMotivo.setEnabled(false);
       iFrame.tfDocumentoMotivo.setText("");
@@ -416,7 +428,7 @@ public class ComunicacionBajaController {
       iFrame.btnGuardar.setEnabled(false);
 
       iFrame.btnLimpiar.setEnabled(false);
-    } catch (ParseException ex) {
+    } catch (ParseException | BadLocationException ex) {
       Logger.getLogger(ComunicacionBajaController.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
