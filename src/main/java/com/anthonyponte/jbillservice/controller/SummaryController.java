@@ -39,16 +39,13 @@ import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.model.Summary;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.Iterator;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-import org.kordamp.ikonli.remixicon.RemixiconAL;
-import org.kordamp.ikonli.remixicon.RemixiconMZ;
-import org.kordamp.ikonli.swing.FontIcon;
 
 /** @author anthony */
 public class SummaryController {
@@ -74,6 +71,8 @@ public class SummaryController {
     iFrame.btnEnviar.addActionListener(
         (var e) -> {
           int seleccionados = selectionModel.getSelected().size();
+          System.out.println(
+              "com.anthonyponte.jbillservice.controller.SummaryController.init() " + seleccionados);
 
           int input =
               JOptionPane.showOptionDialog(
@@ -97,30 +96,30 @@ public class SummaryController {
                     int enviados = 0;
                     if (!selectionModel.isSelectionEmpty()) {
                       EventList<Summary> selected = selectionModel.getSelected();
+                      for (Iterator<Summary> iterator = selected.iterator(); iterator.hasNext(); ) {
+                        Summary next = iterator.next();
 
-                      for (int i = 0; i < selected.size(); i++) {
-                        Summary get = selected.get(i);
                         DataSource source =
-                            new ByteArrayDataSource(get.getZip(), "application/zip");
+                            new ByteArrayDataSource(next.getZip(), "application/zip");
                         DataHandler handler = new DataHandler(source);
 
                         Thread.sleep(10000);
                         String ticket =
-                            service.sendSummary(get.getNombreZip(), handler, get.getTipo());
+                            service.sendSummary(next.getNombreZip(), handler, next.getTipo());
 
                         if (ticket != null) {
                           Thread.sleep(10000);
                           StatusResponse response = service.getStatus(ticket);
 
                           if (response.getStatusCode().equals("0")) {
-                            get.setTicket(ticket);
-                            get.setStatusCode(response.getStatusCode());
-                            get.setNombreContent("R-" + get.getNombreZip());
-                            get.setContent(response.getContent());
+                            next.setTicket(ticket);
+                            next.setStatusCode(response.getStatusCode());
+                            next.setNombreContent("R-" + next.getNombreZip());
+                            next.setContent(response.getContent());
 
-                            summaryDao.update(get.getId(), get);
+                            summaryDao.update(next.getId(), next);
 
-                            selected.remove(get);
+                            selected.remove(next);
 
                             enviados++;
                           }

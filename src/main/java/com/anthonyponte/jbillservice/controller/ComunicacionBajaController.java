@@ -398,7 +398,7 @@ public class ComunicacionBajaController {
       iFrame.tfDocumentoCorrelativo.setEnabled(false);
       iFrame.tfDocumentoCorrelativo.setText("");
 
-      iFrame.tfDocumentoMotivo.setEnabled(true);
+      iFrame.tfDocumentoMotivo.setEnabled(false);
       iFrame.tfDocumentoMotivo.setText("");
 
       iFrame.btnAgregar.setEnabled(false);
