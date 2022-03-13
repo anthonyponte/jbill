@@ -23,7 +23,7 @@ public class IntegerFilter extends DocumentFilter {
   @Override
   public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
       throws BadLocationException {
-    if (fb.getDocument().getLength() + string.length() < maxLength + 1) {
+    if (fb.getDocument().getLength() + string.length() <= maxLength) {
       if (regexCheck.matcher(string).matches()) {
         super.insertString(fb, offset, string, attr);
       }
@@ -34,7 +34,7 @@ public class IntegerFilter extends DocumentFilter {
   public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
       throws BadLocationException {
     int documentLength = fb.getDocument().getLength();
-    if (documentLength - length + text.length() < maxLength + 1) {
+    if (documentLength - length + text.length() <= maxLength) {
       if (regexCheck.matcher(text).matches()) {
         super.replace(fb, offset, length, text.toUpperCase(), attrs);
       }

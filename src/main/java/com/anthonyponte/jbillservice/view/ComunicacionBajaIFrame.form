@@ -44,7 +44,7 @@
                       <Component id="btnLimpiar" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="separator" alignment="1" max="32767" attributes="0"/>
-                  <Component id="tabbed" alignment="0" max="32767" attributes="0"/>
+                  <Component id="tabbed" alignment="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -306,24 +306,33 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnAgregar" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="btnAgregar" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="lblDocumentoMotivo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDocumentoNumero" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDocumentoSerie" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDocumentoTipo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDocumentoFecha" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="lblDocumentoMotivo" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblDocumentoNumero" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblDocumentoSerie" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblDocumentoTipo" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblDocumentoFecha" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="spane" alignment="1" max="32767" attributes="0"/>
-                          <Component id="tfDocumentoSerie" alignment="0" max="32767" attributes="0"/>
-                          <Component id="cbxDocumentoTipo" alignment="0" max="32767" attributes="0"/>
-                          <Component id="dpDocumentoFecha" alignment="0" max="32767" attributes="0"/>
-                          <Component id="tfDocumentoMotivo" alignment="1" pref="0" max="32767" attributes="0"/>
-                          <Component id="tfDocumentoCorrelativo" alignment="1" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="spane" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="cbxDocumentoTipo" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="dpDocumentoFecha" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="tfDocumentoMotivo" alignment="1" pref="0" max="32767" attributes="0"/>
+                                  <Component id="tfDocumentoCorrelativo" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="tfDocumentoSerie" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -356,7 +365,7 @@
                           <Component id="btnAgregar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="spane" pref="116" max="32767" attributes="0"/>
+                      <Component id="spane" pref="104" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -434,26 +443,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Serie Documento"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JFormattedTextField" name="tfDocumentoSerie">
-              <Properties>
-                <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-                  <Format format="FAAA" subtype="-1" type="5"/>
-                </Property>
-                <Property name="enabled" type="boolean" value="false"/>
-                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="null"/>
-                </Property>
-                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="null"/>
-                </Property>
-                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                  <Dimension value="[150, 30]"/>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="lblDocumentoNumero">
               <Properties>
@@ -618,6 +607,23 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="AbstractDocument docRuc = (AbstractDocument) tfDocumentoCorrelativo.getDocument();&#xa;docRuc.setDocumentFilter(new IntegerFilter(8));"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JTextField" name="tfDocumentoSerie">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="null"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="null"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 30]"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="AbstractDocument docSerie = (AbstractDocument) tfDocumentoSerie.getDocument();&#xa;docSerie.setDocumentFilter(new SerieFilter());"/>
               </AuxValues>
             </Component>
           </SubComponents>

@@ -5,16 +5,15 @@
 package com.anthonyponte.jbillservice.view;
 
 import com.anthonyponte.jbillservice.filter.IntegerFilter;
+import com.anthonyponte.jbillservice.filter.SerieFilter;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,8 +26,6 @@ import javax.swing.LayoutStyle;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AbstractDocument;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
 import org.jdesktop.swingx.JXDatePicker;
 import org.kordamp.ikonli.remixicon.RemixiconAL;
 import org.kordamp.ikonli.remixicon.RemixiconMZ;
@@ -72,7 +69,6 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         lblDocumentoTipo = new JLabel();
         cbxDocumentoTipo = new JComboBox<>();
         lblDocumentoSerie = new JLabel();
-        tfDocumentoSerie = new JFormattedTextField();
         lblDocumentoNumero = new JLabel();
         lblDocumentoMotivo = new JLabel();
         tfDocumentoMotivo = new JTextField();
@@ -81,6 +77,7 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         spane = new JScrollPane();
         table = new JTable();
         tfDocumentoCorrelativo = new JTextField();
+        tfDocumentoSerie = new JTextField();
         separator = new JSeparator();
         btnNuevo = new JButton();
         btnGuardar = new JButton();
@@ -198,16 +195,6 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         lblDocumentoSerie.setFont(lblDocumentoSerie.getFont().deriveFont(lblDocumentoSerie.getFont().getStyle() | Font.BOLD, lblDocumentoSerie.getFont().getSize()-2));
         lblDocumentoSerie.setText("Serie Documento");
 
-        try {
-            tfDocumentoSerie.setFormatterFactory(new DefaultFormatterFactory(new MaskFormatter("FAAA")));
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
-        tfDocumentoSerie.setEnabled(false);
-        tfDocumentoSerie.setMaximumSize(null);
-        tfDocumentoSerie.setMinimumSize(null);
-        tfDocumentoSerie.setPreferredSize(new Dimension(150, 30));
-
         lblDocumentoNumero.setFont(lblDocumentoNumero.getFont().deriveFont(lblDocumentoNumero.getFont().getStyle() | Font.BOLD, lblDocumentoNumero.getFont().getSize()-2));
         lblDocumentoNumero.setText("Correlativo Documento");
 
@@ -275,6 +262,13 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         AbstractDocument docRuc = (AbstractDocument) tfDocumentoCorrelativo.getDocument();
         docRuc.setDocumentFilter(new IntegerFilter(8));
 
+        tfDocumentoSerie.setEnabled(false);
+        tfDocumentoSerie.setMaximumSize(null);
+        tfDocumentoSerie.setMinimumSize(null);
+        tfDocumentoSerie.setPreferredSize(new Dimension(150, 30));
+        AbstractDocument docSerie = (AbstractDocument) tfDocumentoSerie.getDocument();
+        docSerie.setDocumentFilter(new SerieFilter());
+
         GroupLayout pnlDetalleLayout = new GroupLayout(pnlDetalle);
         pnlDetalle.setLayout(pnlDetalleLayout);
         pnlDetalleLayout.setHorizontalGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -282,21 +276,26 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
                 .addContainerGap()
                 .addGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDetalleLayout.createSequentialGroup()
-                        .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblDocumentoMotivo)
-                    .addComponent(lblDocumentoNumero)
-                    .addComponent(lblDocumentoSerie)
-                    .addComponent(lblDocumentoTipo)
-                    .addComponent(lblDocumentoFecha)
-                    .addComponent(spane, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfDocumentoSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbxDocumentoTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(dpDocumentoFecha, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfDocumentoMotivo, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(tfDocumentoCorrelativo, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlDetalleLayout.createSequentialGroup()
+                                .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblDocumentoMotivo)
+                            .addComponent(lblDocumentoNumero)
+                            .addComponent(lblDocumentoSerie)
+                            .addComponent(lblDocumentoTipo)
+                            .addComponent(lblDocumentoFecha))
+                        .addGap(150, 150, 150))
+                    .addGroup(pnlDetalleLayout.createSequentialGroup()
+                        .addGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(spane, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxDocumentoTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(dpDocumentoFecha, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfDocumentoMotivo, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(tfDocumentoCorrelativo, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfDocumentoSerie, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         pnlDetalleLayout.setVerticalGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetalleLayout.createSequentialGroup()
@@ -325,7 +324,7 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
                     .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spane, GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                .addComponent(spane, GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -365,7 +364,7 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLimpiar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addComponent(separator, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tabbed, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tabbed, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -412,7 +411,7 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
     public JTextField tfCorrelativo;
     public JTextField tfDocumentoCorrelativo;
     public JTextField tfDocumentoMotivo;
-    public JFormattedTextField tfDocumentoSerie;
+    public JTextField tfDocumentoSerie;
     public JTextField tfFecha;
     public JTextField tfSerie;
     // End of variables declaration//GEN-END:variables

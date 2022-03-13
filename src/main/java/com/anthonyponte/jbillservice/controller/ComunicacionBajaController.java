@@ -72,27 +72,23 @@ public class ComunicacionBajaController {
 
                   @Override
                   protected void done() {
-                    try {
-                      dialog.dispose();
+                    dialog.dispose();
 
-                      iFrame.tabbed.setSelectedIndex(1);
+                    iFrame.tabbed.setSelectedIndex(1);
 
-                      iFrame.tfCorrelativo.setText(
-                          String.valueOf(comunicacionBaja.getCorrelativo()));
+                    iFrame.tfCorrelativo.setText(String.valueOf(comunicacionBaja.getCorrelativo()));
 
-                      iFrame.cbxDocumentoTipo.setModel(
-                          new DefaultComboBoxModel<>(
-                              new String[] {"Factura", "Nota de crédito", "Nota de débito"}));
-                      iFrame.cbxDocumentoTipo.setEnabled(true);
-                      iFrame.cbxDocumentoTipo.requestFocus();
+                    iFrame.cbxDocumentoTipo.setModel(
+                        new DefaultComboBoxModel<>(
+                            new String[] {"Factura", "Nota de crédito", "Nota de débito"}));
+                    iFrame.cbxDocumentoTipo.setEnabled(true);
+                    iFrame.cbxDocumentoTipo.requestFocus();
 
-                      iFrame.tfDocumentoSerie.setValue("");
-                      iFrame.tfDocumentoSerie.setFormatterFactory(
-                          new DefaultFormatterFactory(new MaskFormatter("FAAA")));
-                    } catch (ParseException ex) {
-                      Logger.getLogger(ComunicacionBajaController.class.getName())
-                          .log(Level.SEVERE, null, ex);
-                    }
+                    //                      iFrame.tfDocumentoSerie.setValue("");
+                    //                      iFrame.tfDocumentoSerie.setFormatterFactory(
+                    //                          new DefaultFormatterFactory(new
+                    // MaskFormatter("FAAA")));
+
                   }
                 };
             worker.execute();
@@ -112,26 +108,21 @@ public class ComunicacionBajaController {
 
                   @Override
                   protected void done() {
-                    try {
-                      dialog.dispose();
+                    dialog.dispose();
 
-                      iFrame.tabbed.setSelectedIndex(1);
+                    iFrame.tabbed.setSelectedIndex(1);
 
-                      iFrame.tfCorrelativo.setText(
-                          String.valueOf(comunicacionBaja.getCorrelativo()));
+                    iFrame.tfCorrelativo.setText(String.valueOf(comunicacionBaja.getCorrelativo()));
 
-                      iFrame.cbxDocumentoTipo.setModel(
-                          new DefaultComboBoxModel<>(new String[] {"Comprobante de retención"}));
-                      iFrame.cbxDocumentoTipo.setEnabled(false);
+                    iFrame.cbxDocumentoTipo.setModel(
+                        new DefaultComboBoxModel<>(new String[] {"Comprobante de retención"}));
+                    iFrame.cbxDocumentoTipo.setEnabled(false);
 
-                      iFrame.tfDocumentoSerie.setValue("");
-                      iFrame.tfDocumentoSerie.setFormatterFactory(
-                          new DefaultFormatterFactory(new MaskFormatter("RAAA")));
-                      iFrame.tfDocumentoSerie.requestFocus();
-                    } catch (ParseException ex) {
-                      Logger.getLogger(ComunicacionBajaController.class.getName())
-                          .log(Level.SEVERE, null, ex);
-                    }
+                    //                      iFrame.tfDocumentoSerie.setValue("");
+                    //                      iFrame.tfDocumentoSerie.setFormatterFactory(
+                    //                          new DefaultFormatterFactory(new
+                    // MaskFormatter("RAAA")));
+                    iFrame.tfDocumentoSerie.requestFocus();
                   }
                 };
             worker.execute();
@@ -400,9 +391,9 @@ public class ComunicacionBajaController {
               new String[] {"Factura", "Nota de crédito", "Nota de débito"}));
 
       iFrame.tfDocumentoSerie.setEnabled(false);
-      iFrame.tfDocumentoSerie.setValue("");
-      iFrame.tfDocumentoSerie.setFormatterFactory(
-          new DefaultFormatterFactory(new MaskFormatter("FAAA")));
+      //      iFrame.tfDocumentoSerie.setValue("");
+      //      iFrame.tfDocumentoSerie.setFormatterFactory(
+      //          new DefaultFormatterFactory(new MaskFormatter("FAAA")));
 
       iFrame.tfDocumentoCorrelativo.setEnabled(false);
       iFrame
@@ -428,7 +419,7 @@ public class ComunicacionBajaController {
       iFrame.btnGuardar.setEnabled(false);
 
       iFrame.btnLimpiar.setEnabled(false);
-    } catch (ParseException | BadLocationException ex) {
+    } catch (BadLocationException ex) {
       Logger.getLogger(ComunicacionBajaController.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
