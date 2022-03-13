@@ -143,7 +143,11 @@ public class ISummaryDao implements SummaryDao {
     try {
       database.connect();
 
-      String query = "SELECT COUNT(*) FROM SUMMARY WHERE TIPO = ? AND FECHA_EMISION = ?";
+      String query =
+          "SELECT TOP 1 CORRELATIVO "
+              + "FROM SUMMARY "
+              + "WHERE TIPO = ? AND FECHA_EMISION = ? "
+              + "ORDER BY CORRELATIVO DESC";
 
       try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
         ps.setString(1, summary.getTipo());

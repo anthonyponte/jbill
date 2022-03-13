@@ -43,13 +43,11 @@ import com.google.common.util.concurrent.Uninterruptibles;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-import javax.swing.Timer;
 
 /** @author anthony */
 public class SummaryController {
@@ -99,7 +97,6 @@ public class SummaryController {
                       EventList<Summary> selected = selectionModel.getSelected();
                       List<Summary> list = new ArrayList<>();
                       for (Summary next : selected) {
-                        System.out.println(".doInBackground() " + next);
                         DataSource source =
                             new ByteArrayDataSource(next.getZip(), "application/zip");
                         DataHandler handler = new DataHandler(source);
@@ -146,7 +143,6 @@ public class SummaryController {
                     }
                   }
                 };
-
             worker.execute();
           }
         });
@@ -229,7 +225,6 @@ public class SummaryController {
                             }
                           }
                         };
-
                     worker.execute();
                   }
                 }
