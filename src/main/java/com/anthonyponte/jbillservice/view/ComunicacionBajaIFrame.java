@@ -107,6 +107,7 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         lblTipo.setText("Tipo");
 
         cbxTipo.setModel(new DefaultComboBoxModel<>(new String[] { "Comunicacion de baja", "Resumen de reversiones" }));
+        cbxTipo.setSelectedIndex(-1);
         cbxTipo.setEnabled(false);
         cbxTipo.setMaximumSize(null);
         cbxTipo.setPreferredSize(new Dimension(150, 30));
@@ -188,6 +189,7 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         lblDocumentoTipo.setText("Tipo Documento");
 
         cbxDocumentoTipo.setModel(new DefaultComboBoxModel<>(new String[] { "Factura", "Nota de crédito", "Nota de débito" }));
+        cbxDocumentoTipo.setSelectedIndex(-1);
         cbxDocumentoTipo.setEnabled(false);
         cbxDocumentoTipo.setMaximumSize(null);
         cbxDocumentoTipo.setPreferredSize(new Dimension(150, 30));
@@ -267,7 +269,7 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         tfDocumentoSerie.setMinimumSize(null);
         tfDocumentoSerie.setPreferredSize(new Dimension(150, 30));
         AbstractDocument docSerie = (AbstractDocument) tfDocumentoSerie.getDocument();
-        docSerie.setDocumentFilter(new SerieFilter());
+        docSerie.setDocumentFilter(new SerieFilter('F'));
 
         GroupLayout pnlDetalleLayout = new GroupLayout(pnlDetalle);
         pnlDetalle.setLayout(pnlDetalleLayout);

@@ -195,6 +195,7 @@
                     <StringItem index="1" value="Resumen de reversiones"/>
                   </StringArray>
                 </Property>
+                <Property name="selectedIndex" type="int" value="-1"/>
                 <Property name="enabled" type="boolean" value="false"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="null"/>
@@ -421,6 +422,7 @@
                     <StringItem index="2" value="Nota de d&#xe9;bito"/>
                   </StringArray>
                 </Property>
+                <Property name="selectedIndex" type="int" value="-1"/>
                 <Property name="enabled" type="boolean" value="false"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="null"/>
@@ -623,7 +625,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="AbstractDocument docSerie = (AbstractDocument) tfDocumentoSerie.getDocument();&#xa;docSerie.setDocumentFilter(new SerieFilter());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="AbstractDocument docSerie = (AbstractDocument) tfDocumentoSerie.getDocument();&#xa;docSerie.setDocumentFilter(new SerieFilter(&apos;F&apos;));"/>
               </AuxValues>
             </Component>
           </SubComponents>

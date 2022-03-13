@@ -26,12 +26,22 @@ import javax.swing.text.DocumentFilter;
 public class SerieFilter extends DocumentFilter {
   private final Pattern regexCheck = Pattern.compile("[A-Za-z0-9]+");
 
+  private char serie;
+
+  public SerieFilter(char serie) {
+    this.serie = serie;
+  }
+
+  public void setSerie(char serie) {
+    this.serie = serie;
+  }
+
   @Override
   public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
       throws BadLocationException {
     if (fb.getDocument().getLength() + string.length() <= 4) {
       if (regexCheck.matcher(string).matches()) {
-        super.insertString(fb, offset, string.toUpperCase(), attr);
+        super.insertString(fb, offset, serie + string.toUpperCase(), attr);
       }
     }
   }
@@ -42,7 +52,7 @@ public class SerieFilter extends DocumentFilter {
     int documentLength = fb.getDocument().getLength();
     if (documentLength - length + text.length() <= 4) {
       if (regexCheck.matcher(text).matches()) {
-        super.replace(fb, offset, length, text.toUpperCase(), attrs);
+        super.replace(fb, offset, length, serie + text.toUpperCase(), attrs);
       }
     }
   }

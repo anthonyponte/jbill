@@ -11,7 +11,6 @@ import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
 import com.anthonyponte.jbillservice.model.Documento;
 import com.anthonyponte.jbillservice.view.ComunicacionBajaIFrame;
 import java.awt.event.ActionEvent;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,8 +22,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
 import com.anthonyponte.jbillservice.maindoc.VoidedDocuments;
 import com.anthonyponte.jbillservice.model.Empresa;
 import java.io.File;
@@ -34,7 +31,10 @@ import javax.swing.SwingWorker;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
+import com.anthonyponte.jbillservice.filter.SerieFilter;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
+import java.awt.event.ItemEvent;
+import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 
 /** @author anthony */
@@ -54,9 +54,9 @@ public class ComunicacionBajaController {
   }
 
   public void init() {
-    iFrame.cbxTipo.addActionListener(
-        (ActionEvent arg0) -> {
-          if (iFrame.cbxTipo.getSelectedIndex() == 0) {
+    iFrame.cbxTipo.addItemListener(
+        (ItemEvent ie) -> {
+          if (ie.getStateChange() == ItemEvent.SELECTED) {
             dialog.setVisible(true);
             dialog.setLocationRelativeTo(iFrame);
 
@@ -64,7 +64,9 @@ public class ComunicacionBajaController {
                 new SwingWorker<Void, Void>() {
                   @Override
                   protected Void doInBackground() throws Exception {
-                    comunicacionBaja.setTipo("RA");
+                    if (iFrame.cbxTipo.getSelectedIndex() == 0) comunicacionBaja.setTipo("RA");
+                    else if (iFrame.cbxTipo.getSelectedIndex() == 1) comunicacionBaja.setTipo("RR");
+
                     int count = summaryDao.read(comunicacionBaja);
                     comunicacionBaja.setCorrelativo(count + 1);
                     return null;
@@ -74,55 +76,27 @@ public class ComunicacionBajaController {
                   protected void done() {
                     dialog.dispose();
 
-                    iFrame.tabbed.setSelectedIndex(1);
-
                     iFrame.tfCorrelativo.setText(String.valueOf(comunicacionBaja.getCorrelativo()));
+                    if (iFrame.cbxTipo.getSelectedIndex() == 0) {
+                      iFrame.cbxDocumentoTipo.setModel(
+                          new DefaultComboBoxModel<>(
+                              new String[] {"Factura", "Nota de crédito", "Nota de débito"}));
+                      iFrame.cbxDocumentoTipo.setEnabled(true);
 
-                    iFrame.cbxDocumentoTipo.setModel(
-                        new DefaultComboBoxModel<>(
-                            new String[] {"Factura", "Nota de crédito", "Nota de débito"}));
-                    iFrame.cbxDocumentoTipo.setEnabled(true);
-                    iFrame.cbxDocumentoTipo.requestFocus();
+                      AbstractDocument document =
+                          (AbstractDocument) iFrame.tfDocumentoSerie.getDocument();
+                      SerieFilter filter = (SerieFilter) document.getDocumentFilter();
+                      filter.setSerie('F');
+                    } else if (iFrame.cbxTipo.getSelectedIndex() == 1) {
+                      iFrame.cbxDocumentoTipo.setModel(
+                          new DefaultComboBoxModel<>(new String[] {"Comprobante de retención"}));
+                      iFrame.cbxDocumentoTipo.setEnabled(false);
 
-                    //                      iFrame.tfDocumentoSerie.setValue("");
-                    //                      iFrame.tfDocumentoSerie.setFormatterFactory(
-                    //                          new DefaultFormatterFactory(new
-                    // MaskFormatter("FAAA")));
-
-                  }
-                };
-            worker.execute();
-          } else if (iFrame.cbxTipo.getSelectedIndex() == 1) {
-            dialog.setVisible(true);
-            dialog.setLocationRelativeTo(iFrame);
-
-            SwingWorker worker =
-                new SwingWorker<Void, Void>() {
-                  @Override
-                  protected Void doInBackground() throws Exception {
-                    comunicacionBaja.setTipo("RR");
-                    int count = summaryDao.read(comunicacionBaja);
-                    comunicacionBaja.setCorrelativo(count + 1);
-                    return null;
-                  }
-
-                  @Override
-                  protected void done() {
-                    dialog.dispose();
-
-                    iFrame.tabbed.setSelectedIndex(1);
-
-                    iFrame.tfCorrelativo.setText(String.valueOf(comunicacionBaja.getCorrelativo()));
-
-                    iFrame.cbxDocumentoTipo.setModel(
-                        new DefaultComboBoxModel<>(new String[] {"Comprobante de retención"}));
-                    iFrame.cbxDocumentoTipo.setEnabled(false);
-
-                    //                      iFrame.tfDocumentoSerie.setValue("");
-                    //                      iFrame.tfDocumentoSerie.setFormatterFactory(
-                    //                          new DefaultFormatterFactory(new
-                    // MaskFormatter("RAAA")));
-                    iFrame.tfDocumentoSerie.requestFocus();
+                      AbstractDocument document =
+                          (AbstractDocument) iFrame.tfDocumentoSerie.getDocument();
+                      SerieFilter filter = (SerieFilter) document.getDocumentFilter();
+                      filter.setSerie('R');
+                    }
                   }
                 };
             worker.execute();
@@ -212,6 +186,7 @@ public class ComunicacionBajaController {
                   iFrame.tfFecha.setText(MyDateFormat.d_MMMM_Y(comunicacionBaja.getFechaEmision()));
 
                   iFrame.cbxTipo.setEnabled(true);
+                  iFrame.cbxTipo.setSelectedIndex(0);
                   iFrame.cbxTipo.requestFocus();
 
                   iFrame.tfSerie.setEnabled(true);
@@ -224,6 +199,7 @@ public class ComunicacionBajaController {
                   iFrame.dpDocumentoFecha.setDate(new Date());
 
                   iFrame.cbxDocumentoTipo.setEnabled(true);
+                  iFrame.cbxDocumentoTipo.setSelectedIndex(0);
 
                   iFrame.tfDocumentoSerie.setEnabled(true);
 
@@ -370,10 +346,7 @@ public class ComunicacionBajaController {
       iFrame.tfFecha.setText("");
 
       iFrame.cbxTipo.setEnabled(false);
-      iFrame.cbxTipo.removeAllItems();
-      iFrame.cbxTipo.setModel(
-          new DefaultComboBoxModel<>(
-              new String[] {"Comunicacion de baja", "Resumen de reversiones"}));
+      iFrame.cbxTipo.setSelectedIndex(-1);
 
       iFrame.tfSerie.setEnabled(false);
       iFrame.tfSerie.setText("");
@@ -385,15 +358,14 @@ public class ComunicacionBajaController {
       iFrame.dpDocumentoFecha.setDate(null);
 
       iFrame.cbxDocumentoTipo.setEnabled(false);
-      iFrame.cbxDocumentoTipo.removeAllItems();
-      iFrame.cbxDocumentoTipo.setModel(
-          new DefaultComboBoxModel<>(
-              new String[] {"Factura", "Nota de crédito", "Nota de débito"}));
+      iFrame.cbxDocumentoTipo.setSelectedIndex(-1);
+
 
       iFrame.tfDocumentoSerie.setEnabled(false);
-      //      iFrame.tfDocumentoSerie.setValue("");
-      //      iFrame.tfDocumentoSerie.setFormatterFactory(
-      //          new DefaultFormatterFactory(new MaskFormatter("FAAA")));
+      iFrame.tfDocumentoSerie.getDocument().remove(0, iFrame.tfDocumentoSerie.getText().length());
+      AbstractDocument document = (AbstractDocument) iFrame.tfDocumentoSerie.getDocument();
+      SerieFilter filter = (SerieFilter) document.getDocumentFilter();
+      filter.setSerie('F');
 
       iFrame.tfDocumentoCorrelativo.setEnabled(false);
       iFrame
@@ -454,15 +426,10 @@ public class ComunicacionBajaController {
 
   private String getCodigoTipoDocumento(String descripcion) {
     String codigo = "";
-    if (descripcion.equalsIgnoreCase("Factura")) {
-      codigo = "01";
-    } else if (descripcion.equalsIgnoreCase("Nota de crédito")) {
-      codigo = "07";
-    } else if (descripcion.equalsIgnoreCase("Nota de débito")) {
-      codigo = "08";
-    } else if (descripcion.equalsIgnoreCase("Comprobante de retención")) {
-      codigo = "20";
-    }
+    if (descripcion.equalsIgnoreCase("Factura")) codigo = "01";
+    else if (descripcion.equalsIgnoreCase("Nota de crédito")) codigo = "07";
+    else if (descripcion.equalsIgnoreCase("Nota de débito")) codigo = "08";
+    else if (descripcion.equalsIgnoreCase("Comprobante de retención")) codigo = "20";
     return codigo;
   }
 }
