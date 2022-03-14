@@ -41,7 +41,12 @@ public class SerieFilter extends DocumentFilter {
       throws BadLocationException {
     if (fb.getDocument().getLength() + string.length() <= 4) {
       if (regexCheck.matcher(string).matches()) {
-        super.insertString(fb, offset, serie + string.toUpperCase(), attr);
+        if (fb.getDocument().getLength() == 0) {
+          StringBuilder sb = new StringBuilder(string);
+          sb.setCharAt(0, serie);
+          string = sb.toString();
+        }
+        super.insertString(fb, offset, string.toUpperCase(), attr);
       }
     }
   }
@@ -52,7 +57,12 @@ public class SerieFilter extends DocumentFilter {
     int documentLength = fb.getDocument().getLength();
     if (documentLength - length + text.length() <= 4) {
       if (regexCheck.matcher(text).matches()) {
-        super.replace(fb, offset, length, serie + text.toUpperCase(), attrs);
+        if (fb.getDocument().getLength() == 0) {
+          StringBuilder sb = new StringBuilder(text);
+          sb.setCharAt(0, serie);
+          text = sb.toString();
+        }
+        super.replace(fb, offset, length, text.toUpperCase(), attrs);
       }
     }
   }

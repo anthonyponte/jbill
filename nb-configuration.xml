@@ -21,7 +21,7 @@ Any value defined here will override the pom.xml file value but is only applicab
         <de-funfried-netbeans-plugins-externalcodeformatter.enabledFormatter_2e_SQL>netbeans-formatter</de-funfried-netbeans-plugins-externalcodeformatter.enabledFormatter_2e_SQL>
         <de-funfried-netbeans-plugins-externalcodeformatter.overrideTabSize>true</de-funfried-netbeans-plugins-externalcodeformatter.overrideTabSize>
         <de-funfried-netbeans-plugins-externalcodeformatter.enabledFormatter_2e_JAVA>google-java-formatter</de-funfried-netbeans-plugins-externalcodeformatter.enabledFormatter_2e_JAVA>
-        <de-funfried-netbeans-plugins-externalcodeformatter.showNotifications>false</de-funfried-netbeans-plugins-externalcodeformatter.showNotifications>
+        <de-funfried-netbeans-plugins-externalcodeformatter.showNotifications>true</de-funfried-netbeans-plugins-externalcodeformatter.showNotifications>
         <de-funfried-netbeans-plugins-externalcodeformatter.useProjectSettings>true</de-funfried-netbeans-plugins-externalcodeformatter.useProjectSettings>
         <de-funfried-netbeans-plugins-externalcodeformatter.googleFormatterCodeStyle>GOOGLE</de-funfried-netbeans-plugins-externalcodeformatter.googleFormatterCodeStyle>
         <de-funfried-netbeans-plugins-externalcodeformatter.spring-linefeed/>

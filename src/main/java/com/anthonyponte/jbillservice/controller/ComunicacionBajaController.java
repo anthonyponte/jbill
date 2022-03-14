@@ -74,28 +74,38 @@ public class ComunicacionBajaController {
 
                   @Override
                   protected void done() {
-                    dialog.dispose();
+                    try {
+                      dialog.dispose();
 
-                    iFrame.tfCorrelativo.setText(String.valueOf(comunicacionBaja.getCorrelativo()));
-                    if (iFrame.cbxTipo.getSelectedIndex() == 0) {
-                      iFrame.cbxDocumentoTipo.setModel(
-                          new DefaultComboBoxModel<>(
-                              new String[] {"Factura", "Nota de crédito", "Nota de débito"}));
-                      iFrame.cbxDocumentoTipo.setEnabled(true);
+                      iFrame.tfCorrelativo.setText(
+                          String.valueOf(comunicacionBaja.getCorrelativo()));
 
-                      AbstractDocument document =
-                          (AbstractDocument) iFrame.tfDocumentoSerie.getDocument();
-                      SerieFilter filter = (SerieFilter) document.getDocumentFilter();
-                      filter.setSerie('F');
-                    } else if (iFrame.cbxTipo.getSelectedIndex() == 1) {
-                      iFrame.cbxDocumentoTipo.setModel(
-                          new DefaultComboBoxModel<>(new String[] {"Comprobante de retención"}));
-                      iFrame.cbxDocumentoTipo.setEnabled(false);
+                      iFrame
+                          .tfDocumentoSerie
+                          .getDocument()
+                          .remove(0, iFrame.tfDocumentoSerie.getText().length());
 
-                      AbstractDocument document =
-                          (AbstractDocument) iFrame.tfDocumentoSerie.getDocument();
-                      SerieFilter filter = (SerieFilter) document.getDocumentFilter();
-                      filter.setSerie('R');
+                      if (iFrame.cbxTipo.getSelectedIndex() == 0) {
+                        iFrame.cbxDocumentoTipo.setEnabled(true);
+                        iFrame.cbxDocumentoTipo.setModel(
+                            new DefaultComboBoxModel<>(
+                                new String[] {"Factura", "Nota de crédito", "Nota de débito"}));
+
+                        AbstractDocument docSerie =
+                            (AbstractDocument) iFrame.tfDocumentoSerie.getDocument();
+                        docSerie.setDocumentFilter(new SerieFilter('F'));
+                      } else if (iFrame.cbxTipo.getSelectedIndex() == 1) {
+                        iFrame.cbxDocumentoTipo.setEnabled(false);
+                        iFrame.cbxDocumentoTipo.setModel(
+                            new DefaultComboBoxModel<>(new String[] {"Comprobante de retención"}));
+
+                        AbstractDocument docSerie =
+                            (AbstractDocument) iFrame.tfDocumentoSerie.getDocument();
+                        docSerie.setDocumentFilter(new SerieFilter('R'));
+                      }
+                    } catch (BadLocationException ex) {
+                      Logger.getLogger(ComunicacionBajaController.class.getName())
+                          .log(Level.SEVERE, null, ex);
                     }
                   }
                 };
@@ -360,12 +370,10 @@ public class ComunicacionBajaController {
       iFrame.cbxDocumentoTipo.setEnabled(false);
       iFrame.cbxDocumentoTipo.setSelectedIndex(-1);
 
-
       iFrame.tfDocumentoSerie.setEnabled(false);
       iFrame.tfDocumentoSerie.getDocument().remove(0, iFrame.tfDocumentoSerie.getText().length());
-      AbstractDocument document = (AbstractDocument) iFrame.tfDocumentoSerie.getDocument();
-      SerieFilter filter = (SerieFilter) document.getDocumentFilter();
-      filter.setSerie('F');
+      AbstractDocument docSerie = (AbstractDocument) iFrame.tfDocumentoSerie.getDocument();
+      docSerie.setDocumentFilter(new SerieFilter('F'));
 
       iFrame.tfDocumentoCorrelativo.setEnabled(false);
       iFrame
