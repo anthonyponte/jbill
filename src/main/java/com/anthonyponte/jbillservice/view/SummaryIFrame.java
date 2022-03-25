@@ -4,6 +4,7 @@
  */
 package com.anthonyponte.jbillservice.view;
 
+import com.anthonyponte.jbillservice.filter.LetterNumberFilter;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.GroupLayout;
@@ -15,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
 import org.kordamp.ikonli.remixicon.RemixiconAL;
 import org.kordamp.ikonli.remixicon.RemixiconMZ;
 import org.kordamp.ikonli.swing.FontIcon;
@@ -60,6 +62,8 @@ public class SummaryIFrame extends JInternalFrame {
         tfFiltrar.setMaximumSize(null);
         tfFiltrar.setMinimumSize(new Dimension(150, 30));
         tfFiltrar.setPreferredSize(new Dimension(150, 30));
+        AbstractDocument document = (AbstractDocument) tfFiltrar.getDocument();
+        document.setDocumentFilter(new LetterNumberFilter());
         tfFiltrar.putClientProperty("JTextField.leadingIcon", FontIcon.of(RemixiconAL.FILTER_LINE, 16, Color.decode("#FFFFFF")));
         tfFiltrar.putClientProperty("JTextField.placeholderText", "Filtrar");
         tfFiltrar.putClientProperty("JTextField.showClearButton", true);

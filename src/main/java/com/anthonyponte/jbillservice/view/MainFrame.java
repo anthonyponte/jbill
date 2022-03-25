@@ -29,7 +29,6 @@ public class MainFrame extends JFrame {
      */
     public MainFrame() {
         list = new ArrayList<>();
-        
         list.add(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/16x16.png")).getImage());
         list.add(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/32x32.png")).getImage());
         list.add(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/64x64.png")).getImage());
