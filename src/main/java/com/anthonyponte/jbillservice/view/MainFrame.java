@@ -6,7 +6,11 @@ package com.anthonyponte.jbillservice.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -24,6 +28,13 @@ public class MainFrame extends JFrame {
      * Creates new form MainFrame
      */
     public MainFrame() {
+        list = new ArrayList<>();
+        list.add(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/16x16.png")).getImage());
+        list.add(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/32x32.png")).getImage());
+        list.add(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/64x64.png")).getImage());
+        list.add(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/128x128.png")).getImage());
+        list.add(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/256x256.png")).getImage());
+        list.add(new ImageIcon(getClass().getResource("/com/anthonyponte/jbillservice/img/512x512.png")).getImage());
         initComponents();
     }
 
@@ -50,6 +61,7 @@ public class MainFrame extends JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("JBillService");
+        setIconImages(list);
         setMinimumSize(new Dimension(1024, 768));
 
         dpane.setBackground(new Color(250, 202, 222));
@@ -121,6 +133,7 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private List<Image> list;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public JDesktopPane dpane;
     public JMenuBar mbar;
