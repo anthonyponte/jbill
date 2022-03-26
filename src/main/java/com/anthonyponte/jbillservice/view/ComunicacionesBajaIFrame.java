@@ -89,6 +89,7 @@ public class ComunicacionesBajaIFrame extends JInternalFrame {
 
             }
         ));
+        tblEncabezado.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tblEncabezado.setColumnSelectionAllowed(true);
         tblEncabezado.getTableHeader().setReorderingAllowed(false);
         scrllEncabezado.setViewportView(tblEncabezado);

@@ -40,6 +40,7 @@ import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.model.Summary;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.google.common.util.concurrent.Uninterruptibles;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -47,7 +48,10 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 /** @author anthony */
 public class SummaryController {
@@ -336,6 +340,10 @@ public class SummaryController {
               List<Summary> get = get();
               proxyList.clear();
               proxyList.addAll(get);
+
+              resize(iFrame.table);
+
+              if (!get.isEmpty()) iFrame.tfFiltrar.requestFocus();
             } catch (InterruptedException | ExecutionException ex) {
               Logger.getLogger(SummaryController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -354,5 +362,19 @@ public class SummaryController {
       descripcion = "Resumen diario";
     }
     return descripcion;
+  }
+
+  private void resize(JTable table) {
+    TableColumnModel columnModel = table.getColumnModel();
+    for (int column = 0; column < table.getColumnCount(); column++) {
+      int width = 150;
+      for (int row = 0; row < table.getRowCount(); row++) {
+        TableCellRenderer renderer = table.getCellRenderer(row, column);
+        Component comp = table.prepareRenderer(renderer, row, column);
+        width = Math.max(comp.getPreferredSize().width + 1, width);
+      }
+      if (width > 300) width = 300;
+      columnModel.getColumn(column).setPreferredWidth(width);
+    }
   }
 }

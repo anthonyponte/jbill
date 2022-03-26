@@ -42,6 +42,10 @@ import javax.swing.table.DefaultTableModel;
 import org.joda.time.DateTime;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
+import java.awt.Component;
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 /** @author AnthonyPonte */
 public class ComunicacionesBajaController {
@@ -275,6 +279,11 @@ public class ComunicacionesBajaController {
               List<ComunicacionBaja> get = get();
               eventList.clear();
               eventList.addAll(get);
+
+              resize(iFrame.tblEncabezado);
+
+              if (!get.isEmpty()) iFrame.tfFiltrar.requestFocus();
+              else iFrame.dpMesAno.requestFocus();
             } catch (InterruptedException | ExecutionException ex) {
               Logger.getLogger(ComunicacionesBajaController.class.getName())
                   .log(Level.SEVERE, null, ex);
@@ -282,5 +291,19 @@ public class ComunicacionesBajaController {
           }
         };
     worker.execute();
+  }
+
+  private void resize(JTable table) {
+    TableColumnModel columnModel = table.getColumnModel();
+    for (int column = 0; column < table.getColumnCount(); column++) {
+      int width = 150;
+      for (int row = 0; row < table.getRowCount(); row++) {
+        TableCellRenderer renderer = table.getCellRenderer(row, column);
+        Component comp = table.prepareRenderer(renderer, row, column);
+        width = Math.max(comp.getPreferredSize().width + 1, width);
+      }
+      if (width > 300) width = 300;
+      columnModel.getColumn(column).setPreferredWidth(width);
+    }
   }
 }
