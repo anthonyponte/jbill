@@ -3,12 +3,10 @@
     
     <modelVersion>4.0.0</modelVersion>
     
-    <groupId>com.anthonyponte</groupId>
+    <!-- The Basics -->
+    <groupId>com.anthonyponte.jbillservice</groupId>
     <artifactId>JBillService</artifactId>
-    <name>JBillService</name>
-    <description>Implementacion java del servicio web de envio de SUNAT</description>
     <version>1.0-SNAPSHOT</version>
-
     <dependencies>           
         <dependency>
             <groupId>org.hsqldb</groupId>
@@ -85,13 +83,13 @@
             <version>20050927</version>
         </dependency>
     </dependencies>
-    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
     
+    <!-- Build Settings -->
     <build>
         <resources>
             <resource>
@@ -227,4 +225,8 @@
             </plugin>
         </plugins>
     </build>
+    
+    <!-- More Project Information -->
+    <name>JBillService</name>
+    <description>Implementación java del servicio web de envió de SUNAT</description>
 </project>
