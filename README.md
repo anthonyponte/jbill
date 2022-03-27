@@ -1,7 +1,10 @@
 ![logo](https://github.com/anthonyrponte/JBillService/blob/master/res/logo.png)
 # JBillService
 Implementación java del servicio web de SUNAT 
-![screenshot](https://github.com/anthonyrponte/JBillConsultService/blob/master/res/screenshot.png)
+![screenshot_1](https://github.com/anthonyrponte/JBillService/blob/master/res/screenshot_1.png)
+![screenshot_2](https://github.com/anthonyrponte/JBillService/blob/master/res/screenshot_2.png)
+![screenshot_3](https://github.com/anthonyrponte/JBillService/blob/master/res/screenshot_3.png)
+![screenshot_4](https://github.com/anthonyrponte/JBillService/blob/master/res/screenshot_4.png)
 ## Requisitos
 Java 11
 ## Caraterísticas
