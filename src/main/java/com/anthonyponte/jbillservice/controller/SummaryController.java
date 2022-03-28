@@ -15,7 +15,6 @@ import ca.odell.glazedlists.swing.AdvancedListSelectionModel;
 import ca.odell.glazedlists.swing.AdvancedTableModel;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThreadProxyList;
-import static ca.odell.glazedlists.swing.GlazedListsSwing.swingThreadProxyList;
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
@@ -62,7 +61,6 @@ public class SummaryController {
   private ComunicacionBajaDao comunicacionBajaDao;
   private BillService service;
   private EventList<Summary> eventList;
-  private EventList<Summary> proxyList;
   private SortedList<Summary> sortedList;
   private AdvancedListSelectionModel<Summary> selectionModel;
   private AdvancedTableModel<Summary> tableModel;
@@ -93,13 +91,13 @@ public class SummaryController {
             dialog.setLocationRelativeTo(iFrame);
 
             SwingWorker worker =
-                new SwingWorker<Integer, Void>() {
+                new SwingWorker<List<Summary>, Void>() {
                   @Override
-                  protected Integer doInBackground() throws Exception {
-                    int enviados = 0;
+                  protected List<Summary> doInBackground() throws Exception {
+                    List<Summary> list = null;
                     if (!selectionModel.isSelectionEmpty()) {
                       EventList<Summary> selected = selectionModel.getSelected();
-                      List<Summary> list = new ArrayList<>();
+                      list = new ArrayList<>();
                       for (Summary next : selected) {
                         DataSource source =
                             new ByteArrayDataSource(next.getZip(), "application/zip");
@@ -121,13 +119,11 @@ public class SummaryController {
                             summaryDao.update(next.getId(), next);
 
                             list.add(next);
-                            enviados++;
                           }
                         }
                       }
-                      eventList.removeAll(list);
                     }
-                    return enviados;
+                    return list;
                   }
 
                   @Override
@@ -135,10 +131,13 @@ public class SummaryController {
                     try {
                       dialog.dispose();
 
-                      int eliminados = get();
+                      List<Summary> get = get();
+
+                      eventList.removeAll(get);
+
                       JOptionPane.showMessageDialog(
                           iFrame,
-                          eliminados + " archivos enviados",
+                          get.size() + " archivos enviados",
                           "Enviados",
                           JOptionPane.INFORMATION_MESSAGE);
                     } catch (InterruptedException | ExecutionException ex) {
@@ -241,13 +240,12 @@ public class SummaryController {
     comunicacionBajaDao = new IComunicacionBajaDao();
     service = new IBillService();
     eventList = new BasicEventList<>();
-    proxyList = swingThreadProxyList(eventList);
 
     Comparator comparator =
         (Comparator<Summary>)
             (Summary o1, Summary o2) -> o1.getFechaEmision().compareTo(o2.getFechaEmision());
 
-    sortedList = new SortedList<>(proxyList, comparator.reversed());
+    sortedList = new SortedList<>(eventList, comparator.reversed());
 
     TextFilterator<Summary> textFilterator =
         (List<String> list, Summary summary) -> {
@@ -338,8 +336,8 @@ public class SummaryController {
               dialog.dispose();
 
               List<Summary> get = get();
-              proxyList.clear();
-              proxyList.addAll(get);
+              eventList.clear();
+              eventList.addAll(get);
 
               resize(iFrame.table);
 
