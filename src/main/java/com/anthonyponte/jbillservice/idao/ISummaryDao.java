@@ -41,192 +41,144 @@ public class ISummaryDao implements SummaryDao {
   }
 
   @Override
-  public int create(Summary summary) {
+  public int create(Summary summary) throws SQLException {
     int result = 0;
-    try {
-      database.connect();
 
-      String query =
-          "INSERT INTO SUMMARY"
-              + "(UBL, VERSION, TIPO, SERIE, CORRELATIVO, FECHA_EMISION, FECHA_REFERENCIA, RUC, TIPO_RUC, RAZON_SOCIAL, NOMBRE_ZIP, ZIP) "
-              + "VALUES"
-              + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    database.connect();
 
-      try (PreparedStatement ps =
-          database
-              .getConnection()
-              .prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
+    String query =
+        "INSERT INTO SUMMARY"
+            + "(UBL, VERSION, TIPO, SERIE, CORRELATIVO, FECHA_EMISION, FECHA_REFERENCIA, RUC, TIPO_RUC, RAZON_SOCIAL, NOMBRE_ZIP, ZIP) "
+            + "VALUES"
+            + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        ps.setString(1, summary.getUbl());
-        ps.setString(2, summary.getVersion());
-        ps.setString(3, summary.getTipo());
-        ps.setString(4, summary.getSerie());
-        ps.setInt(5, summary.getCorrelativo());
-        ps.setDate(6, new Date(summary.getFechaEmision().getTime()));
-        ps.setDate(7, new Date(summary.getFechaReferencia().getTime()));
-        ps.setString(8, summary.getEmisor().getRuc());
-        ps.setInt(9, summary.getEmisor().getTipo());
-        ps.setString(10, summary.getEmisor().getRazonSocial());
-        ps.setString(11, summary.getNombreZip());
-        ps.setBytes(12, summary.getZip());
+    try (PreparedStatement ps =
+        database.getConnection().prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
-        ps.executeUpdate();
+      ps.setString(1, summary.getUbl());
+      ps.setString(2, summary.getVersion());
+      ps.setString(3, summary.getTipo());
+      ps.setString(4, summary.getSerie());
+      ps.setInt(5, summary.getCorrelativo());
+      ps.setDate(6, new Date(summary.getFechaEmision().getTime()));
+      ps.setDate(7, new Date(summary.getFechaReferencia().getTime()));
+      ps.setString(8, summary.getEmisor().getRuc());
+      ps.setInt(9, summary.getEmisor().getTipo());
+      ps.setString(10, summary.getEmisor().getRazonSocial());
+      ps.setString(11, summary.getNombreZip());
+      ps.setBytes(12, summary.getZip());
 
-        try (ResultSet rs = ps.getGeneratedKeys()) {
-          while (rs.next()) {
-            result = rs.getInt(1);
-          }
+      ps.executeUpdate();
+
+      try (ResultSet rs = ps.getGeneratedKeys()) {
+        while (rs.next()) {
+          result = rs.getInt(1);
         }
       }
-
-      database.disconnect();
-
-    } catch (SQLException ex) {
-      Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null,
-          ex.getErrorCode() + " - " + ex.getMessage(),
-          ISummaryDao.class.getName(),
-          JOptionPane.ERROR_MESSAGE);
     }
+
+    database.disconnect();
 
     return result;
   }
 
   @Override
-  public List<Summary> read() {
+  public List<Summary> read() throws SQLException {
     List<Summary> list = null;
-    try {
-      database.connect();
+    database.connect();
 
-      String query =
-          "SELECT "
-              + "ID, FECHA_EMISION, RUC, TIPO, SERIE, CORRELATIVO, NOMBRE_ZIP, ZIP "
-              + "FROM SUMMARY "
-              + "WHERE TICKET IS NULL  AND STATUS_CODE IS NULL AND NOMBRE_CONTENT IS NULL AND CONTENT IS NULL "
-              + "ORDER BY FECHA_EMISION DESC";
+    String query =
+        "SELECT "
+            + "ID, FECHA_EMISION, RUC, TIPO, SERIE, CORRELATIVO, NOMBRE_ZIP, ZIP "
+            + "FROM SUMMARY "
+            + "WHERE TICKET IS NULL  AND STATUS_CODE IS NULL AND NOMBRE_CONTENT IS NULL AND CONTENT IS NULL "
+            + "ORDER BY FECHA_EMISION DESC";
 
-      try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
-        try (ResultSet rs = ps.executeQuery()) {
-          list = new ArrayList<>();
-          while (rs.next()) {
-            Summary summary = new Summary();
-            summary.setId(rs.getInt(1));
-            summary.setFechaEmision(rs.getDate(2));
-            Empresa emisor = new Empresa();
-            emisor.setRuc(rs.getString(3));
-            summary.setEmisor(emisor);
-            summary.setTipo(rs.getString(4));
-            summary.setSerie(rs.getString(5));
-            summary.setCorrelativo(rs.getInt(6));
-            summary.setNombreZip(rs.getString(7));
-            summary.setZip(rs.getBytes(8));
-            list.add(summary);
-          }
+    try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
+      try (ResultSet rs = ps.executeQuery()) {
+        list = new ArrayList<>();
+        while (rs.next()) {
+          Summary summary = new Summary();
+          summary.setId(rs.getInt(1));
+          summary.setFechaEmision(rs.getDate(2));
+          Empresa emisor = new Empresa();
+          emisor.setRuc(rs.getString(3));
+          summary.setEmisor(emisor);
+          summary.setTipo(rs.getString(4));
+          summary.setSerie(rs.getString(5));
+          summary.setCorrelativo(rs.getInt(6));
+          summary.setNombreZip(rs.getString(7));
+          summary.setZip(rs.getBytes(8));
+          list.add(summary);
         }
       }
-      database.disconnect();
-    } catch (SQLException ex) {
-      Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null,
-          ex.getErrorCode() + " - " + ex.getMessage(),
-          ISummaryDao.class.getName(),
-          JOptionPane.ERROR_MESSAGE);
     }
+    database.disconnect();
+
     return list;
   }
 
   @Override
-  public int read(Summary summary) {
+  public int read(Summary summary) throws SQLException {
     int count = 0;
-    try {
-      database.connect();
 
-      String query =
-          "SELECT TOP 1 CORRELATIVO "
-              + "FROM SUMMARY "
-              + "WHERE TIPO = ? AND FECHA_EMISION = ? "
-              + "ORDER BY CORRELATIVO DESC";
+    database.connect();
 
-      try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
-        ps.setString(1, summary.getTipo());
-        ps.setDate(2, new Date(summary.getFechaEmision().getTime()));
+    String query =
+        "SELECT TOP 1 CORRELATIVO "
+            + "FROM SUMMARY "
+            + "WHERE TIPO = ? AND FECHA_EMISION = ? "
+            + "ORDER BY CORRELATIVO DESC";
 
-        try (ResultSet rs = ps.executeQuery()) {
-          while (rs.next()) {
-            count = rs.getInt(1);
-          }
+    try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
+      ps.setString(1, summary.getTipo());
+      ps.setDate(2, new Date(summary.getFechaEmision().getTime()));
+
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          count = rs.getInt(1);
         }
       }
-      database.disconnect();
-
-    } catch (SQLException ex) {
-      Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null,
-          ex.getErrorCode() + " - " + ex.getMessage(),
-          ISummaryDao.class.getName(),
-          JOptionPane.ERROR_MESSAGE);
     }
+    database.disconnect();
 
     return count;
   }
 
   @Override
-  public void update(int id, Summary summary) {
-    try {
-      database.connect();
+  public void update(int id, Summary summary) throws SQLException {
+    database.connect();
 
-      String query =
-          "UPDATE SUMMARY SET "
-              + "TICKET = ?, STATUS_CODE = ?, NOMBRE_CONTENT = ?, CONTENT = ? "
-              + "WHERE ID = ?";
+    String query =
+        "UPDATE SUMMARY SET "
+            + "TICKET = ?, STATUS_CODE = ?, NOMBRE_CONTENT = ?, CONTENT = ? "
+            + "WHERE ID = ?";
 
-      try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
+    try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
 
-        ps.setString(1, summary.getTicket());
-        ps.setString(2, summary.getStatusCode());
-        ps.setString(3, summary.getNombreContent());
-        ps.setBytes(4, summary.getContent());
-        ps.setInt(5, id);
+      ps.setString(1, summary.getTicket());
+      ps.setString(2, summary.getStatusCode());
+      ps.setString(3, summary.getNombreContent());
+      ps.setBytes(4, summary.getContent());
+      ps.setInt(5, id);
 
-        ps.executeUpdate();
-      }
-
-      database.disconnect();
-
-    } catch (SQLException ex) {
-      Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null,
-          ex.getErrorCode() + " - " + ex.getMessage(),
-          ISummaryDao.class.getName(),
-          JOptionPane.ERROR_MESSAGE);
+      ps.executeUpdate();
     }
+
+    database.disconnect();
   }
 
   @Override
-  public void delete(int id) {
-    try {
-      database.connect();
+  public void delete(int id) throws SQLException {
+    database.connect();
 
-      String query = "DELETE FROM SUMMARY WHERE ID = ?";
+    String query = "DELETE FROM SUMMARY WHERE ID = ?";
 
-      try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
-        ps.setInt(1, id);
-        ps.executeUpdate();
-      }
-
-      database.disconnect();
-
-    } catch (SQLException ex) {
-      Logger.getLogger(ISummaryDao.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null,
-          ex.getErrorCode() + " - " + ex.getMessage(),
-          ISummaryDao.class.getName(),
-          JOptionPane.ERROR_MESSAGE);
+    try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
+      ps.setInt(1, id);
+      ps.executeUpdate();
     }
+
+    database.disconnect();
   }
 }

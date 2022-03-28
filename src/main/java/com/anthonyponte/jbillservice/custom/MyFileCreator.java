@@ -22,12 +22,9 @@ import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-import javax.swing.JOptionPane;
 import javax.xml.crypto.MarshalException;
 import javax.xml.crypto.dsig.CanonicalizationMethod;
 import javax.xml.crypto.dsig.DigestMethod;
@@ -47,6 +44,7 @@ import javax.xml.crypto.dsig.spec.TransformParameterSpec;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -63,125 +61,101 @@ public class MyFileCreator {
   private static final Preferences PREFS =
       Preferences.userRoot().node(MainController.class.getPackageName());
 
-  public static File create(String tipo, String serie, int correlativo, Document estructura) {
-    File xml = null;
+  public static File create(String tipo, String serie, int correlativo, Document estructura)
+      throws FileNotFoundException, IOException {
+    File xml =
+        new File(
+            PREFS.get(UsuarioController.RUC, "")
+                + "-"
+                + tipo
+                + "-"
+                + serie
+                + "-"
+                + correlativo
+                + ".xml");
 
-    try {
-      xml =
-          new File(
-              PREFS.get(UsuarioController.RUC, "")
-                  + "-"
-                  + tipo
-                  + "-"
-                  + serie
-                  + "-"
-                  + correlativo
-                  + ".xml");
-      try (FileOutputStream fos = new FileOutputStream(xml, false)) {
-        XMLOutputter outputter = new XMLOutputter();
-        Format format = Format.getRawFormat();
-        format.setEncoding("ISO-8859-1");
-        outputter.setFormat(format);
-        outputter.output(estructura, fos);
-        fos.flush();
-      }
-
-      return xml;
-    } catch (FileNotFoundException ex) {
-      Logger.getLogger(MyFileCreator.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null, ex.getMessage(), MyFileCreator.class.getName(), JOptionPane.ERROR_MESSAGE);
-    } catch (IOException ex) {
-      Logger.getLogger(MyFileCreator.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null, ex.getMessage(), MyFileCreator.class.getName(), JOptionPane.ERROR_MESSAGE);
+    try (FileOutputStream fos = new FileOutputStream(xml, false)) {
+      XMLOutputter outputter = new XMLOutputter();
+      Format format = Format.getRawFormat();
+      format.setEncoding("ISO-8859-1");
+      outputter.setFormat(format);
+      outputter.output(estructura, fos);
+      fos.flush();
     }
 
     return xml;
   }
 
-  public static File sign(String tipo, String serie, int correlativo, File file) {
-    File jks = new File(PREFS.get(UsuarioController.FIRMA_JKS, ""));
-    try {
-      XMLSignatureFactory fac = XMLSignatureFactory.getInstance("DOM");
+  public static File sign(String tipo, String serie, int correlativo, File file)
+      throws NoSuchAlgorithmException, InvalidAlgorithmParameterException, KeyStoreException,
+          FileNotFoundException, IOException, CertificateException, UnrecoverableEntryException,
+          ParserConfigurationException, MarshalException, XMLSignatureException, SAXException,
+          TransformerConfigurationException, TransformerException {
 
-      Reference ref =
-          fac.newReference(
-              "",
-              fac.newDigestMethod(DigestMethod.SHA1, null),
-              Collections.singletonList(
-                  fac.newTransform(Transform.ENVELOPED, (TransformParameterSpec) null)),
-              null,
-              null);
+    XMLSignatureFactory fac = XMLSignatureFactory.getInstance("DOM");
 
-      SignedInfo si =
-          fac.newSignedInfo(
-              fac.newCanonicalizationMethod(
-                  CanonicalizationMethod.INCLUSIVE, (C14NMethodParameterSpec) null),
-              fac.newSignatureMethod(SignatureMethod.RSA_SHA1, null),
-              Collections.singletonList(ref));
+    Reference ref =
+        fac.newReference(
+            "",
+            fac.newDigestMethod(DigestMethod.SHA1, null),
+            Collections.singletonList(
+                fac.newTransform(Transform.ENVELOPED, (TransformParameterSpec) null)),
+            null,
+            null);
 
-      KeyStore ks = KeyStore.getInstance("JKS");
-      KeyStore.PrivateKeyEntry keyEntry;
-      FileInputStream ksfis = new FileInputStream(PREFS.get(UsuarioController.FIRMA_JKS, ""));
-      ks.load(ksfis, PREFS.get(UsuarioController.FIRMA_CONTRASENA, "").toCharArray());
-      keyEntry =
-          (KeyStore.PrivateKeyEntry)
-              ks.getEntry(
-                  PREFS.get(UsuarioController.FIRMA_USUARIO, ""),
-                  new KeyStore.PasswordProtection(
-                      PREFS.get(UsuarioController.FIRMA_CONTRASENA, "").toCharArray()));
-      X509Certificate cert = (X509Certificate) keyEntry.getCertificate();
-      KeyInfoFactory kif = fac.getKeyInfoFactory();
-      ArrayList<Object> x509Content = new ArrayList<>();
-      x509Content.add(cert.getSubjectX500Principal().getName());
-      x509Content.add(cert);
-      X509Data xd = kif.newX509Data(x509Content);
-      KeyInfo ki = kif.newKeyInfo(Collections.singletonList(xd));
+    SignedInfo si =
+        fac.newSignedInfo(
+            fac.newCanonicalizationMethod(
+                CanonicalizationMethod.INCLUSIVE, (C14NMethodParameterSpec) null),
+            fac.newSignatureMethod(SignatureMethod.RSA_SHA1, null),
+            Collections.singletonList(ref));
 
-      DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-      dbf.setNamespaceAware(true);
-      org.w3c.dom.Document doc;
-      FileInputStream fis = new FileInputStream(file);
-      doc = (org.w3c.dom.Document) dbf.newDocumentBuilder().parse(fis);
+    KeyStore ks = KeyStore.getInstance("JKS");
+    KeyStore.PrivateKeyEntry keyEntry;
+    FileInputStream ksfis = new FileInputStream(PREFS.get(UsuarioController.FIRMA_JKS, ""));
+    ks.load(ksfis, PREFS.get(UsuarioController.FIRMA_CONTRASENA, "").toCharArray());
+    keyEntry =
+        (KeyStore.PrivateKeyEntry)
+            ks.getEntry(
+                PREFS.get(UsuarioController.FIRMA_USUARIO, ""),
+                new KeyStore.PasswordProtection(
+                    PREFS.get(UsuarioController.FIRMA_CONTRASENA, "").toCharArray()));
+    X509Certificate cert = (X509Certificate) keyEntry.getCertificate();
+    KeyInfoFactory kif = fac.getKeyInfoFactory();
+    ArrayList<Object> x509Content = new ArrayList<>();
+    x509Content.add(cert.getSubjectX500Principal().getName());
+    x509Content.add(cert);
+    X509Data xd = kif.newX509Data(x509Content);
+    KeyInfo ki = kif.newKeyInfo(Collections.singletonList(xd));
 
-      DOMSignContext dsc =
-          new DOMSignContext(
-              keyEntry.getPrivateKey(),
-              (Node) doc.getDocumentElement().getFirstChild().getLastChild().getLastChild());
-      dsc.setDefaultNamespacePrefix("ds");
-      XMLSignature xMLSignature =
-          fac.newXMLSignature(
-              si, ki, null, "SIGN-" + PREFS.get(UsuarioController.FIRMA_USUARIO, ""), null);
-      xMLSignature.sign(dsc);
+    DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    dbf.setNamespaceAware(true);
+    org.w3c.dom.Document doc;
+    FileInputStream fis = new FileInputStream(file);
+    doc = (org.w3c.dom.Document) dbf.newDocumentBuilder().parse(fis);
 
-      try (OutputStream os = new FileOutputStream(file, false)) {
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer trans = tf.newTransformer();
-        trans.transform(new DOMSource((Node) doc), new StreamResult(os));
-        os.flush();
-      }
+    DOMSignContext dsc =
+        new DOMSignContext(
+            keyEntry.getPrivateKey(),
+            (Node) doc.getDocumentElement().getFirstChild().getLastChild().getLastChild());
+    dsc.setDefaultNamespacePrefix("ds");
+    XMLSignature xMLSignature =
+        fac.newXMLSignature(
+            si, ki, null, "SIGN-" + PREFS.get(UsuarioController.FIRMA_USUARIO, ""), null);
+    xMLSignature.sign(dsc);
 
-    } catch (NoSuchAlgorithmException
-        | InvalidAlgorithmParameterException
-        | KeyStoreException
-        | IOException
-        | ParserConfigurationException
-        | SAXException
-        | TransformerException
-        | MarshalException
-        | XMLSignatureException
-        | CertificateException
-        | UnrecoverableEntryException ex) {
-      Logger.getLogger(MyFileCreator.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null, ex.getMessage(), MyFileCreator.class.getName(), JOptionPane.ERROR_MESSAGE);
+    try (OutputStream os = new FileOutputStream(file, false)) {
+      TransformerFactory tf = TransformerFactory.newInstance();
+      Transformer trans = tf.newTransformer();
+      trans.transform(new DOMSource((Node) doc), new StreamResult(os));
+      os.flush();
     }
 
     return file;
   }
 
-  public static File compress(String tipo, String serie, int correlativo, File file) {
+  public static File compress(String tipo, String serie, int correlativo, File file)
+      throws FileNotFoundException, IOException {
     File zipFile =
         new File(
             PREFS.get(UsuarioController.RUC, "")
@@ -203,10 +177,6 @@ public class MyFileCreator {
         }
       }
       zos.flush();
-    } catch (IOException ex) {
-      Logger.getLogger(MyFileCreator.class.getName()).log(Level.SEVERE, null, ex);
-      JOptionPane.showMessageDialog(
-          null, ex.getMessage(), MyFileCreator.class.getName(), JOptionPane.ERROR_MESSAGE);
     }
 
     return zipFile;

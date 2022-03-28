@@ -18,17 +18,18 @@
 package com.anthonyponte.jbillservice.dao;
 
 import com.anthonyponte.jbillservice.model.Summary;
+import java.sql.SQLException;
 import java.util.List;
 
 /** @author AnthonyPonte */
 public interface SummaryDao {
-  public int create(Summary summary);
+  public int create(Summary summary) throws SQLException;
 
-  public List<Summary> read();
+  public List<Summary> read() throws SQLException;
 
-  public int read(Summary summary);
+  public int read(Summary summary) throws SQLException;
 
-  public void update(int id, Summary summary);
+  public void update(int id, Summary summary) throws SQLException;
 
-  public void delete(int id);
+  public void delete(int id) throws SQLException;
 }

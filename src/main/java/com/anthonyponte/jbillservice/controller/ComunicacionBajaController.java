@@ -5,6 +5,7 @@
 package com.anthonyponte.jbillservice.controller;
 
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
+import com.anthonyponte.jbillservice.custom.MyFileCreator;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
@@ -34,8 +35,21 @@ import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.filter.SerieFilter;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import java.awt.event.ItemEvent;
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.CertificateException;
+import java.sql.SQLException;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
+import javax.xml.crypto.MarshalException;
+import javax.xml.crypto.dsig.XMLSignatureException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import org.jdom2.Document;
+import org.xml.sax.SAXException;
 
 /** @author anthony */
 public class ComunicacionBajaController {
@@ -277,14 +291,66 @@ public class ComunicacionBajaController {
                         comunicacionBajaDetalles.add(comunicacionBajaDetalle);
                       }
                       comunicacionBaja.setComunicacionBajaDetalles(comunicacionBajaDetalles);
+
                       VoidedDocuments voided = new VoidedDocuments();
-                      File zip = voided.getStructure(comunicacionBaja);
-                      byte[] byteArray = Files.readAllBytes(zip.toPath());
-                      comunicacionBaja.setNombreZip(zip.getName());
-                      comunicacionBaja.setZip(byteArray);
-                      int id = summaryDao.create(comunicacionBaja);
-                      comunicacionBajaDao.create(id, comunicacionBajaDetalles);
-                      zip.delete();
+                      Document document = voided.getStructure(comunicacionBaja);
+
+                      try {
+                        File xml =
+                            MyFileCreator.create(
+                                comunicacionBaja.getTipo(),
+                                comunicacionBaja.getSerie(),
+                                comunicacionBaja.getCorrelativo(),
+                                document);
+
+                        System.out.println(".doInBackground() " + xml.getAbsolutePath());
+
+                        File sign =
+                            MyFileCreator.sign(
+                                comunicacionBaja.getTipo(),
+                                comunicacionBaja.getSerie(),
+                                comunicacionBaja.getCorrelativo(),
+                                xml);
+                        System.out.println(".doInBackground() " + sign.getAbsolutePath());
+
+                        File zip =
+                            MyFileCreator.compress(
+                                comunicacionBaja.getTipo(),
+                                comunicacionBaja.getSerie(),
+                                comunicacionBaja.getCorrelativo(),
+                                sign);
+
+                        System.out.println(".doInBackground() " + zip.getAbsolutePath());
+
+                        byte[] byteArray = Files.readAllBytes(zip.toPath());
+                        comunicacionBaja.setNombreZip(zip.getName());
+                        comunicacionBaja.setZip(byteArray);
+                        int id = summaryDao.create(comunicacionBaja);
+                        comunicacionBajaDao.create(id, comunicacionBajaDetalles);
+
+                        sign.delete();
+                        zip.delete();
+                      } catch (IOException
+                          | InvalidAlgorithmParameterException
+                          | KeyStoreException
+                          | NoSuchAlgorithmException
+                          | UnrecoverableEntryException
+                          | CertificateException
+                          | MarshalException
+                          | XMLSignatureException
+                          | ParserConfigurationException
+                          | TransformerException
+                          | SAXException
+                          | SQLException ex) {
+                        cancel(true);
+
+                        JOptionPane.showMessageDialog(
+                            null,
+                            ex.getMessage(),
+                            ComunicacionBajaController.class.getName(),
+                            JOptionPane.ERROR_MESSAGE);
+                      }
+
                       return null;
                     }
 
@@ -292,13 +358,17 @@ public class ComunicacionBajaController {
                     protected void done() {
                       dialog.dispose();
 
-                      JOptionPane.showMessageDialog(
-                          iFrame,
-                          comunicacionBaja.getNombreZip() + " guardado",
-                          "Guardado",
-                          JOptionPane.INFORMATION_MESSAGE);
+                      if (isCancelled()) {
+                        start();
+                      } else {
+                        start();
 
-                      start();
+                        JOptionPane.showMessageDialog(
+                            iFrame,
+                            comunicacionBaja.getNombreZip() + " guardado",
+                            "Guardado",
+                            JOptionPane.INFORMATION_MESSAGE);
+                      }
                     }
                   };
 

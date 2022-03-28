@@ -24,7 +24,7 @@ public class VoidedDocuments {
       Preferences.userRoot().node(MainController.class.getPackageName());
   private Document document;
 
-  public File getStructure(ComunicacionBaja comunicacion) {
+  public Document getStructure(ComunicacionBaja comunicacion) {
 
     document = new Document();
 
@@ -156,26 +156,6 @@ public class VoidedDocuments {
       document.getRootElement().addContent(voidedDocumentsLine);
     }
 
-    File xml =
-        MyFileCreator.create(
-            comunicacion.getTipo(),
-            comunicacion.getSerie(),
-            comunicacion.getCorrelativo(),
-            document);
-
-    File signedXml =
-        MyFileCreator.sign(
-            comunicacion.getTipo(), comunicacion.getSerie(), comunicacion.getCorrelativo(), xml);
-
-    File zip =
-        MyFileCreator.compress(
-            comunicacion.getTipo(),
-            comunicacion.getSerie(),
-            comunicacion.getCorrelativo(),
-            signedXml);
-
-    signedXml.delete();
-
-    return zip;
+    return document;
   }
 }
