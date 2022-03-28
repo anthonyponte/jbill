@@ -132,7 +132,6 @@ public class SummaryController {
                       dialog.dispose();
 
                       List<Summary> get = get();
-
                       eventList.removeAll(get);
 
                       JOptionPane.showMessageDialog(
@@ -143,6 +142,12 @@ public class SummaryController {
                     } catch (InterruptedException | ExecutionException ex) {
                       Logger.getLogger(SummaryController.class.getName())
                           .log(Level.SEVERE, null, ex);
+                      
+                       JOptionPane.showMessageDialog(
+                            null,
+                            ex.getMessage(),
+                            SummaryController.class.getName(),
+                            JOptionPane.ERROR_MESSAGE);
                     }
                   }
                 };
@@ -194,10 +199,9 @@ public class SummaryController {
                     dialog.setLocationRelativeTo(iFrame);
 
                     SwingWorker worker =
-                        new SwingWorker<Integer, Void>() {
+                        new SwingWorker<List<Summary>, Void>() {
                           @Override
-                          protected Integer doInBackground() throws Exception {
-                            int eliminados = 0;
+                          protected List<Summary> doInBackground() throws Exception {
                             EventList<Summary> selected = selectionModel.getSelected();
                             List<Summary> list = new ArrayList<>();
                             for (int i = 0; i < selected.size(); i++) {
@@ -205,10 +209,8 @@ public class SummaryController {
                               comunicacionBajaDao.delete(get.getId());
                               summaryDao.delete(get.getId());
                               list.add(get);
-                              eliminados++;
                             }
-                            eventList.removeAll(list);
-                            return eliminados;
+                            return list;
                           }
 
                           @Override
@@ -216,15 +218,23 @@ public class SummaryController {
                             try {
                               dialog.dispose();
 
-                              int eliminados = get();
+                              List<Summary> get = get();
+                              eventList.removeAll(get);
+
                               JOptionPane.showMessageDialog(
                                   iFrame,
-                                  eliminados + " archivos eliminados",
+                                  get.size() + " archivos eliminados",
                                   "Eliminados",
                                   JOptionPane.INFORMATION_MESSAGE);
                             } catch (InterruptedException | ExecutionException ex) {
                               Logger.getLogger(SummaryController.class.getName())
                                   .log(Level.SEVERE, null, ex);
+
+                              JOptionPane.showMessageDialog(
+                                  null,
+                                  ex.getMessage(),
+                                  SummaryController.class.getName(),
+                                  JOptionPane.ERROR_MESSAGE);
                             }
                           }
                         };
@@ -344,6 +354,12 @@ public class SummaryController {
               if (!get.isEmpty()) iFrame.tfFiltrar.requestFocus();
             } catch (InterruptedException | ExecutionException ex) {
               Logger.getLogger(SummaryController.class.getName()).log(Level.SEVERE, null, ex);
+              
+                     JOptionPane.showMessageDialog(
+                            null,
+                            ex.getMessage(),
+                            SummaryController.class.getName(),
+                            JOptionPane.ERROR_MESSAGE);
             }
           }
         };

@@ -120,6 +120,12 @@ public class ComunicacionBajaController {
                     } catch (BadLocationException ex) {
                       Logger.getLogger(ComunicacionBajaController.class.getName())
                           .log(Level.SEVERE, null, ex);
+                      
+                      JOptionPane.showMessageDialog(
+                          null,
+                          ex.getMessage(),
+                          ComunicacionBajaController.class.getName(),
+                          JOptionPane.ERROR_MESSAGE);
                     }
                   }
                 };
@@ -155,6 +161,12 @@ public class ComunicacionBajaController {
           } catch (BadLocationException ex) {
             Logger.getLogger(ComunicacionBajaController.class.getName())
                 .log(Level.SEVERE, null, ex);
+            
+            JOptionPane.showMessageDialog(
+                null,
+                ex.getMessage(),
+                ComunicacionBajaController.class.getName(),
+                JOptionPane.ERROR_MESSAGE);
           }
         });
 
@@ -471,6 +483,12 @@ public class ComunicacionBajaController {
       iFrame.btnLimpiar.setEnabled(false);
     } catch (BadLocationException ex) {
       Logger.getLogger(ComunicacionBajaController.class.getName()).log(Level.SEVERE, null, ex);
+      
+      JOptionPane.showMessageDialog(
+          null,
+          ex.getMessage(),
+          ComunicacionBajaController.class.getName(),
+          JOptionPane.ERROR_MESSAGE);
     }
   }
 
