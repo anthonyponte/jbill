@@ -86,7 +86,7 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setTitle("Comunicacion de baja");
-        setFrameIcon(FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode("#FFFFFF")));
+        setFrameIcon(FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode("#FACADE")));
         setMaximumSize(null);
         setMinimumSize(null);
 
