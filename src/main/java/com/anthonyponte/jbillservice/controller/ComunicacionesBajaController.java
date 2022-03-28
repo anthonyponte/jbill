@@ -187,7 +187,7 @@ public class ComunicacionesBajaController {
         new TableFormat<ComunicacionBaja>() {
           @Override
           public int getColumnCount() {
-            return 9;
+            return 11;
           }
 
           @Override
@@ -210,6 +210,10 @@ public class ComunicacionesBajaController {
               case 7:
                 return "Zip";
               case 8:
+                return "Ticket";
+              case 9:
+                return "Status Code";
+              case 10:
                 return "CDR";
             }
             throw new IllegalStateException("Unexpected column: " + column);
@@ -235,6 +239,10 @@ public class ComunicacionesBajaController {
               case 7:
                 return comunicacionBaja.getNombreZip();
               case 8:
+                return comunicacionBaja.getTicket();
+              case 9:
+                return comunicacionBaja.getStatusCode();
+              case 10:
                 return comunicacionBaja.getNombreContent();
             }
             throw new IllegalStateException("Unexpected column: " + column);
