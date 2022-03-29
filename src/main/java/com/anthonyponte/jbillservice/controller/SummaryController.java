@@ -274,7 +274,7 @@ public class SummaryController {
         new TableFormat<Summary>() {
           @Override
           public int getColumnCount() {
-            return 6;
+            return 7;
           }
 
           @Override
@@ -285,12 +285,14 @@ public class SummaryController {
               case 1:
                 return "RUC";
               case 2:
-                return "Tipo";
+                return "Tipo Codigo";
               case 3:
-                return "Serie";
+                return "Tipo Descripcion";
               case 4:
-                return "Correlativo";
+                return "Serie";
               case 5:
+                return "Correlativo";
+              case 6:
                 return "Zip";
             }
             throw new IllegalStateException("Unexpected column: " + column);
@@ -304,12 +306,14 @@ public class SummaryController {
               case 1:
                 return summary.getEmisor().getRuc();
               case 2:
-                return summary.getTipoDocumento().getDescripcion();
+                return summary.getTipoDocumento().getCodigo();
               case 3:
-                return summary.getSerie();
+                return summary.getTipoDocumento().getDescripcion();
               case 4:
-                return String.valueOf(summary.getCorrelativo());
+                return summary.getSerie();
               case 5:
+                return String.valueOf(summary.getCorrelativo());
+              case 6:
                 return summary.getNombreZip();
             }
             throw new IllegalStateException("Unexpected column: " + column);

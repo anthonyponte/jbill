@@ -188,33 +188,35 @@ public class ComunicacionesBajaController {
         new TableFormat<ComunicacionBaja>() {
           @Override
           public int getColumnCount() {
-            return 11;
+            return 12;
           }
 
           @Override
           public String getColumnName(int column) {
             switch (column) {
               case 0:
-                return "Tipo";
+                return "Tipo Codigo";
               case 1:
-                return "Serie";
+                return "Tipo Descripcion";
               case 2:
-                return "Correlativo";
+                return "Serie";
               case 3:
-                return "Fecha Emision";
+                return "Correlativo";
               case 4:
-                return "Fecha Referencia";
+                return "Fecha Emision";
               case 5:
-                return "RUC";
+                return "Fecha Referencia";
               case 6:
-                return "Razon Social";
+                return "RUC";
               case 7:
-                return "Zip";
+                return "Razon Social";
               case 8:
-                return "Ticket";
+                return "Zip";
               case 9:
-                return "Status Code";
+                return "Ticket";
               case 10:
+                return "Status Code";
+              case 11:
                 return "CDR";
             }
             throw new IllegalStateException("Unexpected column: " + column);
@@ -224,26 +226,28 @@ public class ComunicacionesBajaController {
           public Object getColumnValue(ComunicacionBaja comunicacionBaja, int column) {
             switch (column) {
               case 0:
-                return comunicacionBaja.getTipoDocumento().getDescripcion();
+                return comunicacionBaja.getTipoDocumento().getCodigo();
               case 1:
-                return comunicacionBaja.getSerie();
+                return comunicacionBaja.getTipoDocumento().getDescripcion();
               case 2:
-                return String.valueOf(comunicacionBaja.getCorrelativo());
+                return comunicacionBaja.getSerie();
               case 3:
-                return MyDateFormat.d_MMMM_Y(comunicacionBaja.getFechaEmision());
+                return String.valueOf(comunicacionBaja.getCorrelativo());
               case 4:
-                return MyDateFormat.d_MMMM_Y(comunicacionBaja.getFechaReferencia());
+                return MyDateFormat.d_MMMM_Y(comunicacionBaja.getFechaEmision());
               case 5:
-                return comunicacionBaja.getEmisor().getRuc();
+                return MyDateFormat.d_MMMM_Y(comunicacionBaja.getFechaReferencia());
               case 6:
-                return comunicacionBaja.getEmisor().getRazonSocial();
+                return comunicacionBaja.getEmisor().getRuc();
               case 7:
-                return comunicacionBaja.getNombreZip();
+                return comunicacionBaja.getEmisor().getRazonSocial();
               case 8:
-                return comunicacionBaja.getTicket();
+                return comunicacionBaja.getNombreZip();
               case 9:
-                return comunicacionBaja.getStatusCode();
+                return comunicacionBaja.getTicket();
               case 10:
+                return comunicacionBaja.getStatusCode();
+              case 11:
                 return comunicacionBaja.getNombreContent();
             }
             throw new IllegalStateException("Unexpected column: " + column);
