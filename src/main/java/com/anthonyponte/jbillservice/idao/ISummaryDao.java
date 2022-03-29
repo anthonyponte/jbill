@@ -100,6 +100,7 @@ public class ISummaryDao implements SummaryDao {
           Summary summary = new Summary();
           summary.setId(rs.getInt(1));
           summary.setFechaEmision(rs.getDate(2));
+          
           Empresa emisor = new Empresa();
           emisor.setRuc(rs.getString(3));
           summary.setEmisor(emisor);
