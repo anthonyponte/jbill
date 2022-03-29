@@ -174,7 +174,8 @@ public class ComunicacionesBajaController {
 
     TextFilterator<ComunicacionBaja> filterator =
         (List<String> list, ComunicacionBaja comunicacionBaja) -> {
-          list.add(comunicacionBaja.getTipo());
+          list.add(comunicacionBaja.getTipoDocumento().getCodigo());
+          list.add(comunicacionBaja.getTipoDocumento().getDescripcion());
           list.add(String.valueOf(comunicacionBaja.getCorrelativo()));
         };
 
@@ -223,7 +224,7 @@ public class ComunicacionesBajaController {
           public Object getColumnValue(ComunicacionBaja comunicacionBaja, int column) {
             switch (column) {
               case 0:
-                return comunicacionBaja.getTipo();
+                return comunicacionBaja.getTipoDocumento().getDescripcion();
               case 1:
                 return comunicacionBaja.getSerie();
               case 2:

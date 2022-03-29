@@ -21,9 +21,10 @@ public class ComunicacionBaja extends Summary {
 
   public ComunicacionBaja(
       List<ComunicacionBajaDetalle> comunicacionBajaDetalles,
+      int id,
       String ubl,
       String version,
-      String tipo,
+      TipoDocumento tipoDocumento,
       String serie,
       int correlativo,
       Date fechaEmision,
@@ -32,9 +33,10 @@ public class ComunicacionBaja extends Summary {
       String nombreZip,
       byte[] zip) {
     super(
+        id,
         ubl,
         version,
-        tipo,
+        tipoDocumento,
         serie,
         correlativo,
         fechaEmision,
@@ -47,10 +49,9 @@ public class ComunicacionBaja extends Summary {
 
   public ComunicacionBaja(
       List<ComunicacionBajaDetalle> comunicacionBajaDetalles,
-      int id,
       String ubl,
       String version,
-      String tipo,
+      TipoDocumento tipoDocumento,
       String serie,
       int correlativo,
       Date fechaEmision,
@@ -59,10 +60,9 @@ public class ComunicacionBaja extends Summary {
       String nombreZip,
       byte[] zip) {
     super(
-        id,
         ubl,
         version,
-        tipo,
+        tipoDocumento,
         serie,
         correlativo,
         fechaEmision,

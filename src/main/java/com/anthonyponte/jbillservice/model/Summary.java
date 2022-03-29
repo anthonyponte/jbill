@@ -24,7 +24,7 @@ public class Summary {
   private int id;
   private String ubl;
   private String version;
-  private String tipo;
+  private TipoDocumento tipoDocumento;
   private String serie;
   private int correlativo;
   private Date fechaEmision;
@@ -41,33 +41,10 @@ public class Summary {
   public Summary() {}
 
   public Summary(
-      String ubl,
-      String version,
-      String tipo,
-      String serie,
-      int correlativo,
-      Date fechaEmision,
-      Date fechaReferencia,
-      Empresa emisor,
-      String nombreZip,
-      byte[] zip) {
-    this.ubl = ubl;
-    this.version = version;
-    this.tipo = tipo;
-    this.serie = serie;
-    this.correlativo = correlativo;
-    this.fechaEmision = fechaEmision;
-    this.fechaReferencia = fechaReferencia;
-    this.emisor = emisor;
-    this.nombreZip = nombreZip;
-    this.zip = zip;
-  }
-
-  public Summary(
       int id,
       String ubl,
       String version,
-      String tipo,
+      TipoDocumento tipoDocumento,
       String serie,
       int correlativo,
       Date fechaEmision,
@@ -78,7 +55,30 @@ public class Summary {
     this.id = id;
     this.ubl = ubl;
     this.version = version;
-    this.tipo = tipo;
+    this.tipoDocumento = tipoDocumento;
+    this.serie = serie;
+    this.correlativo = correlativo;
+    this.fechaEmision = fechaEmision;
+    this.fechaReferencia = fechaReferencia;
+    this.emisor = emisor;
+    this.nombreZip = nombreZip;
+    this.zip = zip;
+  }
+
+  public Summary(
+      String ubl,
+      String version,
+      TipoDocumento tipoDocumento,
+      String serie,
+      int correlativo,
+      Date fechaEmision,
+      Date fechaReferencia,
+      Empresa emisor,
+      String nombreZip,
+      byte[] zip) {
+    this.ubl = ubl;
+    this.version = version;
+    this.tipoDocumento = tipoDocumento;
     this.serie = serie;
     this.correlativo = correlativo;
     this.fechaEmision = fechaEmision;
@@ -112,12 +112,12 @@ public class Summary {
     this.version = version;
   }
 
-  public String getTipo() {
-    return tipo;
+  public TipoDocumento getTipoDocumento() {
+    return tipoDocumento;
   }
 
-  public void setTipo(String tipo) {
-    this.tipo = tipo;
+  public void setTipoDocumento(TipoDocumento tipoDocumento) {
+    this.tipoDocumento = tipoDocumento;
   }
 
   public String getSerie() {
@@ -225,8 +225,8 @@ public class Summary {
         + ubl
         + ", version="
         + version
-        + ", tipo="
-        + tipo
+        + ", tipoDocumento="
+        + tipoDocumento
         + ", serie="
         + serie
         + ", correlativo="
@@ -239,12 +239,16 @@ public class Summary {
         + emisor
         + ", nombreZip="
         + nombreZip
+        + ", zip="
+        + zip
         + ", ticket="
         + ticket
         + ", statusCode="
         + statusCode
         + ", nombreContent="
         + nombreContent
+        + ", content="
+        + content
         + ", fechaIngreso="
         + fechaIngreso
         + '}';

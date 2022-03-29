@@ -33,6 +33,7 @@ import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.filter.SerieFilter;
+import com.anthonyponte.jbillservice.model.TipoDocumento;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import java.awt.event.ItemEvent;
 import java.io.IOException;
@@ -78,11 +79,14 @@ public class ComunicacionBajaController {
                 new SwingWorker<Void, Void>() {
                   @Override
                   protected Void doInBackground() throws Exception {
-                    if (iFrame.cbxTipo.getSelectedIndex() == 0) comunicacionBaja.setTipo("RA");
-                    else if (iFrame.cbxTipo.getSelectedIndex() == 1) comunicacionBaja.setTipo("RR");
+
+                    TipoDocumento tipoDocumento = new TipoDocumento();
+                    tipoDocumento.setDescripcion(iFrame.cbxTipo.getSelectedItem().toString());
+                    comunicacionBaja.setTipoDocumento(tipoDocumento);
 
                     int count = summaryDao.read(comunicacionBaja);
                     comunicacionBaja.setCorrelativo(count + 1);
+
                     return null;
                   }
 
@@ -120,7 +124,7 @@ public class ComunicacionBajaController {
                     } catch (BadLocationException ex) {
                       Logger.getLogger(ComunicacionBajaController.class.getName())
                           .log(Level.SEVERE, null, ex);
-                      
+
                       JOptionPane.showMessageDialog(
                           null,
                           ex.getMessage(),
@@ -161,7 +165,7 @@ public class ComunicacionBajaController {
           } catch (BadLocationException ex) {
             Logger.getLogger(ComunicacionBajaController.class.getName())
                 .log(Level.SEVERE, null, ex);
-            
+
             JOptionPane.showMessageDialog(
                 null,
                 ex.getMessage(),
@@ -196,7 +200,11 @@ public class ComunicacionBajaController {
                   comunicacionBaja = new ComunicacionBaja();
                   comunicacionBaja.setUbl("2.0");
                   comunicacionBaja.setVersion("1.0");
-                  comunicacionBaja.setTipo("RA");
+
+                  TipoDocumento tipoDocumento = new TipoDocumento();
+                  tipoDocumento.setDescripcion(iFrame.cbxTipo.getSelectedItem().toString());
+                  comunicacionBaja.setTipoDocumento(tipoDocumento);
+
                   comunicacionBaja.setSerie(MyDateFormat.yyyyMMdd(new Date()));
                   comunicacionBaja.setFechaEmision(new Date());
                   comunicacionBaja.setFechaReferencia(new Date());
@@ -209,6 +217,7 @@ public class ComunicacionBajaController {
                   emisor.setTipo(preferences.getInt(UsuarioController.RUC_TIPO, 0));
                   emisor.setRazonSocial(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
                   comunicacionBaja.setEmisor(emisor);
+
                   return comunicacionBaja;
                 }
 
@@ -310,29 +319,24 @@ public class ComunicacionBajaController {
                       try {
                         File xml =
                             MyFileCreator.create(
-                                comunicacionBaja.getTipo(),
+                                comunicacionBaja.getTipoDocumento().getCodigo(),
                                 comunicacionBaja.getSerie(),
                                 comunicacionBaja.getCorrelativo(),
                                 document);
 
-                        System.out.println(".doInBackground() " + xml.getAbsolutePath());
-
                         File sign =
                             MyFileCreator.sign(
-                                comunicacionBaja.getTipo(),
+                                comunicacionBaja.getTipoDocumento().getCodigo(),
                                 comunicacionBaja.getSerie(),
                                 comunicacionBaja.getCorrelativo(),
                                 xml);
-                        System.out.println(".doInBackground() " + sign.getAbsolutePath());
 
                         File zip =
                             MyFileCreator.compress(
-                                comunicacionBaja.getTipo(),
+                                comunicacionBaja.getTipoDocumento().getCodigo(),
                                 comunicacionBaja.getSerie(),
                                 comunicacionBaja.getCorrelativo(),
                                 sign);
-
-                        System.out.println(".doInBackground() " + zip.getAbsolutePath());
 
                         byte[] byteArray = Files.readAllBytes(zip.toPath());
                         comunicacionBaja.setNombreZip(zip.getName());
@@ -483,7 +487,7 @@ public class ComunicacionBajaController {
       iFrame.btnLimpiar.setEnabled(false);
     } catch (BadLocationException ex) {
       Logger.getLogger(ComunicacionBajaController.class.getName()).log(Level.SEVERE, null, ex);
-      
+
       JOptionPane.showMessageDialog(
           null,
           ex.getMessage(),

@@ -21,15 +21,13 @@ import com.anthonyponte.jbillservice.custom.MyHsqldbConnection;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.model.Empresa;
 import com.anthonyponte.jbillservice.model.Summary;
+import com.anthonyponte.jbillservice.model.TipoDocumento;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /** @author AnthonyPonte */
 public class ISummaryDao implements SummaryDao {
@@ -57,7 +55,7 @@ public class ISummaryDao implements SummaryDao {
 
       ps.setString(1, summary.getUbl());
       ps.setString(2, summary.getVersion());
-      ps.setString(3, summary.getTipo());
+      ps.setString(3, summary.getTipoDocumento().getCodigo());
       ps.setString(4, summary.getSerie());
       ps.setInt(5, summary.getCorrelativo());
       ps.setDate(6, new Date(summary.getFechaEmision().getTime()));
@@ -104,7 +102,11 @@ public class ISummaryDao implements SummaryDao {
           Empresa emisor = new Empresa();
           emisor.setRuc(rs.getString(3));
           summary.setEmisor(emisor);
-          summary.setTipo(rs.getString(4));
+
+          TipoDocumento tipoDocumento = new TipoDocumento();
+          tipoDocumento.setCodigo(rs.getString(4));
+          summary.setTipoDocumento(tipoDocumento);
+
           summary.setSerie(rs.getString(5));
           summary.setCorrelativo(rs.getInt(6));
           summary.setNombreZip(rs.getString(7));
@@ -131,7 +133,7 @@ public class ISummaryDao implements SummaryDao {
             + "ORDER BY CORRELATIVO DESC";
 
     try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
-      ps.setString(1, summary.getTipo());
+      ps.setString(1, summary.getTipoDocumento().getCodigo());
       ps.setDate(2, new Date(summary.getFechaEmision().getTime()));
 
       try (ResultSet rs = ps.executeQuery()) {

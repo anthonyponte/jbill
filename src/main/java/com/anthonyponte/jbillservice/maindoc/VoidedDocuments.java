@@ -8,10 +8,8 @@ package com.anthonyponte.jbillservice.maindoc;
 import com.anthonyponte.jbillservice.controller.MainController;
 import com.anthonyponte.jbillservice.controller.UsuarioController;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
-import com.anthonyponte.jbillservice.custom.MyFileCreator;
 import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
-import java.io.File;
 import java.util.prefs.Preferences;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -77,7 +75,7 @@ public class VoidedDocuments {
     Element id =
         new Element("ID", cbc)
             .setText(
-                comunicacion.getTipo()
+                comunicacion.getTipoDocumento().getCodigo()
                     + "-"
                     + comunicacion.getSerie()
                     + "-"

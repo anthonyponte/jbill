@@ -17,6 +17,7 @@ import com.anthonyponte.jbillservice.model.Empresa;
 import java.util.ArrayList;
 import org.joda.time.DateTime;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
+import com.anthonyponte.jbillservice.model.TipoDocumento;
 
 /** @author anthony */
 public class IComunicacionBajaDao implements ComunicacionBajaDao {
@@ -78,7 +79,11 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
         while (rs.next()) {
           ComunicacionBaja comunicacionBaja = new ComunicacionBaja();
           comunicacionBaja.setId(rs.getInt(1));
-          comunicacionBaja.setTipo(rs.getString(2));
+          
+          TipoDocumento tipoDocumento = new TipoDocumento();
+          tipoDocumento.setCodigo(rs.getString(2));
+          comunicacionBaja.setTipoDocumento(tipoDocumento);
+          
           comunicacionBaja.setSerie(rs.getString(3));
           comunicacionBaja.setCorrelativo(rs.getInt(4));
           comunicacionBaja.setFechaEmision(rs.getDate(5));

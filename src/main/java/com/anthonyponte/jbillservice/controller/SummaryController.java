@@ -104,7 +104,8 @@ public class SummaryController {
                         DataHandler handler = new DataHandler(source);
 
                         String ticket =
-                            service.sendSummary(next.getNombreZip(), handler, next.getTipo());
+                            service.sendSummary(
+                                next.getNombreZip(), handler, next.getTipoDocumento().getCodigo());
 
                         if (ticket != null) {
                           Uninterruptibles.sleepUninterruptibly(10, TimeUnit.SECONDS);
@@ -142,12 +143,12 @@ public class SummaryController {
                     } catch (InterruptedException | ExecutionException ex) {
                       Logger.getLogger(SummaryController.class.getName())
                           .log(Level.SEVERE, null, ex);
-                      
-                       JOptionPane.showMessageDialog(
-                            null,
-                            ex.getMessage(),
-                            SummaryController.class.getName(),
-                            JOptionPane.ERROR_MESSAGE);
+
+                      JOptionPane.showMessageDialog(
+                          null,
+                          ex.getMessage(),
+                          SummaryController.class.getName(),
+                          JOptionPane.ERROR_MESSAGE);
                     }
                   }
                 };
@@ -259,7 +260,8 @@ public class SummaryController {
 
     TextFilterator<Summary> textFilterator =
         (List<String> list, Summary summary) -> {
-          list.add(summary.getTipo());
+          list.add(summary.getTipoDocumento().getCodigo());
+          list.add(summary.getTipoDocumento().getDescripcion());
           list.add(String.valueOf(summary.getCorrelativo()));
         };
 
@@ -302,7 +304,7 @@ public class SummaryController {
               case 1:
                 return summary.getEmisor().getRuc();
               case 2:
-                return getDescripcionDocumento(summary.getTipo());
+                return summary.getTipoDocumento().getDescripcion();
               case 3:
                 return summary.getSerie();
               case 4:
@@ -354,12 +356,12 @@ public class SummaryController {
               if (!get.isEmpty()) iFrame.tfFiltrar.requestFocus();
             } catch (InterruptedException | ExecutionException ex) {
               Logger.getLogger(SummaryController.class.getName()).log(Level.SEVERE, null, ex);
-              
-                     JOptionPane.showMessageDialog(
-                            null,
-                            ex.getMessage(),
-                            SummaryController.class.getName(),
-                            JOptionPane.ERROR_MESSAGE);
+
+              JOptionPane.showMessageDialog(
+                  null,
+                  ex.getMessage(),
+                  SummaryController.class.getName(),
+                  JOptionPane.ERROR_MESSAGE);
             }
           }
         };
