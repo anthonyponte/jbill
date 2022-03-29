@@ -102,11 +102,11 @@ public class ComunicacionesBajaIFrame extends JInternalFrame {
 
             },
             new String [] {
-                "Tipo", "Serie", "Correlativo", "Motivo"
+                "Tipo Codigo", "Tipo Descripcion", "Serie", "Correlativo", "Motivo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -120,6 +120,7 @@ public class ComunicacionesBajaIFrame extends JInternalFrame {
             tblDetalle.getColumnModel().getColumn(1).setResizable(false);
             tblDetalle.getColumnModel().getColumn(2).setResizable(false);
             tblDetalle.getColumnModel().getColumn(3).setResizable(false);
+            tblDetalle.getColumnModel().getColumn(4).setResizable(false);
         }
 
         spltPane.setRightComponent(scrllDetalle);

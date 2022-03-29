@@ -139,12 +139,17 @@ public class ComunicacionesBajaController {
                           List<ComunicacionBajaDetalle> list = get();
                           Object[] row = null;
                           for (ComunicacionBajaDetalle next : list) {
-                            String tipo = next.getDocumento().getTipoDocumento().getCodigo();
+                            String tipoCodigo = next.getDocumento().getTipoDocumento().getCodigo();
+                            String tipoDescripcion =
+                                next.getDocumento().getTipoDocumento().getDescripcion();
                             String serie = next.getDocumento().getSerie();
                             int correlativo = next.getDocumento().getCorrelativo();
                             String motivo = next.getMotivo();
 
-                            row = new Object[] {tipo, serie, correlativo, motivo};
+                            row =
+                                new Object[] {
+                                  tipoCodigo, tipoDescripcion, serie, correlativo, motivo
+                                };
                           }
                           model.addRow(row);
                         } catch (InterruptedException | ExecutionException ex) {
