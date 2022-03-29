@@ -35,9 +35,9 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
 
     String queryDetalle =
         "INSERT INTO COMUNICACION_BAJA_DETALLE"
-            + "(SUMMARY_ID, NUMERO, TIPO, SERIE, CORRELATIVO, MOTIVO) "
+            + "(SUMMARY_ID, NUMERO, TIPO_CODIGO, TIPO_DESCRIPCION, SERIE, CORRELATIVO, MOTIVO) "
             + "VALUES"
-            + "(?, ?, ?, ?, ?, ?)";
+            + "(?, ?, ?, ?, ?, ?, ?)";
 
     try (PreparedStatement ps = database.getConnection().prepareStatement(queryDetalle)) {
 
@@ -46,9 +46,10 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
         ps.setInt(1, id);
         ps.setInt(2, get.getNumero());
         ps.setString(3, get.getDocumento().getTipoDocumento().getCodigo());
-        ps.setString(4, get.getDocumento().getSerie());
-        ps.setInt(5, get.getDocumento().getCorrelativo());
-        ps.setString(6, get.getMotivo());
+        ps.setString(4, get.getDocumento().getTipoDocumento().getDescripcion());
+        ps.setString(5, get.getDocumento().getSerie());
+        ps.setInt(6, get.getDocumento().getCorrelativo());
+        ps.setString(7, get.getMotivo());
         ps.addBatch();
       }
 
@@ -66,9 +67,9 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
 
     String query =
         "SELECT "
-            + "ID, TIPO, SERIE, CORRELATIVO, FECHA_EMISION, FECHA_REFERENCIA, RUC, RAZON_SOCIAL, NOMBRE_ZIP, ZIP, TICKET,  STATUS_CODE,  NOMBRE_CONTENT, CONTENT "
+            + "ID, TIPO_CODIGO, TIPO_DESCRIPCION, SERIE, CORRELATIVO, FECHA_EMISION, FECHA_REFERENCIA, RUC, RAZON_SOCIAL, ZIP_NOMBRE, ZIP, TICKET,  STATUS_CODE,  CONTENT_NOMBRE, CONTENT "
             + "FROM SUMMARY "
-            + "WHERE MONTH(FECHA_EMISION) = ? AND YEAR(FECHA_EMISION) = ? AND TICKET IS NOT NULL  AND STATUS_CODE IS NOT NULL AND NOMBRE_CONTENT IS NOT NULL AND CONTENT IS NOT NULL "
+            + "WHERE MONTH(FECHA_EMISION) = ? AND YEAR(FECHA_EMISION) = ? AND TICKET IS NOT NULL  AND STATUS_CODE IS NOT NULL AND CONTENT_NOMBRE IS NOT NULL AND CONTENT IS NOT NULL "
             + "ORDER BY FECHA_EMISION DESC";
 
     try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
@@ -82,24 +83,25 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
 
           TipoDocumento tipoDocumento = new TipoDocumento();
           tipoDocumento.setCodigo(rs.getString(2));
+          tipoDocumento.setDescripcion(rs.getString(3));
           comunicacionBaja.setTipoDocumento(tipoDocumento);
 
-          comunicacionBaja.setSerie(rs.getString(3));
-          comunicacionBaja.setCorrelativo(rs.getInt(4));
-          comunicacionBaja.setFechaEmision(rs.getDate(5));
-          comunicacionBaja.setFechaReferencia(rs.getDate(6));
+          comunicacionBaja.setSerie(rs.getString(4));
+          comunicacionBaja.setCorrelativo(rs.getInt(5));
+          comunicacionBaja.setFechaEmision(rs.getDate(6));
+          comunicacionBaja.setFechaReferencia(rs.getDate(7));
 
           Empresa emisor = new Empresa();
-          emisor.setRuc(rs.getString(7));
-          emisor.setRazonSocial(rs.getString(8));
+          emisor.setRuc(rs.getString(8));
+          emisor.setRazonSocial(rs.getString(9));
           comunicacionBaja.setEmisor(emisor);
 
-          comunicacionBaja.setNombreZip(rs.getString(9));
-          comunicacionBaja.setZip(rs.getBytes(10));
-          comunicacionBaja.setTicket(rs.getString(11));
-          comunicacionBaja.setStatusCode(rs.getString(12));
-          comunicacionBaja.setNombreContent(rs.getString(13));
-          comunicacionBaja.setContent(rs.getBytes(14));
+          comunicacionBaja.setNombreZip(rs.getString(10));
+          comunicacionBaja.setZip(rs.getBytes(11));
+          comunicacionBaja.setTicket(rs.getString(12));
+          comunicacionBaja.setStatusCode(rs.getString(13));
+          comunicacionBaja.setNombreContent(rs.getString(14));
+          comunicacionBaja.setContent(rs.getBytes(15));
           list.add(comunicacionBaja);
         }
       }
@@ -118,7 +120,7 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
 
     String query =
         "SELECT "
-            + "ID, NUMERO, TIPO, SERIE, CORRELATIVO, MOTIVO "
+            + "ID, NUMERO, TIPO_CODIGO, TIPO_DESCRIPCION, SERIE, CORRELATIVO, MOTIVO "
             + "FROM COMUNICACION_BAJA_DETALLE "
             + "WHERE SUMMARY_ID = ?";
 
@@ -139,13 +141,14 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
 
           TipoDocumento tipoDocumento = new TipoDocumento();
           tipoDocumento.setCodigo(rs.getString(3));
+          tipoDocumento.setDescripcion(rs.getString(4));
           documento.setTipoDocumento(tipoDocumento);
 
-          documento.setSerie(rs.getString(4));
-          documento.setCorrelativo(rs.getInt(5));
+          documento.setSerie(rs.getString(5));
+          documento.setCorrelativo(rs.getInt(6));
           comunicacionBajaDetalle.setDocumento(documento);
 
-          comunicacionBajaDetalle.setMotivo(rs.getString(6));
+          comunicacionBajaDetalle.setMotivo(rs.getString(7));
 
           comunicacionBajaDetalles.add(comunicacionBajaDetalle);
         }

@@ -46,9 +46,9 @@ public class ISummaryDao implements SummaryDao {
 
     String query =
         "INSERT INTO SUMMARY"
-            + "(UBL, VERSION, TIPO, SERIE, CORRELATIVO, FECHA_EMISION, FECHA_REFERENCIA, RUC, TIPO_RUC, RAZON_SOCIAL, NOMBRE_ZIP, ZIP) "
+            + "(UBL, VERSION, TIPO_CODIGO, TIPO_DESCRIPCION, SERIE, CORRELATIVO, FECHA_EMISION, FECHA_REFERENCIA, RUC, RUC_TIPO, RAZON_SOCIAL, ZIP_NOMBRE, ZIP) "
             + "VALUES"
-            + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            + "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     try (PreparedStatement ps =
         database.getConnection().prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -56,15 +56,16 @@ public class ISummaryDao implements SummaryDao {
       ps.setString(1, summary.getUbl());
       ps.setString(2, summary.getVersion());
       ps.setString(3, summary.getTipoDocumento().getCodigo());
-      ps.setString(4, summary.getSerie());
-      ps.setInt(5, summary.getCorrelativo());
-      ps.setDate(6, new Date(summary.getFechaEmision().getTime()));
-      ps.setDate(7, new Date(summary.getFechaReferencia().getTime()));
-      ps.setString(8, summary.getEmisor().getRuc());
-      ps.setInt(9, summary.getEmisor().getTipo());
-      ps.setString(10, summary.getEmisor().getRazonSocial());
-      ps.setString(11, summary.getNombreZip());
-      ps.setBytes(12, summary.getZip());
+      ps.setString(4, summary.getTipoDocumento().getDescripcion());
+      ps.setString(5, summary.getSerie());
+      ps.setInt(6, summary.getCorrelativo());
+      ps.setDate(7, new Date(summary.getFechaEmision().getTime()));
+      ps.setDate(8, new Date(summary.getFechaReferencia().getTime()));
+      ps.setString(9, summary.getEmisor().getRuc());
+      ps.setInt(10, summary.getEmisor().getTipo());
+      ps.setString(11, summary.getEmisor().getRazonSocial());
+      ps.setString(12, summary.getNombreZip());
+      ps.setBytes(13, summary.getZip());
 
       ps.executeUpdate();
 
@@ -82,19 +83,19 @@ public class ISummaryDao implements SummaryDao {
 
   @Override
   public List<Summary> read() throws SQLException {
-    List<Summary> list = null;
+    List<Summary> list = new ArrayList<>();
+
     database.connect();
 
     String query =
         "SELECT "
-            + "ID, FECHA_EMISION, RUC, TIPO, SERIE, CORRELATIVO, NOMBRE_ZIP, ZIP "
+            + "ID, FECHA_EMISION, RUC, TIPO_CODIGO, TIPO_DESCRIPCION, SERIE, CORRELATIVO, ZIP_NOMBRE, ZIP "
             + "FROM SUMMARY "
-            + "WHERE TICKET IS NULL  AND STATUS_CODE IS NULL AND NOMBRE_CONTENT IS NULL AND CONTENT IS NULL "
+            + "WHERE TICKET IS NULL  AND STATUS_CODE IS NULL AND CONTENT_NOMBRE IS NULL AND CONTENT IS NULL "
             + "ORDER BY FECHA_EMISION DESC";
 
     try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
       try (ResultSet rs = ps.executeQuery()) {
-        list = new ArrayList<>();
         while (rs.next()) {
           Summary summary = new Summary();
           summary.setId(rs.getInt(1));
@@ -105,12 +106,13 @@ public class ISummaryDao implements SummaryDao {
 
           TipoDocumento tipoDocumento = new TipoDocumento();
           tipoDocumento.setCodigo(rs.getString(4));
+          tipoDocumento.setDescripcion(rs.getString(5));
           summary.setTipoDocumento(tipoDocumento);
 
-          summary.setSerie(rs.getString(5));
-          summary.setCorrelativo(rs.getInt(6));
-          summary.setNombreZip(rs.getString(7));
-          summary.setZip(rs.getBytes(8));
+          summary.setSerie(rs.getString(6));
+          summary.setCorrelativo(rs.getInt(7));
+          summary.setNombreZip(rs.getString(8));
+          summary.setZip(rs.getBytes(9));
           list.add(summary);
         }
       }
@@ -129,7 +131,7 @@ public class ISummaryDao implements SummaryDao {
     String query =
         "SELECT TOP 1 CORRELATIVO "
             + "FROM SUMMARY "
-            + "WHERE TIPO = ? AND FECHA_EMISION = ? "
+            + "WHERE TIPO_CODIGO = ? AND FECHA_EMISION = ? "
             + "ORDER BY CORRELATIVO DESC";
 
     try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
@@ -153,7 +155,7 @@ public class ISummaryDao implements SummaryDao {
 
     String query =
         "UPDATE SUMMARY SET "
-            + "TICKET = ?, STATUS_CODE = ?, NOMBRE_CONTENT = ?, CONTENT = ? "
+            + "TICKET = ?, STATUS_CODE = ?, CONTENT_NOMBRE = ?, CONTENT = ? "
             + "WHERE ID = ?";
 
     try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
