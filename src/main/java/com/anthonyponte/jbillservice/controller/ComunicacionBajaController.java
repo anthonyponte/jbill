@@ -304,7 +304,11 @@ public class ComunicacionBajaController {
                         int correlativo = Integer.parseInt(model.getValueAt(i, 2).toString());
                         String motivo = model.getValueAt(i, 3).toString();
                         comunicacionBajaDetalle.setNumero(i + 1);
-                        documento.setTipo(getCodigoTipoDocumento(tipo));
+
+                        TipoDocumento tipoDocumento = new TipoDocumento();
+                        tipoDocumento.setDescripcion(tipo);
+                        documento.setTipoDocumento(tipoDocumento);
+                        
                         documento.setSerie(serie);
                         documento.setCorrelativo(correlativo);
                         comunicacionBajaDetalle.setDocumento(documento);

@@ -139,7 +139,7 @@ public class ComunicacionesBajaController {
                           List<ComunicacionBajaDetalle> list = get();
                           Object[] row = null;
                           for (ComunicacionBajaDetalle next : list) {
-                            String tipo = next.getDocumento().getTipo();
+                            String tipo = next.getDocumento().getTipoDocumento().getCodigo();
                             String serie = next.getDocumento().getSerie();
                             int correlativo = next.getDocumento().getCorrelativo();
                             String motivo = next.getMotivo();

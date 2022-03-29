@@ -45,7 +45,7 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
         ComunicacionBajaDetalle get = comunicacionBajaDetalles.get(i);
         ps.setInt(1, id);
         ps.setInt(2, get.getNumero());
-        ps.setString(3, get.getDocumento().getTipo());
+        ps.setString(3, get.getDocumento().getTipoDocumento().getCodigo());
         ps.setString(4, get.getDocumento().getSerie());
         ps.setInt(5, get.getDocumento().getCorrelativo());
         ps.setString(6, get.getMotivo());
@@ -79,11 +79,11 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
         while (rs.next()) {
           ComunicacionBaja comunicacionBaja = new ComunicacionBaja();
           comunicacionBaja.setId(rs.getInt(1));
-          
+
           TipoDocumento tipoDocumento = new TipoDocumento();
           tipoDocumento.setCodigo(rs.getString(2));
           comunicacionBaja.setTipoDocumento(tipoDocumento);
-          
+
           comunicacionBaja.setSerie(rs.getString(3));
           comunicacionBaja.setCorrelativo(rs.getInt(4));
           comunicacionBaja.setFechaEmision(rs.getDate(5));
@@ -136,7 +136,11 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
           comunicacionBajaDetalle.setNumero(rs.getInt(2));
 
           Documento documento = new Documento();
-          documento.setTipo(rs.getString(3));
+
+          TipoDocumento tipoDocumento = new TipoDocumento();
+          tipoDocumento.setCodigo(rs.getString(3));
+          documento.setTipoDocumento(tipoDocumento);
+
           documento.setSerie(rs.getString(4));
           documento.setCorrelativo(rs.getInt(5));
           comunicacionBajaDetalle.setDocumento(documento);

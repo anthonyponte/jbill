@@ -8,24 +8,24 @@ package com.anthonyponte.jbillservice.model;
 /** @author anthony */
 public class Documento {
 
-  private String tipo;
+  private TipoDocumento tipoDocumento;
   private String serie;
   private int correlativo;
 
   public Documento() {}
 
-  public Documento(String tipo, String serie, int correlativo) {
-    this.tipo = tipo;
+  public Documento(TipoDocumento tipoDocumento, String serie, int correlativo) {
+    this.tipoDocumento = tipoDocumento;
     this.serie = serie;
     this.correlativo = correlativo;
   }
 
-  public String getTipo() {
-    return tipo;
+  public TipoDocumento getTipoDocumento() {
+    return tipoDocumento;
   }
 
-  public void setTipo(String tipo) {
-    this.tipo = tipo;
+  public void setTipoDocumento(TipoDocumento tipoDocumento) {
+    this.tipoDocumento = tipoDocumento;
   }
 
   public String getSerie() {
@@ -47,8 +47,8 @@ public class Documento {
   @Override
   public String toString() {
     return "Documento{"
-        + "tipo="
-        + tipo
+        + "tipoDocumento="
+        + tipoDocumento
         + ", serie="
         + serie
         + ", correlativo="

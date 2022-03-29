@@ -143,7 +143,8 @@ public class VoidedDocuments {
           new Element("VoidedDocumentsLine", sac)
               .addContent(new Element("LineID", cbc).setText(String.valueOf(detalle.getNumero())))
               .addContent(
-                  new Element("DocumentTypeCode", cbc).setText(detalle.getDocumento().getTipo()))
+                  new Element("DocumentTypeCode", cbc)
+                      .setText(detalle.getDocumento().getTipoDocumento().getCodigo()))
               .addContent(
                   new Element("DocumentSerialID", sac).setText(detalle.getDocumento().getSerie()))
               .addContent(

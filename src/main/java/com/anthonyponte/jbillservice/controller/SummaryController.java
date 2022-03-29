@@ -368,18 +368,6 @@ public class SummaryController {
     worker.execute();
   }
 
-  private String getDescripcionDocumento(String codigo) {
-    String descripcion = "";
-    if (codigo.equalsIgnoreCase("RA")) {
-      descripcion = "Comunicacion de baja";
-    } else if (codigo.equalsIgnoreCase("RR")) {
-      descripcion = "Resumen de reversiones";
-    } else if (codigo.equalsIgnoreCase("RC")) {
-      descripcion = "Resumen diario";
-    }
-    return descripcion;
-  }
-
   private void resize(JTable table) {
     TableColumnModel columnModel = table.getColumnModel();
     for (int column = 0; column < table.getColumnCount(); column++) {
