@@ -244,8 +244,6 @@ public class ComunicacionBajaController {
 
                     comunicacionBaja = get();
 
-                    iFrame.tabbed.setSelectedIndex(0);
-
                     iFrame.tfFecha.setEnabled(true);
                     iFrame.tfFecha.setText(
                         MyDateFormat.d_MMMM_Y(comunicacionBaja.getFechaEmision()));

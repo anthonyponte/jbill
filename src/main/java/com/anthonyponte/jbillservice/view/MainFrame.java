@@ -59,7 +59,7 @@ public class MainFrame extends JFrame {
         miSummary = new JMenuItem();
         menuSalir = new JMenuItem();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("JBillService");
         setIconImages(list);
         setMinimumSize(new Dimension(1024, 768));

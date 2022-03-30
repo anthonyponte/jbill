@@ -14,11 +14,17 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.beans.PropertyVetoException;
+import java.io.IOException;
+import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import org.hsqldb.Server;
+import org.hsqldb.persist.HsqlProperties;
+import org.hsqldb.server.ServerAcl;
 
 /** @author anthony */
 public class MainController {
@@ -29,6 +35,13 @@ public class MainController {
   private SummaryIFrame summaryIFrame;
   private ComunicacionesBajaIFrame comunicacionesBajaIFrame;
   private LoadingDialog dialog;
+  private final String ALIAS = "jbs";
+  private final String DATABASE = "jbillservice";
+  private final String USER = "SA";
+  private final String PASS = "";
+  private final String URL = "jdbc:hsqldb:hsql://localhost/" + ALIAS;
+  private Connection connection = null;
+  private Server server = null;
 
   public MainController(MainFrame frame) {
     this.frame = frame;
@@ -79,16 +92,51 @@ public class MainController {
 
     frame.menuSalir.addActionListener(
         (ActionEvent arg0) -> {
-          int input =
-              JOptionPane.showConfirmDialog(
-                  frame,
-                  "Seguro que desea salir?",
-                  "Salir",
-                  JOptionPane.YES_NO_OPTION,
-                  JOptionPane.QUESTION_MESSAGE);
-          if (input == JOptionPane.YES_OPTION) {
-            frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+          finnish();
+        });
+
+    frame.addWindowListener(
+        new WindowListener() {
+          @Override
+          public void windowOpened(WindowEvent e) {
+            try {
+              HsqlProperties properties = new HsqlProperties();
+              properties.setProperty(
+                  "server.database.0",
+                  "file:C:\\Users\\AnthonyPonte\\Documents\\Projects\\NetBeansProjects\\JBillService\\src\\main\\java\\com\\anthonyponte\\jbillservice\\bd\\"
+                      + DATABASE);
+              properties.setProperty("server.dbname.0", ALIAS);
+
+              server = new Server();
+              server.setProperties(properties);
+              server.setTrace(true);
+              server.start();
+            } catch (IOException | ServerAcl.AclFormatException ex) {
+              Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+            }
           }
+
+          @Override
+          public void windowClosing(WindowEvent e) {
+            finnish();
+          }
+
+          @Override
+          public void windowClosed(WindowEvent e) {
+            server.stop();
+          }
+
+          @Override
+          public void windowIconified(WindowEvent e) {}
+
+          @Override
+          public void windowDeiconified(WindowEvent e) {}
+
+          @Override
+          public void windowActivated(WindowEvent e) {}
+
+          @Override
+          public void windowDeactivated(WindowEvent e) {}
         });
   }
 
@@ -107,6 +155,18 @@ public class MainController {
     } else {
       iframeClosed(usuarioIFrame);
     }
+  }
+
+  private void finnish() {
+    int input =
+        JOptionPane.showConfirmDialog(
+            frame,
+            "Seguro que desea salir?",
+            "Salir",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
+
+    if (input == JOptionPane.YES_OPTION) frame.dispose();
   }
 
   private Point centerIFrame(JInternalFrame jif) {
