@@ -277,8 +277,11 @@ public class ComunicacionBajaController {
                     iFrame.btnGuardar.setEnabled(false);
                     iFrame.btnLimpiar.setEnabled(true);
                   } catch (InterruptedException | ExecutionException ex) {
-                    Logger.getLogger(ComunicacionBajaController.class.getName())
-                        .log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(
+                        null,
+                        ex.getMessage(),
+                        ComunicacionBajaController.class.getName(),
+                        JOptionPane.ERROR_MESSAGE);
                   }
                 }
               };

@@ -27,7 +27,8 @@ public class MyHsqldbConnection {
   public void connect() {
     try {
       HsqlProperties properties = new HsqlProperties();
-      properties.setProperty("server.database.0", "./database/" + DATABASE);
+      properties.setProperty(
+          "server.database.0", "file:./src/main/java/com/anthonyponte/jbillservice/bd/" + DATABASE);
       properties.setProperty("server.dbname.0", ALIAS);
 
       server = new Server();
