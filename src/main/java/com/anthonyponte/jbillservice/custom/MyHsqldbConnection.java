@@ -9,8 +9,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.hsqldb.Server;
 import org.hsqldb.persist.HsqlProperties;
 import org.hsqldb.server.ServerAcl;
@@ -27,18 +26,19 @@ public class MyHsqldbConnection {
 
   public void connect() {
     try {
-      HsqlProperties hsqlProperties = new HsqlProperties();
-      hsqlProperties.setProperty("server.database.0", "./database/" + DATABASE);
-      hsqlProperties.setProperty("server.dbname.0", ALIAS);
+      HsqlProperties properties = new HsqlProperties();
+      properties.setProperty("server.database.0", "./database/" + DATABASE);
+      properties.setProperty("server.dbname.0", ALIAS);
 
       server = new Server();
-      server.setProperties(hsqlProperties);
+      server.setProperties(properties);
       server.setTrace(true);
       server.start();
 
       connection = DriverManager.getConnection(URL, USER, PASS);
     } catch (IOException | ServerAcl.AclFormatException | SQLException ex) {
-      Logger.getLogger(MyHsqldbConnection.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(
+          null, ex.getMessage(), MyHsqldbConnection.class.getName(), JOptionPane.ERROR_MESSAGE);
     }
   }
 
@@ -47,7 +47,8 @@ public class MyHsqldbConnection {
       connection.close();
       server.stop();
     } catch (SQLException ex) {
-      Logger.getLogger(MyHsqldbConnection.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(
+          null, ex.getMessage(), MyHsqldbConnection.class.getName(), JOptionPane.ERROR_MESSAGE);
     }
   }
 

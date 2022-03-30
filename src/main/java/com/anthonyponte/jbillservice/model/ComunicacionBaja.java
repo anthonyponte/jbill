@@ -83,6 +83,12 @@ public class ComunicacionBaja extends Summary {
 
   @Override
   public String toString() {
-    return "ComunicacionBaja{" + "comunicacionBajaDetalles=" + comunicacionBajaDetalles + '}';
+    return super.toString()
+        + " ComunicacionBaja{"
+        + "comunicacionBajaDetalles="
+        + comunicacionBajaDetalles
+        + '}';
   }
+  
+  
 }

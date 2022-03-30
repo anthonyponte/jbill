@@ -107,6 +107,7 @@ public class ComunicacionBajaIFrame extends JInternalFrame {
         lblTipo.setText("Tipo");
 
         cbxTipo.setModel(new DefaultComboBoxModel<>(new String[] { "Comunicación de baja", "Resumen de reversiones" }));
+        cbxTipo.setSelectedIndex(-1);
         cbxTipo.setEnabled(false);
         cbxTipo.setMaximumSize(null);
         cbxTipo.setPreferredSize(new Dimension(150, 30));
