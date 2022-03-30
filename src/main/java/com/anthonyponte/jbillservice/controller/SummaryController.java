@@ -36,19 +36,29 @@ import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.idao.IBillService;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
+import com.anthonyponte.jbillservice.model.ComunicacionBaja;
+import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
 import com.anthonyponte.jbillservice.model.Summary;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.google.common.util.concurrent.Uninterruptibles;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
@@ -153,6 +163,41 @@ public class SummaryController {
                   }
                 };
             worker.execute();
+          }
+        });
+
+    iFrame.table.addMouseListener(
+        new MouseAdapter() {
+          @Override
+          public void mouseClicked(MouseEvent e) {
+            if (e.getClickCount() == 2) {
+              int column = iFrame.table.columnAtPoint(e.getPoint());
+              if (column == 6) {
+                Summary selected = selectionModel.getSelected().get(0);
+
+                JFileChooser chooser = new JFileChooser();
+                chooser.setCurrentDirectory(new File("."));
+                chooser.setSelectedFile(new File(selected.getNombreZip()));
+
+                int result = chooser.showSaveDialog(iFrame);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                  File file = chooser.getSelectedFile().getAbsoluteFile();
+                  try (FileOutputStream fos =
+                      new FileOutputStream(file.getParent() + "//" + file.getName())) {
+
+                    fos.write(selected.getZip());
+
+                    fos.flush();
+                  } catch (FileNotFoundException ex) {
+                    Logger.getLogger(ComunicacionesBajaController.class.getName())
+                        .log(Level.SEVERE, null, ex);
+                  } catch (IOException ex) {
+                    Logger.getLogger(ComunicacionesBajaController.class.getName())
+                        .log(Level.SEVERE, null, ex);
+                  }
+                }
+              }
+            }
           }
         });
 

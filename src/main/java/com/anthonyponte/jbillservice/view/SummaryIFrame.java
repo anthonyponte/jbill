@@ -15,6 +15,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AbstractDocument;
 import org.kordamp.ikonli.remixicon.RemixiconAL;
@@ -77,8 +78,10 @@ public class SummaryIFrame extends JInternalFrame {
             }
         ));
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        table.setColumnSelectionAllowed(true);
         table.getTableHeader().setReorderingAllowed(false);
         scrllPane.setViewportView(table);
+        table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         btnEnviar.setIcon(FontIcon.of(RemixiconMZ.SEND_PLANE_LINE, 16, Color.decode("#FFFFFF")));
         btnEnviar.setText("Enviar");
