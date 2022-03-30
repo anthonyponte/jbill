@@ -77,15 +77,15 @@ public class ComunicacionesBajaController {
           public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {
               int column = iFrame.tblEncabezado.columnAtPoint(e.getPoint());
-              if (column == 7 || column == 8) {
+              if (column == 8 || column == 11) {
                 ComunicacionBaja selected = selectionModel.getSelected().get(0);
 
                 JFileChooser chooser = new JFileChooser();
                 chooser.setCurrentDirectory(new File("."));
 
-                if (column == 7) {
+                if (column == 8) {
                   chooser.setSelectedFile(new File(selected.getNombreZip()));
-                } else if (column == 8) {
+                } else if (column == 11) {
                   chooser.setSelectedFile(new File(selected.getNombreContent()));
                 }
 
@@ -95,9 +95,9 @@ public class ComunicacionesBajaController {
                   try (FileOutputStream fos =
                       new FileOutputStream(file.getParent() + "//" + file.getName())) {
 
-                    if (column == 7) {
+                    if (column == 8) {
                       fos.write(selected.getZip());
-                    } else if (column == 8) {
+                    } else if (column == 11) {
                       fos.write(selected.getContent());
                     }
 
