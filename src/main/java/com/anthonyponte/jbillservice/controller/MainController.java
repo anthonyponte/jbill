@@ -17,7 +17,6 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
@@ -35,13 +34,9 @@ public class MainController {
   private SummaryIFrame summaryIFrame;
   private ComunicacionesBajaIFrame comunicacionesBajaIFrame;
   private LoadingDialog dialog;
+  private Server server = null;
   private final String ALIAS = "jbs";
   private final String DATABASE = "jbillservice";
-  private final String USER = "SA";
-  private final String PASS = "";
-  private final String URL = "jdbc:hsqldb:hsql://localhost/" + ALIAS;
-  private Connection connection = null;
-  private Server server = null;
 
   public MainController(MainFrame frame) {
     this.frame = frame;
