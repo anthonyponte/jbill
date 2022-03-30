@@ -22,7 +22,7 @@ public class VoidedDocuments {
       Preferences.userRoot().node(MainController.class.getPackageName());
   private Document document;
 
-  public Document getStructure(ComunicacionBaja comunicacion) {
+  public Document getStructure(ComunicacionBaja comunicacionBaja) {
 
     document = new Document();
 
@@ -65,31 +65,31 @@ public class VoidedDocuments {
                 new Element("UBLExtension", ext).addContent(new Element("ExtensionContent", ext)));
     document.getRootElement().addContent(ublExtensions);
 
-    Element ublVersionID = new Element("UBLVersionID", cbc).setText(comunicacion.getUbl());
+    Element ublVersionID = new Element("UBLVersionID", cbc).setText(comunicacionBaja.getUbl());
     document.getRootElement().addContent(ublVersionID);
 
     Element customizationID =
-        new Element("CustomizationID", cbc).setText(comunicacion.getVersion());
+        new Element("CustomizationID", cbc).setText(comunicacionBaja.getVersion());
     document.getRootElement().addContent(customizationID);
 
     Element id =
         new Element("ID", cbc)
             .setText(
-                comunicacion.getTipoDocumento().getCodigo()
+                comunicacionBaja.getTipoDocumento().getCodigo()
                     + "-"
-                    + comunicacion.getSerie()
+                    + comunicacionBaja.getSerie()
                     + "-"
-                    + comunicacion.getCorrelativo());
+                    + comunicacionBaja.getCorrelativo());
     document.getRootElement().addContent(id);
 
     Element referenceDate =
         new Element("ReferenceDate", cbc)
-            .setText(MyDateFormat.yyyy_MM_dd(comunicacion.getFechaReferencia()));
+            .setText(MyDateFormat.yyyy_MM_dd(comunicacionBaja.getFechaReferencia()));
     document.getRootElement().addContent(referenceDate);
 
     Element issueDate =
         new Element("IssueDate", cbc)
-            .setText(MyDateFormat.yyyy_MM_dd(comunicacion.getFechaEmision()));
+            .setText(MyDateFormat.yyyy_MM_dd(comunicacionBaja.getFechaEmision()));
     document.getRootElement().addContent(issueDate);
 
     Element signature =
@@ -102,12 +102,12 @@ public class VoidedDocuments {
                     .addContent(
                         new Element("PartyIdentification", cac)
                             .addContent(
-                                new Element("ID", cbc).setText(comunicacion.getEmisor().getRuc())))
+                                new Element("ID", cbc).setText(comunicacionBaja.getEmisor().getRuc())))
                     .addContent(
                         new Element("PartyName", cac)
                             .addContent(
                                 new Element("Name", cbc)
-                                    .setText(comunicacion.getEmisor().getRazonSocial()))))
+                                    .setText(comunicacionBaja.getEmisor().getRazonSocial()))))
             .addContent(
                 new Element("DigitalSignatureAttachment", cac)
                     .addContent(
@@ -123,21 +123,21 @@ public class VoidedDocuments {
         new Element("AccountingSupplierParty", cac)
             .addContent(
                 new Element("CustomerAssignedAccountID", cbc)
-                    .setText(comunicacion.getEmisor().getRuc()))
+                    .setText(comunicacionBaja.getEmisor().getRuc()))
             .addContent(
                 new Element("AdditionalAccountID", cbc)
-                    .setText(String.valueOf(comunicacion.getEmisor().getTipo())))
+                    .setText(String.valueOf(comunicacionBaja.getEmisor().getTipo())))
             .addContent(
                 new Element("Party", cac)
                     .addContent(
                         new Element("PartyLegalEntity", cac)
                             .addContent(
                                 new Element("RegistrationName", cbc)
-                                    .setText(comunicacion.getEmisor().getRazonSocial()))));
+                                    .setText(comunicacionBaja.getEmisor().getRazonSocial()))));
     document.getRootElement().addContent(accountingSupplierParty);
 
-    for (int i = 0; i < comunicacion.getComunicacionBajaDetalles().size(); i++) {
-      ComunicacionBajaDetalle detalle = comunicacion.getComunicacionBajaDetalles().get(i);
+    for (int i = 0; i < comunicacionBaja.getComunicacionBajaDetalles().size(); i++) {
+      ComunicacionBajaDetalle detalle = comunicacionBaja.getComunicacionBajaDetalles().get(i);
 
       Element voidedDocumentsLine =
           new Element("VoidedDocumentsLine", sac)
