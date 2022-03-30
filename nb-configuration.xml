@@ -26,7 +26,6 @@ Any value defined here will override the pom.xml file value but is only applicab
         <de-funfried-netbeans-plugins-externalcodeformatter.googleFormatterCodeStyle>GOOGLE</de-funfried-netbeans-plugins-externalcodeformatter.googleFormatterCodeStyle>
         <de-funfried-netbeans-plugins-externalcodeformatter.spring-linefeed/>
         <org-netbeans-modules-javascript2-requirejs.enabled>true</org-netbeans-modules-javascript2-requirejs.enabled>
-        <org-netbeans-modules-maven-jaxws._5f_C_5f_billService>https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_billService>
         <netbeans.hint.license>gpl30</netbeans.hint.license>
     </properties>
 </project-shared-configuration>
