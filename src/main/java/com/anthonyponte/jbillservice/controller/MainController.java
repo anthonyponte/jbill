@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyVetoException;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -96,10 +97,7 @@ public class MainController {
           public void windowOpened(WindowEvent e) {
             try {
               HsqlProperties properties = new HsqlProperties();
-              properties.setProperty(
-                  "server.database.0",
-                  "file:./src/main/java/com/anthonyponte/jbillservice/hsqldb/"
-                      + DATABASE);
+              properties.setProperty("server.database.0", "file:./hsqldb/" + DATABASE);
               properties.setProperty("server.dbname.0", ALIAS);
 
               server = new Server();
@@ -107,7 +105,8 @@ public class MainController {
               server.setTrace(true);
               server.start();
             } catch (IOException | ServerAcl.AclFormatException ex) {
-              Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+              JOptionPane.showMessageDialog(
+                  null, ex.getMessage(), MainController.class.getName(), JOptionPane.ERROR_MESSAGE);
             }
           }
 

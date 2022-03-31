@@ -16,6 +16,7 @@ public class MyHsqldbConnection {
   private final String USER = "SA";
   private final String PASS = "";
   private final String URL = "jdbc:hsqldb:hsql://localhost/" + ALIAS;
+//  private final String URL = "jdbc:hsqldb:file:/com/anthonyponte/jbillservice/hsqldb/" + ALIAS;
   private Connection connection = null;
 
   public void connect() {

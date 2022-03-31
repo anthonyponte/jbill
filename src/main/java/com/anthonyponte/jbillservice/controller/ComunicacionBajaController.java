@@ -162,7 +162,10 @@ public class ComunicacionBajaController {
             DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
             model.addRow(new Object[] {tipo, serie, numero, motivo});
 
-            iFrame.tfDocumentoSerie.setText("");
+            iFrame
+                .tfDocumentoSerie
+                .getDocument()
+                .remove(0, iFrame.tfDocumentoSerie.getText().length());
             iFrame
                 .tfDocumentoCorrelativo
                 .getDocument()
