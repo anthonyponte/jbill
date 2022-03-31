@@ -98,7 +98,7 @@ public class MainController {
               HsqlProperties properties = new HsqlProperties();
               properties.setProperty(
                   "server.database.0",
-                  "file:C:\\Users\\AnthonyPonte\\Documents\\Projects\\NetBeansProjects\\JBillService\\src\\main\\java\\com\\anthonyponte\\jbillservice\\bd\\"
+                  "file:./src/main/java/com/anthonyponte/jbillservice/hsqldb/"
                       + DATABASE);
               properties.setProperty("server.dbname.0", ALIAS);
 
