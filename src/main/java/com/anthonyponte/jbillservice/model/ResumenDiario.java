@@ -17,5 +17,79 @@
 
 package com.anthonyponte.jbillservice.model;
 
+import java.util.Date;
+import java.util.List;
+
 /** @author AnthonyPonte */
-public class ResumenDiario {}
+public class ResumenDiario extends Summary {
+  private List<ResumenDiarioDetalle> resumenDiarioDetalles;
+
+  public ResumenDiario() {}
+
+  public ResumenDiario(
+      int id,
+      String ubl,
+      String version,
+      TipoDocumento tipoDocumento,
+      String serie,
+      int correlativo,
+      Date fechaEmision,
+      Date fechaReferencia,
+      Empresa emisor,
+      String nombreZip,
+      byte[] zip) {
+    super(
+        id,
+        ubl,
+        version,
+        tipoDocumento,
+        serie,
+        correlativo,
+        fechaEmision,
+        fechaReferencia,
+        emisor,
+        nombreZip,
+        zip);
+  }
+
+  public ResumenDiario(
+      String ubl,
+      String version,
+      TipoDocumento tipoDocumento,
+      String serie,
+      int correlativo,
+      Date fechaEmision,
+      Date fechaReferencia,
+      Empresa emisor,
+      String nombreZip,
+      byte[] zip) {
+    super(
+        ubl,
+        version,
+        tipoDocumento,
+        serie,
+        correlativo,
+        fechaEmision,
+        fechaReferencia,
+        emisor,
+        nombreZip,
+        zip);
+  }
+
+  public List<ResumenDiarioDetalle> getResumenDiarioDetalles() {
+    return resumenDiarioDetalles;
+  }
+
+  public void setResumenDiarioDetalles(List<ResumenDiarioDetalle> resumenDiarioDetalles) {
+    this.resumenDiarioDetalles = resumenDiarioDetalles;
+  }
+
+  @Override
+  public String toString() {
+    return super.toString()
+        + "ResumenDiario{"
+        + "resumenDiarioDetalles="
+        + resumenDiarioDetalles
+        + '}';
+  }
+}
