@@ -132,7 +132,7 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
         while (rs.next()) {
           ComunicacionBajaDetalle comunicacionBajaDetalle = new ComunicacionBajaDetalle();
 
-          comunicacionBajaDetalle.setComunicacion(comunicacionBaja);
+          comunicacionBajaDetalle.setComunicacionBaja(comunicacionBaja);
 
           comunicacionBajaDetalle.setId(rs.getInt(1));
           comunicacionBajaDetalle.setNumero(rs.getInt(2));

@@ -7,35 +7,27 @@ package com.anthonyponte.jbillservice.model;
 /** @author anthony */
 public class ComunicacionBajaDetalle {
 
-  private ComunicacionBaja comunicacion;
   private int id;
+  private ComunicacionBaja comunicacionBaja;
   private int numero;
   private Documento documento;
   private String motivo;
 
   public ComunicacionBajaDetalle() {}
 
+  public ComunicacionBajaDetalle(
+      int id, ComunicacionBaja comunicacionBaja, int numero, Documento documento, String motivo) {
+    this.id = id;
+    this.comunicacionBaja = comunicacionBaja;
+    this.numero = numero;
+    this.documento = documento;
+    this.motivo = motivo;
+  }
+
   public ComunicacionBajaDetalle(int numero, Documento documento, String motivo) {
     this.numero = numero;
     this.documento = documento;
     this.motivo = motivo;
-  }
-
-  public ComunicacionBajaDetalle(
-      ComunicacionBaja comunicacion, int id, int numero, Documento documento, String motivo) {
-    this.comunicacion = comunicacion;
-    this.id = id;
-    this.numero = numero;
-    this.documento = documento;
-    this.motivo = motivo;
-  }
-
-  public ComunicacionBaja getComunicacion() {
-    return comunicacion;
-  }
-
-  public void setComunicacion(ComunicacionBaja comunicacion) {
-    this.comunicacion = comunicacion;
   }
 
   public int getId() {
@@ -44,6 +36,14 @@ public class ComunicacionBajaDetalle {
 
   public void setId(int id) {
     this.id = id;
+  }
+
+  public ComunicacionBaja getComunicacionBaja() {
+    return comunicacionBaja;
+  }
+
+  public void setComunicacionBaja(ComunicacionBaja comunicacionBaja) {
+    this.comunicacionBaja = comunicacionBaja;
   }
 
   public int getNumero() {
@@ -72,11 +72,11 @@ public class ComunicacionBajaDetalle {
 
   @Override
   public String toString() {
-    return "ComunicacionDetalle{"
-        + "comunicacion="
-        + comunicacion
-        + ", id="
+    return "ComunicacionBajaDetalle{"
+        + "id="
         + id
+        + ", comunicacionBaja="
+        + comunicacionBaja
         + ", numero="
         + numero
         + ", documento="
