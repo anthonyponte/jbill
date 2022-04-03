@@ -53,35 +53,35 @@ public class ResumenDiarioIFrame extends JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tabbed = new javax.swing.JTabbedPane();
-        pnlEncabezado = new javax.swing.JPanel();
-        lblFecha = new javax.swing.JLabel();
-        tfFecha = new javax.swing.JTextField();
-        lblTipo = new javax.swing.JLabel();
-        cbxTipo = new javax.swing.JComboBox<>();
-        lblCorrelativo = new javax.swing.JLabel();
-        tfCorrelativo = new javax.swing.JTextField();
-        lblSerie = new javax.swing.JLabel();
-        tfSerie = new javax.swing.JTextField();
-        pnlDetalle = new javax.swing.JPanel();
-        lblDocumentoFecha = new javax.swing.JLabel();
-        dpDocumentoFecha = new org.jdesktop.swingx.JXDatePicker();
-        lblDocumentoTipo = new javax.swing.JLabel();
-        cbxDocumentoTipo = new javax.swing.JComboBox<>();
-        lblDocumentoSerie = new javax.swing.JLabel();
-        lblDocumentoNumero = new javax.swing.JLabel();
-        lblDocumentoMotivo = new javax.swing.JLabel();
-        tfDocumentoMotivo = new javax.swing.JTextField();
-        btnAgregar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        spane = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
-        tfDocumentoCorrelativo = new javax.swing.JTextField();
-        tfDocumentoSerie = new javax.swing.JTextField();
-        separator = new javax.swing.JSeparator();
-        btnNuevo = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
+        tabbed = new JTabbedPane();
+        pnlEncabezado = new JPanel();
+        lblFechaGeneracion = new JLabel();
+        tfFechaGeneracion = new JTextField();
+        lblTipo = new JLabel();
+        lblCorrelativo = new JLabel();
+        tfCorrelativo = new JTextField();
+        lblSerie = new JLabel();
+        tfSerie = new JTextField();
+        tfTipo = new JTextField();
+        dpFechaEmision = new JXDatePicker();
+        lblFechaEmision = new JLabel();
+        pnlDetalle = new JPanel();
+        lblDocumentoTipo = new JLabel();
+        cbxDocumentoTipo = new JComboBox<>();
+        lblDocumentoSerie = new JLabel();
+        lblDocumentoNumero = new JLabel();
+        lblDocumentoMotivo = new JLabel();
+        tfDocumentoMotivo = new JTextField();
+        btnAgregar = new JButton();
+        btnEliminar = new JButton();
+        spane = new JScrollPane();
+        table = new JTable();
+        tfDocumentoCorrelativo = new JTextField();
+        tfDocumentoSerie = new JTextField();
+        separator = new JSeparator();
+        btnNuevo = new JButton();
+        btnGuardar = new JButton();
+        btnLimpiar = new JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -94,35 +94,29 @@ public class ResumenDiarioIFrame extends JInternalFrame {
 
         pnlEncabezado.setMaximumSize(null);
 
-        lblFecha.setFont(lblFecha.getFont().deriveFont(lblFecha.getFont().getStyle() | java.awt.Font.BOLD, lblFecha.getFont().getSize()-2));
-        lblFecha.setText("Fecha");
+        lblFechaGeneracion.setFont(lblFechaGeneracion.getFont().deriveFont(lblFechaGeneracion.getFont().getStyle() | Font.BOLD, lblFechaGeneracion.getFont().getSize()-2));
+        lblFechaGeneracion.setText("Fecha Generacion");
 
-        tfFecha.setEnabled(false);
-        tfFecha.setMaximumSize(null);
-        tfFecha.setMinimumSize(null);
-        tfFecha.setPreferredSize(new java.awt.Dimension(150, 30));
-        tfFecha.setEditable(false);
+        tfFechaGeneracion.setEnabled(false);
+        tfFechaGeneracion.setMaximumSize(null);
+        tfFechaGeneracion.setMinimumSize(null);
+        tfFechaGeneracion.setPreferredSize(new Dimension(150, 30));
+        tfFechaGeneracion.setEditable(false);
 
-        lblTipo.setFont(lblTipo.getFont().deriveFont(lblTipo.getFont().getStyle() | java.awt.Font.BOLD, lblTipo.getFont().getSize()-2));
+        lblTipo.setFont(lblTipo.getFont().deriveFont(lblTipo.getFont().getStyle() | Font.BOLD, lblTipo.getFont().getSize()-2));
         lblTipo.setText("Tipo");
 
-        cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comunicación de baja", "Resumen de reversiones" }));
-        cbxTipo.setSelectedIndex(-1);
-        cbxTipo.setEnabled(false);
-        cbxTipo.setMaximumSize(null);
-        cbxTipo.setPreferredSize(new java.awt.Dimension(150, 30));
-
-        lblCorrelativo.setFont(lblCorrelativo.getFont().deriveFont(lblCorrelativo.getFont().getStyle() | java.awt.Font.BOLD, lblCorrelativo.getFont().getSize()-2));
+        lblCorrelativo.setFont(lblCorrelativo.getFont().deriveFont(lblCorrelativo.getFont().getStyle() | Font.BOLD, lblCorrelativo.getFont().getSize()-2));
         lblCorrelativo.setText("Correlativo");
         lblCorrelativo.setName(""); // NOI18N
 
         tfCorrelativo.setEnabled(false);
         tfCorrelativo.setMaximumSize(null);
         tfCorrelativo.setMinimumSize(null);
-        tfCorrelativo.setPreferredSize(new java.awt.Dimension(150, 30));
+        tfCorrelativo.setPreferredSize(new Dimension(150, 30));
         tfCorrelativo.setEditable(false);
 
-        lblSerie.setFont(lblSerie.getFont().deriveFont(lblSerie.getFont().getStyle() | java.awt.Font.BOLD, lblSerie.getFont().getSize()-2));
+        lblSerie.setFont(lblSerie.getFont().deriveFont(lblSerie.getFont().getStyle() | Font.BOLD, lblSerie.getFont().getSize()-2));
         lblSerie.setText("Serie");
         lblSerie.setMaximumSize(null);
         lblSerie.setMinimumSize(null);
@@ -131,45 +125,65 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfSerie.setEnabled(false);
         tfSerie.setMaximumSize(null);
         tfSerie.setMinimumSize(null);
-        tfSerie.setPreferredSize(new java.awt.Dimension(150, 30));
+        tfSerie.setPreferredSize(new Dimension(150, 30));
         tfSerie.setEditable(false);
 
-        javax.swing.GroupLayout pnlEncabezadoLayout = new javax.swing.GroupLayout(pnlEncabezado);
+        tfTipo.setEnabled(false);
+        tfTipo.setMaximumSize(null);
+        tfTipo.setMinimumSize(null);
+        tfTipo.setPreferredSize(new Dimension(150, 30));
+        tfFechaGeneracion.setEditable(false);
+
+        dpFechaEmision.setEnabled(false);
+        dpFechaEmision.setFormats(new SimpleDateFormat("d MMMM y"));
+        dpFechaEmision.setMaximumSize(null);
+        dpFechaEmision.setMinimumSize(null);
+        dpFechaEmision.setPreferredSize(new Dimension(150, 30));
+        dpFechaEmision.getEditor().setEditable(false);
+
+        lblFechaEmision.setFont(lblFechaEmision.getFont().deriveFont(lblFechaEmision.getFont().getStyle() | Font.BOLD, lblFechaEmision.getFont().getSize()-2));
+        lblFechaEmision.setText("Fecha Emision Documentos");
+
+        GroupLayout pnlEncabezadoLayout = new GroupLayout(pnlEncabezado);
         pnlEncabezado.setLayout(pnlEncabezadoLayout);
-        pnlEncabezadoLayout.setHorizontalGroup(
-            pnlEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlEncabezadoLayout.setHorizontalGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlEncabezadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-                    .addComponent(cbxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(tfFechaGeneracion, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                    .addComponent(tfSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfTipo, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                    .addComponent(dpFechaEmision, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblTipo)
-                    .addComponent(lblFecha)
-                    .addComponent(lblSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblFechaGeneracion)
+                    .addComponent(lblSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCorrelativo)
-                    .addComponent(tfCorrelativo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblFechaEmision))
                 .addContainerGap())
         );
-        pnlEncabezadoLayout.setVerticalGroup(
-            pnlEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlEncabezadoLayout.setVerticalGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlEncabezadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblFecha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblTipo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(lblSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblCorrelativo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfCorrelativo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblFechaGeneracion)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfFechaGeneracion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblFechaEmision)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dpFechaEmision, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -177,57 +191,47 @@ public class ResumenDiarioIFrame extends JInternalFrame {
 
         pnlDetalle.setMaximumSize(null);
 
-        lblDocumentoFecha.setFont(lblDocumentoFecha.getFont().deriveFont(lblDocumentoFecha.getFont().getStyle() | java.awt.Font.BOLD, lblDocumentoFecha.getFont().getSize()-2));
-        lblDocumentoFecha.setText("Fecha Documento");
-
-        dpDocumentoFecha.setEnabled(false);
-        dpDocumentoFecha.setFormats(new SimpleDateFormat("d MMMM y"));
-        dpDocumentoFecha.setMaximumSize(null);
-        dpDocumentoFecha.setMinimumSize(null);
-        dpDocumentoFecha.setPreferredSize(new java.awt.Dimension(150, 30));
-        dpDocumentoFecha.getEditor().setEditable(false);
-
-        lblDocumentoTipo.setFont(lblDocumentoTipo.getFont().deriveFont(lblDocumentoTipo.getFont().getStyle() | java.awt.Font.BOLD, lblDocumentoTipo.getFont().getSize()-2));
+        lblDocumentoTipo.setFont(lblDocumentoTipo.getFont().deriveFont(lblDocumentoTipo.getFont().getStyle() | Font.BOLD, lblDocumentoTipo.getFont().getSize()-2));
         lblDocumentoTipo.setText("Tipo Documento");
 
-        cbxDocumentoTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Factura", "Nota de crédito", "Nota de débito" }));
+        cbxDocumentoTipo.setModel(new DefaultComboBoxModel<>(new String[] { "Boleta de venta", "Nota de crédito - boleta de venta", "Nota de débito - boleta de venta" }));
         cbxDocumentoTipo.setSelectedIndex(-1);
         cbxDocumentoTipo.setEnabled(false);
         cbxDocumentoTipo.setMaximumSize(null);
-        cbxDocumentoTipo.setPreferredSize(new java.awt.Dimension(150, 30));
+        cbxDocumentoTipo.setPreferredSize(new Dimension(150, 30));
 
-        lblDocumentoSerie.setFont(lblDocumentoSerie.getFont().deriveFont(lblDocumentoSerie.getFont().getStyle() | java.awt.Font.BOLD, lblDocumentoSerie.getFont().getSize()-2));
+        lblDocumentoSerie.setFont(lblDocumentoSerie.getFont().deriveFont(lblDocumentoSerie.getFont().getStyle() | Font.BOLD, lblDocumentoSerie.getFont().getSize()-2));
         lblDocumentoSerie.setText("Serie Documento");
 
-        lblDocumentoNumero.setFont(lblDocumentoNumero.getFont().deriveFont(lblDocumentoNumero.getFont().getStyle() | java.awt.Font.BOLD, lblDocumentoNumero.getFont().getSize()-2));
+        lblDocumentoNumero.setFont(lblDocumentoNumero.getFont().deriveFont(lblDocumentoNumero.getFont().getStyle() | Font.BOLD, lblDocumentoNumero.getFont().getSize()-2));
         lblDocumentoNumero.setText("Correlativo Documento");
 
-        lblDocumentoMotivo.setFont(lblDocumentoMotivo.getFont().deriveFont(lblDocumentoMotivo.getFont().getStyle() | java.awt.Font.BOLD, lblDocumentoMotivo.getFont().getSize()-2));
+        lblDocumentoMotivo.setFont(lblDocumentoMotivo.getFont().deriveFont(lblDocumentoMotivo.getFont().getStyle() | Font.BOLD, lblDocumentoMotivo.getFont().getSize()-2));
         lblDocumentoMotivo.setText("Motivo Baja");
 
         tfDocumentoMotivo.setEnabled(false);
         tfDocumentoMotivo.setMaximumSize(null);
         tfDocumentoMotivo.setMinimumSize(null);
-        tfDocumentoMotivo.setPreferredSize(new java.awt.Dimension(150, 30));
+        tfDocumentoMotivo.setPreferredSize(new Dimension(150, 30));
 
         btnAgregar.setIcon(FontIcon.of(RemixiconAL.INSERT_ROW_BOTTOM, 16, Color.decode("#FFFFFF")));
         btnAgregar.setText("Agregar");
         btnAgregar.setEnabled(false);
-        btnAgregar.setMinimumSize(new java.awt.Dimension(150, 30));
+        btnAgregar.setMinimumSize(new Dimension(150, 30));
         btnAgregar.setName(""); // NOI18N
-        btnAgregar.setPreferredSize(new java.awt.Dimension(150, 30));
+        btnAgregar.setPreferredSize(new Dimension(150, 30));
 
         btnEliminar.setIcon(FontIcon.of(RemixiconAL.DELETE_ROW, 16, Color.decode("#FFFFFF")));
         btnEliminar.setText("Eliminar");
         btnEliminar.setEnabled(false);
-        btnEliminar.setMinimumSize(new java.awt.Dimension(150, 30));
-        btnEliminar.setPreferredSize(new java.awt.Dimension(150, 30));
+        btnEliminar.setMinimumSize(new Dimension(150, 30));
+        btnEliminar.setPreferredSize(new Dimension(150, 30));
 
         spane.setMaximumSize(null);
         spane.setMinimumSize(null);
-        spane.setPreferredSize(new java.awt.Dimension(150, 150));
+        spane.setPreferredSize(new Dimension(150, 150));
 
-        table.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new DefaultTableModel(
             new Object [][] {
 
             },
@@ -236,7 +240,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                Object.class, String.class, Integer.class, String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -251,7 +255,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         table.setPreferredSize(null);
         table.getTableHeader().setReorderingAllowed(false);
         spane.setViewportView(table);
-        table.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         if (table.getColumnModel().getColumnCount() > 0) {
             table.getColumnModel().getColumn(0).setResizable(false);
             table.getColumnModel().getColumn(1).setResizable(false);
@@ -262,75 +266,67 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfDocumentoCorrelativo.setEnabled(false);
         tfDocumentoCorrelativo.setMaximumSize(null);
         tfDocumentoCorrelativo.setMinimumSize(null);
-        tfDocumentoCorrelativo.setPreferredSize(new java.awt.Dimension(150, 30));
+        tfDocumentoCorrelativo.setPreferredSize(new Dimension(150, 30));
         AbstractDocument docRuc = (AbstractDocument) tfDocumentoCorrelativo.getDocument();
         docRuc.setDocumentFilter(new IntegerFilter(8));
 
         tfDocumentoSerie.setEnabled(false);
         tfDocumentoSerie.setMaximumSize(null);
         tfDocumentoSerie.setMinimumSize(null);
-        tfDocumentoSerie.setPreferredSize(new java.awt.Dimension(150, 30));
+        tfDocumentoSerie.setPreferredSize(new Dimension(150, 30));
         AbstractDocument docSerie = (AbstractDocument) tfDocumentoSerie.getDocument();
         docSerie.setDocumentFilter(new SerieFilter('F'));
 
-        javax.swing.GroupLayout pnlDetalleLayout = new javax.swing.GroupLayout(pnlDetalle);
+        GroupLayout pnlDetalleLayout = new GroupLayout(pnlDetalle);
         pnlDetalle.setLayout(pnlDetalleLayout);
-        pnlDetalleLayout.setHorizontalGroup(
-            pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlDetalleLayout.setHorizontalGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetalleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(pnlDetalleLayout.createSequentialGroup()
-                        .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(pnlDetalleLayout.createSequentialGroup()
-                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addComponent(lblDocumentoMotivo)
                             .addComponent(lblDocumentoNumero)
                             .addComponent(lblDocumentoSerie)
-                            .addComponent(lblDocumentoTipo)
-                            .addComponent(lblDocumentoFecha))
+                            .addComponent(lblDocumentoTipo))
                         .addGap(150, 150, 150))
                     .addGroup(pnlDetalleLayout.createSequentialGroup()
-                        .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(spane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxDocumentoTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(dpDocumentoFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfDocumentoMotivo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(tfDocumentoCorrelativo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfDocumentoSerie, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(spane, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxDocumentoTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfDocumentoMotivo, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(tfDocumentoCorrelativo, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfDocumentoSerie, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())))
         );
-        pnlDetalleLayout.setVerticalGroup(
-            pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlDetalleLayout.setVerticalGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetalleLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblDocumentoFecha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dpDocumentoFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblDocumentoTipo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxDocumentoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxDocumentoTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblDocumentoSerie)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfDocumentoSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfDocumentoSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblDocumentoNumero)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfDocumentoCorrelativo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblDocumentoMotivo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfDocumentoMotivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spane, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfDocumentoMotivo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(spane, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -338,89 +334,87 @@ public class ResumenDiarioIFrame extends JInternalFrame {
 
         separator.setMaximumSize(null);
         separator.setMinimumSize(null);
-        separator.setPreferredSize(new java.awt.Dimension(5, 5));
+        separator.setPreferredSize(new Dimension(5, 5));
 
         btnNuevo.setIcon(FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode("#FFFFFF")));
         btnNuevo.setText("Nuevo");
-        btnNuevo.setMinimumSize(new java.awt.Dimension(150, 30));
-        btnNuevo.setPreferredSize(new java.awt.Dimension(150, 30));
+        btnNuevo.setMinimumSize(new Dimension(150, 30));
+        btnNuevo.setPreferredSize(new Dimension(150, 30));
 
         btnGuardar.setIcon(FontIcon.of(RemixiconMZ.SAVE_LINE, 16, Color.decode("#FFFFFF")));
         btnGuardar.setText("Guardar");
         btnGuardar.setEnabled(false);
-        btnGuardar.setMinimumSize(new java.awt.Dimension(150, 30));
-        btnGuardar.setPreferredSize(new java.awt.Dimension(150, 30));
+        btnGuardar.setMinimumSize(new Dimension(150, 30));
+        btnGuardar.setPreferredSize(new Dimension(150, 30));
 
         btnLimpiar.setIcon(FontIcon.of(RemixiconAL.ERASER_LINE, 16, Color.decode("#FFFFFF")));
         btnLimpiar.setText("Limpiar");
         btnLimpiar.setEnabled(false);
-        btnLimpiar.setMinimumSize(new java.awt.Dimension(150, 30));
-        btnLimpiar.setPreferredSize(new java.awt.Dimension(150, 30));
+        btnLimpiar.setMinimumSize(new Dimension(150, 30));
+        btnLimpiar.setPreferredSize(new Dimension(150, 30));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(separator, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tabbed, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(btnNuevo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnGuardar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnLimpiar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(separator, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tabbed, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabbed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addComponent(tabbed, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpiar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnNuevo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btnAgregar;
-    public javax.swing.JButton btnEliminar;
-    public javax.swing.JButton btnGuardar;
-    public javax.swing.JButton btnLimpiar;
-    public javax.swing.JButton btnNuevo;
-    public javax.swing.JComboBox<String> cbxDocumentoTipo;
-    public javax.swing.JComboBox<String> cbxTipo;
-    public org.jdesktop.swingx.JXDatePicker dpDocumentoFecha;
-    public javax.swing.JLabel lblCorrelativo;
-    public javax.swing.JLabel lblDocumentoFecha;
-    public javax.swing.JLabel lblDocumentoMotivo;
-    public javax.swing.JLabel lblDocumentoNumero;
-    public javax.swing.JLabel lblDocumentoSerie;
-    public javax.swing.JLabel lblDocumentoTipo;
-    public javax.swing.JLabel lblFecha;
-    public javax.swing.JLabel lblSerie;
-    public javax.swing.JLabel lblTipo;
-    public javax.swing.JPanel pnlDetalle;
-    public javax.swing.JPanel pnlEncabezado;
-    public javax.swing.JSeparator separator;
-    public javax.swing.JScrollPane spane;
-    public javax.swing.JTabbedPane tabbed;
-    public javax.swing.JTable table;
-    public javax.swing.JTextField tfCorrelativo;
-    public javax.swing.JTextField tfDocumentoCorrelativo;
-    public javax.swing.JTextField tfDocumentoMotivo;
-    public javax.swing.JTextField tfDocumentoSerie;
-    public javax.swing.JTextField tfFecha;
-    public javax.swing.JTextField tfSerie;
+    public JButton btnAgregar;
+    public JButton btnEliminar;
+    public JButton btnGuardar;
+    public JButton btnLimpiar;
+    public JButton btnNuevo;
+    public JComboBox<String> cbxDocumentoTipo;
+    public JXDatePicker dpFechaEmision;
+    public JLabel lblCorrelativo;
+    public JLabel lblDocumentoMotivo;
+    public JLabel lblDocumentoNumero;
+    public JLabel lblDocumentoSerie;
+    public JLabel lblDocumentoTipo;
+    public JLabel lblFechaEmision;
+    public JLabel lblFechaGeneracion;
+    public JLabel lblSerie;
+    public JLabel lblTipo;
+    public JPanel pnlDetalle;
+    public JPanel pnlEncabezado;
+    public JSeparator separator;
+    public JScrollPane spane;
+    public JTabbedPane tabbed;
+    public JTable table;
+    public JTextField tfCorrelativo;
+    public JTextField tfDocumentoCorrelativo;
+    public JTextField tfDocumentoMotivo;
+    public JTextField tfDocumentoSerie;
+    public JTextField tfFechaGeneracion;
+    public JTextField tfSerie;
+    public JTextField tfTipo;
     // End of variables declaration//GEN-END:variables
 }
