@@ -10,13 +10,13 @@ import com.anthonyponte.jbillservice.view.UsuarioIFrame;
 import com.anthonyponte.jbillservice.view.ComunicacionBajaIFrame;
 import com.anthonyponte.jbillservice.view.ComunicacionesBajaIFrame;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
+import com.anthonyponte.jbillservice.view.ResumenDiarioIFrame;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyVetoException;
-import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +32,7 @@ public class MainController {
   private final MainFrame frame;
   private UsuarioIFrame usuarioIFrame;
   private ComunicacionBajaIFrame comunicacionBajaIFrame;
+  private ResumenDiarioIFrame resumenDiarioIFrame;
   private SummaryIFrame summaryIFrame;
   private ComunicacionesBajaIFrame comunicacionesBajaIFrame;
   private LoadingDialog dialog;
@@ -59,6 +60,18 @@ public class MainController {
             new ComunicacionBajaController(comunicacionBajaIFrame, dialog).init();
           } else {
             iframeClosed(comunicacionBajaIFrame);
+          }
+        });
+
+    frame.miResumenDiario.addActionListener(
+        (ActionEvent arg0) -> {
+          if (isIframeClosed(resumenDiarioIFrame)) {
+            resumenDiarioIFrame = new ResumenDiarioIFrame();
+            frame.dpane.add(resumenDiarioIFrame);
+            resumenDiarioIFrame.setLocation(centerIFrame(resumenDiarioIFrame));
+            new ResumenDiarioController(resumenDiarioIFrame, dialog).init();
+          } else {
+            iframeClosed(resumenDiarioIFrame);
           }
         });
 
