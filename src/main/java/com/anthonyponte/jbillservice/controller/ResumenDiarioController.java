@@ -28,11 +28,12 @@ public class ResumenDiarioController {
   public ResumenDiarioController(ResumenDiarioIFrame iFrame, LoadingDialog dialog) {
     this.iFrame = iFrame;
     this.dialog = dialog;
+    initComponents();
   }
 
-  void init() {
-    throw new UnsupportedOperationException(
-        "Not supported yet."); // Generated from
-                               // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+  void init() {}
+
+  private void initComponents() {
+    iFrame.show();
   }
 }
