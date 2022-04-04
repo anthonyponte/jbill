@@ -138,7 +138,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfTipo.setMaximumSize(null);
         tfTipo.setMinimumSize(null);
         tfTipo.setPreferredSize(new Dimension(150, 30));
-        tfFechaGeneracion.setEditable(false);
+        tfTipo.setEditable(false);
 
         lblSerie.setText("Serie");
         lblSerie.setMaximumSize(null);

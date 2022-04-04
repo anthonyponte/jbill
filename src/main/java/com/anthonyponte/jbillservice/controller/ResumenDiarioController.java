@@ -17,13 +17,30 @@
 
 package com.anthonyponte.jbillservice.controller;
 
+import com.anthonyponte.jbillservice.custom.MyDateFormat;
+import com.anthonyponte.jbillservice.dao.SummaryDao;
+import com.anthonyponte.jbillservice.idao.ISummaryDao;
+import com.anthonyponte.jbillservice.model.Empresa;
+import com.anthonyponte.jbillservice.model.ResumenDiario;
+import com.anthonyponte.jbillservice.model.TipoDocumento;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.ResumenDiarioIFrame;
+import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.prefs.Preferences;
+import javax.swing.SwingWorker;
 
 /** @author anthony */
 public class ResumenDiarioController {
   private final ResumenDiarioIFrame iFrame;
   private final LoadingDialog dialog;
+  private Preferences preferences;
+  private SummaryDao summaryDao;
+  private ResumenDiario resumenDiario;
 
   public ResumenDiarioController(ResumenDiarioIFrame iFrame, LoadingDialog dialog) {
     this.iFrame = iFrame;
@@ -31,9 +48,85 @@ public class ResumenDiarioController {
     initComponents();
   }
 
-  void init() {}
+  void init() {
+    iFrame.btnNuevo.addActionListener(
+        (ActionEvent arg0) -> {
+          dialog.setVisible(true);
+          dialog.setLocationRelativeTo(iFrame);
+
+          SwingWorker worker =
+              new SwingWorker<ResumenDiario, Void>() {
+                @Override
+                protected ResumenDiario doInBackground() throws Exception {
+                  ResumenDiario resumen = null;
+                  try {
+                    resumen = new ResumenDiario();
+
+                    resumen.setUbl("2.0");
+                    resumen.setVersion("1.0");
+                    resumen.setSerie(MyDateFormat.yyyyMMdd(new Date()));
+
+                    TipoDocumento tipoDocumento = new TipoDocumento();
+                    tipoDocumento.setDescripcion("Resumen diario");
+                    resumen.setTipoDocumento(tipoDocumento);
+
+                    resumen.setFechaEmision(new Date());
+                    resumen.setFechaReferencia(new Date());
+
+                    Empresa emisor = new Empresa();
+                    emisor.setRuc(preferences.get(UsuarioController.RUC, ""));
+                    emisor.setTipo(preferences.getInt(UsuarioController.RUC_TIPO, 0));
+                    emisor.setRazonSocial(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
+                    resumen.setEmisor(emisor);
+
+                    int count = summaryDao.read(resumen);
+                    resumen.setCorrelativo(count + 1);
+                  } catch (SQLException ex) {
+                    Logger.getLogger(ResumenDiarioController.class.getName())
+                        .log(Level.SEVERE, null, ex);
+                  }
+                  return resumen;
+                }
+
+                @Override
+                protected void done() {
+                  try {
+                    dialog.dispose();
+
+                    iFrame.tfTipo.setEnabled(true);
+                    iFrame.tfSerie.setEnabled(true);
+                    iFrame.tfCorrelativo.setEnabled(true);
+                    iFrame.tfFechaGeneracion.setEnabled(true);
+                    iFrame.dpFechaEmision.setEnabled(true);
+
+                    iFrame.btnNuevo.setEnabled(false);
+                    iFrame.btnGuardar.setEnabled(false);
+                    iFrame.btnLimpiar.setEnabled(true);
+
+                    ResumenDiario get = get();
+
+                    iFrame.tfTipo.setText(get.getTipoDocumento().getDescripcion());
+                    iFrame.tfSerie.setText(get.getSerie());
+                    iFrame.tfCorrelativo.setText(String.valueOf(get.getCorrelativo()));
+                    iFrame.tfFechaGeneracion.setText(MyDateFormat.d_MMMM_Y(get.getFechaEmision()));
+                    iFrame.dpFechaEmision.setDate(new Date());
+
+                    iFrame.dpFechaEmision.requestFocus();
+                  } catch (InterruptedException | ExecutionException ex) {
+                    Logger.getLogger(ResumenDiarioController.class.getName())
+                        .log(Level.SEVERE, null, ex);
+                  }
+                }
+              };
+
+          worker.execute();
+        });
+  }
 
   private void initComponents() {
+    summaryDao = new ISummaryDao();
+    preferences = Preferences.userRoot().node(MainController.class.getPackageName());
+
     iFrame.show();
     iFrame.btnNuevo.requestFocus();
   }
