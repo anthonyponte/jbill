@@ -35,5 +35,6 @@ public class ResumenDiarioController {
 
   private void initComponents() {
     iFrame.show();
+    iFrame.btnNuevo.requestFocus();
   }
 }
