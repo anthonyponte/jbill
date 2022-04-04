@@ -93,6 +93,7 @@ public class UsuarioController {
             frame.menuVer.setEnabled(true);
             frame.menuBillService.setEnabled(true);
             frame.miComunicacionBaja.setEnabled(true);
+            frame.miResumenDiario.setEnabled(true);
             frame.miComunicacionesBaja.setEnabled(true);
             frame.miSummary.setEnabled(true);
           } catch (BackingStoreException ex) {

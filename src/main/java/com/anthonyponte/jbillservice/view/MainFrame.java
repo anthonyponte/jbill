@@ -53,6 +53,7 @@ public class MainFrame extends JFrame {
         menuEntrar = new JMenuItem();
         menuNuevo = new JMenu();
         miComunicacionBaja = new JMenuItem();
+        miResumenDiario = new JMenuItem();
         menuVer = new JMenu();
         miComunicacionesBaja = new JMenuItem();
         menuBillService = new JMenu();
@@ -86,6 +87,10 @@ public class MainFrame extends JFrame {
         miComunicacionBaja.setText("Comunicacion de baja");
         miComunicacionBaja.setEnabled(false);
         menuNuevo.add(miComunicacionBaja);
+
+        miResumenDiario.setText("Resumen diario");
+        miResumenDiario.setEnabled(false);
+        menuNuevo.add(miResumenDiario);
 
         menuMain.add(menuNuevo);
 
@@ -145,6 +150,7 @@ public class MainFrame extends JFrame {
     public JMenu menuVer;
     public JMenuItem miComunicacionBaja;
     public JMenuItem miComunicacionesBaja;
+    public JMenuItem miResumenDiario;
     public JMenuItem miSummary;
     // End of variables declaration//GEN-END:variables
 }
