@@ -87,7 +87,7 @@ public class ResumenDiario extends Summary {
   @Override
   public String toString() {
     return super.toString()
-        + "ResumenDiario{"
+        + " ResumenDiario{"
         + "resumenDiarioDetalles="
         + resumenDiarioDetalles
         + '}';
