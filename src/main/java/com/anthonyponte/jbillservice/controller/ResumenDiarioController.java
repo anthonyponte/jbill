@@ -34,6 +34,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 /** @author anthony */
@@ -84,8 +85,11 @@ public class ResumenDiarioController {
                     int count = summaryDao.read(resumen);
                     resumen.setCorrelativo(count + 1);
                   } catch (SQLException ex) {
-                    Logger.getLogger(ResumenDiarioController.class.getName())
-                        .log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(
+                        null,
+                        ex.getMessage(),
+                        ResumenDiarioController.class.getName(),
+                        JOptionPane.ERROR_MESSAGE);
                   }
                   return resumen;
                 }
@@ -118,12 +122,27 @@ public class ResumenDiarioController {
                     iFrame.cbxDocumentoTipo.setEditable(true);
                     iFrame.cbxDocumentoTipo.setSelectedIndex(0);
 
+                    iFrame.tfDocumentoSerie.setEnabled(true);
+                    iFrame.tfDocumentoSerie.setEditable(true);
+
+                    iFrame.tfDocumentoCorrelativo.setEnabled(true);
+                    iFrame.tfDocumentoCorrelativo.setEditable(true);
+
+                    iFrame.cbxDocumentoIdentidadTipo.setEnabled(true);
+                    iFrame.cbxDocumentoIdentidadTipo.setEditable(true);
+
+                    iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
+                    iFrame.tfDocumentoIdentidadNumero.setEditable(true);
+
                     iFrame.btnNuevo.setEnabled(false);
                     iFrame.btnGuardar.setEnabled(false);
                     iFrame.btnLimpiar.setEnabled(true);
                   } catch (InterruptedException | ExecutionException ex) {
-                    Logger.getLogger(ResumenDiarioController.class.getName())
-                        .log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(
+                        null,
+                        ex.getMessage(),
+                        ResumenDiarioController.class.getName(),
+                        JOptionPane.ERROR_MESSAGE);
                   }
                 }
               };
@@ -136,8 +155,28 @@ public class ResumenDiarioController {
           if (ie.getStateChange() == ItemEvent.SELECTED) {
             if (iFrame.cbxDocumentoTipo.getSelectedIndex() == 0) {
               iFrame.tbbdDetalle.setEnabledAt(2, false);
+
+              iFrame.cbxReferenciaTipo.setEnabled(false);
+              iFrame.cbxReferenciaTipo.setEditable(false);
+              iFrame.cbxReferenciaTipo.setSelectedIndex(-1);
+
+              iFrame.tfReferenciaSerie.setEnabled(false);
+              iFrame.tfReferenciaSerie.setEditable(false);
+
+              iFrame.tfReferenciaCorrelativo.setEnabled(false);
+              iFrame.tfReferenciaCorrelativo.setEditable(false);
             } else {
               iFrame.tbbdDetalle.setEnabledAt(2, true);
+
+              iFrame.cbxReferenciaTipo.setEnabled(true);
+              iFrame.cbxReferenciaTipo.setEditable(true);
+              iFrame.cbxReferenciaTipo.setSelectedIndex(0);
+
+              iFrame.tfReferenciaSerie.setEnabled(true);
+              iFrame.tfReferenciaSerie.setEditable(true);
+
+              iFrame.tfReferenciaCorrelativo.setEnabled(true);
+              iFrame.tfReferenciaCorrelativo.setEditable(true);
             }
           }
         });

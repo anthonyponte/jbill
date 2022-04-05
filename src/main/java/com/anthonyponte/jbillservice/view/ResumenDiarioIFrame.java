@@ -74,7 +74,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         cbxDocumentoTipo = new JComboBox<>();
         lblDocumentoSerie = new JLabel();
         tfDocumentoSerie = new JTextField();
-        lblDocumentoNumero = new JLabel();
+        lblDocumentoCorrelativo = new JLabel();
         tfDocumentoCorrelativo = new JTextField();
         pnlRemitente = new JPanel();
         lblDocumentoIdentidadTipo = new JLabel();
@@ -258,8 +258,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         AbstractDocument docSerie = (AbstractDocument) tfDocumentoSerie.getDocument();
         docSerie.setDocumentFilter(new SerieFilter('B'));
 
-        lblDocumentoNumero.setText("Correlativo");
-        lblDocumentoNumero.setPreferredSize(new Dimension(125, 30));
+        lblDocumentoCorrelativo.setText("Correlativo");
+        lblDocumentoCorrelativo.setPreferredSize(new Dimension(125, 30));
 
         tfDocumentoCorrelativo.setEnabled(false);
         tfDocumentoCorrelativo.setMaximumSize(null);
@@ -283,7 +283,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfDocumentoSerie, GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE))
                     .addGroup(pnlDocumentoLayout.createSequentialGroup()
-                        .addComponent(lblDocumentoNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfDocumentoCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -300,7 +300,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                     .addComponent(tfDocumentoSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDocumentoNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -310,7 +310,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         lblDocumentoIdentidadTipo.setText("Documento identidad");
         lblDocumentoIdentidadTipo.setPreferredSize(new Dimension(125, 30));
 
-        cbxDocumentoIdentidadTipo.setModel(new DefaultComboBoxModel<>(new String[] { "Boleta de venta", "Nota de crédito - boleta de venta", "Nota de débito - boleta de venta" }));
+        cbxDocumentoIdentidadTipo.setModel(new DefaultComboBoxModel<>(new String[] { "DOC.TRIB.NO.DOM.SIN.RUC", "Documento Nacional de Identidad", "Carnet de extranjería", "Registro Unico de Contributentes", "Pasaporte", "Cédula Diplomática de identidad", "DOC.IDENT.PAIS.RESIDENCIA-NO.D", "Tax Identification Number - TIN – Doc Trib PP.NN", "Identification Number - IN – Doc Trib PP. JJ", "TAM- Tarjeta Andina de Migración ", "Permiso Temporal de Permanencia - PTP", "Salvoconducto" }));
         cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
         cbxDocumentoIdentidadTipo.setEnabled(false);
         cbxDocumentoIdentidadTipo.setMaximumSize(null);
@@ -358,7 +358,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         lblReferenciaTipo.setText("Tipo");
         lblReferenciaTipo.setPreferredSize(new Dimension(125, 30));
 
-        cbxReferenciaTipo.setModel(new DefaultComboBoxModel<>(new String[] { "Boleta de venta", "Nota de crédito - boleta de venta", "Nota de débito - boleta de venta" }));
+        cbxReferenciaTipo.setModel(new DefaultComboBoxModel<>(new String[] { "Boleta de venta", "Ticket o cinta emitido por máquina registradora" }));
         cbxReferenciaTipo.setSelectedIndex(-1);
         cbxReferenciaTipo.setEnabled(false);
         cbxReferenciaTipo.setMaximumSize(null);
@@ -771,9 +771,9 @@ public class ResumenDiarioIFrame extends JInternalFrame {
     public JComboBox<String> cbxReferenciaTipo;
     public JXDatePicker dpFechaEmision;
     public JLabel lblCorrelativo;
+    public JLabel lblDocumentoCorrelativo;
     public JLabel lblDocumentoIdentidadNumero;
     public JLabel lblDocumentoIdentidadTipo;
-    public JLabel lblDocumentoNumero;
     public JLabel lblDocumentoSerie;
     public JLabel lblDocumentoTipo;
     public JLabel lblExoneradas;
