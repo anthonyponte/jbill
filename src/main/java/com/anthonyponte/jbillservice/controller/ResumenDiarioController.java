@@ -134,6 +134,36 @@ public class ResumenDiarioController {
                     iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
                     iFrame.tfDocumentoIdentidadNumero.setEditable(true);
 
+                    iFrame.tfImporteTotal.setEnabled(true);
+                    iFrame.tfImporteTotal.setEditable(true);
+
+                    iFrame.tfGravadas.setEnabled(true);
+                    iFrame.tfGravadas.setEditable(true);
+
+                    iFrame.tfExoneradas.setEnabled(true);
+                    iFrame.tfExoneradas.setEditable(true);
+
+                    iFrame.tfInafectas.setEnabled(true);
+                    iFrame.tfInafectas.setEditable(true);
+
+                    iFrame.tfGratuitas.setEnabled(true);
+                    iFrame.tfGratuitas.setEditable(true);
+
+                    iFrame.tfExportacion.setEnabled(true);
+                    iFrame.tfExportacion.setEditable(true);
+
+                    iFrame.tfOtrosCargos.setEnabled(true);
+                    iFrame.tfOtrosCargos.setEditable(true);
+
+                    iFrame.tfIgv.setEnabled(true);
+                    iFrame.tfIgv.setEditable(true);
+
+                    iFrame.tfIsc.setEnabled(true);
+                    iFrame.tfIsc.setEditable(true);
+
+                    iFrame.tfOtrosTributos.setEnabled(true);
+                    iFrame.tfOtrosTributos.setEditable(true);
+
                     iFrame.btnNuevo.setEnabled(false);
                     iFrame.btnGuardar.setEnabled(false);
                     iFrame.btnLimpiar.setEnabled(true);
