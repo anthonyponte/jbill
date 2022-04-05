@@ -26,6 +26,8 @@ import com.anthonyponte.jbillservice.model.TipoDocumento;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.ResumenDiarioIFrame;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
@@ -93,25 +95,32 @@ public class ResumenDiarioController {
                   try {
                     dialog.dispose();
 
+                    resumenDiario = get();
+
                     iFrame.tfTipo.setEnabled(true);
+                    iFrame.tfTipo.setText(resumenDiario.getTipoDocumento().getDescripcion());
+
                     iFrame.tfSerie.setEnabled(true);
+                    iFrame.tfSerie.setText(resumenDiario.getSerie());
+
                     iFrame.tfCorrelativo.setEnabled(true);
+                    iFrame.tfCorrelativo.setText(String.valueOf(resumenDiario.getCorrelativo()));
+
                     iFrame.tfFechaGeneracion.setEnabled(true);
+                    iFrame.tfFechaGeneracion.setText(
+                        MyDateFormat.d_MMMM_Y(resumenDiario.getFechaEmision()));
+
                     iFrame.dpFechaEmision.setEnabled(true);
+                    iFrame.dpFechaEmision.setDate(new Date());
+                    iFrame.dpFechaEmision.requestFocus();
+
+                    iFrame.cbxDocumentoTipo.setEnabled(true);
+                    iFrame.cbxDocumentoTipo.setEditable(true);
+                    iFrame.cbxDocumentoTipo.setSelectedIndex(0);
 
                     iFrame.btnNuevo.setEnabled(false);
                     iFrame.btnGuardar.setEnabled(false);
                     iFrame.btnLimpiar.setEnabled(true);
-
-                    ResumenDiario get = get();
-
-                    iFrame.tfTipo.setText(get.getTipoDocumento().getDescripcion());
-                    iFrame.tfSerie.setText(get.getSerie());
-                    iFrame.tfCorrelativo.setText(String.valueOf(get.getCorrelativo()));
-                    iFrame.tfFechaGeneracion.setText(MyDateFormat.d_MMMM_Y(get.getFechaEmision()));
-                    iFrame.dpFechaEmision.setDate(new Date());
-
-                    iFrame.dpFechaEmision.requestFocus();
                   } catch (InterruptedException | ExecutionException ex) {
                     Logger.getLogger(ResumenDiarioController.class.getName())
                         .log(Level.SEVERE, null, ex);
@@ -121,6 +130,17 @@ public class ResumenDiarioController {
 
           worker.execute();
         });
+
+    iFrame.cbxDocumentoTipo.addItemListener(
+        (ItemEvent ie) -> {
+          if (ie.getStateChange() == ItemEvent.SELECTED) {
+            if (iFrame.cbxDocumentoTipo.getSelectedIndex() == 0) {
+              iFrame.tbbdDetalle.setEnabledAt(2, false);
+            } else {
+              iFrame.tbbdDetalle.setEnabledAt(2, true);
+            }
+          }
+        });
   }
 
   private void initComponents() {
@@ -128,6 +148,8 @@ public class ResumenDiarioController {
     preferences = Preferences.userRoot().node(MainController.class.getPackageName());
 
     iFrame.show();
+    iFrame.tbbdDetalle.setEnabledAt(2, false);
+
     iFrame.btnNuevo.requestFocus();
   }
 }
