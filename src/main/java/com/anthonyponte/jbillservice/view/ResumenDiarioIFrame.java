@@ -11,11 +11,13 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,6 +30,8 @@ import javax.swing.LayoutStyle;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AbstractDocument;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
 import org.jdesktop.swingx.JXDatePicker;
 import org.kordamp.ikonli.remixicon.RemixiconAL;
 import org.kordamp.ikonli.remixicon.RemixiconMZ;
@@ -89,26 +93,28 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         lblReferenciaCorrelativo = new JLabel();
         tfReferenciaCorrelativo = new JTextField();
         pnlImportes = new JPanel();
+        jScrollPane1 = new JScrollPane();
+        jPanel1 = new JPanel();
         lblImporteTotal = new JLabel();
-        tfImporteTotal = new JTextField();
+        tfImporteTotal = new JFormattedTextField();
         lblGravadas = new JLabel();
-        tfGravadas = new JTextField();
+        tfGravadas = new JFormattedTextField();
         lblExoneradas = new JLabel();
-        tfExoneradas = new JTextField();
+        tfExoneradas = new JFormattedTextField();
         lblInafectas = new JLabel();
-        tfInafectas = new JTextField();
+        tfInafectas = new JFormattedTextField();
         lblGratuitas = new JLabel();
-        tfGratuitas = new JTextField();
+        tfGratuitas = new JFormattedTextField();
         lblExportacion = new JLabel();
-        tfExportacion = new JTextField();
+        tfExportacion = new JFormattedTextField();
         lblOtrosCargos = new JLabel();
-        tfOtrosCargos = new JTextField();
-        tfIgv = new JTextField();
+        tfOtrosCargos = new JFormattedTextField();
         lblIgv = new JLabel();
+        tfIgv = new JFormattedTextField();
         lblIsc = new JLabel();
-        tfIsc = new JTextField();
+        tfIsc = new JFormattedTextField();
         lblOtrosTributos = new JLabel();
-        tfOtrosTributos = new JTextField();
+        tfOtrosTributos = new JFormattedTextField();
         pnlPercepcion = new JPanel();
         btnAgregar = new JButton();
         btnEliminar = new JButton();
@@ -129,10 +135,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
 
         pnlEncabezado.setMaximumSize(null);
 
+        lblTipo.setFont(lblTipo.getFont().deriveFont(lblTipo.getFont().getStyle() | Font.BOLD, lblTipo.getFont().getSize()-2));
         lblTipo.setText("Tipo");
-        lblTipo.setMaximumSize(null);
-        lblTipo.setMinimumSize(null);
-        lblTipo.setPreferredSize(new Dimension(125, 30));
 
         tfTipo.setEnabled(false);
         tfTipo.setMaximumSize(null);
@@ -140,10 +144,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfTipo.setPreferredSize(new Dimension(150, 30));
         tfTipo.setEditable(false);
 
+        lblSerie.setFont(lblSerie.getFont().deriveFont(lblSerie.getFont().getStyle() | Font.BOLD, lblSerie.getFont().getSize()-2));
         lblSerie.setText("Serie");
-        lblSerie.setMaximumSize(null);
-        lblSerie.setMinimumSize(null);
-        lblSerie.setPreferredSize(new Dimension(125, 30));
 
         tfSerie.setEnabled(false);
         tfSerie.setMaximumSize(null);
@@ -151,11 +153,9 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfSerie.setPreferredSize(new Dimension(150, 30));
         tfSerie.setEditable(false);
 
+        lblCorrelativo.setFont(lblCorrelativo.getFont().deriveFont(lblCorrelativo.getFont().getStyle() | Font.BOLD, lblCorrelativo.getFont().getSize()-2));
         lblCorrelativo.setText("Correlativo");
-        lblCorrelativo.setMaximumSize(null);
-        lblCorrelativo.setMinimumSize(null);
         lblCorrelativo.setName(""); // NOI18N
-        lblCorrelativo.setPreferredSize(new Dimension(125, 30));
 
         tfCorrelativo.setEnabled(false);
         tfCorrelativo.setMaximumSize(null);
@@ -163,8 +163,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfCorrelativo.setPreferredSize(new Dimension(150, 30));
         tfCorrelativo.setEditable(false);
 
+        lblFechaGeneracion.setFont(lblFechaGeneracion.getFont().deriveFont(lblFechaGeneracion.getFont().getStyle() | Font.BOLD, lblFechaGeneracion.getFont().getSize()-2));
         lblFechaGeneracion.setText("Fecha generacion");
-        lblFechaGeneracion.setPreferredSize(new Dimension(125, 30));
 
         tfFechaGeneracion.setEnabled(false);
         tfFechaGeneracion.setMaximumSize(null);
@@ -172,8 +172,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfFechaGeneracion.setPreferredSize(new Dimension(150, 30));
         tfFechaGeneracion.setEditable(false);
 
+        lblFechaEmision.setFont(lblFechaEmision.getFont().deriveFont(lblFechaEmision.getFont().getStyle() | Font.BOLD, lblFechaEmision.getFont().getSize()-2));
         lblFechaEmision.setText("Fecha emision");
-        lblFechaEmision.setPreferredSize(new Dimension(125, 30));
 
         dpFechaEmision.setEnabled(false);
         dpFechaEmision.setFormats(new SimpleDateFormat("d MMMM y"));
@@ -188,50 +188,43 @@ public class ResumenDiarioIFrame extends JInternalFrame {
             .addGroup(pnlEncabezadoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(tfTipo, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                    .addComponent(tfSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfFechaGeneracion, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlEncabezadoLayout.createSequentialGroup()
-                        .addComponent(lblTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfTipo, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE))
-                    .addGroup(pnlEncabezadoLayout.createSequentialGroup()
-                        .addComponent(lblFechaGeneracion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfFechaGeneracion, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE))
-                    .addGroup(pnlEncabezadoLayout.createSequentialGroup()
-                        .addComponent(lblSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlEncabezadoLayout.createSequentialGroup()
-                        .addComponent(lblCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlEncabezadoLayout.createSequentialGroup()
-                        .addComponent(lblFechaEmision, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dpFechaEmision, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTipo)
+                            .addComponent(lblSerie)
+                            .addComponent(lblCorrelativo)
+                            .addComponent(lblFechaGeneracion)
+                            .addComponent(lblFechaEmision))
+                        .addGap(0, 0, 0))
+                    .addComponent(dpFechaEmision, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlEncabezadoLayout.setVerticalGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlEncabezadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblTipo)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addComponent(tfTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblSerie)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addComponent(tfSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblCorrelativo)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFechaGeneracion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfFechaGeneracion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addComponent(tfCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblFechaGeneracion)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFechaEmision, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dpFechaEmision, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addComponent(tfFechaGeneracion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblFechaEmision)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dpFechaEmision, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -239,8 +232,11 @@ public class ResumenDiarioIFrame extends JInternalFrame {
 
         pnlDetalle.setMaximumSize(null);
 
+        lblDocumentoTipo.setFont(lblDocumentoTipo.getFont().deriveFont(lblDocumentoTipo.getFont().getStyle() | Font.BOLD, lblDocumentoTipo.getFont().getSize()-2));
         lblDocumentoTipo.setText("Tipo");
-        lblDocumentoTipo.setPreferredSize(new Dimension(125, 30));
+        lblDocumentoTipo.setMaximumSize(null);
+        lblDocumentoTipo.setMinimumSize(null);
+        lblDocumentoTipo.setPreferredSize(null);
 
         cbxDocumentoTipo.setModel(new DefaultComboBoxModel<>(new String[] { "Boleta de venta", "Nota de crédito - boleta de venta", "Nota de débito - boleta de venta" }));
         cbxDocumentoTipo.setSelectedIndex(-1);
@@ -248,25 +244,31 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         cbxDocumentoTipo.setMaximumSize(null);
         cbxDocumentoTipo.setPreferredSize(new Dimension(150, 30));
 
+        lblDocumentoSerie.setFont(lblDocumentoSerie.getFont().deriveFont(lblDocumentoSerie.getFont().getStyle() | Font.BOLD, lblDocumentoSerie.getFont().getSize()-2));
         lblDocumentoSerie.setText("Serie");
-        lblDocumentoSerie.setPreferredSize(new Dimension(125, 30));
+        lblDocumentoSerie.setMaximumSize(null);
+        lblDocumentoSerie.setMinimumSize(null);
+        lblDocumentoSerie.setPreferredSize(null);
 
         tfDocumentoSerie.setEnabled(false);
         tfDocumentoSerie.setMaximumSize(null);
         tfDocumentoSerie.setMinimumSize(null);
         tfDocumentoSerie.setPreferredSize(new Dimension(150, 30));
-        AbstractDocument docSerie = (AbstractDocument) tfDocumentoSerie.getDocument();
-        docSerie.setDocumentFilter(new SerieFilter('B'));
+        AbstractDocument adDocumentoSerie = (AbstractDocument) tfDocumentoSerie.getDocument();
+        adDocumentoSerie.setDocumentFilter(new SerieFilter('B'));
 
+        lblDocumentoCorrelativo.setFont(lblDocumentoCorrelativo.getFont().deriveFont(lblDocumentoCorrelativo.getFont().getStyle() | Font.BOLD, lblDocumentoCorrelativo.getFont().getSize()-2));
         lblDocumentoCorrelativo.setText("Correlativo");
-        lblDocumentoCorrelativo.setPreferredSize(new Dimension(125, 30));
+        lblDocumentoCorrelativo.setMaximumSize(null);
+        lblDocumentoCorrelativo.setMinimumSize(null);
+        lblDocumentoCorrelativo.setPreferredSize(null);
 
         tfDocumentoCorrelativo.setEnabled(false);
         tfDocumentoCorrelativo.setMaximumSize(null);
         tfDocumentoCorrelativo.setMinimumSize(null);
         tfDocumentoCorrelativo.setPreferredSize(new Dimension(150, 30));
-        AbstractDocument docRuc = (AbstractDocument) tfDocumentoCorrelativo.getDocument();
-        docRuc.setDocumentFilter(new IntegerFilter(8));
+        AbstractDocument adDocumentoCorrelativo = (AbstractDocument) tfDocumentoCorrelativo.getDocument();
+        adDocumentoCorrelativo.setDocumentFilter(new IntegerFilter(8));
 
         GroupLayout pnlDocumentoLayout = new GroupLayout(pnlDocumento);
         pnlDocumento.setLayout(pnlDocumentoLayout);
@@ -274,41 +276,38 @@ public class ResumenDiarioIFrame extends JInternalFrame {
             .addGroup(pnlDocumentoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxDocumentoTipo, 0, 438, Short.MAX_VALUE)
+                    .addComponent(tfDocumentoSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlDocumentoLayout.createSequentialGroup()
-                        .addComponent(lblDocumentoTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxDocumentoTipo, 0, 307, Short.MAX_VALUE))
-                    .addGroup(pnlDocumentoLayout.createSequentialGroup()
-                        .addComponent(lblDocumentoSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfDocumentoSerie, GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE))
-                    .addGroup(pnlDocumentoLayout.createSequentialGroup()
-                        .addComponent(lblDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfDocumentoCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDocumentoTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDocumentoSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, 0))
+                    .addComponent(tfDocumentoCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlDocumentoLayout.setVerticalGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlDocumentoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDocumentoTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxDocumentoTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblDocumentoTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDocumentoSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfDocumentoSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addComponent(cbxDocumentoTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblDocumentoSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addComponent(tfDocumentoSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         tbbdDetalle.addTab("Documento", pnlDocumento);
 
+        lblDocumentoIdentidadTipo.setFont(lblDocumentoIdentidadTipo.getFont().deriveFont(lblDocumentoIdentidadTipo.getFont().getStyle() | Font.BOLD, lblDocumentoIdentidadTipo.getFont().getSize()-2));
         lblDocumentoIdentidadTipo.setText("Documento identidad");
-        lblDocumentoIdentidadTipo.setPreferredSize(new Dimension(125, 30));
 
         cbxDocumentoIdentidadTipo.setModel(new DefaultComboBoxModel<>(new String[] { "DOC.TRIB.NO.DOM.SIN.RUC", "Documento Nacional de Identidad", "Carnet de extranjería", "Registro Unico de Contributentes", "Pasaporte", "Cédula Diplomática de identidad", "DOC.IDENT.PAIS.RESIDENCIA-NO.D", "Tax Identification Number - TIN – Doc Trib PP.NN", "Identification Number - IN – Doc Trib PP. JJ", "TAM- Tarjeta Andina de Migración ", "Permiso Temporal de Permanencia - PTP", "Salvoconducto" }));
         cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
@@ -316,8 +315,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         cbxDocumentoIdentidadTipo.setMaximumSize(null);
         cbxDocumentoIdentidadTipo.setPreferredSize(new Dimension(150, 30));
 
+        lblDocumentoIdentidadNumero.setFont(lblDocumentoIdentidadNumero.getFont().deriveFont(lblDocumentoIdentidadNumero.getFont().getStyle() | Font.BOLD, lblDocumentoIdentidadNumero.getFont().getSize()-2));
         lblDocumentoIdentidadNumero.setText("Numero");
-        lblDocumentoIdentidadNumero.setPreferredSize(new Dimension(125, 30));
 
         tfDocumentoIdentidadNumero.setEnabled(false);
         tfDocumentoIdentidadNumero.setMaximumSize(null);
@@ -330,33 +329,32 @@ public class ResumenDiarioIFrame extends JInternalFrame {
             .addGroup(pnlRemitenteLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlRemitenteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxDocumentoIdentidadTipo, 0, 438, Short.MAX_VALUE)
                     .addGroup(pnlRemitenteLayout.createSequentialGroup()
-                        .addComponent(lblDocumentoIdentidadTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxDocumentoIdentidadTipo, 0, 307, Short.MAX_VALUE))
-                    .addGroup(pnlRemitenteLayout.createSequentialGroup()
-                        .addComponent(lblDocumentoIdentidadNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfDocumentoIdentidadNumero, GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)))
+                        .addGroup(pnlRemitenteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDocumentoIdentidadTipo)
+                            .addComponent(lblDocumentoIdentidadNumero))
+                        .addGap(0, 0, 0))
+                    .addComponent(tfDocumentoIdentidadNumero, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlRemitenteLayout.setVerticalGroup(pnlRemitenteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlRemitenteLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlRemitenteLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDocumentoIdentidadTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxDocumentoIdentidadTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblDocumentoIdentidadTipo)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlRemitenteLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDocumentoIdentidadNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfDocumentoIdentidadNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addComponent(cbxDocumentoIdentidadTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblDocumentoIdentidadNumero)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfDocumentoIdentidadNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         tbbdDetalle.addTab("Remitente", pnlRemitente);
 
+        lblReferenciaTipo.setFont(lblReferenciaTipo.getFont().deriveFont(lblReferenciaTipo.getFont().getStyle() | Font.BOLD, lblReferenciaTipo.getFont().getSize()-2));
         lblReferenciaTipo.setText("Tipo");
-        lblReferenciaTipo.setPreferredSize(new Dimension(125, 30));
 
         cbxReferenciaTipo.setModel(new DefaultComboBoxModel<>(new String[] { "Boleta de venta", "Ticket o cinta emitido por máquina registradora" }));
         cbxReferenciaTipo.setSelectedIndex(-1);
@@ -364,21 +362,25 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         cbxReferenciaTipo.setMaximumSize(null);
         cbxReferenciaTipo.setPreferredSize(new Dimension(150, 30));
 
+        lblReferenciaSerie.setFont(lblReferenciaSerie.getFont().deriveFont(lblReferenciaSerie.getFont().getStyle() | Font.BOLD, lblReferenciaSerie.getFont().getSize()-2));
         lblReferenciaSerie.setText("Serie");
-        lblReferenciaSerie.setPreferredSize(new Dimension(125, 30));
 
         tfReferenciaSerie.setEnabled(false);
         tfReferenciaSerie.setMaximumSize(null);
         tfReferenciaSerie.setMinimumSize(null);
         tfReferenciaSerie.setPreferredSize(new Dimension(150, 30));
+        AbstractDocument adReferenciaSerie = (AbstractDocument) tfReferenciaSerie.getDocument();
+        adReferenciaSerie.setDocumentFilter(new SerieFilter('B'));
 
+        lblReferenciaCorrelativo.setFont(lblReferenciaCorrelativo.getFont().deriveFont(lblReferenciaCorrelativo.getFont().getStyle() | Font.BOLD, lblReferenciaCorrelativo.getFont().getSize()-2));
         lblReferenciaCorrelativo.setText("Correlativo");
-        lblReferenciaCorrelativo.setPreferredSize(new Dimension(125, 30));
 
         tfReferenciaCorrelativo.setEnabled(false);
         tfReferenciaCorrelativo.setMaximumSize(null);
         tfReferenciaCorrelativo.setMinimumSize(null);
         tfReferenciaCorrelativo.setPreferredSize(new Dimension(150, 30));
+        AbstractDocument adReferenciaCorrelativo = (AbstractDocument) tfReferenciaCorrelativo.getDocument();
+        adReferenciaCorrelativo.setDocumentFilter(new IntegerFilter(8));
 
         GroupLayout pnlReferenciaLayout = new GroupLayout(pnlReferencia);
         pnlReferencia.setLayout(pnlReferenciaLayout);
@@ -386,224 +388,223 @@ public class ResumenDiarioIFrame extends JInternalFrame {
             .addGroup(pnlReferenciaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxReferenciaTipo, 0, 438, Short.MAX_VALUE)
+                    .addComponent(tfReferenciaSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlReferenciaLayout.createSequentialGroup()
-                        .addComponent(lblReferenciaTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxReferenciaTipo, 0, 307, Short.MAX_VALUE))
-                    .addGroup(pnlReferenciaLayout.createSequentialGroup()
-                        .addComponent(lblReferenciaSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfReferenciaSerie, GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE))
-                    .addGroup(pnlReferenciaLayout.createSequentialGroup()
-                        .addComponent(lblReferenciaCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfReferenciaCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(lblReferenciaTipo)
+                            .addComponent(lblReferenciaSerie)
+                            .addComponent(lblReferenciaCorrelativo))
+                        .addGap(0, 0, 0))
+                    .addComponent(tfReferenciaCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlReferenciaLayout.setVerticalGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlReferenciaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblReferenciaTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxReferenciaTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addComponent(lblReferenciaTipo)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblReferenciaSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfReferenciaSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addComponent(cbxReferenciaTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblReferenciaSerie)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblReferenciaCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfReferenciaCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addComponent(tfReferenciaSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblReferenciaCorrelativo)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfReferenciaCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         tbbdDetalle.addTab("Referencia", pnlReferencia);
 
-        lblImporteTotal.setText("Importe total");
-        lblImporteTotal.setPreferredSize(new Dimension(125, 30));
+        jScrollPane1.setMaximumSize(null);
+        jScrollPane1.setMinimumSize(null);
+        jScrollPane1.setPreferredSize(new Dimension(438, 300));
 
+        lblImporteTotal.setFont(lblImporteTotal.getFont().deriveFont(lblImporteTotal.getFont().getStyle() | Font.BOLD, lblImporteTotal.getFont().getSize()-2));
+        lblImporteTotal.setText("Importe total");
+
+        tfImporteTotal.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
         tfImporteTotal.setEnabled(false);
         tfImporteTotal.setMaximumSize(null);
         tfImporteTotal.setMinimumSize(null);
         tfImporteTotal.setPreferredSize(new Dimension(150, 30));
+        tfImporteTotal.setEditable(false);
 
+        lblGravadas.setFont(lblGravadas.getFont().deriveFont(lblGravadas.getFont().getStyle() | Font.BOLD, lblGravadas.getFont().getSize()-2));
         lblGravadas.setText("Gravadas");
-        lblGravadas.setMaximumSize(null);
-        lblGravadas.setMinimumSize(null);
-        lblGravadas.setPreferredSize(new Dimension(125, 30));
 
+        tfGravadas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
         tfGravadas.setEnabled(false);
         tfGravadas.setMaximumSize(null);
         tfGravadas.setMinimumSize(null);
         tfGravadas.setPreferredSize(new Dimension(150, 30));
 
+        lblExoneradas.setFont(lblExoneradas.getFont().deriveFont(lblExoneradas.getFont().getStyle() | Font.BOLD, lblExoneradas.getFont().getSize()-2));
         lblExoneradas.setText("Exoneradas");
-        lblExoneradas.setMaximumSize(null);
-        lblExoneradas.setMinimumSize(null);
-        lblExoneradas.setPreferredSize(new Dimension(125, 30));
 
+        tfExoneradas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
         tfExoneradas.setEnabled(false);
         tfExoneradas.setMaximumSize(null);
         tfExoneradas.setMinimumSize(null);
         tfExoneradas.setPreferredSize(new Dimension(150, 30));
 
+        lblInafectas.setFont(lblInafectas.getFont().deriveFont(lblInafectas.getFont().getStyle() | Font.BOLD, lblInafectas.getFont().getSize()-2));
         lblInafectas.setText("Inafectas");
-        lblInafectas.setMaximumSize(null);
-        lblInafectas.setMinimumSize(null);
-        lblInafectas.setPreferredSize(new Dimension(125, 30));
 
+        tfInafectas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
         tfInafectas.setEnabled(false);
         tfInafectas.setMaximumSize(null);
         tfInafectas.setMinimumSize(null);
         tfInafectas.setPreferredSize(new Dimension(150, 30));
 
+        lblGratuitas.setFont(lblGratuitas.getFont().deriveFont(lblGratuitas.getFont().getStyle() | Font.BOLD, lblGratuitas.getFont().getSize()-2));
         lblGratuitas.setText("Gratuitas");
-        lblGratuitas.setMaximumSize(null);
-        lblGratuitas.setMinimumSize(null);
-        lblGratuitas.setPreferredSize(new Dimension(125, 30));
 
+        tfGratuitas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
         tfGratuitas.setEnabled(false);
         tfGratuitas.setMaximumSize(null);
         tfGratuitas.setMinimumSize(null);
         tfGratuitas.setPreferredSize(new Dimension(150, 30));
 
+        lblExportacion.setFont(lblExportacion.getFont().deriveFont(lblExportacion.getFont().getStyle() | Font.BOLD, lblExportacion.getFont().getSize()-2));
         lblExportacion.setText("Exportacion");
-        lblExportacion.setMaximumSize(null);
-        lblExportacion.setMinimumSize(null);
-        lblExportacion.setPreferredSize(new Dimension(125, 30));
 
+        tfExportacion.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
         tfExportacion.setEnabled(false);
         tfExportacion.setMaximumSize(null);
         tfExportacion.setMinimumSize(null);
         tfExportacion.setPreferredSize(new Dimension(150, 30));
 
+        lblOtrosCargos.setFont(lblOtrosCargos.getFont().deriveFont(lblOtrosCargos.getFont().getStyle() | Font.BOLD, lblOtrosCargos.getFont().getSize()-2));
         lblOtrosCargos.setText("Otros cargos");
-        lblOtrosCargos.setPreferredSize(new Dimension(125, 30));
 
+        tfOtrosCargos.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
         tfOtrosCargos.setEnabled(false);
         tfOtrosCargos.setMaximumSize(null);
         tfOtrosCargos.setMinimumSize(null);
         tfOtrosCargos.setPreferredSize(new Dimension(150, 30));
 
+        lblIgv.setFont(lblIgv.getFont().deriveFont(lblIgv.getFont().getStyle() | Font.BOLD, lblIgv.getFont().getSize()-2));
+        lblIgv.setText("IGV");
+
+        tfIgv.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
         tfIgv.setEnabled(false);
         tfIgv.setMaximumSize(null);
         tfIgv.setMinimumSize(null);
         tfIgv.setPreferredSize(new Dimension(150, 30));
+        tfIgv.setEditable(false);
 
-        lblIgv.setText("IGV");
-        lblIgv.setMaximumSize(null);
-        lblIgv.setMinimumSize(null);
-        lblIgv.setPreferredSize(new Dimension(125, 30));
-
+        lblIsc.setFont(lblIsc.getFont().deriveFont(lblIsc.getFont().getStyle() | Font.BOLD, lblIsc.getFont().getSize()-2));
         lblIsc.setText("ISC");
-        lblIsc.setMaximumSize(null);
-        lblIsc.setMinimumSize(null);
-        lblIsc.setPreferredSize(new Dimension(125, 30));
 
+        tfIsc.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
         tfIsc.setEnabled(false);
         tfIsc.setMaximumSize(null);
         tfIsc.setMinimumSize(null);
         tfIsc.setPreferredSize(new Dimension(150, 30));
 
+        lblOtrosTributos.setFont(lblOtrosTributos.getFont().deriveFont(lblOtrosTributos.getFont().getStyle() | Font.BOLD, lblOtrosTributos.getFont().getSize()-2));
         lblOtrosTributos.setText("Otros tributos");
-        lblOtrosTributos.setPreferredSize(new Dimension(125, 30));
 
+        tfOtrosTributos.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
         tfOtrosTributos.setEnabled(false);
         tfOtrosTributos.setMaximumSize(null);
         tfOtrosTributos.setMinimumSize(null);
         tfOtrosTributos.setPreferredSize(new Dimension(150, 30));
 
+        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(tfImporteTotal, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfGravadas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfExoneradas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfInafectas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfExportacion, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfGratuitas, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfOtrosCargos, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfIgv, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfIsc, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(lblImporteTotal)
+                            .addComponent(lblGravadas)
+                            .addComponent(lblExoneradas)
+                            .addComponent(lblInafectas)
+                            .addComponent(lblGratuitas)
+                            .addComponent(lblExportacion)
+                            .addComponent(lblOtrosCargos)
+                            .addComponent(lblIgv)
+                            .addComponent(lblIsc)
+                            .addComponent(lblOtrosTributos))
+                        .addGap(0, 0, 0))
+                    .addComponent(tfOtrosTributos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblImporteTotal)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfImporteTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblGravadas)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfGravadas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblExoneradas)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfExoneradas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblInafectas)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfInafectas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblGratuitas)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfGratuitas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblExportacion)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfExportacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblOtrosCargos)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfOtrosCargos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblIgv)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfIgv, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblIsc)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfIsc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblOtrosTributos)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfOtrosTributos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jScrollPane1.setViewportView(jPanel1);
+
         GroupLayout pnlImportesLayout = new GroupLayout(pnlImportes);
         pnlImportes.setLayout(pnlImportesLayout);
         pnlImportesLayout.setHorizontalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(pnlImportesLayout.createSequentialGroup()
+            .addGroup(GroupLayout.Alignment.TRAILING, pnlImportesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlImportesLayout.createSequentialGroup()
-                        .addComponent(lblImporteTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfImporteTotal, GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE))
-                    .addGroup(GroupLayout.Alignment.TRAILING, pnlImportesLayout.createSequentialGroup()
-                        .addComponent(lblGravadas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfGravadas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlImportesLayout.createSequentialGroup()
-                        .addComponent(lblExoneradas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfExoneradas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(GroupLayout.Alignment.TRAILING, pnlImportesLayout.createSequentialGroup()
-                        .addComponent(lblInafectas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfInafectas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlImportesLayout.createSequentialGroup()
-                        .addComponent(lblGratuitas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfGratuitas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(GroupLayout.Alignment.TRAILING, pnlImportesLayout.createSequentialGroup()
-                        .addComponent(lblExportacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfExportacion, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlImportesLayout.createSequentialGroup()
-                        .addComponent(lblOtrosCargos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfOtrosCargos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(GroupLayout.Alignment.TRAILING, pnlImportesLayout.createSequentialGroup()
-                        .addComponent(lblIgv, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfIgv, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlImportesLayout.createSequentialGroup()
-                        .addComponent(lblIsc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfIsc, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(GroupLayout.Alignment.TRAILING, pnlImportesLayout.createSequentialGroup()
-                        .addComponent(lblOtrosTributos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tfOtrosTributos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlImportesLayout.setVerticalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlImportesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(tfImporteTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblImporteTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(tfGravadas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblGravadas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(tfExoneradas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblExoneradas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(tfInafectas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblInafectas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(tfGratuitas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblGratuitas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(tfExportacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblExportacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(tfOtrosCargos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblOtrosCargos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(tfIgv, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblIgv, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(tfIsc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblIsc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(tfOtrosTributos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblOtrosTributos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tbbdDetalle.addTab("Importes", pnlImportes);
@@ -625,11 +626,6 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         btnAgregar.setMinimumSize(new Dimension(150, 30));
         btnAgregar.setName(""); // NOI18N
         btnAgregar.setPreferredSize(new Dimension(150, 30));
-        btnAgregar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
-            }
-        });
 
         btnEliminar.setIcon(FontIcon.of(RemixiconAL.DELETE_ROW, 16, Color.decode("#FFFFFF")));
         btnEliminar.setText("Eliminar");
@@ -684,7 +680,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addComponent(spane, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tbbdDetalle, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(tbbdDetalle, GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         pnlDetalleLayout.setVerticalGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -696,7 +692,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                     .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spane, GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                .addComponent(spane, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -736,7 +732,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLimpiar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addComponent(separator, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tabbed, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(tabbed, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -756,10 +752,6 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAgregarActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public JButton btnAgregar;
     public JButton btnEliminar;
@@ -770,6 +762,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
     public JComboBox<String> cbxDocumentoTipo;
     public JComboBox<String> cbxReferenciaTipo;
     public JXDatePicker dpFechaEmision;
+    public JPanel jPanel1;
+    public JScrollPane jScrollPane1;
     public JLabel lblCorrelativo;
     public JLabel lblDocumentoCorrelativo;
     public JLabel lblDocumentoIdentidadNumero;
@@ -809,17 +803,17 @@ public class ResumenDiarioIFrame extends JInternalFrame {
     public JTextField tfDocumentoCorrelativo;
     public JTextField tfDocumentoIdentidadNumero;
     public JTextField tfDocumentoSerie;
-    public JTextField tfExoneradas;
-    public JTextField tfExportacion;
+    public JFormattedTextField tfExoneradas;
+    public JFormattedTextField tfExportacion;
     public JTextField tfFechaGeneracion;
-    public JTextField tfGratuitas;
-    public JTextField tfGravadas;
-    public JTextField tfIgv;
-    public JTextField tfImporteTotal;
-    public JTextField tfInafectas;
-    public JTextField tfIsc;
-    public JTextField tfOtrosCargos;
-    public JTextField tfOtrosTributos;
+    public JFormattedTextField tfGratuitas;
+    public JFormattedTextField tfGravadas;
+    public JFormattedTextField tfIgv;
+    public JFormattedTextField tfImporteTotal;
+    public JFormattedTextField tfInafectas;
+    public JFormattedTextField tfIsc;
+    public JFormattedTextField tfOtrosCargos;
+    public JFormattedTextField tfOtrosTributos;
     public JTextField tfReferenciaCorrelativo;
     public JTextField tfReferenciaSerie;
     public JTextField tfSerie;

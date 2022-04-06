@@ -132,7 +132,6 @@ public class ResumenDiarioController {
                     iFrame.tfDocumentoIdentidadNumero.setEditable(true);
 
                     iFrame.tfImporteTotal.setEnabled(true);
-                    iFrame.tfImporteTotal.setEditable(true);
 
                     iFrame.tfGravadas.setEnabled(true);
                     iFrame.tfGravadas.setEditable(true);
@@ -149,11 +148,10 @@ public class ResumenDiarioController {
                     iFrame.tfExportacion.setEnabled(true);
                     iFrame.tfExportacion.setEditable(true);
 
-                    iFrame.tfOtrosCargos.setEnabled(true);
-                    iFrame.tfOtrosCargos.setEditable(true);
+                    iFrame.tfIsc.setEnabled(true);
+                    iFrame.tfIsc.setEditable(true);
 
                     iFrame.tfIgv.setEnabled(true);
-                    iFrame.tfIgv.setEditable(true);
 
                     iFrame.tfIsc.setEnabled(true);
                     iFrame.tfIsc.setEditable(true);
