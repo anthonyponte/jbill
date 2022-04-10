@@ -115,49 +115,44 @@ public class ResumenDiarioController {
                     iFrame.dpFechaEmision.setDate(new Date());
                     iFrame.dpFechaEmision.requestFocus();
 
+                    iFrame.cbxEstado.setEnabled(true);
+                    iFrame.cbxEstado.setSelectedIndex(0);
+
+                    iFrame.cbxMoneda.setEnabled(true);
+                    iFrame.cbxMoneda.setSelectedIndex(0);
+
                     iFrame.cbxDocumentoTipo.setEnabled(true);
-                    iFrame.cbxDocumentoTipo.setEditable(true);
                     iFrame.cbxDocumentoTipo.setSelectedIndex(0);
 
                     iFrame.tfDocumentoSerie.setEnabled(true);
-                    iFrame.tfDocumentoSerie.setEditable(true);
 
                     iFrame.tfDocumentoCorrelativo.setEnabled(true);
-                    iFrame.tfDocumentoCorrelativo.setEditable(true);
 
                     iFrame.cbxDocumentoIdentidadTipo.setEnabled(true);
-                    iFrame.cbxDocumentoIdentidadTipo.setEditable(true);
+                    iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
 
                     iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
-                    iFrame.tfDocumentoIdentidadNumero.setEditable(true);
 
                     iFrame.tfImporteTotal.setEnabled(true);
 
                     iFrame.tfGravadas.setEnabled(true);
-                    iFrame.tfGravadas.setEditable(true);
 
                     iFrame.tfExoneradas.setEnabled(true);
-                    iFrame.tfExoneradas.setEditable(true);
 
                     iFrame.tfInafectas.setEnabled(true);
-                    iFrame.tfInafectas.setEditable(true);
 
                     iFrame.tfGratuitas.setEnabled(true);
-                    iFrame.tfGratuitas.setEditable(true);
 
                     iFrame.tfExportacion.setEnabled(true);
-                    iFrame.tfExportacion.setEditable(true);
 
                     iFrame.tfIsc.setEnabled(true);
-                    iFrame.tfIsc.setEditable(true);
 
+                    iFrame.tfIgv.setEditable(true);
                     iFrame.tfIgv.setEnabled(true);
 
                     iFrame.tfIsc.setEnabled(true);
-                    iFrame.tfIsc.setEditable(true);
 
                     iFrame.tfOtrosTributos.setEnabled(true);
-                    iFrame.tfOtrosTributos.setEditable(true);
 
                     iFrame.btnNuevo.setEnabled(false);
                     iFrame.btnGuardar.setEnabled(false);
@@ -182,26 +177,20 @@ public class ResumenDiarioController {
               iFrame.tbbdDetalle.setEnabledAt(2, false);
 
               iFrame.cbxReferenciaTipo.setEnabled(false);
-              iFrame.cbxReferenciaTipo.setEditable(false);
               iFrame.cbxReferenciaTipo.setSelectedIndex(-1);
 
               iFrame.tfReferenciaSerie.setEnabled(false);
-              iFrame.tfReferenciaSerie.setEditable(false);
 
               iFrame.tfReferenciaCorrelativo.setEnabled(false);
-              iFrame.tfReferenciaCorrelativo.setEditable(false);
             } else {
               iFrame.tbbdDetalle.setEnabledAt(2, true);
 
               iFrame.cbxReferenciaTipo.setEnabled(true);
-              iFrame.cbxReferenciaTipo.setEditable(true);
               iFrame.cbxReferenciaTipo.setSelectedIndex(0);
 
               iFrame.tfReferenciaSerie.setEnabled(true);
-              iFrame.tfReferenciaSerie.setEditable(true);
 
               iFrame.tfReferenciaCorrelativo.setEnabled(true);
-              iFrame.tfReferenciaCorrelativo.setEditable(true);
             }
           }
         });

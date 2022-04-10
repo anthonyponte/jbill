@@ -106,16 +106,11 @@
                           <Component id="tfSerie" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfCorrelativo" alignment="0" max="32767" attributes="0"/>
                           <Component id="tfFechaGeneracion" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="lblTipo" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblSerie" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblCorrelativo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFechaGeneracion" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblFechaEmision" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="lblTipo" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblSerie" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblCorrelativo" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFechaGeneracion" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblFechaEmision" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="dpFechaEmision" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -333,14 +328,27 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="btnAgregar" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="spane" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="tbbdDetalle" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="cbxEstado" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="cbxMoneda" alignment="1" max="32767" attributes="0"/>
+                              </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="spane" alignment="1" max="32767" attributes="0"/>
-                          <Component id="tbbdDetalle" alignment="1" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="btnAgregar" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btnEliminar" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="lblEstado" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblMoneda" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -348,6 +356,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblEstado" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cbxEstado" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="lblMoneda" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="cbxMoneda" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="tbbdDetalle" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -355,7 +371,7 @@
                           <Component id="btnAgregar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="spane" max="32767" attributes="0"/>
+                      <Component id="spane" pref="132" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -383,14 +399,9 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="cbxDocumentoTipo" alignment="0" pref="438" max="32767" attributes="0"/>
                                   <Component id="tfDocumentoSerie" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblDocumentoTipo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblDocumentoSerie" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblDocumentoCorrelativo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="lblDocumentoTipo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDocumentoSerie" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDocumentoCorrelativo" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="tfDocumentoCorrelativo" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -449,6 +460,9 @@
                         <Property name="selectedIndex" type="int" value="-1"/>
                         <Property name="enabled" type="boolean" value="false"/>
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="null"/>
+                        </Property>
+                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="null"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -550,13 +564,8 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="cbxDocumentoIdentidadTipo" alignment="0" pref="438" max="32767" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblDocumentoIdentidadTipo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblDocumentoIdentidadNumero" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="lblDocumentoIdentidadTipo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblDocumentoIdentidadNumero" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="tfDocumentoIdentidadNumero" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -613,6 +622,10 @@
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="null"/>
                         </Property>
+                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                          <Dimension value="null"/>
+                        </Property>
+                        <Property name="name" type="java.lang.String" value="" noResource="true"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[150, 30]"/>
                         </Property>
@@ -665,14 +678,9 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="cbxReferenciaTipo" alignment="0" pref="438" max="32767" attributes="0"/>
                                   <Component id="tfReferenciaSerie" alignment="0" max="32767" attributes="0"/>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblReferenciaTipo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblReferenciaSerie" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblReferenciaCorrelativo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="lblReferenciaTipo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblReferenciaSerie" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblReferenciaCorrelativo" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="tfReferenciaCorrelativo" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -827,7 +835,7 @@
                           <Dimension value="null"/>
                         </Property>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[438, 300]"/>
+                          <Dimension value="[438, 200]"/>
                         </Property>
                       </Properties>
 
@@ -850,21 +858,16 @@
                                           <Component id="tfOtrosCargos" alignment="1" max="32767" attributes="0"/>
                                           <Component id="tfIgv" alignment="0" max="32767" attributes="0"/>
                                           <Component id="tfIsc" alignment="0" max="32767" attributes="0"/>
-                                          <Group type="102" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="lblImporteTotal" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lblGravadas" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lblExoneradas" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lblInafectas" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lblGratuitas" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lblExportacion" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lblOtrosCargos" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lblIgv" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lblIsc" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="lblOtrosTributos" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                                          </Group>
+                                          <Component id="lblImporteTotal" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblGravadas" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblExoneradas" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblInafectas" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblGratuitas" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblExportacion" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblOtrosCargos" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblIgv" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblIsc" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lblOtrosTributos" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="tfOtrosTributos" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -1337,6 +1340,72 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JComboBox" name="cbxEstado">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="3">
+                    <StringItem index="0" value="Adicionar"/>
+                    <StringItem index="1" value="Modificar"/>
+                    <StringItem index="2" value="Anulado"/>
+                  </StringArray>
+                </Property>
+                <Property name="selectedIndex" type="int" value="-1"/>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="null"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 30]"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="cbxMoneda">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="2">
+                    <StringItem index="0" value="PEN"/>
+                    <StringItem index="1" value="USD"/>
+                  </StringArray>
+                </Property>
+                <Property name="selectedIndex" type="int" value="-1"/>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="null"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="null"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[150, 30]"/>
+                </Property>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblEstado">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+                  <FontInfo relative="true">
+                    <Font bold="true" component="lblEstado" property="font" relativeSize="true" size="-2"/>
+                  </FontInfo>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Estado"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblMoneda">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+                  <FontInfo relative="true">
+                    <Font bold="true" component="lblMoneda" property="font" relativeSize="true" size="-2"/>
+                  </FontInfo>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Moneda"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>
