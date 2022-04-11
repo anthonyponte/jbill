@@ -28,10 +28,11 @@ public class ResumenDiarioDetalle {
   private Percepcion percepcion;
   private Estado estado;
   private double importeTotal;
-  private String monedaTipo;
+  private Moneda moneda;
   private Operacion gravadas;
   private Operacion exoneradas;
   private Operacion inafectas;
+  private Operacion gratuitas;
   private Operacion exportacion;
   private OtrosCargos otrosCargos;
   private Impuesto igv;
@@ -51,10 +52,11 @@ public class ResumenDiarioDetalle {
       Percepcion percepcion,
       Estado estado,
       double importeTotal,
-      String monedaTipo,
+      Moneda moneda,
       Operacion gravadas,
       Operacion exoneradas,
       Operacion inafectas,
+      Operacion gratuitas,
       Operacion exportacion,
       OtrosCargos otrosCargos,
       Impuesto igv,
@@ -70,10 +72,11 @@ public class ResumenDiarioDetalle {
     this.percepcion = percepcion;
     this.estado = estado;
     this.importeTotal = importeTotal;
-    this.monedaTipo = monedaTipo;
+    this.moneda = moneda;
     this.gravadas = gravadas;
     this.exoneradas = exoneradas;
     this.inafectas = inafectas;
+    this.gratuitas = gratuitas;
     this.exportacion = exportacion;
     this.otrosCargos = otrosCargos;
     this.igv = igv;
@@ -154,12 +157,12 @@ public class ResumenDiarioDetalle {
     this.importeTotal = importeTotal;
   }
 
-  public String getMonedaTipo() {
-    return monedaTipo;
+  public Moneda getMoneda() {
+    return moneda;
   }
 
-  public void setMonedaTipo(String monedaTipo) {
-    this.monedaTipo = monedaTipo;
+  public void setMoneda(Moneda moneda) {
+    this.moneda = moneda;
   }
 
   public Operacion getGravadas() {
@@ -184,6 +187,14 @@ public class ResumenDiarioDetalle {
 
   public void setInafectas(Operacion inafectas) {
     this.inafectas = inafectas;
+  }
+
+  public Operacion getGratuitas() {
+    return gratuitas;
+  }
+
+  public void setGratuitas(Operacion gratuitas) {
+    this.gratuitas = gratuitas;
   }
 
   public Operacion getExportacion() {
@@ -255,14 +266,16 @@ public class ResumenDiarioDetalle {
         + estado
         + ", importeTotal="
         + importeTotal
-        + ", monedaTipo="
-        + monedaTipo
+        + ", moneda="
+        + moneda
         + ", gravadas="
         + gravadas
         + ", exoneradas="
         + exoneradas
         + ", inafectas="
         + inafectas
+        + ", gratuitas="
+        + gratuitas
         + ", exportacion="
         + exportacion
         + ", otrosCargos="
