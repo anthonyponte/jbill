@@ -93,7 +93,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         lblReferenciaCorrelativo = new JLabel();
         tfReferenciaCorrelativo = new JTextField();
         pnlImportes = new JPanel();
-        jScrollPane1 = new JScrollPane();
+        spnImportes = new JScrollPane();
         jPanel1 = new JPanel();
         lblImporteTotal = new JLabel();
         tfImporteTotal = new JFormattedTextField();
@@ -115,6 +115,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfIsc = new JFormattedTextField();
         lblOtrosTributos = new JLabel();
         tfOtrosTributos = new JFormattedTextField();
+        lblBolsasPlasticas = new JLabel();
+        tfBolsasPlasticas = new JFormattedTextField();
         pnlPercepcion = new JPanel();
         btnAgregar = new JButton();
         btnEliminar = new JButton();
@@ -413,9 +415,9 @@ public class ResumenDiarioIFrame extends JInternalFrame {
 
         tbbdDetalle.addTab("Referencia", pnlReferencia);
 
-        jScrollPane1.setMaximumSize(null);
-        jScrollPane1.setMinimumSize(null);
-        jScrollPane1.setPreferredSize(new Dimension(438, 200));
+        spnImportes.setMaximumSize(null);
+        spnImportes.setMinimumSize(null);
+        spnImportes.setPreferredSize(new Dimension(438, 200));
 
         lblImporteTotal.setFont(lblImporteTotal.getFont().deriveFont(lblImporteTotal.getFont().getStyle() | Font.BOLD, lblImporteTotal.getFont().getSize()-2));
         lblImporteTotal.setText("Importe total");
@@ -509,6 +511,15 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfOtrosTributos.setMinimumSize(null);
         tfOtrosTributos.setPreferredSize(new Dimension(150, 30));
 
+        lblBolsasPlasticas.setFont(lblBolsasPlasticas.getFont().deriveFont(lblBolsasPlasticas.getFont().getStyle() | Font.BOLD, lblBolsasPlasticas.getFont().getSize()-2));
+        lblBolsasPlasticas.setText("Bolsas plasticas");
+
+        tfBolsasPlasticas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+        tfBolsasPlasticas.setEnabled(false);
+        tfBolsasPlasticas.setMaximumSize(null);
+        tfBolsasPlasticas.setMinimumSize(null);
+        tfBolsasPlasticas.setPreferredSize(new Dimension(150, 30));
+
         GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -534,7 +545,9 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                     .addComponent(lblIgv)
                     .addComponent(lblIsc)
                     .addComponent(lblOtrosTributos)
-                    .addComponent(tfOtrosTributos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tfOtrosTributos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblBolsasPlasticas)
+                    .addComponent(tfBolsasPlasticas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -579,23 +592,27 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                 .addComponent(lblOtrosTributos)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfOtrosTributos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblBolsasPlasticas)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfBolsasPlasticas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jScrollPane1.setViewportView(jPanel1);
+        spnImportes.setViewportView(jPanel1);
 
         GroupLayout pnlImportesLayout = new GroupLayout(pnlImportes);
         pnlImportes.setLayout(pnlImportesLayout);
         pnlImportesLayout.setHorizontalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(GroupLayout.Alignment.TRAILING, pnlImportesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(spnImportes, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlImportesLayout.setVerticalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlImportesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addComponent(spnImportes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -634,32 +651,15 @@ public class ResumenDiarioIFrame extends JInternalFrame {
 
             },
             new String [] {
-                "Tipo", "Serie", "Numero", "Motivo"
-            }
-        ) {
-            Class[] types = new Class [] {
-                Object.class, String.class, Integer.class, String.class
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-        });
+        ));
         table.setColumnSelectionAllowed(true);
         table.setEnabled(false);
-        table.setMaximumSize(null);
-        table.setMinimumSize(null);
         table.setName(""); // NOI18N
-        table.setPreferredSize(null);
         table.getTableHeader().setReorderingAllowed(false);
         spane.setViewportView(table);
         table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        if (table.getColumnModel().getColumnCount() > 0) {
-            table.getColumnModel().getColumn(0).setResizable(false);
-            table.getColumnModel().getColumn(1).setResizable(false);
-            table.getColumnModel().getColumn(2).setResizable(false);
-            table.getColumnModel().getColumn(3).setResizable(false);
-        }
 
         cbxEstado.setModel(new DefaultComboBoxModel<>(new String[] { "Adicionar", "Modificar", "Anulado" }));
         cbxEstado.setSelectedIndex(-1);
@@ -686,22 +686,17 @@ public class ResumenDiarioIFrame extends JInternalFrame {
             .addGroup(pnlDetalleLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(spane, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tbbdDetalle, GroupLayout.Alignment.TRAILING)
+                    .addComponent(cbxEstado, GroupLayout.Alignment.TRAILING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbxMoneda, GroupLayout.Alignment.TRAILING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlDetalleLayout.createSequentialGroup()
-                        .addGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(spane, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tbbdDetalle, GroupLayout.Alignment.TRAILING)
-                            .addComponent(cbxEstado, GroupLayout.Alignment.TRAILING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxMoneda, GroupLayout.Alignment.TRAILING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addGroup(pnlDetalleLayout.createSequentialGroup()
-                        .addGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlDetalleLayout.createSequentialGroup()
-                                .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblEstado)
-                            .addComponent(lblMoneda))
-                        .addContainerGap())))
+                        .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblEstado)
+                    .addComponent(lblMoneda))
+                .addContainerGap())
         );
         pnlDetalleLayout.setVerticalGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetalleLayout.createSequentialGroup()
@@ -793,7 +788,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
     public JComboBox<String> cbxReferenciaTipo;
     public JXDatePicker dpFechaEmision;
     public JPanel jPanel1;
-    public JScrollPane jScrollPane1;
+    public JLabel lblBolsasPlasticas;
     public JLabel lblCorrelativo;
     public JLabel lblDocumentoCorrelativo;
     public JLabel lblDocumentoIdentidadNumero;
@@ -828,9 +823,11 @@ public class ResumenDiarioIFrame extends JInternalFrame {
     public JPanel pnlRemitente;
     public JSeparator separator;
     public JScrollPane spane;
+    public JScrollPane spnImportes;
     public JTabbedPane tabbed;
     public JTable table;
     public JTabbedPane tbbdDetalle;
+    public JFormattedTextField tfBolsasPlasticas;
     public JTextField tfCorrelativo;
     public JTextField tfDocumentoCorrelativo;
     public JTextField tfDocumentoIdentidadNumero;

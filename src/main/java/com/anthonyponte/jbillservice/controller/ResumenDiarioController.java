@@ -134,25 +134,40 @@ public class ResumenDiarioController {
                     iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
 
                     iFrame.tfImporteTotal.setEnabled(true);
+                    iFrame.tfImporteTotal.setText("0.00");
 
                     iFrame.tfGravadas.setEnabled(true);
+                    iFrame.tfGravadas.setText("0.00");
 
                     iFrame.tfExoneradas.setEnabled(true);
+                    iFrame.tfExoneradas.setText("0.00");
 
                     iFrame.tfInafectas.setEnabled(true);
+                    iFrame.tfInafectas.setText("0.00");
 
                     iFrame.tfGratuitas.setEnabled(true);
+                    iFrame.tfGratuitas.setText("0.00");
 
                     iFrame.tfExportacion.setEnabled(true);
+                    iFrame.tfExportacion.setText("0.00");
+
+                    iFrame.tfOtrosCargos.setEnabled(true);
+                    iFrame.tfOtrosCargos.setText("0.00");
 
                     iFrame.tfIsc.setEnabled(true);
+                    iFrame.tfIsc.setText("0.00");
 
-                    iFrame.tfIgv.setEditable(true);
                     iFrame.tfIgv.setEnabled(true);
+                    iFrame.tfIgv.setText("0.00");
 
                     iFrame.tfIsc.setEnabled(true);
+                    iFrame.tfIsc.setText("0.00");
 
                     iFrame.tfOtrosTributos.setEnabled(true);
+                    iFrame.tfOtrosTributos.setText("0.00");
+
+                    iFrame.tfBolsasPlasticas.setEnabled(true);
+                    iFrame.tfBolsasPlasticas.setText("0.00");
 
                     iFrame.btnNuevo.setEnabled(false);
                     iFrame.btnGuardar.setEnabled(false);
