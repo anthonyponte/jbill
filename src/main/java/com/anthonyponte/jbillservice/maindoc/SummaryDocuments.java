@@ -164,6 +164,18 @@ public class SummaryDocuments {
                   new Element("DocumentTypeCode", cbc)
                       .setText(detalle.getDocumento().getTipoDocumento().getCodigo()));
 
+      if (detalle.getRemitente() != null) {
+        Element accountingCustomerParty =
+            new Element("AccountingCustomerParty", cac)
+                .addContent(
+                    new Element("CustomerAssignedAccountID", cbc)
+                        .setText(detalle.getRemitente().getRuc()))
+                .addContent(
+                    new Element("AdditionalAccountID", cbc)
+                        .setText(String.valueOf(detalle.getRemitente().getTipo())));
+        summaryDocumentsLine.addContent(accountingCustomerParty);
+      }
+
       if (detalle.getDocumentoReferencia() != null) {
         Element billingReference =
             new Element("BillingReference", cac)
@@ -274,6 +286,118 @@ public class SummaryDocuments {
                         .setAttribute("currencyID", detalle.getMoneda().getCodigo())
                         .setText(String.valueOf(detalle.getOtrosCargos().getTotal())));
         summaryDocumentsLine.addContent(allowanceCharge);
+      }
+
+      Element taxTotal =
+          new Element("TaxTotal", cac)
+              .addContent(
+                  new Element("TaxAmount", cbc)
+                      .setAttribute("currencyID", detalle.getMoneda().getCodigo())
+                      .setText(String.valueOf(detalle.getIgv().getTotal())))
+              .addContent(
+                  new Element("TaxSubtotal", cac)
+                      .addContent(
+                          new Element("TaxAmount", cbc)
+                              .setAttribute("currencyID", detalle.getMoneda().getCodigo())
+                              .setText(String.valueOf(detalle.getIgv().getTotal()))))
+              .addContent(
+                  new Element("TaxCategory", cac)
+                      .addContent(
+                          new Element("TaxScheme", cac)
+                              .addContent(
+                                  new Element("ID", cbc).setText(detalle.getIgv().getCodigo()))
+                              .addContent(
+                                  new Element("Name", cbc).setText(detalle.getIgv().getNombre()))
+                              .addContent(
+                                  new Element("TaxTypeCode", cbc)
+                                      .setText(detalle.getIgv().getCodigoInternacional()))));
+      summaryDocumentsLine.addContent(taxTotal);
+
+      if (detalle.getIsc() != null) {
+        taxTotal =
+            new Element("TaxTotal", cac)
+                .addContent(
+                    new Element("TaxAmount", cbc)
+                        .setAttribute("currencyID", detalle.getMoneda().getCodigo())
+                        .setText(String.valueOf(detalle.getIsc().getTotal())))
+                .addContent(
+                    new Element("TaxSubtotal", cac)
+                        .addContent(
+                            new Element("TaxAmount", cbc)
+                                .setAttribute("currencyID", detalle.getMoneda().getCodigo())
+                                .setText(String.valueOf(detalle.getIsc().getTotal()))))
+                .addContent(
+                    new Element("TaxCategory", cac)
+                        .addContent(
+                            new Element("TaxScheme", cac)
+                                .addContent(
+                                    new Element("ID", cbc).setText(detalle.getIsc().getCodigo()))
+                                .addContent(
+                                    new Element("Name", cbc).setText(detalle.getIsc().getNombre()))
+                                .addContent(
+                                    new Element("TaxTypeCode", cbc)
+                                        .setText(detalle.getIsc().getCodigoInternacional()))));
+        summaryDocumentsLine.addContent(taxTotal);
+      }
+
+      if (detalle.getOtrosTributos() != null) {
+        taxTotal =
+            new Element("TaxTotal", cac)
+                .addContent(
+                    new Element("TaxAmount", cbc)
+                        .setAttribute("currencyID", detalle.getMoneda().getCodigo())
+                        .setText(String.valueOf(detalle.getOtrosTributos().getTotal())))
+                .addContent(
+                    new Element("TaxSubtotal", cac)
+                        .addContent(
+                            new Element("TaxAmount", cbc)
+                                .setAttribute("currencyID", detalle.getMoneda().getCodigo())
+                                .setText(String.valueOf(detalle.getOtrosTributos().getTotal()))))
+                .addContent(
+                    new Element("TaxCategory", cac)
+                        .addContent(
+                            new Element("TaxScheme", cac)
+                                .addContent(
+                                    new Element("ID", cbc)
+                                        .setText(detalle.getOtrosTributos().getCodigo()))
+                                .addContent(
+                                    new Element("Name", cbc)
+                                        .setText(detalle.getOtrosTributos().getNombre()))
+                                .addContent(
+                                    new Element("TaxTypeCode", cbc)
+                                        .setText(
+                                            detalle.getOtrosTributos().getCodigoInternacional()))));
+        summaryDocumentsLine.addContent(taxTotal);
+      }
+
+      if (detalle.getImpuestoBolsa() != null) {
+        taxTotal =
+            new Element("TaxTotal", cac)
+                .addContent(
+                    new Element("TaxAmount", cbc)
+                        .setAttribute("currencyID", detalle.getMoneda().getCodigo())
+                        .setText(String.valueOf(detalle.getImpuestoBolsa().getTotal())))
+                .addContent(
+                    new Element("TaxSubtotal", cac)
+                        .addContent(
+                            new Element("TaxAmount", cbc)
+                                .setAttribute("currencyID", detalle.getMoneda().getCodigo())
+                                .setText(String.valueOf(detalle.getImpuestoBolsa().getTotal()))))
+                .addContent(
+                    new Element("TaxCategory", cac)
+                        .addContent(
+                            new Element("TaxScheme", cac)
+                                .addContent(
+                                    new Element("ID", cbc)
+                                        .setText(detalle.getImpuestoBolsa().getCodigo()))
+                                .addContent(
+                                    new Element("Name", cbc)
+                                        .setText(detalle.getImpuestoBolsa().getNombre()))
+                                .addContent(
+                                    new Element("TaxTypeCode", cbc)
+                                        .setText(
+                                            detalle.getImpuestoBolsa().getCodigoInternacional()))));
+        summaryDocumentsLine.addContent(taxTotal);
       }
 
       document.getRootElement().addContent(summaryDocumentsLine);
