@@ -275,6 +275,18 @@ public class SummaryDocuments {
         summaryDocumentsLine.addContent(billingPayment);
       }
 
+      if (detalle.getExportacion()!= null) {
+        Element billingPayment =
+            new Element("BillingPayment", sac)
+                .addContent(
+                    new Element("PaidAmount", cbc)
+                        .setAttribute("currencyID", detalle.getMoneda().getCodigo())
+                        .setText(String.valueOf(detalle.getExportacion().getTotal())))
+                .addContent(
+                    new Element("InstructionID", cbc).setText(detalle.getExportacion().getCodigo()));
+        summaryDocumentsLine.addContent(billingPayment);
+      }
+
       if (detalle.getOtrosCargos() != null) {
         Element allowanceCharge =
             new Element("AllowanceCharge", cac)
