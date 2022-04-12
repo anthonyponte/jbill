@@ -72,6 +72,10 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         lblFechaEmision = new JLabel();
         dpFechaEmision = new JXDatePicker();
         pnlDetalle = new JPanel();
+        lblEstado = new JLabel();
+        cbxEstado = new JComboBox<>();
+        lblMoneda = new JLabel();
+        cbxMoneda = new JComboBox<>();
         tbbdDetalle = new JTabbedPane();
         pnlDocumento = new JPanel();
         lblDocumentoTipo = new JLabel();
@@ -130,10 +134,6 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         btnEliminar = new JButton();
         spane = new JScrollPane();
         table = new JTable();
-        cbxEstado = new JComboBox<>();
-        cbxMoneda = new JComboBox<>();
-        lblEstado = new JLabel();
-        lblMoneda = new JLabel();
         separator = new JSeparator();
         btnNuevo = new JButton();
         btnGuardar = new JButton();
@@ -242,6 +242,25 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tabbed.addTab("Encabezado", FontIcon.of(RemixiconAL.FILE_LIST_LINE, 16, Color.decode("#FFFFFF")), pnlEncabezado, "");
 
         pnlDetalle.setMaximumSize(null);
+
+        lblEstado.setFont(lblEstado.getFont().deriveFont(lblEstado.getFont().getStyle() | Font.BOLD, lblEstado.getFont().getSize()-2));
+        lblEstado.setText("Estado");
+
+        cbxEstado.setModel(new DefaultComboBoxModel<>(new String[] { "Adicionar", "Modificar", "Anulado" }));
+        cbxEstado.setSelectedIndex(-1);
+        cbxEstado.setEnabled(false);
+        cbxEstado.setMaximumSize(null);
+        cbxEstado.setPreferredSize(new Dimension(150, 30));
+
+        lblMoneda.setFont(lblMoneda.getFont().deriveFont(lblMoneda.getFont().getStyle() | Font.BOLD, lblMoneda.getFont().getSize()-2));
+        lblMoneda.setText("Moneda");
+
+        cbxMoneda.setModel(new DefaultComboBoxModel<>(new String[] { "PEN", "USD" }));
+        cbxMoneda.setSelectedIndex(-1);
+        cbxMoneda.setEnabled(false);
+        cbxMoneda.setMaximumSize(null);
+        cbxMoneda.setMinimumSize(null);
+        cbxMoneda.setPreferredSize(new Dimension(150, 30));
 
         lblDocumentoTipo.setFont(lblDocumentoTipo.getFont().deriveFont(lblDocumentoTipo.getFont().getStyle() | Font.BOLD, lblDocumentoTipo.getFont().getSize()-2));
         lblDocumentoTipo.setText("Tipo");
@@ -603,7 +622,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                 .addComponent(lblOtrosTributos)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfOtrosTributos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblBolsasPlasticas)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfBolsasPlasticas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -617,9 +636,10 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         spnPercepcion.setBorder(null);
         spnPercepcion.setMaximumSize(null);
         spnPercepcion.setMinimumSize(null);
+        spnPercepcion.setPreferredSize(new Dimension(450, 200));
 
         pnlPercepcion.setMaximumSize(null);
-        pnlPercepcion.setPreferredSize(new Dimension(450, 200));
+        pnlPercepcion.setMinimumSize(null);
 
         cbxPercepcionRegimen.setModel(new DefaultComboBoxModel<>(new String[] { "Percepción Venta Interna", "Percepción a la adquisición de combustible", "Percepción realizada al agente de percepción con tasa especial" }));
         cbxPercepcionRegimen.setSelectedIndex(-1);
@@ -665,13 +685,13 @@ public class ResumenDiarioIFrame extends JInternalFrame {
             .addGroup(pnlPercepcionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlPercepcionLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(cbxPercepcionRegimen, 0, 438, Short.MAX_VALUE)
+                    .addComponent(cbxPercepcionRegimen, 0, 428, Short.MAX_VALUE)
                     .addComponent(lblPercepcionRegimen)
-                    .addComponent(tfPercepcionTasa, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfPercepcionTasa, GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
                     .addComponent(lblPercepcionTasa)
-                    .addComponent(tfPercepcionMonto, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfPercepcionMonto, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
                     .addComponent(lblPercepcionMonto)
-                    .addComponent(tfPercepcionMontoTotal, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfPercepcionMontoTotal, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
                     .addComponent(lblPercepcionMontoTotal))
                 .addContainerGap())
         );
@@ -731,25 +751,6 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         spane.setViewportView(table);
         table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        cbxEstado.setModel(new DefaultComboBoxModel<>(new String[] { "Adicionar", "Modificar", "Anulado" }));
-        cbxEstado.setSelectedIndex(-1);
-        cbxEstado.setEnabled(false);
-        cbxEstado.setMaximumSize(null);
-        cbxEstado.setPreferredSize(new Dimension(150, 30));
-
-        cbxMoneda.setModel(new DefaultComboBoxModel<>(new String[] { "PEN", "USD" }));
-        cbxMoneda.setSelectedIndex(-1);
-        cbxMoneda.setEnabled(false);
-        cbxMoneda.setMaximumSize(null);
-        cbxMoneda.setMinimumSize(null);
-        cbxMoneda.setPreferredSize(new Dimension(150, 30));
-
-        lblEstado.setFont(lblEstado.getFont().deriveFont(lblEstado.getFont().getStyle() | Font.BOLD, lblEstado.getFont().getSize()-2));
-        lblEstado.setText("Estado");
-
-        lblMoneda.setFont(lblMoneda.getFont().deriveFont(lblMoneda.getFont().getStyle() | Font.BOLD, lblMoneda.getFont().getSize()-2));
-        lblMoneda.setText("Moneda");
-
         GroupLayout pnlDetalleLayout = new GroupLayout(pnlDetalle);
         pnlDetalle.setLayout(pnlDetalleLayout);
         pnlDetalleLayout.setHorizontalGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -780,12 +781,12 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                 .addComponent(cbxMoneda, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tbbdDetalle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spane, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                .addComponent(spane, GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
