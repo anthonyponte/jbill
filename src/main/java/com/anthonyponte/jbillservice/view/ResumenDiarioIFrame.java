@@ -92,9 +92,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfReferenciaSerie = new JTextField();
         lblReferenciaCorrelativo = new JLabel();
         tfReferenciaCorrelativo = new JTextField();
-        pnlImportes = new JPanel();
         spnImportes = new JScrollPane();
-        jPanel1 = new JPanel();
+        pnlImportes = new JPanel();
         lblImporteTotal = new JLabel();
         tfImporteTotal = new JFormattedTextField();
         lblGravadas = new JLabel();
@@ -117,7 +116,16 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfOtrosTributos = new JFormattedTextField();
         lblBolsasPlasticas = new JLabel();
         tfBolsasPlasticas = new JFormattedTextField();
+        spnPercepcion = new JScrollPane();
         pnlPercepcion = new JPanel();
+        cbxPercepcionRegimen = new JComboBox<>();
+        lblPercepcionRegimen = new JLabel();
+        lblPercepcionTasa = new JLabel();
+        tfPercepcionTasa = new JTextField();
+        tfPercepcionMonto = new JFormattedTextField();
+        lblPercepcionMonto = new JLabel();
+        tfPercepcionMontoTotal = new JFormattedTextField();
+        lblPercepcionMontoTotal = new JLabel();
         btnAgregar = new JButton();
         btnEliminar = new JButton();
         spane = new JScrollPane();
@@ -415,9 +423,12 @@ public class ResumenDiarioIFrame extends JInternalFrame {
 
         tbbdDetalle.addTab("Referencia", pnlReferencia);
 
+        spnImportes.setBorder(null);
         spnImportes.setMaximumSize(null);
         spnImportes.setMinimumSize(null);
         spnImportes.setPreferredSize(new Dimension(438, 200));
+
+        pnlImportes.setMaximumSize(null);
 
         lblImporteTotal.setFont(lblImporteTotal.getFont().deriveFont(lblImporteTotal.getFont().getStyle() | Font.BOLD, lblImporteTotal.getFont().getSize()-2));
         lblImporteTotal.setText("Importe total");
@@ -520,12 +531,12 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfBolsasPlasticas.setMinimumSize(null);
         tfBolsasPlasticas.setPreferredSize(new Dimension(150, 30));
 
-        GroupLayout jPanel1Layout = new GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        GroupLayout pnlImportesLayout = new GroupLayout(pnlImportes);
+        pnlImportes.setLayout(pnlImportesLayout);
+        pnlImportesLayout.setHorizontalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(pnlImportesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(tfImporteTotal, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tfGravadas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tfExoneradas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -550,8 +561,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                     .addComponent(tfBolsasPlasticas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        pnlImportesLayout.setVerticalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(pnlImportesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblImporteTotal)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -599,35 +610,95 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                 .addContainerGap())
         );
 
-        spnImportes.setViewportView(jPanel1);
+        spnImportes.setViewportView(pnlImportes);
 
-        GroupLayout pnlImportesLayout = new GroupLayout(pnlImportes);
-        pnlImportes.setLayout(pnlImportesLayout);
-        pnlImportesLayout.setHorizontalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(GroupLayout.Alignment.TRAILING, pnlImportesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(spnImportes, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnlImportesLayout.setVerticalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGroup(pnlImportesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(spnImportes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        tbbdDetalle.addTab("Importes", spnImportes);
 
-        tbbdDetalle.addTab("Importes", pnlImportes);
+        spnPercepcion.setBorder(null);
+        spnPercepcion.setMaximumSize(null);
+        spnPercepcion.setMinimumSize(null);
+
+        pnlPercepcion.setMaximumSize(null);
+        pnlPercepcion.setPreferredSize(new Dimension(450, 200));
+
+        cbxPercepcionRegimen.setModel(new DefaultComboBoxModel<>(new String[] { "Percepción Venta Interna", "Percepción a la adquisición de combustible", "Percepción realizada al agente de percepción con tasa especial" }));
+        cbxPercepcionRegimen.setSelectedIndex(-1);
+        cbxPercepcionRegimen.setEnabled(false);
+        cbxPercepcionRegimen.setMaximumSize(null);
+        cbxPercepcionRegimen.setPreferredSize(new Dimension(150, 30));
+
+        lblPercepcionRegimen.setFont(lblPercepcionRegimen.getFont().deriveFont(lblPercepcionRegimen.getFont().getStyle() | Font.BOLD, lblPercepcionRegimen.getFont().getSize()-2));
+        lblPercepcionRegimen.setText("Regimen");
+
+        lblPercepcionTasa.setFont(lblPercepcionTasa.getFont().deriveFont(lblPercepcionTasa.getFont().getStyle() | Font.BOLD, lblPercepcionTasa.getFont().getSize()-2));
+        lblPercepcionTasa.setText("Tasa");
+
+        tfPercepcionTasa.setEnabled(false);
+        tfPercepcionTasa.setMaximumSize(null);
+        tfPercepcionTasa.setMinimumSize(null);
+        tfPercepcionTasa.setPreferredSize(new Dimension(150, 30));
+        tfPercepcionTasa.setEditable(false);
+
+        tfPercepcionMonto.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+        tfPercepcionMonto.setEnabled(false);
+        tfPercepcionMonto.setMaximumSize(null);
+        tfPercepcionMonto.setMinimumSize(null);
+        tfPercepcionMonto.setPreferredSize(new Dimension(150, 30));
+        tfImporteTotal.setEditable(false);
+
+        lblPercepcionMonto.setFont(lblPercepcionMonto.getFont().deriveFont(lblPercepcionMonto.getFont().getStyle() | Font.BOLD, lblPercepcionMonto.getFont().getSize()-2));
+        lblPercepcionMonto.setText("Monto");
+
+        tfPercepcionMontoTotal.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+        tfPercepcionMontoTotal.setEnabled(false);
+        tfPercepcionMontoTotal.setMaximumSize(null);
+        tfPercepcionMontoTotal.setMinimumSize(null);
+        tfPercepcionMontoTotal.setPreferredSize(new Dimension(150, 30));
+        tfImporteTotal.setEditable(false);
+
+        lblPercepcionMontoTotal.setFont(lblPercepcionMontoTotal.getFont().deriveFont(lblPercepcionMontoTotal.getFont().getStyle() | Font.BOLD, lblPercepcionMontoTotal.getFont().getSize()-2));
+        lblPercepcionMontoTotal.setText("Monto total");
 
         GroupLayout pnlPercepcionLayout = new GroupLayout(pnlPercepcion);
         pnlPercepcion.setLayout(pnlPercepcionLayout);
         pnlPercepcionLayout.setHorizontalGroup(pnlPercepcionLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(pnlPercepcionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlPercepcionLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxPercepcionRegimen, 0, 438, Short.MAX_VALUE)
+                    .addComponent(lblPercepcionRegimen)
+                    .addComponent(tfPercepcionTasa, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblPercepcionTasa)
+                    .addComponent(tfPercepcionMonto, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblPercepcionMonto)
+                    .addComponent(tfPercepcionMontoTotal, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblPercepcionMontoTotal))
+                .addContainerGap())
         );
         pnlPercepcionLayout.setVerticalGroup(pnlPercepcionLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(pnlPercepcionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblPercepcionRegimen)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxPercepcionRegimen, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblPercepcionTasa)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfPercepcionTasa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblPercepcionMonto)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfPercepcionMonto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblPercepcionMontoTotal)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfPercepcionMontoTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        tbbdDetalle.addTab("Percepcion", pnlPercepcion);
+        spnPercepcion.setViewportView(pnlPercepcion);
+
+        tbbdDetalle.addTab("Percepcion", spnPercepcion);
 
         btnAgregar.setIcon(FontIcon.of(RemixiconAL.INSERT_ROW_BOTTOM, 16, Color.decode("#FFFFFF")));
         btnAgregar.setText("Agregar");
@@ -643,7 +714,6 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         btnEliminar.setPreferredSize(new Dimension(150, 30));
 
         spane.setMaximumSize(null);
-        spane.setMinimumSize(null);
         spane.setPreferredSize(new Dimension(150, 150));
 
         table.setModel(new DefaultTableModel(
@@ -715,7 +785,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                     .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spane, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                .addComponent(spane, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -755,7 +825,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                         .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnLimpiar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addComponent(separator, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tabbed, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tabbed, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -785,9 +855,9 @@ public class ResumenDiarioIFrame extends JInternalFrame {
     public JComboBox<String> cbxDocumentoTipo;
     public JComboBox<String> cbxEstado;
     public JComboBox<String> cbxMoneda;
+    public JComboBox<String> cbxPercepcionRegimen;
     public JComboBox<String> cbxReferenciaTipo;
     public JXDatePicker dpFechaEmision;
-    public JPanel jPanel1;
     public JLabel lblBolsasPlasticas;
     public JLabel lblCorrelativo;
     public JLabel lblDocumentoCorrelativo;
@@ -809,6 +879,10 @@ public class ResumenDiarioIFrame extends JInternalFrame {
     public JLabel lblMoneda;
     public JLabel lblOtrosCargos;
     public JLabel lblOtrosTributos;
+    public JLabel lblPercepcionMonto;
+    public JLabel lblPercepcionMontoTotal;
+    public JLabel lblPercepcionRegimen;
+    public JLabel lblPercepcionTasa;
     public JLabel lblReferenciaCorrelativo;
     public JLabel lblReferenciaSerie;
     public JLabel lblReferenciaTipo;
@@ -824,6 +898,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
     public JSeparator separator;
     public JScrollPane spane;
     public JScrollPane spnImportes;
+    public JScrollPane spnPercepcion;
     public JTabbedPane tabbed;
     public JTable table;
     public JTabbedPane tbbdDetalle;
@@ -843,6 +918,9 @@ public class ResumenDiarioIFrame extends JInternalFrame {
     public JFormattedTextField tfIsc;
     public JFormattedTextField tfOtrosCargos;
     public JFormattedTextField tfOtrosTributos;
+    public JFormattedTextField tfPercepcionMonto;
+    public JFormattedTextField tfPercepcionMontoTotal;
+    public JTextField tfPercepcionTasa;
     public JTextField tfReferenciaCorrelativo;
     public JTextField tfReferenciaSerie;
     public JTextField tfSerie;
