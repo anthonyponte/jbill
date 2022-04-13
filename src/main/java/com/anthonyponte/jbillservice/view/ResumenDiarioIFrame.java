@@ -9,8 +9,6 @@ import com.anthonyponte.jbillservice.filter.SerieFilter;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.DefaultComboBoxModel;
@@ -639,7 +637,6 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         spnPercepcion.setPreferredSize(new Dimension(450, 200));
 
         pnlPercepcion.setMaximumSize(null);
-        pnlPercepcion.setMinimumSize(null);
 
         cbxPercepcionRegimen.setModel(new DefaultComboBoxModel<>(new String[] { "Percepción Venta Interna", "Percepción a la adquisición de combustible", "Percepción realizada al agente de percepción con tasa especial" }));
         cbxPercepcionRegimen.setSelectedIndex(-1);
@@ -789,6 +786,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                 .addComponent(spane, GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        tbbdDetalle.setEnabledAt(2, false);
 
         tabbed.addTab("Detalle", FontIcon.of(RemixiconAL.LIST_ORDERED, 16, Color.decode("#FFFFFF")), pnlDetalle, "");
 

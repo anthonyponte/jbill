@@ -436,6 +436,9 @@
               </AuxValues>
             </Component>
             <Container class="javax.swing.JTabbedPane" name="tbbdDetalle">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="tbbdDetalle.setEnabledAt(2, false); "/>
+              </AuxValues>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
               <SubComponents>
@@ -1306,9 +1309,6 @@
                     <Container class="javax.swing.JPanel" name="pnlPercepcion">
                       <Properties>
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="null"/>
-                        </Property>
-                        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="null"/>
                         </Property>
                       </Properties>
