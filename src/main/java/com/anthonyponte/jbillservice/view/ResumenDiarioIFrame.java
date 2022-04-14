@@ -661,7 +661,6 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfPercepcionMonto.setMaximumSize(null);
         tfPercepcionMonto.setMinimumSize(null);
         tfPercepcionMonto.setPreferredSize(new Dimension(150, 30));
-        tfImporteTotal.setEditable(false);
 
         lblPercepcionMonto.setFont(lblPercepcionMonto.getFont().deriveFont(lblPercepcionMonto.getFont().getStyle() | Font.BOLD, lblPercepcionMonto.getFont().getSize()-2));
         lblPercepcionMonto.setText("Monto");
@@ -671,7 +670,6 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfPercepcionMontoTotal.setMaximumSize(null);
         tfPercepcionMontoTotal.setMinimumSize(null);
         tfPercepcionMontoTotal.setPreferredSize(new Dimension(150, 30));
-        tfImporteTotal.setEditable(false);
 
         lblPercepcionMontoTotal.setFont(lblPercepcionMontoTotal.getFont().deriveFont(lblPercepcionMontoTotal.getFont().getStyle() | Font.BOLD, lblPercepcionMontoTotal.getFont().getSize()-2));
         lblPercepcionMontoTotal.setText("Monto total");

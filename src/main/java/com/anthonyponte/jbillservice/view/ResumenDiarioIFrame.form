@@ -1433,9 +1433,6 @@
                               <Dimension value="[150, 30]"/>
                             </Property>
                           </Properties>
-                          <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tfImporteTotal.setEditable(false);"/>
-                          </AuxValues>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lblPercepcionMonto">
                           <Properties>
@@ -1463,9 +1460,6 @@
                               <Dimension value="[150, 30]"/>
                             </Property>
                           </Properties>
-                          <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tfImporteTotal.setEditable(false);"/>
-                          </AuxValues>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lblPercepcionMontoTotal">
                           <Properties>

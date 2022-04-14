@@ -171,8 +171,19 @@ public class ResumenDiarioController {
                     iFrame.tfBolsasPlasticas.setEnabled(true);
                     iFrame.tfBolsasPlasticas.setText("0.00");
 
+                    iFrame.cbxPercepcionRegimen.setEnabled(true);
+                    iFrame.cbxPercepcionRegimen.setSelectedIndex(0);
+
+                    iFrame.tfPercepcionTasa.setEnabled(true);
+
+                    iFrame.tfPercepcionMonto.setEnabled(true);
+
+                    iFrame.tfPercepcionMontoTotal.setEnabled(true);
+
                     iFrame.btnNuevo.setEnabled(false);
+
                     iFrame.btnGuardar.setEnabled(false);
+
                     iFrame.btnLimpiar.setEnabled(true);
                   } catch (InterruptedException | ExecutionException ex) {
                     JOptionPane.showMessageDialog(
@@ -245,6 +256,9 @@ public class ResumenDiarioController {
     iFrame.dpFechaEmision.setEnabled(false);
     iFrame.dpFechaEmision.setDate(null);
 
+    iFrame.tbbdDetalle.setSelectedIndex(0);
+    iFrame.tbbdDetalle.setEnabledAt(2, false);
+
     iFrame.cbxEstado.setEnabled(false);
     iFrame.cbxEstado.setSelectedIndex(-1);
 
@@ -299,13 +313,23 @@ public class ResumenDiarioController {
     iFrame.tfBolsasPlasticas.setEnabled(false);
     iFrame.tfBolsasPlasticas.setText("");
 
+    iFrame.cbxPercepcionRegimen.setEnabled(false);
+    iFrame.cbxPercepcionRegimen.setSelectedIndex(-1);
+
+    iFrame.tfPercepcionTasa.setEnabled(false);
+    iFrame.tfPercepcionTasa.setText("");
+
+    iFrame.tfPercepcionMonto.setEnabled(false);
+    iFrame.tfPercepcionMonto.setText("");
+
+    iFrame.tfPercepcionMontoTotal.setEnabled(false);
+    iFrame.tfPercepcionMontoTotal.setText("");
+
     iFrame.btnNuevo.setEnabled(true);
     iFrame.btnNuevo.requestFocus();
 
     iFrame.btnGuardar.setEnabled(false);
 
     iFrame.btnLimpiar.setEnabled(false);
-
-    iFrame.tbbdDetalle.setEnabledAt(2, false);
   }
 }
