@@ -17,11 +17,14 @@
 
 package com.anthonyponte.jbillservice.controller;
 
+import ca.odell.glazedlists.gui.TableFormat;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
+import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.Empresa;
 import com.anthonyponte.jbillservice.model.ResumenDiario;
+import com.anthonyponte.jbillservice.model.ResumenDiarioDetalle;
 import com.anthonyponte.jbillservice.model.TipoDocumento;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.ResumenDiarioIFrame;
@@ -35,6 +38,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.BadLocationException;
 
 /** @author anthony */
 public class ResumenDiarioController {
@@ -200,6 +205,8 @@ public class ResumenDiarioController {
           worker.execute();
         });
 
+    iFrame.btnGuardar.addActionListener((ActionEvent arg0) -> {});
+
     iFrame.btnLimpiar.addActionListener(
         (ActionEvent arg0) -> {
           start();
@@ -230,6 +237,18 @@ public class ResumenDiarioController {
           }
         });
 
+    iFrame.btnAgregar.addActionListener(
+        (arg0) -> {
+          String tipo = iFrame.cbxDocumentoTipo.getSelectedItem().toString();
+          String serie = iFrame.tfDocumentoSerie.getText();
+          int numero = Integer.parseInt(iFrame.tfDocumentoCorrelativo.getText());
+
+          DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
+          model.addRow(new Object[] {tipo, serie, numero});
+
+          iFrame.btnGuardar.setEnabled(true);
+        });
+
     iFrame.tfGravadas.getDocument().addDocumentListener(dl);
 
     iFrame.tfExoneradas.getDocument().addDocumentListener(dl);
@@ -250,6 +269,76 @@ public class ResumenDiarioController {
   private void initComponents() {
     summaryDao = new ISummaryDao();
     preferences = Preferences.userRoot().node(MainController.class.getPackageName());
+
+    TableFormat<ResumenDiarioDetalle> tableFormat =
+        new TableFormat<ResumenDiarioDetalle>() {
+          @Override
+          public int getColumnCount() {
+            return 12;
+          }
+
+          @Override
+          public String getColumnName(int column) {
+            switch (column) {
+              case 0:
+                return "Tipo Codigo";
+              case 1:
+                return "Tipo Descripcion";
+              case 2:
+                return "Serie";
+              case 3:
+                return "Correlativo";
+              case 4:
+                return "Fecha Emision";
+              case 5:
+                return "Fecha Referencia";
+              case 6:
+                return "RUC";
+              case 7:
+                return "Razon Social";
+              case 8:
+                return "Zip";
+              case 9:
+                return "Ticket";
+              case 10:
+                return "Status Code";
+              case 11:
+                return "CDR";
+            }
+            throw new IllegalStateException("Unexpected column: " + column);
+          }
+
+          @Override
+          public Object getColumnValue(ResumenDiarioDetalle detalle, int column) {
+            switch (column) {
+              case 0:
+                return detalle.getDocumento().getSerie();
+              case 1:
+                return detalle.getDocumento().getCorrelativo();
+              case 2:
+                return detalle.getDocumento().getTipoDocumento().getDescripcion();
+              case 3:
+                return detalle.getRemitente().getRuc();
+              case 4:
+                return detalle.getDocumentoReferencia().getSerie();
+              case 5:
+                return detalle.getDocumentoReferencia().getCorrelativo();
+              case 6:
+                return detalle.getDocumentoReferencia().getTipoDocumento().getDescripcion();
+              case 7:
+                return detalle.getPercepcion().getSerie();
+              case 8:
+                return detalle.getPercepcion().getSerie();
+              case 9:
+                return detalle.getPercepcion().getSerie();
+              case 10:
+                return detalle.getPercepcion().getSerie();
+              case 11:
+                return detalle.getPercepcion().getSerie();
+            }
+            throw new IllegalStateException("Unexpected column: " + column);
+          }
+        };
 
     iFrame.show();
 
