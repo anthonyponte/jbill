@@ -326,15 +326,31 @@ public class ResumenDiarioController {
               case 6:
                 return detalle.getDocumentoReferencia().getTipoDocumento().getDescripcion();
               case 7:
-                return detalle.getPercepcion().getSerie();
+                return detalle.getPercepcion().getDescripcion();
               case 8:
-                return detalle.getPercepcion().getSerie();
+                return detalle.getPercepcion().getTasa();
               case 9:
-                return detalle.getPercepcion().getSerie();
+                return detalle.getPercepcion().getMonto();
               case 10:
-                return detalle.getPercepcion().getSerie();
+                return detalle.getPercepcion().getMontoTotal();
               case 11:
-                return detalle.getPercepcion().getSerie();
+                return detalle.getEstado().getDescripcion();
+              case 12:
+                return detalle.getImporteTotal();
+              case 13:
+                return detalle.getMoneda().getDescripcion();
+              case 14:
+                return detalle.getGravadas().getTotal();
+              case 15:
+                return detalle.getExoneradas().getTotal();
+              case 16:
+                return detalle.getInafectas().getTotal();
+              case 17:
+                return detalle.getGratuitas().getTotal();
+              case 18:
+                return detalle.getExportacion().getTotal();
+              case 19:
+                return detalle.getOtrosCargos().getTotal();
             }
             throw new IllegalStateException("Unexpected column: " + column);
           }
