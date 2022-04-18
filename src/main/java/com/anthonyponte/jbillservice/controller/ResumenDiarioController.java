@@ -17,11 +17,16 @@
 
 package com.anthonyponte.jbillservice.controller;
 
+import ca.odell.glazedlists.BasicEventList;
+import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.gui.TableFormat;
+import ca.odell.glazedlists.swing.AdvancedListSelectionModel;
+import ca.odell.glazedlists.swing.AdvancedTableModel;
+import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
+import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThreadProxyList;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
-import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.Empresa;
 import com.anthonyponte.jbillservice.model.ResumenDiario;
 import com.anthonyponte.jbillservice.model.ResumenDiarioDetalle;
@@ -39,7 +44,6 @@ import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.BadLocationException;
 
 /** @author anthony */
 public class ResumenDiarioController {
@@ -48,6 +52,9 @@ public class ResumenDiarioController {
   private Preferences preferences;
   private SummaryDao summaryDao;
   private ResumenDiario resumenDiario;
+  private EventList<ResumenDiarioDetalle> eventList;
+  private AdvancedTableModel<ResumenDiarioDetalle> tableModel;
+  private AdvancedListSelectionModel<ResumenDiarioDetalle> selectionModel;
 
   public ResumenDiarioController(ResumenDiarioIFrame iFrame, LoadingDialog dialog) {
     this.iFrame = iFrame;
@@ -269,41 +276,66 @@ public class ResumenDiarioController {
   private void initComponents() {
     summaryDao = new ISummaryDao();
     preferences = Preferences.userRoot().node(MainController.class.getPackageName());
+    eventList = new BasicEventList<>();
 
     TableFormat<ResumenDiarioDetalle> tableFormat =
         new TableFormat<ResumenDiarioDetalle>() {
           @Override
           public int getColumnCount() {
-            return 12;
+            return 24;
           }
 
           @Override
           public String getColumnName(int column) {
             switch (column) {
               case 0:
-                return "Tipo Codigo";
-              case 1:
-                return "Tipo Descripcion";
-              case 2:
                 return "Serie";
-              case 3:
+              case 1:
                 return "Correlativo";
+              case 2:
+                return "Tipo";
+              case 3:
+                return "Adquiriente";
               case 4:
-                return "Fecha Emision";
+                return "Referencia Serie";
               case 5:
-                return "Fecha Referencia";
+                return "Referencia Correlativo";
               case 6:
-                return "RUC";
+                return "Referencia Tipo";
               case 7:
-                return "Razon Social";
+                return "Percepcion Descripcion";
               case 8:
-                return "Zip";
+                return "Percepcion Tasa";
               case 9:
-                return "Ticket";
+                return "Percepcion Monto";
               case 10:
-                return "Status Code";
+                return "Percepcion Monto Totsl";
               case 11:
-                return "CDR";
+                return "Estado";
+              case 12:
+                return "Importe Total";
+              case 13:
+                return "Moneda";
+              case 14:
+                return "Gravadas";
+              case 15:
+                return "Exoneradas";
+              case 16:
+                return "Inafectas";
+              case 17:
+                return "Gratuitas";
+              case 18:
+                return "Exportacion";
+              case 19:
+                return "Otros Cargos";
+              case 20:
+                return "IGV";
+              case 21:
+                return "ISC";
+              case 22:
+                return "Otros Tributos";
+              case 23:
+                return "Bolsas";
             }
             throw new IllegalStateException("Unexpected column: " + column);
           }
@@ -351,10 +383,23 @@ public class ResumenDiarioController {
                 return detalle.getExportacion().getTotal();
               case 19:
                 return detalle.getOtrosCargos().getTotal();
+              case 20:
+                return detalle.getIgv().getTotal();
+              case 21:
+                return detalle.getIsc().getTotal();
+              case 22:
+                return detalle.getOtrosTributos().getTotal();
+              case 23:
+                return detalle.getImpuestoBolsa().getTotal();
             }
             throw new IllegalStateException("Unexpected column: " + column);
           }
         };
+
+    tableModel = eventTableModelWithThreadProxyList(eventList, tableFormat);
+    selectionModel = new DefaultEventSelectionModel<>(eventList);
+    iFrame.table.setModel(tableModel);
+    iFrame.table.setSelectionModel(selectionModel);
 
     iFrame.show();
 
