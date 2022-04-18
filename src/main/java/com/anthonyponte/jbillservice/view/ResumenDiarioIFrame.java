@@ -242,7 +242,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         pnlDetalle.setMaximumSize(null);
 
         lblEstado.setFont(lblEstado.getFont().deriveFont(lblEstado.getFont().getStyle() | Font.BOLD, lblEstado.getFont().getSize()-2));
-        lblEstado.setText("Estado");
+        lblEstado.setText("Estado *");
 
         cbxEstado.setModel(new DefaultComboBoxModel<>(new String[] { "Adicionar", "Modificar", "Anulado" }));
         cbxEstado.setSelectedIndex(-1);
@@ -251,7 +251,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         cbxEstado.setPreferredSize(new Dimension(150, 30));
 
         lblMoneda.setFont(lblMoneda.getFont().deriveFont(lblMoneda.getFont().getStyle() | Font.BOLD, lblMoneda.getFont().getSize()-2));
-        lblMoneda.setText("Moneda");
+        lblMoneda.setText("Moneda *");
 
         cbxMoneda.setModel(new DefaultComboBoxModel<>(new String[] { "PEN", "USD" }));
         cbxMoneda.setSelectedIndex(-1);
@@ -261,10 +261,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         cbxMoneda.setPreferredSize(new Dimension(150, 30));
 
         lblDocumentoTipo.setFont(lblDocumentoTipo.getFont().deriveFont(lblDocumentoTipo.getFont().getStyle() | Font.BOLD, lblDocumentoTipo.getFont().getSize()-2));
-        lblDocumentoTipo.setText("Tipo");
-        lblDocumentoTipo.setMaximumSize(null);
-        lblDocumentoTipo.setMinimumSize(null);
-        lblDocumentoTipo.setPreferredSize(null);
+        lblDocumentoTipo.setText("Tipo *");
 
         cbxDocumentoTipo.setModel(new DefaultComboBoxModel<>(new String[] { "Boleta de venta", "Nota de crédito - boleta de venta", "Nota de débito - boleta de venta" }));
         cbxDocumentoTipo.setSelectedIndex(-1);
@@ -274,10 +271,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         cbxDocumentoTipo.setPreferredSize(new Dimension(150, 30));
 
         lblDocumentoSerie.setFont(lblDocumentoSerie.getFont().deriveFont(lblDocumentoSerie.getFont().getStyle() | Font.BOLD, lblDocumentoSerie.getFont().getSize()-2));
-        lblDocumentoSerie.setText("Serie");
-        lblDocumentoSerie.setMaximumSize(null);
-        lblDocumentoSerie.setMinimumSize(null);
-        lblDocumentoSerie.setPreferredSize(null);
+        lblDocumentoSerie.setText("Serie *");
 
         tfDocumentoSerie.setEnabled(false);
         tfDocumentoSerie.setMaximumSize(null);
@@ -287,10 +281,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         adDocumentoSerie.setDocumentFilter(new SerieFilter('B'));
 
         lblDocumentoCorrelativo.setFont(lblDocumentoCorrelativo.getFont().deriveFont(lblDocumentoCorrelativo.getFont().getStyle() | Font.BOLD, lblDocumentoCorrelativo.getFont().getSize()-2));
-        lblDocumentoCorrelativo.setText("Correlativo");
-        lblDocumentoCorrelativo.setMaximumSize(null);
-        lblDocumentoCorrelativo.setMinimumSize(null);
-        lblDocumentoCorrelativo.setPreferredSize(null);
+        lblDocumentoCorrelativo.setText("Correlativo *");
 
         tfDocumentoCorrelativo.setEnabled(false);
         tfDocumentoCorrelativo.setMaximumSize(null);
@@ -307,24 +298,24 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                 .addGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(cbxDocumentoTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tfDocumentoSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblDocumentoTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblDocumentoSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDocumentoTipo)
+                    .addComponent(lblDocumentoSerie)
+                    .addComponent(lblDocumentoCorrelativo)
                     .addComponent(tfDocumentoCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlDocumentoLayout.setVerticalGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlDocumentoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblDocumentoTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblDocumentoTipo)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cbxDocumentoTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblDocumentoSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblDocumentoSerie)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfDocumentoSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblDocumentoCorrelativo)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())

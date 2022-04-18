@@ -246,12 +246,7 @@ public class ResumenDiarioController {
 
     iFrame.btnAgregar.addActionListener(
         (arg0) -> {
-          String tipo = iFrame.cbxDocumentoTipo.getSelectedItem().toString();
-          String serie = iFrame.tfDocumentoSerie.getText();
-          int numero = Integer.parseInt(iFrame.tfDocumentoCorrelativo.getText());
-
-          DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
-          model.addRow(new Object[] {tipo, serie, numero});
+          ResumenDiarioDetalle detalle = new ResumenDiarioDetalle();
 
           iFrame.btnGuardar.setEnabled(true);
         });
@@ -350,21 +345,33 @@ public class ResumenDiarioController {
               case 2:
                 return detalle.getDocumento().getTipoDocumento().getDescripcion();
               case 3:
-                return detalle.getRemitente().getRuc();
+                if (detalle.getRemitente() != null) return detalle.getRemitente().getRuc();
+                else return "";
               case 4:
-                return detalle.getDocumentoReferencia().getSerie();
+                if (detalle.getDocumentoReferencia() != null)
+                  return detalle.getDocumentoReferencia().getSerie();
+                else return "";
               case 5:
-                return detalle.getDocumentoReferencia().getCorrelativo();
+                if (detalle.getDocumentoReferencia() != null)
+                  return detalle.getDocumentoReferencia().getCorrelativo();
+                else return "";
               case 6:
-                return detalle.getDocumentoReferencia().getTipoDocumento().getDescripcion();
+                if (detalle.getDocumentoReferencia() != null)
+                  return detalle.getDocumentoReferencia().getTipoDocumento().getDescripcion();
+                else return "";
               case 7:
-                return detalle.getPercepcion().getDescripcion();
+                if (detalle.getPercepcion() != null)
+                  return detalle.getPercepcion().getDescripcion();
+                else return "";
               case 8:
-                return detalle.getPercepcion().getTasa();
+                if (detalle.getPercepcion() != null) return detalle.getPercepcion().getTasa();
+                else return "";
               case 9:
-                return detalle.getPercepcion().getMonto();
+                if (detalle.getPercepcion() != null) return detalle.getPercepcion().getMonto();
+                else return "";
               case 10:
-                return detalle.getPercepcion().getMontoTotal();
+                if (detalle.getPercepcion() != null) return detalle.getPercepcion().getMontoTotal();
+                else return "";
               case 11:
                 return detalle.getEstado().getDescripcion();
               case 12:
@@ -372,25 +379,36 @@ public class ResumenDiarioController {
               case 13:
                 return detalle.getMoneda().getDescripcion();
               case 14:
-                return detalle.getGravadas().getTotal();
+                if (detalle.getGravadas() != null) return detalle.getGravadas().getTotal();
+                else return "";
               case 15:
-                return detalle.getExoneradas().getTotal();
+                if (detalle.getExoneradas() != null) return detalle.getExoneradas().getTotal();
+                else return "";
               case 16:
-                return detalle.getInafectas().getTotal();
+                if (detalle.getInafectas() != null) return detalle.getInafectas().getTotal();
+                else return "";
               case 17:
-                return detalle.getGratuitas().getTotal();
+                if (detalle.getGratuitas() != null) return detalle.getGratuitas().getTotal();
+                else return "";
               case 18:
-                return detalle.getExportacion().getTotal();
+                if (detalle.getExportacion() != null) return detalle.getExportacion().getTotal();
+                else return "";
               case 19:
-                return detalle.getOtrosCargos().getTotal();
+                if (detalle.getOtrosCargos() != null) return detalle.getOtrosCargos().getTotal();
+                else return "";
               case 20:
                 return detalle.getIgv().getTotal();
               case 21:
-                return detalle.getIsc().getTotal();
+                if (detalle.getIsc() != null) return detalle.getIsc().getTotal();
+                else return "";
               case 22:
-                return detalle.getOtrosTributos().getTotal();
+                if (detalle.getOtrosTributos() != null)
+                  return detalle.getOtrosTributos().getTotal();
+                else return "";
               case 23:
-                return detalle.getImpuestoBolsa().getTotal();
+                if (detalle.getImpuestoBolsa() != null)
+                  return detalle.getImpuestoBolsa().getTotal();
+                else return "";
             }
             throw new IllegalStateException("Unexpected column: " + column);
           }
