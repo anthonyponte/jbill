@@ -6,18 +6,23 @@ package com.anthonyponte.jbillservice.view;
 
 import com.anthonyponte.jbillservice.filter.IntegerFilter;
 import com.anthonyponte.jbillservice.filter.SerieFilter;
+import com.anthonyponte.jbillservice.model.Estado;
+import com.anthonyponte.jbillservice.model.TipoDocumento;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -244,11 +249,26 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         lblEstado.setFont(lblEstado.getFont().deriveFont(lblEstado.getFont().getStyle() | Font.BOLD, lblEstado.getFont().getSize()-2));
         lblEstado.setText("Estado *");
 
-        cbxEstado.setModel(new DefaultComboBoxModel<>(new String[] { "Adicionar", "Modificar", "Anulado" }));
-        cbxEstado.setSelectedIndex(-1);
+        cbxEstado.setModel(new DefaultComboBoxModel(new Estado[] {
+            new Estado("1", "Adicionar"),
+            new Estado("2", "Modificar"),
+            new Estado("3", "Anulado")
+        }));
         cbxEstado.setEnabled(false);
         cbxEstado.setMaximumSize(null);
         cbxEstado.setPreferredSize(new Dimension(150, 30));
+        cbxEstado.setRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(
+                JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof Estado) {
+                    Estado estado = (Estado) value;
+                    setText(estado.getDescripcion());
+                }
+                return this;
+            }
+        });
 
         lblMoneda.setFont(lblMoneda.getFont().deriveFont(lblMoneda.getFont().getStyle() | Font.BOLD, lblMoneda.getFont().getSize()-2));
         lblMoneda.setText("Moneda *");
@@ -263,12 +283,26 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         lblDocumentoTipo.setFont(lblDocumentoTipo.getFont().deriveFont(lblDocumentoTipo.getFont().getStyle() | Font.BOLD, lblDocumentoTipo.getFont().getSize()-2));
         lblDocumentoTipo.setText("Tipo *");
 
-        cbxDocumentoTipo.setModel(new DefaultComboBoxModel<>(new String[] { "Boleta de venta", "Nota de crédito - boleta de venta", "Nota de débito - boleta de venta" }));
-        cbxDocumentoTipo.setSelectedIndex(-1);
+        cbxDocumentoTipo.setModel(new DefaultComboBoxModel(new TipoDocumento[] {
+            new TipoDocumento("03", "Boleta de venta"),
+            new TipoDocumento("07", "Nota de crédito - boleta de venta"),
+            new TipoDocumento("08", "Nota de débito - boleta de venta")
+        }));
         cbxDocumentoTipo.setEnabled(false);
         cbxDocumentoTipo.setMaximumSize(null);
-        cbxDocumentoTipo.setMinimumSize(null);
         cbxDocumentoTipo.setPreferredSize(new Dimension(150, 30));
+        cbxDocumentoTipo.setRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(
+                JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof TipoDocumento) {
+                    TipoDocumento tipoDocumento = (TipoDocumento) value;
+                    setText(tipoDocumento.getDescripcion());
+                }
+                return this;
+            }
+        });
 
         lblDocumentoSerie.setFont(lblDocumentoSerie.getFont().deriveFont(lblDocumentoSerie.getFont().getStyle() | Font.BOLD, lblDocumentoSerie.getFont().getSize()-2));
         lblDocumentoSerie.setText("Serie *");
