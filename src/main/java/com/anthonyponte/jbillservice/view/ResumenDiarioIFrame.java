@@ -67,15 +67,15 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tabbed = new JTabbedPane();
         pnlEncabezado = new JPanel();
         lblTipo = new JLabel();
-        tfTipo = new JTextField();
         lblSerie = new JLabel();
         tfSerie = new JTextField();
         lblCorrelativo = new JLabel();
         tfCorrelativo = new JTextField();
         lblFechaGeneracion = new JLabel();
-        tfFechaGeneracion = new JTextField();
         lblFechaEmision = new JLabel();
         dpFechaEmision = new JXDatePicker();
+        dpFechaGeneracion = new JXDatePicker();
+        cbxTipo = new JComboBox<>();
         pnlDetalle = new JPanel();
         lblEstado = new JLabel();
         cbxEstado = new JComboBox<>();
@@ -157,12 +157,6 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         lblTipo.setFont(lblTipo.getFont().deriveFont(lblTipo.getFont().getStyle() | Font.BOLD, lblTipo.getFont().getSize()-2));
         lblTipo.setText("Tipo");
 
-        tfTipo.setEnabled(false);
-        tfTipo.setMaximumSize(null);
-        tfTipo.setMinimumSize(null);
-        tfTipo.setPreferredSize(new Dimension(150, 30));
-        tfTipo.setEditable(false);
-
         lblSerie.setFont(lblSerie.getFont().deriveFont(lblSerie.getFont().getStyle() | Font.BOLD, lblSerie.getFont().getSize()-2));
         lblSerie.setText("Serie");
 
@@ -170,7 +164,6 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfSerie.setMaximumSize(null);
         tfSerie.setMinimumSize(null);
         tfSerie.setPreferredSize(new Dimension(150, 30));
-        tfSerie.setEditable(false);
 
         lblCorrelativo.setFont(lblCorrelativo.getFont().deriveFont(lblCorrelativo.getFont().getStyle() | Font.BOLD, lblCorrelativo.getFont().getSize()-2));
         lblCorrelativo.setText("Correlativo");
@@ -180,16 +173,9 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfCorrelativo.setMaximumSize(null);
         tfCorrelativo.setMinimumSize(null);
         tfCorrelativo.setPreferredSize(new Dimension(150, 30));
-        tfCorrelativo.setEditable(false);
 
         lblFechaGeneracion.setFont(lblFechaGeneracion.getFont().deriveFont(lblFechaGeneracion.getFont().getStyle() | Font.BOLD, lblFechaGeneracion.getFont().getSize()-2));
         lblFechaGeneracion.setText("Fecha generacion");
-
-        tfFechaGeneracion.setEnabled(false);
-        tfFechaGeneracion.setMaximumSize(null);
-        tfFechaGeneracion.setMinimumSize(null);
-        tfFechaGeneracion.setPreferredSize(new Dimension(150, 30));
-        tfFechaGeneracion.setEditable(false);
 
         lblFechaEmision.setFont(lblFechaEmision.getFont().deriveFont(lblFechaEmision.getFont().getStyle() | Font.BOLD, lblFechaEmision.getFont().getSize()-2));
         lblFechaEmision.setText("Fecha emision");
@@ -201,22 +187,48 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         dpFechaEmision.setPreferredSize(new Dimension(150, 30));
         dpFechaEmision.getEditor().setEditable(false);
 
+        dpFechaGeneracion.setEditable(false);
+        dpFechaGeneracion.setEnabled(false);
+        dpFechaGeneracion.setFormats(new SimpleDateFormat("d MMMM y"));
+        dpFechaGeneracion.setMaximumSize(null);
+        dpFechaGeneracion.setMinimumSize(null);
+        dpFechaGeneracion.setPreferredSize(new Dimension(150, 30));
+
+        cbxTipo.setModel(new DefaultComboBoxModel(new TipoDocumento[] {
+            new TipoDocumento("RC", "Resumen Diario")
+        }));
+        cbxTipo.setEnabled(false);
+        cbxTipo.setMaximumSize(null);
+        cbxTipo.setPreferredSize(new Dimension(150, 30));
+        cbxTipo.setRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(
+                JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof TipoDocumento) {
+                    TipoDocumento tipoDocumento = (TipoDocumento) value;
+                    setText(tipoDocumento.getDescripcion());
+                }
+                return this;
+            }
+        });
+
         GroupLayout pnlEncabezadoLayout = new GroupLayout(pnlEncabezado);
         pnlEncabezado.setLayout(pnlEncabezadoLayout);
         pnlEncabezadoLayout.setHorizontalGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlEncabezadoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(tfTipo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfSerie, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                     .addComponent(tfCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfFechaGeneracion, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblTipo)
                     .addComponent(lblSerie)
                     .addComponent(lblCorrelativo)
                     .addComponent(lblFechaGeneracion)
                     .addComponent(lblFechaEmision)
-                    .addComponent(dpFechaEmision, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(dpFechaEmision, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dpFechaGeneracion, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbxTipo, GroupLayout.Alignment.TRAILING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlEncabezadoLayout.setVerticalGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -224,8 +236,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                 .addContainerGap()
                 .addComponent(lblTipo)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbxTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblSerie)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -236,7 +248,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblFechaGeneracion)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfFechaGeneracion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addComponent(dpFechaGeneracion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblFechaEmision)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -381,7 +393,6 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
         new DocumentoIdentidad("4", "Documento Nacional de Identidad"),
         new DocumentoIdentidad("6", "Registro Unico de Contributentes")
     }));
-    cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
     cbxDocumentoIdentidadTipo.setEnabled(false);
     cbxDocumentoIdentidadTipo.setMaximumSize(null);
     cbxDocumentoIdentidadTipo.setName(""); // NOI18N
@@ -926,7 +937,9 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     public JComboBox<String> cbxMoneda;
     public JComboBox<String> cbxPercepcionRegimen;
     public JComboBox<String> cbxReferenciaTipo;
+    public JComboBox<String> cbxTipo;
     public JXDatePicker dpFechaEmision;
+    public JXDatePicker dpFechaGeneracion;
     public JLabel lblBolsasPlasticas;
     public JLabel lblCorrelativo;
     public JLabel lblDocumentoCorrelativo;
@@ -978,7 +991,6 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     public JTextField tfDocumentoSerie;
     public JFormattedTextField tfExoneradas;
     public JFormattedTextField tfExportacion;
-    public JTextField tfFechaGeneracion;
     public JFormattedTextField tfGratuitas;
     public JFormattedTextField tfGravadas;
     public JFormattedTextField tfIgv;
@@ -993,6 +1005,5 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     public JTextField tfReferenciaCorrelativo;
     public JTextField tfReferenciaSerie;
     public JTextField tfSerie;
-    public JTextField tfTipo;
     // End of variables declaration//GEN-END:variables
 }

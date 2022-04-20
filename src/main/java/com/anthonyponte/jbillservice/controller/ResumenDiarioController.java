@@ -64,36 +64,22 @@ public class ResumenDiarioController {
   void init() {
     iFrame.btnNuevo.addActionListener(
         (ActionEvent arg0) -> {
+          iFrame.cbxTipo.setSelectedIndex(0);
+          iFrame.dpFechaGeneracion.setDate(new Date());
+
           dialog.setVisible(true);
           dialog.setLocationRelativeTo(iFrame);
 
           SwingWorker worker =
-              new SwingWorker<ResumenDiario, Void>() {
+              new SwingWorker<Integer, Void>() {
                 @Override
-                protected ResumenDiario doInBackground() throws Exception {
-                  ResumenDiario resumen = null;
+                protected Integer doInBackground() throws Exception {
+                  int count = 0;
                   try {
-                    resumen = new ResumenDiario();
+                    TipoDocumento tipoDocumento = (TipoDocumento) iFrame.cbxTipo.getSelectedItem();
+                    Date fechaGeneracion = iFrame.dpFechaGeneracion.getDate();
 
-                    resumen.setUbl("2.0");
-                    resumen.setVersion("1.0");
-                    resumen.setSerie(MyDateFormat.yyyyMMdd(new Date()));
-
-                    TipoDocumento tipoDocumento = new TipoDocumento();
-                    tipoDocumento.setDescripcion("Resumen diario");
-                    resumen.setTipoDocumento(tipoDocumento);
-
-                    resumen.setFechaEmision(new Date());
-                    resumen.setFechaReferencia(new Date());
-
-                    Empresa emisor = new Empresa();
-                    emisor.setRuc(preferences.get(UsuarioController.RUC, ""));
-                    emisor.setTipo(preferences.getInt(UsuarioController.RUC_TIPO, 0));
-                    emisor.setRazonSocial(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
-                    resumen.setEmisor(emisor);
-
-                    int count = summaryDao.read(resumen);
-                    resumen.setCorrelativo(count + 1);
+                    count = summaryDao.count(tipoDocumento, fechaGeneracion);
                   } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(
                         null,
@@ -101,7 +87,7 @@ public class ResumenDiarioController {
                         ResumenDiarioController.class.getName(),
                         JOptionPane.ERROR_MESSAGE);
                   }
-                  return resumen;
+                  return count;
                 }
 
                 @Override
@@ -109,22 +95,13 @@ public class ResumenDiarioController {
                   try {
                     dialog.dispose();
 
-                    resumenDiario = get();
-
                     iFrame.tabbed.setSelectedIndex(0);
 
-                    iFrame.tfTipo.setEnabled(true);
-                    iFrame.tfTipo.setText(resumenDiario.getTipoDocumento().getDescripcion());
+                    Date fechaGeneracion = iFrame.dpFechaGeneracion.getDate();
+                    iFrame.tfSerie.setText(MyDateFormat.yyyyMMdd(fechaGeneracion));
 
-                    iFrame.tfSerie.setEnabled(true);
-                    iFrame.tfSerie.setText(resumenDiario.getSerie());
-
-                    iFrame.tfCorrelativo.setEnabled(true);
-                    iFrame.tfCorrelativo.setText(String.valueOf(resumenDiario.getCorrelativo()));
-
-                    iFrame.tfFechaGeneracion.setEnabled(true);
-                    iFrame.tfFechaGeneracion.setText(
-                        MyDateFormat.d_MMMM_Y(resumenDiario.getFechaEmision()));
+                    int count = get();
+                    iFrame.tfCorrelativo.setText(String.valueOf(count));
 
                     iFrame.dpFechaEmision.setEnabled(true);
                     iFrame.dpFechaEmision.setDate(new Date());
@@ -209,6 +186,153 @@ public class ResumenDiarioController {
               };
 
           worker.execute();
+
+          //          dialog.setVisible(true);
+          //          dialog.setLocationRelativeTo(iFrame);
+          //
+          //          SwingWorker worker =
+          //              new SwingWorker<ResumenDiario, Void>() {
+          //                @Override
+          //                protected ResumenDiario doInBackground() throws Exception {
+          //                  ResumenDiario resumen = null;
+          //                  try {
+          //                    resumen = new ResumenDiario();
+          //
+          //                    resumen.setUbl("2.0");
+          //                    resumen.setVersion("1.0");
+          //                    resumen.setSerie(MyDateFormat.yyyyMMdd(new Date()));
+          //
+          //                    TipoDocumento tipoDocumento = new TipoDocumento();
+          //                    tipoDocumento.setDescripcion("Resumen diario");
+          //                    resumen.setTipoDocumento(tipoDocumento);
+          //
+          //                    resumen.setFechaEmision(new Date());
+          //                    resumen.setFechaReferencia(new Date());
+          //
+          //                    Empresa emisor = new Empresa();
+          //                    emisor.setRuc(preferences.get(UsuarioController.RUC, ""));
+          //                    emisor.setTipo(preferences.getInt(UsuarioController.RUC_TIPO, 0));
+          //
+          // emisor.setRazonSocial(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
+          //                    resumen.setEmisor(emisor);
+          //
+          //                    int count = summaryDao.read(resumen);
+          //                    resumen.setCorrelativo(count + 1);
+          //                  } catch (SQLException ex) {
+          //                    JOptionPane.showMessageDialog(
+          //                        null,
+          //                        ex.getMessage(),
+          //                        ResumenDiarioController.class.getName(),
+          //                        JOptionPane.ERROR_MESSAGE);
+          //                  }
+          //                  return resumen;
+          //                }
+          //
+          //                @Override
+          //                protected void done() {
+          //                  try {
+          //                    dialog.dispose();
+          //
+          //                    resumenDiario = get();
+          //
+          //                    iFrame.tabbed.setSelectedIndex(0);
+          //
+          //                    iFrame.cbxTipo.setEnabled(true);
+          //                    iFrame.cbxTipo.setSelectedIndex(0);
+          //
+          //                    iFrame.tfSerie.setEnabled(true);
+          //                    iFrame.tfSerie.setText(resumenDiario.getSerie());
+          //
+          //                    iFrame.tfCorrelativo.setEnabled(true);
+          //
+          // iFrame.tfCorrelativo.setText(String.valueOf(resumenDiario.getCorrelativo()));
+          //
+          //                    iFrame.dpFechaGeneracion.setEnabled(true);
+          //                    iFrame.dpFechaGeneracion.setDate(new Date());
+          //
+          //                    iFrame.dpFechaEmision.setEnabled(true);
+          //                    iFrame.dpFechaEmision.setDate(new Date());
+          //                    iFrame.dpFechaEmision.requestFocus();
+          //
+          //                    iFrame.cbxEstado.setEnabled(true);
+          //                    iFrame.cbxEstado.setSelectedIndex(0);
+          //
+          //                    iFrame.cbxMoneda.setEnabled(true);
+          //                    iFrame.cbxMoneda.setSelectedIndex(0);
+          //
+          //                    iFrame.cbxDocumentoTipo.setEnabled(true);
+          //                    iFrame.cbxDocumentoTipo.setSelectedIndex(0);
+          //
+          //                    iFrame.tfDocumentoSerie.setEnabled(true);
+          //
+          //                    iFrame.tfDocumentoCorrelativo.setEnabled(true);
+          //
+          //                    iFrame.cbxDocumentoIdentidadTipo.setEnabled(true);
+          //                    iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
+          //
+          //                    iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
+          //
+          //                    iFrame.tfImporteTotal.setEnabled(true);
+          //                    iFrame.tfImporteTotal.setText("0.00");
+          //
+          //                    iFrame.tfGravadas.setEnabled(true);
+          //                    iFrame.tfGravadas.setText("0.00");
+          //
+          //                    iFrame.tfExoneradas.setEnabled(true);
+          //                    iFrame.tfExoneradas.setText("0.00");
+          //
+          //                    iFrame.tfInafectas.setEnabled(true);
+          //                    iFrame.tfInafectas.setText("0.00");
+          //
+          //                    iFrame.tfGratuitas.setEnabled(true);
+          //                    iFrame.tfGratuitas.setText("0.00");
+          //
+          //                    iFrame.tfExportacion.setEnabled(true);
+          //                    iFrame.tfExportacion.setText("0.00");
+          //
+          //                    iFrame.tfOtrosCargos.setEnabled(true);
+          //                    iFrame.tfOtrosCargos.setText("0.00");
+          //
+          //                    iFrame.tfIsc.setEnabled(true);
+          //                    iFrame.tfIsc.setText("0.00");
+          //
+          //                    iFrame.tfIgv.setEnabled(true);
+          //                    iFrame.tfIgv.setText("0.00");
+          //
+          //                    iFrame.tfIsc.setEnabled(true);
+          //                    iFrame.tfIsc.setText("0.00");
+          //
+          //                    iFrame.tfOtrosTributos.setEnabled(true);
+          //                    iFrame.tfOtrosTributos.setText("0.00");
+          //
+          //                    iFrame.tfBolsasPlasticas.setEnabled(true);
+          //                    iFrame.tfBolsasPlasticas.setText("0.00");
+          //
+          //                    iFrame.cbxPercepcionRegimen.setEnabled(true);
+          //                    iFrame.cbxPercepcionRegimen.setSelectedIndex(0);
+          //
+          //                    iFrame.tfPercepcionTasa.setEnabled(true);
+          //
+          //                    iFrame.tfPercepcionMonto.setEnabled(true);
+          //
+          //                    iFrame.tfPercepcionMontoTotal.setEnabled(true);
+          //
+          //                    iFrame.btnNuevo.setEnabled(false);
+          //
+          //                    iFrame.btnGuardar.setEnabled(false);
+          //
+          //                    iFrame.btnLimpiar.setEnabled(true);
+          //                  } catch (InterruptedException | ExecutionException ex) {
+          //                    JOptionPane.showMessageDialog(
+          //                        null,
+          //                        ex.getMessage(),
+          //                        ResumenDiarioController.class.getName(),
+          //                        JOptionPane.ERROR_MESSAGE);
+          //                  }
+          //                }
+          //              };
+          //
+          //          worker.execute();
         });
 
     iFrame.btnGuardar.addActionListener((ActionEvent arg0) -> {});
@@ -426,8 +550,8 @@ public class ResumenDiarioController {
   private void start() {
     iFrame.tabbed.setSelectedIndex(0);
 
-    iFrame.tfTipo.setEnabled(false);
-    iFrame.tfTipo.setText("");
+    iFrame.cbxTipo.setEnabled(false);
+    iFrame.cbxTipo.setSelectedIndex(-1);
 
     iFrame.tfSerie.setEnabled(false);
     iFrame.tfSerie.setText("");
@@ -435,8 +559,8 @@ public class ResumenDiarioController {
     iFrame.tfCorrelativo.setEnabled(false);
     iFrame.tfCorrelativo.setText("");
 
-    iFrame.tfFechaGeneracion.setEnabled(false);
-    iFrame.tfFechaGeneracion.setText("");
+    iFrame.dpFechaGeneracion.setEnabled(false);
+    iFrame.dpFechaGeneracion.setDate(null);
 
     iFrame.dpFechaEmision.setEnabled(false);
     iFrame.dpFechaEmision.setDate(null);
