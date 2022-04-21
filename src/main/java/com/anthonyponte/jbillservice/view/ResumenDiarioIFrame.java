@@ -9,11 +9,14 @@ import com.anthonyponte.jbillservice.filter.SerieFilter;
 import com.anthonyponte.jbillservice.model.DocumentoIdentidad;
 import com.anthonyponte.jbillservice.model.Estado;
 import com.anthonyponte.jbillservice.model.Moneda;
+import com.anthonyponte.jbillservice.model.RegimenPercepcion;
 import com.anthonyponte.jbillservice.model.TipoDocumento;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.DefaultComboBoxModel;
@@ -96,11 +99,11 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfDocumentoIdentidadNumero = new JTextField();
         pnlReferencia = new JPanel();
         lblReferenciaTipo = new JLabel();
-        cbxReferenciaTipo = new JComboBox<>();
+        cbxDocumentoReferenciaTipo = new JComboBox<>();
         lblReferenciaSerie = new JLabel();
-        tfReferenciaSerie = new JTextField();
+        tfDocumentoReferenciaSerie = new JTextField();
         lblReferenciaCorrelativo = new JLabel();
-        tfReferenciaCorrelativo = new JTextField();
+        tfDocumentoReferenciaCorrelativo = new JTextField();
         spnImportes = new JScrollPane();
         pnlImportes = new JPanel();
         lblImporteTotal = new JLabel();
@@ -135,6 +138,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         lblPercepcionMonto = new JLabel();
         tfPercepcionMontoTotal = new JFormattedTextField();
         lblPercepcionMontoTotal = new JLabel();
+        tfPercepcionBase = new JFormattedTextField();
+        lblPercepcionBase = new JLabel();
         btnAgregar = new JButton();
         btnEliminar = new JButton();
         spane = new JScrollPane();
@@ -255,6 +260,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
                 .addComponent(dpFechaEmision, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        cbxTipo.setSelectedIndex(-1);
 
         tabbed.addTab("Encabezado", FontIcon.of(RemixiconAL.FILE_LIST_LINE, 16, Color.decode("#FFFFFF")), pnlEncabezado, "");
 
@@ -382,6 +389,8 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
             .addContainerGap())
     );
 
+    cbxDocumentoTipo.setSelectedIndex(-1);
+
     tbbdDetalle.addTab("Documento", pnlDocumento);
 
     lblDocumentoIdentidadTipo.setFont(lblDocumentoIdentidadTipo.getFont().deriveFont(lblDocumentoIdentidadTipo.getFont().getStyle() | Font.BOLD, lblDocumentoIdentidadTipo.getFont().getSize()-2));
@@ -443,19 +452,21 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
             .addContainerGap())
     );
 
+    cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
+
     tbbdDetalle.addTab("Remitente", pnlRemitente);
 
     lblReferenciaTipo.setFont(lblReferenciaTipo.getFont().deriveFont(lblReferenciaTipo.getFont().getStyle() | Font.BOLD, lblReferenciaTipo.getFont().getSize()-2));
     lblReferenciaTipo.setText("Tipo");
 
-    cbxReferenciaTipo.setModel(new DefaultComboBoxModel(new TipoDocumento[] {
+    cbxDocumentoReferenciaTipo.setModel(new DefaultComboBoxModel(new TipoDocumento[] {
         new TipoDocumento("03", "Boleta de venta"),
         new TipoDocumento("12", "Ticket de máquina registradora")
     }));
-    cbxReferenciaTipo.setEnabled(false);
-    cbxReferenciaTipo.setMaximumSize(null);
-    cbxReferenciaTipo.setPreferredSize(new Dimension(150, 30));
-    cbxReferenciaTipo.setRenderer(new DefaultListCellRenderer(){
+    cbxDocumentoReferenciaTipo.setEnabled(false);
+    cbxDocumentoReferenciaTipo.setMaximumSize(null);
+    cbxDocumentoReferenciaTipo.setPreferredSize(new Dimension(150, 30));
+    cbxDocumentoReferenciaTipo.setRenderer(new DefaultListCellRenderer(){
         @Override
         public Component getListCellRendererComponent(
             JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -471,21 +482,21 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblReferenciaSerie.setFont(lblReferenciaSerie.getFont().deriveFont(lblReferenciaSerie.getFont().getStyle() | Font.BOLD, lblReferenciaSerie.getFont().getSize()-2));
     lblReferenciaSerie.setText("Serie");
 
-    tfReferenciaSerie.setEnabled(false);
-    tfReferenciaSerie.setMaximumSize(null);
-    tfReferenciaSerie.setMinimumSize(null);
-    tfReferenciaSerie.setPreferredSize(new Dimension(150, 30));
-    AbstractDocument adReferenciaSerie = (AbstractDocument) tfReferenciaSerie.getDocument();
+    tfDocumentoReferenciaSerie.setEnabled(false);
+    tfDocumentoReferenciaSerie.setMaximumSize(null);
+    tfDocumentoReferenciaSerie.setMinimumSize(null);
+    tfDocumentoReferenciaSerie.setPreferredSize(new Dimension(150, 30));
+    AbstractDocument adReferenciaSerie = (AbstractDocument) tfDocumentoReferenciaSerie.getDocument();
     adReferenciaSerie.setDocumentFilter(new SerieFilter('B'));
 
     lblReferenciaCorrelativo.setFont(lblReferenciaCorrelativo.getFont().deriveFont(lblReferenciaCorrelativo.getFont().getStyle() | Font.BOLD, lblReferenciaCorrelativo.getFont().getSize()-2));
     lblReferenciaCorrelativo.setText("Correlativo");
 
-    tfReferenciaCorrelativo.setEnabled(false);
-    tfReferenciaCorrelativo.setMaximumSize(null);
-    tfReferenciaCorrelativo.setMinimumSize(null);
-    tfReferenciaCorrelativo.setPreferredSize(new Dimension(150, 30));
-    AbstractDocument adReferenciaCorrelativo = (AbstractDocument) tfReferenciaCorrelativo.getDocument();
+    tfDocumentoReferenciaCorrelativo.setEnabled(false);
+    tfDocumentoReferenciaCorrelativo.setMaximumSize(null);
+    tfDocumentoReferenciaCorrelativo.setMinimumSize(null);
+    tfDocumentoReferenciaCorrelativo.setPreferredSize(new Dimension(150, 30));
+    AbstractDocument adReferenciaCorrelativo = (AbstractDocument) tfDocumentoReferenciaCorrelativo.getDocument();
     adReferenciaCorrelativo.setDocumentFilter(new IntegerFilter(8));
 
         GroupLayout pnlReferenciaLayout = new GroupLayout(pnlReferencia);
@@ -494,12 +505,12 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
         .addGroup(pnlReferenciaLayout.createSequentialGroup()
             .addContainerGap()
             .addGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(cbxReferenciaTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfReferenciaSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbxDocumentoReferenciaTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfDocumentoReferenciaSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblReferenciaTipo)
                 .addComponent(lblReferenciaSerie)
                 .addComponent(lblReferenciaCorrelativo)
-                .addComponent(tfReferenciaCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tfDocumentoReferenciaCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
     );
     pnlReferenciaLayout.setVerticalGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -507,17 +518,19 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
             .addContainerGap()
             .addComponent(lblReferenciaTipo)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cbxReferenciaTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addComponent(cbxDocumentoReferenciaTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblReferenciaSerie)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfReferenciaSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addComponent(tfDocumentoReferenciaSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblReferenciaCorrelativo)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfReferenciaCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addComponent(tfDocumentoReferenciaCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
     );
+
+    cbxDocumentoReferenciaTipo.setSelectedIndex(-1);
 
     tbbdDetalle.addTab("Referencia", pnlReferencia);
 
@@ -719,11 +732,26 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
 
     pnlPercepcion.setMaximumSize(null);
 
-    cbxPercepcionRegimen.setModel(new DefaultComboBoxModel<>(new String[] { "Percepción Venta Interna", "Percepción a la adquisición de combustible", "Percepción realizada al agente de percepción con tasa especial" }));
-    cbxPercepcionRegimen.setSelectedIndex(-1);
+    cbxPercepcionRegimen.setModel(new DefaultComboBoxModel(new RegimenPercepcion[] {
+        new RegimenPercepcion("01", "Percepción Venta Interna", 2),
+        new RegimenPercepcion("02", "Percepción a la adquisición de combustible", 1),
+        new RegimenPercepcion("03", "Percepción realizada al agente de percepción con tasa especial", 0.5)
+    }));
     cbxPercepcionRegimen.setEnabled(false);
     cbxPercepcionRegimen.setMaximumSize(null);
     cbxPercepcionRegimen.setPreferredSize(new Dimension(150, 30));
+    cbxPercepcionRegimen.setRenderer(new DefaultListCellRenderer(){
+        @Override
+        public Component getListCellRendererComponent(
+            JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            if (value instanceof RegimenPercepcion) {
+                RegimenPercepcion regimenPercepcion = (RegimenPercepcion) value;
+                setText(regimenPercepcion.getDescripcion());
+            }
+            return this;
+        }
+    });
 
     lblPercepcionRegimen.setFont(lblPercepcionRegimen.getFont().deriveFont(lblPercepcionRegimen.getFont().getStyle() | Font.BOLD, lblPercepcionRegimen.getFont().getSize()-2));
     lblPercepcionRegimen.setText("Regimen");
@@ -755,6 +783,15 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblPercepcionMontoTotal.setFont(lblPercepcionMontoTotal.getFont().deriveFont(lblPercepcionMontoTotal.getFont().getStyle() | Font.BOLD, lblPercepcionMontoTotal.getFont().getSize()-2));
     lblPercepcionMontoTotal.setText("Monto total");
 
+    tfPercepcionBase.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfPercepcionBase.setEnabled(false);
+    tfPercepcionBase.setMaximumSize(null);
+    tfPercepcionBase.setMinimumSize(null);
+    tfPercepcionBase.setPreferredSize(new Dimension(150, 30));
+
+    lblPercepcionBase.setFont(lblPercepcionBase.getFont().deriveFont(lblPercepcionBase.getFont().getStyle() | Font.BOLD, lblPercepcionBase.getFont().getSize()-2));
+    lblPercepcionBase.setText("Base");
+
         GroupLayout pnlPercepcionLayout = new GroupLayout(pnlPercepcion);
     pnlPercepcion.setLayout(pnlPercepcionLayout);
     pnlPercepcionLayout.setHorizontalGroup(pnlPercepcionLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -768,7 +805,9 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
                 .addComponent(tfPercepcionMonto, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblPercepcionMonto)
                 .addComponent(tfPercepcionMontoTotal, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblPercepcionMontoTotal))
+                .addComponent(lblPercepcionMontoTotal)
+                .addComponent(tfPercepcionBase, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblPercepcionBase))
             .addContainerGap())
     );
     pnlPercepcionLayout.setVerticalGroup(pnlPercepcionLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -789,8 +828,14 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
             .addComponent(lblPercepcionMontoTotal)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(tfPercepcionMontoTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(lblPercepcionBase)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfPercepcionBase, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
     );
+
+    cbxPercepcionRegimen.setSelectedIndex(-1);
 
     spnPercepcion.setViewportView(pnlPercepcion);
 
@@ -809,6 +854,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     btnEliminar.setMinimumSize(new Dimension(150, 30));
     btnEliminar.setPreferredSize(new Dimension(150, 30));
 
+    spane.setEnabled(false);
     spane.setMaximumSize(null);
     spane.setPreferredSize(new Dimension(150, 100));
 
@@ -867,6 +913,8 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
             .addContainerGap())
     );
 
+    cbxEstado.setSelectedIndex(-1);
+    cbxMoneda.setSelectedIndex(-1);
     tbbdDetalle.setEnabledAt(2, false);
 
     tabbed.addTab("Detalle", FontIcon.of(RemixiconAL.LIST_ORDERED, 16, Color.decode("#FFFFFF")), pnlDetalle, "");
@@ -932,11 +980,11 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     public JButton btnLimpiar;
     public JButton btnNuevo;
     public JComboBox<String> cbxDocumentoIdentidadTipo;
+    public JComboBox<String> cbxDocumentoReferenciaTipo;
     public JComboBox<String> cbxDocumentoTipo;
     public JComboBox<String> cbxEstado;
     public JComboBox<String> cbxMoneda;
     public JComboBox<String> cbxPercepcionRegimen;
-    public JComboBox<String> cbxReferenciaTipo;
     public JComboBox<String> cbxTipo;
     public JXDatePicker dpFechaEmision;
     public JXDatePicker dpFechaGeneracion;
@@ -961,6 +1009,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     public JLabel lblMoneda;
     public JLabel lblOtrosCargos;
     public JLabel lblOtrosTributos;
+    public JLabel lblPercepcionBase;
     public JLabel lblPercepcionMonto;
     public JLabel lblPercepcionMontoTotal;
     public JLabel lblPercepcionRegimen;
@@ -988,6 +1037,8 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     public JTextField tfCorrelativo;
     public JTextField tfDocumentoCorrelativo;
     public JTextField tfDocumentoIdentidadNumero;
+    public JTextField tfDocumentoReferenciaCorrelativo;
+    public JTextField tfDocumentoReferenciaSerie;
     public JTextField tfDocumentoSerie;
     public JFormattedTextField tfExoneradas;
     public JFormattedTextField tfExportacion;
@@ -999,11 +1050,10 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     public JFormattedTextField tfIsc;
     public JFormattedTextField tfOtrosCargos;
     public JFormattedTextField tfOtrosTributos;
+    public JFormattedTextField tfPercepcionBase;
     public JFormattedTextField tfPercepcionMonto;
     public JFormattedTextField tfPercepcionMontoTotal;
     public JTextField tfPercepcionTasa;
-    public JTextField tfReferenciaCorrelativo;
-    public JTextField tfReferenciaSerie;
     public JTextField tfSerie;
     // End of variables declaration//GEN-END:variables
 }

@@ -164,15 +164,15 @@ public class SummaryDocuments {
                   new Element("DocumentTypeCode", cbc)
                       .setText(detalle.getDocumento().getTipoDocumento().getCodigo()));
 
-      if (detalle.getRemitente() != null) {
+      if (detalle.getAdquiriente() != null) {
         Element accountingCustomerParty =
             new Element("AccountingCustomerParty", cac)
                 .addContent(
                     new Element("CustomerAssignedAccountID", cbc)
-                        .setText(detalle.getRemitente().getRuc()))
+                        .setText(detalle.getAdquiriente().getRuc()))
                 .addContent(
                     new Element("AdditionalAccountID", cbc)
-                        .setText(String.valueOf(detalle.getRemitente().getTipo())));
+                        .setText(String.valueOf(detalle.getAdquiriente().getTipo())));
         summaryDocumentsLine.addContent(accountingCustomerParty);
       }
 
@@ -197,10 +197,12 @@ public class SummaryDocuments {
             new Element("SUNATPerceptionSummaryDocumentReference", sac)
                 .addContent(
                     new Element("SUNATPerceptionSystemCode", sac)
-                        .setText(detalle.getPercepcion().getCodigo()))
+                        .setText(detalle.getPercepcion().getRegimenPercepcion().getCodigo()))
                 .addContent(
                     new Element("SUNATPerceptionPercent", sac)
-                        .setText(String.valueOf(detalle.getPercepcion().getTasa())))
+                        .setText(
+                            String.valueOf(
+                                detalle.getPercepcion().getRegimenPercepcion().getPorcentaje())))
                 .addContent(
                     new Element("TotalInvoiceAmount", cbc)
                         .setAttribute("currencyID", detalle.getMoneda().getCodigo())
@@ -275,7 +277,7 @@ public class SummaryDocuments {
         summaryDocumentsLine.addContent(billingPayment);
       }
 
-      if (detalle.getExportacion()!= null) {
+      if (detalle.getExportacion() != null) {
         Element billingPayment =
             new Element("BillingPayment", sac)
                 .addContent(
@@ -283,7 +285,8 @@ public class SummaryDocuments {
                         .setAttribute("currencyID", detalle.getMoneda().getCodigo())
                         .setText(String.valueOf(detalle.getExportacion().getTotal())))
                 .addContent(
-                    new Element("InstructionID", cbc).setText(detalle.getExportacion().getCodigo()));
+                    new Element("InstructionID", cbc)
+                        .setText(detalle.getExportacion().getCodigo()));
         summaryDocumentsLine.addContent(billingPayment);
       }
 
@@ -319,7 +322,8 @@ public class SummaryDocuments {
                               .addContent(
                                   new Element("ID", cbc).setText(detalle.getIgv().getCodigo()))
                               .addContent(
-                                  new Element("Name", cbc).setText(detalle.getIgv().getNombre()))
+                                  new Element("Name", cbc)
+                                      .setText(detalle.getIgv().getDescripcion()))
                               .addContent(
                                   new Element("TaxTypeCode", cbc)
                                       .setText(detalle.getIgv().getCodigoInternacional()))));
@@ -345,7 +349,8 @@ public class SummaryDocuments {
                                 .addContent(
                                     new Element("ID", cbc).setText(detalle.getIsc().getCodigo()))
                                 .addContent(
-                                    new Element("Name", cbc).setText(detalle.getIsc().getNombre()))
+                                    new Element("Name", cbc)
+                                        .setText(detalle.getIsc().getDescripcion()))
                                 .addContent(
                                     new Element("TaxTypeCode", cbc)
                                         .setText(detalle.getIsc().getCodigoInternacional()))));
@@ -374,7 +379,7 @@ public class SummaryDocuments {
                                         .setText(detalle.getOtrosTributos().getCodigo()))
                                 .addContent(
                                     new Element("Name", cbc)
-                                        .setText(detalle.getOtrosTributos().getNombre()))
+                                        .setText(detalle.getOtrosTributos().getDescripcion()))
                                 .addContent(
                                     new Element("TaxTypeCode", cbc)
                                         .setText(
@@ -404,7 +409,7 @@ public class SummaryDocuments {
                                         .setText(detalle.getImpuestoBolsa().getCodigo()))
                                 .addContent(
                                     new Element("Name", cbc)
-                                        .setText(detalle.getImpuestoBolsa().getNombre()))
+                                        .setText(detalle.getImpuestoBolsa().getDescripcion()))
                                 .addContent(
                                     new Element("TaxTypeCode", cbc)
                                         .setText(

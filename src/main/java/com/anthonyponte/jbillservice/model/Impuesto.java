@@ -21,15 +21,15 @@ package com.anthonyponte.jbillservice.model;
 public class Impuesto {
   private double total;
   private String codigo;
-  private String nombre;
+  private String descripcion;
   private String codigoInternacional;
 
   public Impuesto() {}
 
-  public Impuesto(double total, String codigo, String nombre, String codigoInternacional) {
+  public Impuesto(double total, String codigo, String descripcion, String codigoInternacional) {
     this.total = total;
     this.codigo = codigo;
-    this.nombre = nombre;
+    this.descripcion = descripcion;
     this.codigoInternacional = codigoInternacional;
   }
 
@@ -49,12 +49,12 @@ public class Impuesto {
     this.codigo = codigo;
   }
 
-  public String getNombre() {
-    return nombre;
+  public String getDescripcion() {
+    return descripcion;
   }
 
-  public void setNombre(String nombre) {
-    this.nombre = nombre;
+  public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
   }
 
   public String getCodigoInternacional() {
@@ -72,8 +72,8 @@ public class Impuesto {
         + total
         + ", codigo="
         + codigo
-        + ", nombre="
-        + nombre
+        + ", descripcion="
+        + descripcion
         + ", codigoInternacional="
         + codigoInternacional
         + '}';

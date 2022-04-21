@@ -23,7 +23,7 @@ public class ResumenDiarioDetalle {
   private ResumenDiario resumenDiario;
   private int numero;
   private Documento documento;
-  private Empresa remitente;
+  private Empresa adquiriente;
   private Documento documentoReferencia;
   private Percepcion percepcion;
   private Estado estado;
@@ -47,7 +47,7 @@ public class ResumenDiarioDetalle {
       ResumenDiario resumenDiario,
       int numero,
       Documento documento,
-      Empresa remitente,
+      Empresa adquiriente,
       Documento documentoReferencia,
       Percepcion percepcion,
       Estado estado,
@@ -67,7 +67,7 @@ public class ResumenDiarioDetalle {
     this.resumenDiario = resumenDiario;
     this.numero = numero;
     this.documento = documento;
-    this.remitente = remitente;
+    this.adquiriente = adquiriente;
     this.documentoReferencia = documentoReferencia;
     this.percepcion = percepcion;
     this.estado = estado;
@@ -117,12 +117,12 @@ public class ResumenDiarioDetalle {
     this.documento = documento;
   }
 
-  public Empresa getRemitente() {
-    return remitente;
+  public Empresa getAdquiriente() {
+    return adquiriente;
   }
 
-  public void setRemitente(Empresa remitente) {
-    this.remitente = remitente;
+  public void setAdquiriente(Empresa adquiriente) {
+    this.adquiriente = adquiriente;
   }
 
   public Documento getDocumentoReferencia() {
@@ -257,7 +257,7 @@ public class ResumenDiarioDetalle {
         + ", documento="
         + documento
         + ", remitente="
-        + remitente
+        + adquiriente
         + ", documentoReferencia="
         + documentoReferencia
         + ", percepcion="
