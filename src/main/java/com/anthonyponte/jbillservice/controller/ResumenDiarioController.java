@@ -179,6 +179,8 @@ public class ResumenDiarioController {
 
                     iFrame.tfPercepcionMontoTotal.setEnabled(true);
 
+                    iFrame.tfPercepcionBase.setEnabled(true);
+
                     iFrame.btnNuevo.setEnabled(false);
 
                     iFrame.btnGuardar.setEnabled(false);
@@ -372,6 +374,17 @@ public class ResumenDiarioController {
               iFrame.tfDocumentoReferenciaSerie.setEnabled(true);
 
               iFrame.tfDocumentoReferenciaCorrelativo.setEnabled(true);
+            }
+          }
+        });
+
+    iFrame.cbxPercepcionRegimen.addItemListener(
+        (ItemEvent ie) -> {
+          if (ie.getStateChange() == ItemEvent.SELECTED) {
+            if (iFrame.cbxDocumentoTipo.getSelectedIndex() == 0) {
+              RegimenPercepcion regimenPercepcion =
+                  (RegimenPercepcion) iFrame.cbxPercepcionRegimen.getSelectedItem();
+              iFrame.tfPercepcionTasa.setText(String.valueOf(regimenPercepcion.getPorcentaje()));
             }
           }
         });
@@ -774,6 +787,9 @@ public class ResumenDiarioController {
 
     iFrame.tfPercepcionMontoTotal.setEnabled(false);
     iFrame.tfPercepcionMontoTotal.setText("");
+
+    iFrame.tfPercepcionBase.setEnabled(false);
+    iFrame.tfPercepcionBase.setText("");
 
     iFrame.btnNuevo.setEnabled(true);
     iFrame.btnNuevo.requestFocus();
