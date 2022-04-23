@@ -25,6 +25,7 @@ import ca.odell.glazedlists.swing.AdvancedTableModel;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThreadProxyList;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
+import com.anthonyponte.jbillservice.custom.MyTableResize;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.model.Documento;
@@ -59,7 +60,6 @@ public class ResumenDiarioController {
   private final LoadingDialog dialog;
   private Preferences preferences;
   private SummaryDao summaryDao;
-  private ResumenDiario resumenDiario;
   private EventList<ResumenDiarioDetalle> eventList;
   private AdvancedTableModel<ResumenDiarioDetalle> tableModel;
   private AdvancedListSelectionModel<ResumenDiarioDetalle> selectionModel;
@@ -523,25 +523,30 @@ public class ResumenDiarioController {
           }
 
           eventList.add(detalle);
+          MyTableResize.resize(iFrame.table);
 
           iFrame.btnGuardar.setEnabled(true);
         });
 
-    iFrame.tfGravadas.getDocument().addDocumentListener(dl);
+    iFrame.tfDocumentoSerie.getDocument().addDocumentListener(dlEnabled);
 
-    iFrame.tfExoneradas.getDocument().addDocumentListener(dl);
+    iFrame.tfDocumentoCorrelativo.getDocument().addDocumentListener(dlEnabled);
 
-    iFrame.tfInafectas.getDocument().addDocumentListener(dl);
+    iFrame.tfGravadas.getDocument().addDocumentListener(dlSum);
 
-    iFrame.tfExportacion.getDocument().addDocumentListener(dl);
+    iFrame.tfExoneradas.getDocument().addDocumentListener(dlSum);
 
-    iFrame.tfOtrosCargos.getDocument().addDocumentListener(dl);
+    iFrame.tfInafectas.getDocument().addDocumentListener(dlSum);
 
-    iFrame.tfIsc.getDocument().addDocumentListener(dl);
+    iFrame.tfExportacion.getDocument().addDocumentListener(dlSum);
 
-    iFrame.tfOtrosTributos.getDocument().addDocumentListener(dl);
+    iFrame.tfOtrosCargos.getDocument().addDocumentListener(dlSum);
 
-    iFrame.tfBolsasPlasticas.getDocument().addDocumentListener(dl);
+    iFrame.tfIsc.getDocument().addDocumentListener(dlSum);
+
+    iFrame.tfOtrosTributos.getDocument().addDocumentListener(dlSum);
+
+    iFrame.tfBolsasPlasticas.getDocument().addDocumentListener(dlSum);
   }
 
   private void initComponents() {
@@ -790,6 +795,9 @@ public class ResumenDiarioController {
 
     iFrame.tfPercepcionBase.setEnabled(false);
     iFrame.tfPercepcionBase.setText("");
+    
+    eventList.clear();
+    selectionModel.clearSelection();
 
     iFrame.btnNuevo.setEnabled(true);
     iFrame.btnNuevo.requestFocus();
@@ -799,7 +807,34 @@ public class ResumenDiarioController {
     iFrame.btnLimpiar.setEnabled(false);
   }
 
-  private final DocumentListener dl =
+  private final DocumentListener dlEnabled =
+      new DocumentListener() {
+        @Override
+        public void insertUpdate(DocumentEvent arg0) {
+          enabled();
+        }
+
+        @Override
+        public void removeUpdate(DocumentEvent arg0) {
+          enabled();
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent arg0) {
+          enabled();
+        }
+      };
+
+  private void enabled() {
+    if (iFrame.tfDocumentoSerie.getText().isEmpty()
+        || iFrame.tfDocumentoCorrelativo.getText().isEmpty()) {
+      iFrame.btnAgregar.setEnabled(false);
+    } else {
+      iFrame.btnAgregar.setEnabled(true);
+    }
+  }
+
+  private final DocumentListener dlSum =
       new DocumentListener() {
         @Override
         public void insertUpdate(DocumentEvent arg0) {
@@ -815,39 +850,39 @@ public class ResumenDiarioController {
         public void changedUpdate(DocumentEvent arg0) {
           sum();
         }
-
-        private void sum() {
-          if (!iFrame.tfGravadas.getText().isEmpty()
-              && !iFrame.tfExoneradas.getText().isEmpty()
-              && !iFrame.tfInafectas.getText().isEmpty()
-              && !iFrame.tfExportacion.getText().isEmpty()
-              && !iFrame.tfOtrosCargos.getText().isEmpty()
-              && !iFrame.tfIsc.getText().isEmpty()
-              && !iFrame.tfOtrosTributos.getText().isEmpty()
-              && !iFrame.tfBolsasPlasticas.getText().isEmpty()) {
-            double gravadas = Double.parseDouble(iFrame.tfGravadas.getText());
-            double exoneradas = Double.parseDouble(iFrame.tfExoneradas.getText());
-            double inafectas = Double.parseDouble(iFrame.tfInafectas.getText());
-            double exportacion = Double.parseDouble(iFrame.tfExportacion.getText());
-            double otrosCargos = Double.parseDouble(iFrame.tfOtrosCargos.getText());
-            double igv = gravadas * 0.18;
-            double isc = Double.parseDouble(iFrame.tfIsc.getText());
-            double otrosTributos = Double.parseDouble(iFrame.tfOtrosTributos.getText());
-            double bolsas = Double.parseDouble(iFrame.tfBolsasPlasticas.getText());
-            double importeTotal =
-                gravadas
-                    + exoneradas
-                    + inafectas
-                    + exportacion
-                    + otrosCargos
-                    + igv
-                    + isc
-                    + otrosTributos
-                    + bolsas;
-
-            iFrame.tfIgv.setValue(igv);
-            iFrame.tfImporteTotal.setValue(importeTotal);
-          }
-        }
       };
+
+  private void sum() {
+    if (!iFrame.tfGravadas.getText().isEmpty()
+        && !iFrame.tfExoneradas.getText().isEmpty()
+        && !iFrame.tfInafectas.getText().isEmpty()
+        && !iFrame.tfExportacion.getText().isEmpty()
+        && !iFrame.tfOtrosCargos.getText().isEmpty()
+        && !iFrame.tfIsc.getText().isEmpty()
+        && !iFrame.tfOtrosTributos.getText().isEmpty()
+        && !iFrame.tfBolsasPlasticas.getText().isEmpty()) {
+      double gravadas = Double.parseDouble(iFrame.tfGravadas.getText());
+      double exoneradas = Double.parseDouble(iFrame.tfExoneradas.getText());
+      double inafectas = Double.parseDouble(iFrame.tfInafectas.getText());
+      double exportacion = Double.parseDouble(iFrame.tfExportacion.getText());
+      double otrosCargos = Double.parseDouble(iFrame.tfOtrosCargos.getText());
+      double igv = gravadas * 0.18;
+      double isc = Double.parseDouble(iFrame.tfIsc.getText());
+      double otrosTributos = Double.parseDouble(iFrame.tfOtrosTributos.getText());
+      double bolsas = Double.parseDouble(iFrame.tfBolsasPlasticas.getText());
+      double importeTotal =
+          gravadas
+              + exoneradas
+              + inafectas
+              + exportacion
+              + otrosCargos
+              + igv
+              + isc
+              + otrosTributos
+              + bolsas;
+
+      iFrame.tfIgv.setValue(igv);
+      iFrame.tfImporteTotal.setValue(importeTotal);
+    }
+  }
 }

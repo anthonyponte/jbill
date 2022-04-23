@@ -938,7 +938,7 @@
                                 <Font bold="true" component="lblImporteTotal" property="font" relativeSize="true" size="-2"/>
                               </FontInfo>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Importe total"/>
+                            <Property name="text" type="java.lang.String" value="Importe total *"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JFormattedTextField" name="tfImporteTotal">
@@ -1130,7 +1130,7 @@
                                 <Font bold="true" component="lblIgv" property="font" relativeSize="true" size="-2"/>
                               </FontInfo>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="IGV"/>
+                            <Property name="text" type="java.lang.String" value="IGV *"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JFormattedTextField" name="tfIgv">

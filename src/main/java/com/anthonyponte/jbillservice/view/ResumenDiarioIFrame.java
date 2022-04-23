@@ -15,8 +15,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.DefaultComboBoxModel;
@@ -542,7 +540,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     pnlImportes.setMaximumSize(null);
 
     lblImporteTotal.setFont(lblImporteTotal.getFont().deriveFont(lblImporteTotal.getFont().getStyle() | Font.BOLD, lblImporteTotal.getFont().getSize()-2));
-    lblImporteTotal.setText("Importe total");
+    lblImporteTotal.setText("Importe total *");
 
     tfImporteTotal.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
     tfImporteTotal.setEnabled(false);
@@ -606,7 +604,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     tfOtrosCargos.setPreferredSize(new Dimension(150, 30));
 
     lblIgv.setFont(lblIgv.getFont().deriveFont(lblIgv.getFont().getStyle() | Font.BOLD, lblIgv.getFont().getSize()-2));
-    lblIgv.setText("IGV");
+    lblIgv.setText("IGV *");
 
     tfIgv.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
     tfIgv.setEnabled(false);
