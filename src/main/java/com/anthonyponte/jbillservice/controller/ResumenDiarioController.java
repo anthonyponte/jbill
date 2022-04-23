@@ -38,7 +38,6 @@ import com.anthonyponte.jbillservice.model.Operacion;
 import com.anthonyponte.jbillservice.model.OtrosCargos;
 import com.anthonyponte.jbillservice.model.Percepcion;
 import com.anthonyponte.jbillservice.model.RegimenPercepcion;
-import com.anthonyponte.jbillservice.model.ResumenDiario;
 import com.anthonyponte.jbillservice.model.ResumenDiarioDetalle;
 import com.anthonyponte.jbillservice.model.TipoDocumento;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
