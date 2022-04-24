@@ -25,9 +25,16 @@ import ca.odell.glazedlists.swing.AdvancedTableModel;
 import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThreadProxyList;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
+import com.anthonyponte.jbillservice.custom.MyFileCreator;
 import com.anthonyponte.jbillservice.custom.MyTableResize;
+import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
+import com.anthonyponte.jbillservice.dao.ResumenDiarioDao;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
+import com.anthonyponte.jbillservice.idao.IResumenDiarioDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
+import com.anthonyponte.jbillservice.maindoc.SummaryDocuments;
+import com.anthonyponte.jbillservice.maindoc.VoidedDocuments;
+import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
 import com.anthonyponte.jbillservice.model.Documento;
 import com.anthonyponte.jbillservice.model.DocumentoIdentidad;
 import com.anthonyponte.jbillservice.model.Empresa;
@@ -38,20 +45,40 @@ import com.anthonyponte.jbillservice.model.Operacion;
 import com.anthonyponte.jbillservice.model.OtrosCargos;
 import com.anthonyponte.jbillservice.model.Percepcion;
 import com.anthonyponte.jbillservice.model.RegimenPercepcion;
+import com.anthonyponte.jbillservice.model.ResumenDiario;
 import com.anthonyponte.jbillservice.model.ResumenDiarioDetalle;
 import com.anthonyponte.jbillservice.model.TipoDocumento;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.ResumenDiarioIFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.CertificateException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.xml.crypto.MarshalException;
+import javax.xml.crypto.dsig.XMLSignatureException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import org.jdom2.Document;
+import org.xml.sax.SAXException;
 
 /** @author anthony */
 public class ResumenDiarioController {
@@ -59,6 +86,7 @@ public class ResumenDiarioController {
   private final LoadingDialog dialog;
   private Preferences preferences;
   private SummaryDao summaryDao;
+  private ResumenDiarioDao resumenDiarioDao;
   private EventList<ResumenDiarioDetalle> eventList;
   private AdvancedTableModel<ResumenDiarioDetalle> tableModel;
   private AdvancedListSelectionModel<ResumenDiarioDetalle> selectionModel;
@@ -196,156 +224,149 @@ public class ResumenDiarioController {
               };
 
           worker.execute();
-
-          //          dialog.setVisible(true);
-          //          dialog.setLocationRelativeTo(iFrame);
-          //
-          //          SwingWorker worker =
-          //              new SwingWorker<ResumenDiario, Void>() {
-          //                @Override
-          //                protected ResumenDiario doInBackground() throws Exception {
-          //                  ResumenDiario resumen = null;
-          //                  try {
-          //                    resumen = new ResumenDiario();
-          //
-          //                    resumen.setUbl("2.0");
-          //                    resumen.setVersion("1.0");
-          //                    resumen.setSerie(MyDateFormat.yyyyMMdd(new Date()));
-          //
-          //                    TipoDocumento tipoDocumento = new TipoDocumento();
-          //                    tipoDocumento.setDescripcion("Resumen diario");
-          //                    resumen.setTipoDocumento(tipoDocumento);
-          //
-          //                    resumen.setFechaEmision(new Date());
-          //                    resumen.setFechaReferencia(new Date());
-          //
-          //                    Empresa emisor = new Empresa();
-          //                    emisor.setRuc(preferences.get(UsuarioController.RUC, ""));
-          //                    emisor.setTipo(preferences.getInt(UsuarioController.RUC_TIPO, 0));
-          //
-          // emisor.setRazonSocial(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
-          //                    resumen.setEmisor(emisor);
-          //
-          //                    int count = summaryDao.read(resumen);
-          //                    resumen.setCorrelativo(count + 1);
-          //                  } catch (SQLException ex) {
-          //                    JOptionPane.showMessageDialog(
-          //                        null,
-          //                        ex.getMessage(),
-          //                        ResumenDiarioController.class.getName(),
-          //                        JOptionPane.ERROR_MESSAGE);
-          //                  }
-          //                  return resumen;
-          //                }
-          //
-          //                @Override
-          //                protected void done() {
-          //                  try {
-          //                    dialog.dispose();
-          //
-          //                    resumenDiario = get();
-          //
-          //                    iFrame.tabbed.setSelectedIndex(0);
-          //
-          //                    iFrame.cbxTipo.setEnabled(true);
-          //                    iFrame.cbxTipo.setSelectedIndex(0);
-          //
-          //                    iFrame.tfSerie.setEnabled(true);
-          //                    iFrame.tfSerie.setText(resumenDiario.getSerie());
-          //
-          //                    iFrame.tfCorrelativo.setEnabled(true);
-          //
-          // iFrame.tfCorrelativo.setText(String.valueOf(resumenDiario.getCorrelativo()));
-          //
-          //                    iFrame.dpFechaGeneracion.setEnabled(true);
-          //                    iFrame.dpFechaGeneracion.setDate(new Date());
-          //
-          //                    iFrame.dpFechaEmision.setEnabled(true);
-          //                    iFrame.dpFechaEmision.setDate(new Date());
-          //                    iFrame.dpFechaEmision.requestFocus();
-          //
-          //                    iFrame.cbxEstado.setEnabled(true);
-          //                    iFrame.cbxEstado.setSelectedIndex(0);
-          //
-          //                    iFrame.cbxMoneda.setEnabled(true);
-          //                    iFrame.cbxMoneda.setSelectedIndex(0);
-          //
-          //                    iFrame.cbxDocumentoTipo.setEnabled(true);
-          //                    iFrame.cbxDocumentoTipo.setSelectedIndex(0);
-          //
-          //                    iFrame.tfDocumentoSerie.setEnabled(true);
-          //
-          //                    iFrame.tfDocumentoCorrelativo.setEnabled(true);
-          //
-          //                    iFrame.cbxDocumentoIdentidadTipo.setEnabled(true);
-          //                    iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
-          //
-          //                    iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
-          //
-          //                    iFrame.tfImporteTotal.setEnabled(true);
-          //                    iFrame.tfImporteTotal.setText("0.00");
-          //
-          //                    iFrame.tfGravadas.setEnabled(true);
-          //                    iFrame.tfGravadas.setText("0.00");
-          //
-          //                    iFrame.tfExoneradas.setEnabled(true);
-          //                    iFrame.tfExoneradas.setText("0.00");
-          //
-          //                    iFrame.tfInafectas.setEnabled(true);
-          //                    iFrame.tfInafectas.setText("0.00");
-          //
-          //                    iFrame.tfGratuitas.setEnabled(true);
-          //                    iFrame.tfGratuitas.setText("0.00");
-          //
-          //                    iFrame.tfExportacion.setEnabled(true);
-          //                    iFrame.tfExportacion.setText("0.00");
-          //
-          //                    iFrame.tfOtrosCargos.setEnabled(true);
-          //                    iFrame.tfOtrosCargos.setText("0.00");
-          //
-          //                    iFrame.tfIsc.setEnabled(true);
-          //                    iFrame.tfIsc.setText("0.00");
-          //
-          //                    iFrame.tfIgv.setEnabled(true);
-          //                    iFrame.tfIgv.setText("0.00");
-          //
-          //                    iFrame.tfIsc.setEnabled(true);
-          //                    iFrame.tfIsc.setText("0.00");
-          //
-          //                    iFrame.tfOtrosTributos.setEnabled(true);
-          //                    iFrame.tfOtrosTributos.setText("0.00");
-          //
-          //                    iFrame.tfBolsasPlasticas.setEnabled(true);
-          //                    iFrame.tfBolsasPlasticas.setText("0.00");
-          //
-          //                    iFrame.cbxPercepcionRegimen.setEnabled(true);
-          //                    iFrame.cbxPercepcionRegimen.setSelectedIndex(0);
-          //
-          //                    iFrame.tfPercepcionTasa.setEnabled(true);
-          //
-          //                    iFrame.tfPercepcionMonto.setEnabled(true);
-          //
-          //                    iFrame.tfPercepcionMontoTotal.setEnabled(true);
-          //
-          //                    iFrame.btnNuevo.setEnabled(false);
-          //
-          //                    iFrame.btnGuardar.setEnabled(false);
-          //
-          //                    iFrame.btnLimpiar.setEnabled(true);
-          //                  } catch (InterruptedException | ExecutionException ex) {
-          //                    JOptionPane.showMessageDialog(
-          //                        null,
-          //                        ex.getMessage(),
-          //                        ResumenDiarioController.class.getName(),
-          //                        JOptionPane.ERROR_MESSAGE);
-          //                  }
-          //                }
-          //              };
-          //
-          //          worker.execute();
         });
 
-    iFrame.btnGuardar.addActionListener((ActionEvent arg0) -> {});
+    iFrame.btnGuardar.addActionListener(
+        (ActionEvent arg0) -> {
+          File jks = new File(preferences.get(UsuarioController.FIRMA_JKS, ""));
+          if (jks.exists()) {
+            int input =
+                JOptionPane.showOptionDialog(
+                    iFrame,
+                    "Seguro que desea guardar esta "
+                        + iFrame.cbxTipo.getSelectedItem().toString()
+                        + "?",
+                    "Guardar",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    new Object[] {"Guardar", "Cancelar"},
+                    "Guardar");
+
+            if (input == JOptionPane.YES_OPTION) {
+
+              dialog.setVisible(true);
+              dialog.setLocationRelativeTo(iFrame);
+
+              SwingWorker worker =
+                  new SwingWorker<ResumenDiario, Void>() {
+                    @Override
+                    protected ResumenDiario doInBackground() throws Exception {
+                      ResumenDiario resumenDiario = null;
+                      try {
+                        resumenDiario = new ResumenDiario();
+                        resumenDiario.setUbl("2.0");
+                        resumenDiario.setVersion("1.0");
+
+                        resumenDiario.setTipoDocumento(
+                            (TipoDocumento) iFrame.cbxTipo.getSelectedItem());
+                        resumenDiario.setSerie(
+                            MyDateFormat.yyyyMMdd(iFrame.dpFechaGeneracion.getDate()));
+                        resumenDiario.setCorrelativo(
+                            Integer.valueOf(iFrame.tfCorrelativo.getText()));
+
+                        resumenDiario.setFechaEmision(iFrame.dpFechaGeneracion.getDate());
+                        resumenDiario.setFechaReferencia(iFrame.dpFechaEmision.getDate());
+
+                        Empresa emisor = new Empresa();
+                        emisor.setRuc(preferences.get(UsuarioController.RUC, ""));
+                        emisor.setTipo(preferences.getInt(UsuarioController.RUC_TIPO, 0));
+                        emisor.setRazonSocial(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
+                        resumenDiario.setEmisor(emisor);
+
+                        resumenDiario.setResumenDiarioDetalles(eventList);
+
+                        SummaryDocuments summaryDocuments = new SummaryDocuments();
+                        Document document = summaryDocuments.getStructure(resumenDiario);
+
+                        File xml =
+                            MyFileCreator.create(
+                                resumenDiario.getTipoDocumento().getCodigo(),
+                                resumenDiario.getSerie(),
+                                resumenDiario.getCorrelativo(),
+                                document);
+
+                        File sign =
+                            MyFileCreator.sign(
+                                resumenDiario.getTipoDocumento().getCodigo(),
+                                resumenDiario.getSerie(),
+                                resumenDiario.getCorrelativo(),
+                                xml);
+
+                        File zip =
+                            MyFileCreator.compress(
+                                resumenDiario.getTipoDocumento().getCodigo(),
+                                resumenDiario.getSerie(),
+                                resumenDiario.getCorrelativo(),
+                                sign);
+
+                        byte[] byteArray = Files.readAllBytes(zip.toPath());
+                        resumenDiario.setNombreZip(zip.getName());
+                        resumenDiario.setZip(byteArray);
+                        int id = summaryDao.create(resumenDiario);
+                        resumenDiarioDao.create(id, eventList);
+
+                        sign.delete();
+                        zip.delete();
+                      } catch (IOException
+                          | InvalidAlgorithmParameterException
+                          | KeyStoreException
+                          | NoSuchAlgorithmException
+                          | UnrecoverableEntryException
+                          | CertificateException
+                          | MarshalException
+                          | XMLSignatureException
+                          | ParserConfigurationException
+                          | TransformerException
+                          | SAXException
+                          | SQLException ex) {
+                        cancel(true);
+
+                        JOptionPane.showMessageDialog(
+                            null,
+                            ex.getMessage(),
+                            ResumenDiarioController.class.getName(),
+                            JOptionPane.ERROR_MESSAGE);
+                      }
+                      return resumenDiario;
+                    }
+
+                    @Override
+                    protected void done() {
+                      dialog.dispose();
+
+                      if (isCancelled()) {
+                        start();
+                      } else {
+                        try {
+                          start();
+                          ResumenDiario get = get();
+
+                          JOptionPane.showMessageDialog(
+                              iFrame,
+                              get.getNombreZip() + " guardado",
+                              "Guardado",
+                              JOptionPane.INFORMATION_MESSAGE);
+                        } catch (InterruptedException | ExecutionException ex) {
+                          Logger.getLogger(ResumenDiarioController.class.getName())
+                              .log(Level.SEVERE, null, ex);
+                        }
+                      }
+                    }
+                  };
+
+              worker.execute();
+            }
+
+          } else {
+            JOptionPane.showMessageDialog(
+                iFrame,
+                "No se encuentra el archivo JKS en la ruta "
+                    + preferences.get(UsuarioController.FIRMA_JKS, ""),
+                ResumenDiarioController.class.getName(),
+                JOptionPane.ERROR_MESSAGE);
+          }
+        });
 
     iFrame.btnLimpiar.addActionListener(
         (ActionEvent arg0) -> {
@@ -550,6 +571,7 @@ public class ResumenDiarioController {
 
   private void initComponents() {
     summaryDao = new ISummaryDao();
+    resumenDiarioDao = new IResumenDiarioDao();
     preferences = Preferences.userRoot().node(MainController.class.getPackageName());
     eventList = new BasicEventList<>();
 
@@ -794,7 +816,7 @@ public class ResumenDiarioController {
 
     iFrame.tfPercepcionBase.setEnabled(false);
     iFrame.tfPercepcionBase.setText("");
-    
+
     eventList.clear();
     selectionModel.clearSelection();
 
