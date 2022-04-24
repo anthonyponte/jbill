@@ -23,6 +23,7 @@ import com.anthonyponte.jbillservice.model.ResumenDiario;
 import com.anthonyponte.jbillservice.model.ResumenDiarioDetalle;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.List;
 import org.joda.time.DateTime;
 
@@ -72,21 +73,43 @@ public class IResumenDiarioDao implements ResumenDiarioDao {
         ps.setString(5, get.getDocumento().getTipoDocumento().getCodigo());
         ps.setString(6, get.getDocumento().getTipoDocumento().getDescripcion());
 
-        ps.setInt(7, get.getAdquiriente().getDocumentoIdentidadNumero());
-        ps.setString(8, get.getAdquiriente().getDocumentoIdentidad().getCodigo());
-        ps.setString(9, get.getAdquiriente().getDocumentoIdentidad().getDescripcion());
+        if (get.getAdquiriente() != null) {
+          ps.setInt(7, get.getAdquiriente().getDocumentoIdentidadNumero());
+          ps.setString(8, get.getAdquiriente().getDocumentoIdentidad().getCodigo());
+          ps.setString(9, get.getAdquiriente().getDocumentoIdentidad().getDescripcion());
+        } else {
+          ps.setNull(7, Types.INTEGER);
+          ps.setNull(8, Types.VARCHAR);
+          ps.setNull(9, Types.VARCHAR);
+        }
 
-        ps.setString(10, get.getDocumentoReferencia().getSerie());
-        ps.setInt(11, get.getDocumentoReferencia().getCorrelativo());
-        ps.setString(12, get.getDocumentoReferencia().getTipoDocumento().getCodigo());
-        ps.setString(13, get.getDocumentoReferencia().getTipoDocumento().getDescripcion());
+        if (get.getDocumentoReferencia() != null) {
+          ps.setString(10, get.getDocumentoReferencia().getSerie());
+          ps.setInt(11, get.getDocumentoReferencia().getCorrelativo());
+          ps.setString(12, get.getDocumentoReferencia().getTipoDocumento().getCodigo());
+          ps.setString(13, get.getDocumentoReferencia().getTipoDocumento().getDescripcion());
+        } else {
+          ps.setNull(10, Types.VARCHAR);
+          ps.setNull(11, Types.INTEGER);
+          ps.setNull(12, Types.VARCHAR);
+          ps.setNull(13, Types.VARCHAR);
+        }
 
-        ps.setString(14, get.getPercepcion().getRegimenPercepcion().getCodigo());
-        ps.setString(15, get.getPercepcion().getRegimenPercepcion().getDescripcion());
-        ps.setDouble(16, get.getPercepcion().getRegimenPercepcion().getPorcentaje());
-        ps.setDouble(17, get.getPercepcion().getMonto());
-        ps.setDouble(18, get.getPercepcion().getMontoTotal());
-        ps.setDouble(19, get.getPercepcion().getBase());
+        if (get.getPercepcion() != null) {
+          ps.setString(14, get.getPercepcion().getRegimenPercepcion().getCodigo());
+          ps.setString(15, get.getPercepcion().getRegimenPercepcion().getDescripcion());
+          ps.setDouble(16, get.getPercepcion().getRegimenPercepcion().getPorcentaje());
+          ps.setDouble(17, get.getPercepcion().getMonto());
+          ps.setDouble(18, get.getPercepcion().getMontoTotal());
+          ps.setDouble(19, get.getPercepcion().getBase());
+        } else {
+          ps.setNull(14, Types.VARCHAR);
+          ps.setNull(15, Types.VARCHAR);
+          ps.setNull(16, Types.DOUBLE);
+          ps.setNull(17, Types.DOUBLE);
+          ps.setNull(18, Types.DOUBLE);
+          ps.setNull(19, Types.DOUBLE);
+        }
 
         ps.setString(20, get.getEstado().getCodigo());
         ps.setString(21, get.getEstado().getDescripcion());
@@ -96,48 +119,104 @@ public class IResumenDiarioDao implements ResumenDiarioDao {
         ps.setString(23, get.getMoneda().getCodigo());
         ps.setString(24, get.getMoneda().getDescripcion());
 
-        ps.setDouble(25, get.getGravadas().getTotal());
-        ps.setString(26, get.getGravadas().getCodigo());
-        ps.setString(27, get.getGravadas().getDescripcion());
+        if (get.getGravadas() != null) {
+          ps.setDouble(25, get.getGravadas().getTotal());
+          ps.setString(26, get.getGravadas().getCodigo());
+          ps.setString(27, get.getGravadas().getDescripcion());
+        } else {
+          ps.setNull(25, Types.DOUBLE);
+          ps.setNull(26, Types.VARCHAR);
+          ps.setNull(27, Types.VARCHAR);
+        }
 
-        ps.setDouble(28, get.getExoneradas().getTotal());
-        ps.setString(29, get.getExoneradas().getCodigo());
-        ps.setString(30, get.getExoneradas().getDescripcion());
+        if (get.getExoneradas() != null) {
+          ps.setDouble(28, get.getExoneradas().getTotal());
+          ps.setString(29, get.getExoneradas().getCodigo());
+          ps.setString(30, get.getExoneradas().getDescripcion());
+        } else {
+          ps.setNull(28, Types.DOUBLE);
+          ps.setNull(29, Types.VARCHAR);
+          ps.setNull(30, Types.VARCHAR);
+        }
 
-        ps.setDouble(31, get.getInafectas().getTotal());
-        ps.setString(32, get.getInafectas().getCodigo());
-        ps.setString(33, get.getInafectas().getDescripcion());
+        if (get.getInafectas() != null) {
+          ps.setDouble(31, get.getInafectas().getTotal());
+          ps.setString(32, get.getInafectas().getCodigo());
+          ps.setString(33, get.getInafectas().getDescripcion());
+        } else {
+          ps.setNull(31, Types.DOUBLE);
+          ps.setNull(32, Types.VARCHAR);
+          ps.setNull(33, Types.VARCHAR);
+        }
 
-        ps.setDouble(34, get.getGratuitas().getTotal());
-        ps.setString(35, get.getGratuitas().getCodigo());
-        ps.setString(36, get.getGratuitas().getDescripcion());
+        if (get.getGratuitas() != null) {
+          ps.setDouble(34, get.getGratuitas().getTotal());
+          ps.setString(35, get.getGratuitas().getCodigo());
+          ps.setString(36, get.getGratuitas().getDescripcion());
+        } else {
+          ps.setNull(34, Types.DOUBLE);
+          ps.setNull(35, Types.VARCHAR);
+          ps.setNull(36, Types.VARCHAR);
+        }
 
-        ps.setDouble(37, get.getExportacion().getTotal());
-        ps.setString(38, get.getExportacion().getCodigo());
-        ps.setString(39, get.getExportacion().getDescripcion());
+        if (get.getExportacion() != null) {
+          ps.setDouble(37, get.getExportacion().getTotal());
+          ps.setString(38, get.getExportacion().getCodigo());
+          ps.setString(39, get.getExportacion().getDescripcion());
+        } else {
+          ps.setNull(37, Types.DOUBLE);
+          ps.setNull(38, Types.VARCHAR);
+          ps.setNull(39, Types.VARCHAR);
+        }
 
-        ps.setBoolean(40, get.getOtrosCargos().isIndicador());
-        ps.setDouble(41, get.getOtrosCargos().getTotal());
+        if (get.getOtrosCargos() != null) {
+          ps.setBoolean(40, get.getOtrosCargos().isIndicador());
+          ps.setDouble(41, get.getOtrosCargos().getTotal());
+        } else {
+          ps.setNull(40, Types.BOOLEAN);
+          ps.setNull(41, Types.DOUBLE);
+        }
 
         ps.setDouble(42, get.getIgv().getTotal());
         ps.setString(43, get.getIgv().getCodigo());
         ps.setString(44, get.getIgv().getDescripcion());
         ps.setString(45, get.getIgv().getCodigoInternacional());
 
-        ps.setDouble(46, get.getIsc().getTotal());
-        ps.setString(47, get.getIsc().getCodigo());
-        ps.setString(48, get.getIsc().getDescripcion());
-        ps.setString(49, get.getIsc().getCodigoInternacional());
+        if (get.getIsc() != null) {
+          ps.setDouble(46, get.getIsc().getTotal());
+          ps.setString(47, get.getIsc().getCodigo());
+          ps.setString(48, get.getIsc().getDescripcion());
+          ps.setString(49, get.getIsc().getCodigoInternacional());
+        } else {
+          ps.setNull(46, Types.DOUBLE);
+          ps.setNull(47, Types.VARCHAR);
+          ps.setNull(48, Types.VARCHAR);
+          ps.setNull(49, Types.VARCHAR);
+        }
 
-        ps.setDouble(50, get.getOtrosTributos().getTotal());
-        ps.setString(51, get.getOtrosTributos().getCodigo());
-        ps.setString(52, get.getOtrosTributos().getDescripcion());
-        ps.setString(53, get.getOtrosTributos().getCodigoInternacional());
+        if (get.getOtrosTributos() != null) {
+          ps.setDouble(50, get.getOtrosTributos().getTotal());
+          ps.setString(51, get.getOtrosTributos().getCodigo());
+          ps.setString(52, get.getOtrosTributos().getDescripcion());
+          ps.setString(53, get.getOtrosTributos().getCodigoInternacional());
+        } else {
+          ps.setNull(50, Types.DOUBLE);
+          ps.setNull(51, Types.VARCHAR);
+          ps.setNull(52, Types.VARCHAR);
+          ps.setNull(53, Types.VARCHAR);
+        }
 
-        ps.setDouble(54, get.getImpuestoBolsa().getTotal());
-        ps.setString(55, get.getImpuestoBolsa().getCodigo());
-        ps.setString(56, get.getImpuestoBolsa().getDescripcion());
-        ps.setString(57, get.getImpuestoBolsa().getCodigoInternacional());
+        if (get.getImpuestoBolsa() != null) {
+          ps.setDouble(54, get.getImpuestoBolsa().getTotal());
+          ps.setString(55, get.getImpuestoBolsa().getCodigo());
+          ps.setString(56, get.getImpuestoBolsa().getDescripcion());
+          ps.setString(57, get.getImpuestoBolsa().getCodigoInternacional());
+        } else {
+          ps.setNull(54, Types.DOUBLE);
+          ps.setNull(55, Types.VARCHAR);
+          ps.setNull(56, Types.VARCHAR);
+          ps.setNull(57, Types.VARCHAR);
+        }
 
         ps.addBatch();
       }

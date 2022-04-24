@@ -27,14 +27,11 @@ import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThr
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
 import com.anthonyponte.jbillservice.custom.MyFileCreator;
 import com.anthonyponte.jbillservice.custom.MyTableResize;
-import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.dao.ResumenDiarioDao;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.idao.IResumenDiarioDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.maindoc.SummaryDocuments;
-import com.anthonyponte.jbillservice.maindoc.VoidedDocuments;
-import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
 import com.anthonyponte.jbillservice.model.Documento;
 import com.anthonyponte.jbillservice.model.DocumentoIdentidad;
 import com.anthonyponte.jbillservice.model.Empresa;
@@ -61,9 +58,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,7 +67,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.DefaultTableModel;
 import javax.xml.crypto.MarshalException;
 import javax.xml.crypto.dsig.XMLSignatureException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -304,7 +298,10 @@ public class ResumenDiarioController {
                         resumenDiario.setNombreZip(zip.getName());
                         resumenDiario.setZip(byteArray);
                         int id = summaryDao.create(resumenDiario);
+                        System.out.println(".doInBackground() " + id);
                         resumenDiarioDao.create(id, eventList);
+                        System.out.println(".doInBackground() " + id);
+                        System.out.println(".doInBackground() " + resumenDiario);
 
                         sign.delete();
                         zip.delete();
@@ -328,6 +325,7 @@ public class ResumenDiarioController {
                             ResumenDiarioController.class.getName(),
                             JOptionPane.ERROR_MESSAGE);
                       }
+                      System.out.println(".doInBackground() " + resumenDiario);
                       return resumenDiario;
                     }
 
@@ -341,7 +339,7 @@ public class ResumenDiarioController {
                         try {
                           start();
                           ResumenDiario get = get();
-
+                          System.out.println(".done() " + get);
                           JOptionPane.showMessageDialog(
                               iFrame,
                               get.getNombreZip() + " guardado",
