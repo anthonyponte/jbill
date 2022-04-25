@@ -29,6 +29,7 @@ import com.anthonyponte.jbillservice.custom.MyFileCreator;
 import com.anthonyponte.jbillservice.custom.MyTableResize;
 import com.anthonyponte.jbillservice.dao.ResumenDiarioDao;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
+import com.anthonyponte.jbillservice.filter.IntegerFilter;
 import com.anthonyponte.jbillservice.idao.IResumenDiarioDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.maindoc.SummaryDocuments;
@@ -67,6 +68,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 import javax.xml.crypto.MarshalException;
 import javax.xml.crypto.dsig.XMLSignatureException;
@@ -225,12 +227,11 @@ public class ResumenDiarioController {
         (ActionEvent arg0) -> {
           File jks = new File(preferences.get(UsuarioController.FIRMA_JKS, ""));
           if (jks.exists()) {
+            TipoDocumento tipoDocumento = (TipoDocumento) iFrame.cbxTipo.getSelectedItem();
             int input =
                 JOptionPane.showOptionDialog(
                     iFrame,
-                    "Seguro que desea guardar esta "
-                        + iFrame.cbxTipo.getSelectedItem().toString()
-                        + "?",
+                    "Seguro que desea guardar esta " + tipoDocumento.getDescripcion() + "?",
                     "Guardar",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
@@ -397,14 +398,36 @@ public class ResumenDiarioController {
           }
         });
 
+    iFrame.cbxDocumentoIdentidadTipo.addItemListener(
+        (ItemEvent ie) -> {
+          if (ie.getStateChange() == ItemEvent.SELECTED) {
+            try {
+              AbstractDocument adtfDocumentoIdentidadNumero =
+                  (AbstractDocument) iFrame.tfDocumentoIdentidadNumero.getDocument();
+
+              adtfDocumentoIdentidadNumero.remove(
+                  0, iFrame.tfDocumentoIdentidadNumero.getText().length());
+
+              if (iFrame.cbxDocumentoIdentidadTipo.getSelectedIndex() == 1)
+                adtfDocumentoIdentidadNumero.setDocumentFilter(new IntegerFilter(8));
+              if (iFrame.cbxDocumentoIdentidadTipo.getSelectedIndex() == 2)
+                adtfDocumentoIdentidadNumero.setDocumentFilter(new IntegerFilter(9));
+              if (iFrame.cbxDocumentoIdentidadTipo.getSelectedIndex() == 3)
+                adtfDocumentoIdentidadNumero.setDocumentFilter(new IntegerFilter(11));
+
+              iFrame.tfDocumentoIdentidadNumero.requestFocus();
+            } catch (BadLocationException ex) {
+              Logger.getLogger(ResumenDiarioController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+        });
+
     iFrame.cbxPercepcionRegimen.addItemListener(
         (ItemEvent ie) -> {
           if (ie.getStateChange() == ItemEvent.SELECTED) {
-            if (iFrame.cbxDocumentoTipo.getSelectedIndex() == 0) {
-              RegimenPercepcion regimenPercepcion =
-                  (RegimenPercepcion) iFrame.cbxPercepcionRegimen.getSelectedItem();
-              iFrame.tfPercepcionTasa.setText(String.valueOf(regimenPercepcion.getPorcentaje()));
-            }
+            RegimenPercepcion regimenPercepcion =
+                (RegimenPercepcion) iFrame.cbxPercepcionRegimen.getSelectedItem();
+            iFrame.tfPercepcionTasa.setText(String.valueOf(regimenPercepcion.getPorcentaje()));
           }
         });
 
@@ -592,8 +615,6 @@ public class ResumenDiarioController {
             iFrame.tfBolsasPlasticas.setText("0.00");
 
             iFrame.cbxPercepcionRegimen.setSelectedIndex(0);
-
-            iFrame.tfPercepcionTasa.setText("");
 
             iFrame.tfPercepcionMonto.setText("0.00");
 
@@ -831,6 +852,10 @@ public class ResumenDiarioController {
       iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
 
       iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
+      iFrame
+          .tfDocumentoIdentidadNumero
+          .getDocument()
+          .remove(0, iFrame.tfDocumentoIdentidadNumero.getText().length());
 
       iFrame.tfImporteTotal.setEnabled(false);
       iFrame.tfImporteTotal.setText("");

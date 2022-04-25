@@ -397,7 +397,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     cbxDocumentoIdentidadTipo.setModel(new DefaultComboBoxModel(new DocumentoIdentidad[] {
         new DocumentoIdentidad("0", "DOC.TRIB.NO.DOM.SIN.RUC"),
         new DocumentoIdentidad("1", "Documento Nacional de Identidad"),
-        new DocumentoIdentidad("4", "Documento Nacional de Identidad"),
+        new DocumentoIdentidad("4", "Carnet de extranjería"),
         new DocumentoIdentidad("6", "Registro Unico de Contributentes")
     }));
     cbxDocumentoIdentidadTipo.setEnabled(false);
