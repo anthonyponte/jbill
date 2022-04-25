@@ -67,6 +67,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
 import javax.xml.crypto.MarshalException;
 import javax.xml.crypto.dsig.XMLSignatureException;
 import javax.xml.parsers.ParserConfigurationException;
@@ -409,141 +410,156 @@ public class ResumenDiarioController {
 
     iFrame.btnAgregar.addActionListener(
         (arg0) -> {
-          ResumenDiarioDetalle detalle = new ResumenDiarioDetalle();
+          try {
+            ResumenDiarioDetalle detalle = new ResumenDiarioDetalle();
 
-          Documento documento = new Documento();
-          documento.setSerie(iFrame.tfDocumentoSerie.getText());
-          documento.setCorrelativo(Integer.valueOf(iFrame.tfDocumentoCorrelativo.getText()));
-          documento.setTipoDocumento((TipoDocumento) iFrame.cbxDocumentoTipo.getSelectedItem());
-          detalle.setDocumento(documento);
+            Documento documento = new Documento();
+            documento.setSerie(iFrame.tfDocumentoSerie.getText());
+            documento.setCorrelativo(Integer.valueOf(iFrame.tfDocumentoCorrelativo.getText()));
+            documento.setTipoDocumento((TipoDocumento) iFrame.cbxDocumentoTipo.getSelectedItem());
+            detalle.setDocumento(documento);
 
-          if (iFrame.cbxDocumentoIdentidadTipo.getSelectedIndex() >= 0
-              && !iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()) {
-            Empresa adquiriente = new Empresa();
-            adquiriente.setDocumentoIdentidadNumero(
-                Integer.valueOf(iFrame.tfDocumentoIdentidadNumero.getText()));
-            adquiriente.setDocumentoIdentidad(
-                (DocumentoIdentidad) iFrame.cbxDocumentoIdentidadTipo.getSelectedItem());
-            detalle.setAdquiriente(adquiriente);
+            if (iFrame.cbxDocumentoIdentidadTipo.getSelectedIndex() >= 0
+                && !iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()) {
+              Empresa adquiriente = new Empresa();
+              adquiriente.setDocumentoIdentidadNumero(
+                  Integer.valueOf(iFrame.tfDocumentoIdentidadNumero.getText()));
+              adquiriente.setDocumentoIdentidad(
+                  (DocumentoIdentidad) iFrame.cbxDocumentoIdentidadTipo.getSelectedItem());
+              detalle.setAdquiriente(adquiriente);
+            }
+
+            if (iFrame.cbxDocumentoReferenciaTipo.getSelectedIndex() >= 0
+                && !iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
+                && !iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
+              Documento documentoReferencia = new Documento();
+              documentoReferencia.setSerie(iFrame.tfDocumentoReferenciaSerie.getText());
+              documentoReferencia.setCorrelativo(
+                  Integer.valueOf(iFrame.tfDocumentoReferenciaCorrelativo.getText()));
+              documentoReferencia.setTipoDocumento(
+                  (TipoDocumento) iFrame.cbxDocumentoReferenciaTipo.getSelectedItem());
+              detalle.setDocumentoReferencia(documentoReferencia);
+            }
+
+            if (iFrame.cbxPercepcionRegimen.getSelectedIndex() >= 0
+                && !iFrame.tfPercepcionTasa.getText().isEmpty()
+                && !iFrame.tfPercepcionMonto.getText().isEmpty()
+                && !iFrame.tfPercepcionMontoTotal.getText().isEmpty()) {
+              Percepcion percepcion = new Percepcion();
+              percepcion.setRegimenPercepcion(
+                  (RegimenPercepcion) iFrame.cbxPercepcionRegimen.getSelectedItem());
+              percepcion.setMonto(Double.parseDouble(iFrame.tfPercepcionMonto.getText()));
+              percepcion.setMontoTotal(Double.parseDouble(iFrame.tfPercepcionMonto.getText()));
+              percepcion.setMonto(Double.parseDouble(iFrame.tfPercepcionMontoTotal.getText()));
+              percepcion.setBase(Double.parseDouble(iFrame.tfPercepcionBase.getText()));
+              detalle.setPercepcion(percepcion);
+            }
+
+            detalle.setEstado((Estado) iFrame.cbxEstado.getSelectedItem());
+
+            detalle.setImporteTotal(Double.parseDouble(iFrame.tfImporteTotal.getText()));
+
+            detalle.setMoneda((Moneda) iFrame.cbxMoneda.getSelectedItem());
+
+            if (!iFrame.tfGravadas.getText().equals("0.00")) {
+              Operacion gravadas = new Operacion();
+              gravadas.setCodigo("01");
+              gravadas.setDescripcion("Gravado");
+              gravadas.setTotal(Double.parseDouble(iFrame.tfGravadas.getText()));
+              detalle.setGravadas(gravadas);
+            }
+
+            if (!iFrame.tfExoneradas.getText().equals("0.00")) {
+              Operacion exoneradas = new Operacion();
+              exoneradas.setCodigo("02");
+              exoneradas.setDescripcion("Exonerado");
+              exoneradas.setTotal(Double.parseDouble(iFrame.tfExoneradas.getText()));
+              detalle.setExoneradas(exoneradas);
+            }
+
+            if (!iFrame.tfInafectas.getText().equals("0.00")) {
+              Operacion inafectas = new Operacion();
+              inafectas.setCodigo("03");
+              inafectas.setDescripcion("Inafecto");
+              inafectas.setTotal(Double.parseDouble(iFrame.tfInafectas.getText()));
+              detalle.setInafectas(inafectas);
+            }
+
+            if (!iFrame.tfExportacion.getText().equals("0.00")) {
+              Operacion exportacion = new Operacion();
+              exportacion.setCodigo("04");
+              exportacion.setDescripcion("Exportación");
+              exportacion.setTotal(Double.parseDouble(iFrame.tfExportacion.getText()));
+              detalle.setExportacion(exportacion);
+            }
+
+            if (!iFrame.tfGratuitas.getText().equals("0.00")) {
+              Operacion gratuitas = new Operacion();
+              gratuitas.setCodigo("05");
+              gratuitas.setDescripcion("Gratuitas");
+              gratuitas.setTotal(Double.parseDouble(iFrame.tfGratuitas.getText()));
+              detalle.setGratuitas(gratuitas);
+            }
+
+            if (!iFrame.tfOtrosCargos.getText().equals("0.00")) {
+              OtrosCargos otrosCargos = new OtrosCargos();
+              otrosCargos.setIndicador(true);
+              otrosCargos.setTotal(Double.parseDouble(iFrame.tfOtrosCargos.getText()));
+              detalle.setOtrosCargos(otrosCargos);
+            }
+
+            Impuesto igv = new Impuesto();
+            igv.setTotal(Double.parseDouble(iFrame.tfIgv.getText()));
+            igv.setCodigo("1000");
+            igv.setDescripcion("IGV Impuesto General a las Ventas");
+            igv.setCodigoInternacional("VAT");
+            detalle.setIgv(igv);
+
+            if (!iFrame.tfIsc.getText().equals("0.00")) {
+              Impuesto isc = new Impuesto();
+              isc.setTotal(Double.parseDouble(iFrame.tfIsc.getText()));
+              isc.setCodigo("2000");
+              isc.setDescripcion("ISC Impuesto Selectivo al Consumo");
+              isc.setCodigoInternacional("EXC");
+              detalle.setIsc(isc);
+            }
+
+            if (!iFrame.tfOtrosTributos.getText().equals("0.00")) {
+              Impuesto otrosTributos = new Impuesto();
+              otrosTributos.setTotal(Double.parseDouble(iFrame.tfOtrosTributos.getText()));
+              otrosTributos.setCodigo("9999");
+              otrosTributos.setDescripcion("Otros tributos");
+              otrosTributos.setCodigoInternacional("OTH");
+              detalle.setOtrosTributos(otrosTributos);
+            }
+
+            if (!iFrame.tfBolsasPlasticas.getText().equals("0.00")) {
+              Impuesto bolsas = new Impuesto();
+              bolsas.setTotal(Double.parseDouble(iFrame.tfBolsasPlasticas.getText()));
+              bolsas.setCodigo("7152");
+              bolsas.setDescripcion("Impuesto a la bolsa plastica");
+              bolsas.setCodigoInternacional("OTH");
+              detalle.setImpuestoBolsa(bolsas);
+            }
+
+            eventList.add(detalle);
+
+            iFrame
+                .tfDocumentoSerie
+                .getDocument()
+                .remove(0, iFrame.tfDocumentoSerie.getText().length());
+
+            iFrame
+                .tfDocumentoCorrelativo
+                .getDocument()
+                .remove(0, iFrame.tfDocumentoCorrelativo.getText().length());
+
+            iFrame.cbxDocumentoTipo.setSelectedIndex(0);
+
+            iFrame.btnGuardar.setEnabled(true);
+          } catch (BadLocationException ex) {
+            Logger.getLogger(ResumenDiarioController.class.getName()).log(Level.SEVERE, null, ex);
           }
-
-          if (iFrame.cbxDocumentoReferenciaTipo.getSelectedIndex() >= 0
-              && !iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
-              && !iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
-            Documento documentoReferencia = new Documento();
-            documentoReferencia.setSerie(iFrame.tfDocumentoReferenciaSerie.getText());
-            documentoReferencia.setCorrelativo(
-                Integer.valueOf(iFrame.tfDocumentoReferenciaCorrelativo.getText()));
-            documentoReferencia.setTipoDocumento(
-                (TipoDocumento) iFrame.cbxDocumentoReferenciaTipo.getSelectedItem());
-            detalle.setDocumentoReferencia(documentoReferencia);
-          }
-
-          if (iFrame.cbxPercepcionRegimen.getSelectedIndex() >= 0
-              && !iFrame.tfPercepcionTasa.getText().isEmpty()
-              && !iFrame.tfPercepcionMonto.getText().isEmpty()
-              && !iFrame.tfPercepcionMontoTotal.getText().isEmpty()) {
-            Percepcion percepcion = new Percepcion();
-            percepcion.setRegimenPercepcion(
-                (RegimenPercepcion) iFrame.cbxPercepcionRegimen.getSelectedItem());
-            percepcion.setMonto(Double.parseDouble(iFrame.tfPercepcionMonto.getText()));
-            percepcion.setMontoTotal(Double.parseDouble(iFrame.tfPercepcionMonto.getText()));
-            percepcion.setMonto(Double.parseDouble(iFrame.tfPercepcionMontoTotal.getText()));
-            percepcion.setBase(Double.parseDouble(iFrame.tfPercepcionBase.getText()));
-            detalle.setPercepcion(percepcion);
-          }
-
-          detalle.setEstado((Estado) iFrame.cbxEstado.getSelectedItem());
-
-          detalle.setImporteTotal(Double.parseDouble(iFrame.tfImporteTotal.getText()));
-
-          detalle.setMoneda((Moneda) iFrame.cbxMoneda.getSelectedItem());
-
-          if (!iFrame.tfGravadas.getText().equals("0.00")) {
-            Operacion gravadas = new Operacion();
-            gravadas.setCodigo("01");
-            gravadas.setDescripcion("Gravado");
-            gravadas.setTotal(Double.parseDouble(iFrame.tfGravadas.getText()));
-            detalle.setGravadas(gravadas);
-          }
-
-          if (!iFrame.tfExoneradas.getText().equals("0.00")) {
-            Operacion exoneradas = new Operacion();
-            exoneradas.setCodigo("02");
-            exoneradas.setDescripcion("Exonerado");
-            exoneradas.setTotal(Double.parseDouble(iFrame.tfExoneradas.getText()));
-            detalle.setExoneradas(exoneradas);
-          }
-
-          if (!iFrame.tfInafectas.getText().equals("0.00")) {
-            Operacion inafectas = new Operacion();
-            inafectas.setCodigo("03");
-            inafectas.setDescripcion("Inafecto");
-            inafectas.setTotal(Double.parseDouble(iFrame.tfInafectas.getText()));
-            detalle.setInafectas(inafectas);
-          }
-
-          if (!iFrame.tfExportacion.getText().equals("0.00")) {
-            Operacion exportacion = new Operacion();
-            exportacion.setCodigo("04");
-            exportacion.setDescripcion("Exportación");
-            exportacion.setTotal(Double.parseDouble(iFrame.tfExportacion.getText()));
-            detalle.setExportacion(exportacion);
-          }
-
-          if (!iFrame.tfGratuitas.getText().equals("0.00")) {
-            Operacion gratuitas = new Operacion();
-            gratuitas.setCodigo("05");
-            gratuitas.setDescripcion("Gratuitas");
-            gratuitas.setTotal(Double.parseDouble(iFrame.tfGratuitas.getText()));
-            detalle.setGratuitas(gratuitas);
-          }
-
-          if (!iFrame.tfOtrosCargos.getText().equals("0.00")) {
-            OtrosCargos otrosCargos = new OtrosCargos();
-            otrosCargos.setIndicador(true);
-            otrosCargos.setTotal(Double.parseDouble(iFrame.tfOtrosCargos.getText()));
-            detalle.setOtrosCargos(otrosCargos);
-          }
-
-          Impuesto igv = new Impuesto();
-          igv.setTotal(Double.parseDouble(iFrame.tfIgv.getText()));
-          igv.setCodigo("1000");
-          igv.setDescripcion("IGV Impuesto General a las Ventas");
-          igv.setCodigoInternacional("VAT");
-          detalle.setIgv(igv);
-
-          if (!iFrame.tfIsc.getText().equals("0.00")) {
-            Impuesto isc = new Impuesto();
-            isc.setTotal(Double.parseDouble(iFrame.tfIsc.getText()));
-            isc.setCodigo("2000");
-            isc.setDescripcion("ISC Impuesto Selectivo al Consumo");
-            isc.setCodigoInternacional("EXC");
-            detalle.setIsc(isc);
-          }
-
-          if (!iFrame.tfOtrosTributos.getText().equals("0.00")) {
-            Impuesto otrosTributos = new Impuesto();
-            otrosTributos.setTotal(Double.parseDouble(iFrame.tfOtrosTributos.getText()));
-            otrosTributos.setCodigo("9999");
-            otrosTributos.setDescripcion("Otros tributos");
-            otrosTributos.setCodigoInternacional("OTH");
-            detalle.setOtrosTributos(otrosTributos);
-          }
-
-          if (!iFrame.tfBolsasPlasticas.getText().equals("0.00")) {
-            Impuesto bolsas = new Impuesto();
-            bolsas.setTotal(Double.parseDouble(iFrame.tfBolsasPlasticas.getText()));
-            bolsas.setCodigo("7152");
-            bolsas.setDescripcion("Impuesto a la bolsa plastica");
-            bolsas.setCodigoInternacional("OTH");
-            detalle.setImpuestoBolsa(bolsas);
-          }
-
-          eventList.add(detalle);
-          MyTableResize.resize(iFrame.table);
-
-          iFrame.btnGuardar.setEnabled(true);
         });
 
     iFrame.tfDocumentoSerie.getDocument().addDocumentListener(dlEnabled);
@@ -719,6 +735,7 @@ public class ResumenDiarioController {
     selectionModel = new DefaultEventSelectionModel<>(eventList);
     iFrame.table.setModel(tableModel);
     iFrame.table.setSelectionModel(selectionModel);
+    MyTableResize.resize(iFrame.table);
 
     iFrame.show();
 
@@ -726,104 +743,113 @@ public class ResumenDiarioController {
   }
 
   private void start() {
-    iFrame.tabbed.setSelectedIndex(0);
+    try {
+      iFrame.tabbed.setSelectedIndex(0);
 
-    iFrame.cbxTipo.setEnabled(false);
-    iFrame.cbxTipo.setSelectedIndex(-1);
+      iFrame.cbxTipo.setEnabled(false);
+      iFrame.cbxTipo.setSelectedIndex(-1);
 
-    iFrame.tfSerie.setEnabled(false);
-    iFrame.tfSerie.setText("");
+      iFrame.tfSerie.setEnabled(false);
+      iFrame.tfSerie.setText("");
 
-    iFrame.tfCorrelativo.setEnabled(false);
-    iFrame.tfCorrelativo.setText("");
+      iFrame.tfCorrelativo.setEnabled(false);
+      iFrame.tfCorrelativo.setText("");
 
-    iFrame.dpFechaGeneracion.setEnabled(false);
-    iFrame.dpFechaGeneracion.setDate(null);
+      iFrame.dpFechaGeneracion.setEnabled(false);
+      iFrame.dpFechaGeneracion.setDate(null);
 
-    iFrame.dpFechaEmision.setEnabled(false);
-    iFrame.dpFechaEmision.setDate(null);
+      iFrame.dpFechaEmision.setEnabled(false);
+      iFrame.dpFechaEmision.setDate(null);
 
-    iFrame.tbbdDetalle.setSelectedIndex(0);
-    iFrame.tbbdDetalle.setEnabledAt(2, false);
+      iFrame.tbbdDetalle.setSelectedIndex(0);
+      iFrame.tbbdDetalle.setEnabledAt(2, false);
 
-    iFrame.cbxEstado.setEnabled(false);
-    iFrame.cbxEstado.setSelectedIndex(-1);
+      iFrame.cbxEstado.setEnabled(false);
+      iFrame.cbxEstado.setSelectedIndex(-1);
 
-    iFrame.cbxMoneda.setEnabled(false);
-    iFrame.cbxMoneda.setSelectedIndex(-1);
+      iFrame.cbxMoneda.setEnabled(false);
+      iFrame.cbxMoneda.setSelectedIndex(-1);
 
-    iFrame.cbxDocumentoTipo.setEnabled(false);
-    iFrame.cbxDocumentoTipo.setSelectedIndex(-1);
+      iFrame.cbxDocumentoTipo.setEnabled(false);
+      iFrame.cbxDocumentoTipo.setSelectedIndex(-1);
 
-    iFrame.tfDocumentoSerie.setEnabled(false);
+      iFrame.tfDocumentoSerie.setEnabled(false);
+      iFrame.tfDocumentoSerie.getDocument().remove(0, iFrame.tfDocumentoSerie.getText().length());
 
-    iFrame.tfDocumentoCorrelativo.setEnabled(false);
+      iFrame.tfDocumentoCorrelativo.setEnabled(false);
+      iFrame
+          .tfDocumentoCorrelativo
+          .getDocument()
+          .remove(0, iFrame.tfDocumentoCorrelativo.getText().length());
 
-    iFrame.cbxDocumentoIdentidadTipo.setEnabled(false);
-    iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
+      iFrame.cbxDocumentoIdentidadTipo.setEnabled(false);
+      iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
 
-    iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
+      iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
 
-    iFrame.tfImporteTotal.setEnabled(false);
-    iFrame.tfImporteTotal.setText("");
+      iFrame.tfImporteTotal.setEnabled(false);
+      iFrame.tfImporteTotal.setText("");
 
-    iFrame.tfGravadas.setEnabled(false);
-    iFrame.tfGravadas.setText("");
+      iFrame.tfGravadas.setEnabled(false);
+      iFrame.tfGravadas.setText("");
 
-    iFrame.tfExoneradas.setEnabled(false);
-    iFrame.tfExoneradas.setText("");
+      iFrame.tfExoneradas.setEnabled(false);
+      iFrame.tfExoneradas.setText("");
 
-    iFrame.tfInafectas.setEnabled(false);
-    iFrame.tfInafectas.setText("");
+      iFrame.tfInafectas.setEnabled(false);
+      iFrame.tfInafectas.setText("");
 
-    iFrame.tfGratuitas.setEnabled(false);
-    iFrame.tfGratuitas.setText("");
+      iFrame.tfGratuitas.setEnabled(false);
+      iFrame.tfGratuitas.setText("");
 
-    iFrame.tfExportacion.setEnabled(false);
-    iFrame.tfExportacion.setText("");
+      iFrame.tfExportacion.setEnabled(false);
+      iFrame.tfExportacion.setText("");
 
-    iFrame.tfOtrosCargos.setEnabled(false);
-    iFrame.tfOtrosCargos.setText("");
+      iFrame.tfOtrosCargos.setEnabled(false);
+      iFrame.tfOtrosCargos.setText("");
 
-    iFrame.tfIsc.setEnabled(false);
-    iFrame.tfIsc.setText("");
+      iFrame.tfIsc.setEnabled(false);
+      iFrame.tfIsc.setText("");
 
-    iFrame.tfIgv.setEnabled(false);
-    iFrame.tfIgv.setText("");
+      iFrame.tfIgv.setEnabled(false);
+      iFrame.tfIgv.setText("");
 
-    iFrame.tfIsc.setEnabled(false);
-    iFrame.tfIsc.setText("");
+      iFrame.tfIsc.setEnabled(false);
+      iFrame.tfIsc.setText("");
 
-    iFrame.tfOtrosTributos.setEnabled(false);
-    iFrame.tfOtrosTributos.setText("");
+      iFrame.tfOtrosTributos.setEnabled(false);
+      iFrame.tfOtrosTributos.setText("");
 
-    iFrame.tfBolsasPlasticas.setEnabled(false);
-    iFrame.tfBolsasPlasticas.setText("");
+      iFrame.tfBolsasPlasticas.setEnabled(false);
+      iFrame.tfBolsasPlasticas.setText("");
 
-    iFrame.cbxPercepcionRegimen.setEnabled(false);
-    iFrame.cbxPercepcionRegimen.setSelectedIndex(-1);
+      iFrame.cbxPercepcionRegimen.setEnabled(false);
+      iFrame.cbxPercepcionRegimen.setSelectedIndex(-1);
 
-    iFrame.tfPercepcionTasa.setEnabled(false);
-    iFrame.tfPercepcionTasa.setText("");
+      iFrame.tfPercepcionTasa.setEnabled(false);
+      iFrame.tfPercepcionTasa.setText("");
 
-    iFrame.tfPercepcionMonto.setEnabled(false);
-    iFrame.tfPercepcionMonto.setText("");
+      iFrame.tfPercepcionMonto.setEnabled(false);
+      iFrame.tfPercepcionMonto.setText("");
 
-    iFrame.tfPercepcionMontoTotal.setEnabled(false);
-    iFrame.tfPercepcionMontoTotal.setText("");
+      iFrame.tfPercepcionMontoTotal.setEnabled(false);
+      iFrame.tfPercepcionMontoTotal.setText("");
 
-    iFrame.tfPercepcionBase.setEnabled(false);
-    iFrame.tfPercepcionBase.setText("");
+      iFrame.tfPercepcionBase.setEnabled(false);
+      iFrame.tfPercepcionBase.setText("");
 
-    eventList.clear();
-    selectionModel.clearSelection();
+      eventList.clear();
+      selectionModel.clearSelection();
 
-    iFrame.btnNuevo.setEnabled(true);
-    iFrame.btnNuevo.requestFocus();
+      iFrame.btnNuevo.setEnabled(true);
+      iFrame.btnNuevo.requestFocus();
 
-    iFrame.btnGuardar.setEnabled(false);
+      iFrame.btnGuardar.setEnabled(false);
 
-    iFrame.btnLimpiar.setEnabled(false);
+      iFrame.btnLimpiar.setEnabled(false);
+    } catch (BadLocationException ex) {
+      Logger.getLogger(ResumenDiarioController.class.getName()).log(Level.SEVERE, null, ex);
+    }
   }
 
   private final DocumentListener dlEnabled =
