@@ -544,6 +544,15 @@ public class ResumenDiarioController {
 
             eventList.add(detalle);
 
+            iFrame.tbbdDetalle.setSelectedIndex(0);
+
+            iFrame.cbxEstado.setSelectedIndex(0);
+            iFrame.cbxEstado.requestFocus();
+
+            iFrame.cbxMoneda.setSelectedIndex(0);
+
+            iFrame.cbxDocumentoTipo.setSelectedIndex(0);
+
             iFrame
                 .tfDocumentoSerie
                 .getDocument()
@@ -554,7 +563,43 @@ public class ResumenDiarioController {
                 .getDocument()
                 .remove(0, iFrame.tfDocumentoCorrelativo.getText().length());
 
-            iFrame.cbxDocumentoTipo.setSelectedIndex(0);
+            iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
+
+            iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
+
+            iFrame.tfImporteTotal.setText("0.00");
+
+            iFrame.tfGravadas.setText("0.00");
+
+            iFrame.tfExoneradas.setText("0.00");
+
+            iFrame.tfInafectas.setText("0.00");
+
+            iFrame.tfGratuitas.setText("0.00");
+
+            iFrame.tfExportacion.setText("0.00");
+
+            iFrame.tfOtrosCargos.setText("0.00");
+
+            iFrame.tfIsc.setText("0.00");
+
+            iFrame.tfIgv.setText("0.00");
+
+            iFrame.tfIsc.setText("0.00");
+
+            iFrame.tfOtrosTributos.setText("0.00");
+
+            iFrame.tfBolsasPlasticas.setText("0.00");
+
+            iFrame.cbxPercepcionRegimen.setSelectedIndex(0);
+
+            iFrame.tfPercepcionTasa.setText("");
+
+            iFrame.tfPercepcionMonto.setText("0.00");
+
+            iFrame.tfPercepcionMontoTotal.setText("0.00");
+
+            iFrame.tfPercepcionBase.setText("0.00");
 
             iFrame.btnGuardar.setEnabled(true);
           } catch (BadLocationException ex) {
