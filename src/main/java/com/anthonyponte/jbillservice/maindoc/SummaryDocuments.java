@@ -40,7 +40,7 @@ public class SummaryDocuments {
 
     Namespace urn =
         Namespace.getNamespace(
-            "urn:sunat:names:specification:ubl:peru:schema:xsd:VoidedDocuments-1");
+            "urn:sunat:names:specification:ubl:peru:schema:xsd:SummaryDocuments-1");
 
     Namespace cac =
         Namespace.getNamespace(
@@ -155,14 +155,14 @@ public class SummaryDocuments {
           new Element("SummaryDocumentsLine", sac)
               .addContent(new Element("LineID", cbc).setText(String.valueOf(detalle.getNumero())))
               .addContent(
-                  new Element("ID", sac)
+                  new Element("DocumentTypeCode", cbc)
+                      .setText(detalle.getDocumento().getTipoDocumento().getCodigo()))
+              .addContent(
+                  new Element("ID", cbc)
                       .setText(
                           detalle.getDocumento().getSerie()
                               + "-"
-                              + detalle.getDocumento().getCorrelativo()))
-              .addContent(
-                  new Element("DocumentTypeCode", cbc)
-                      .setText(detalle.getDocumento().getTipoDocumento().getCodigo()));
+                              + detalle.getDocumento().getCorrelativo()));
 
       if (detalle.getAdquiriente() != null) {
         Element accountingCustomerParty =
@@ -314,19 +314,21 @@ public class SummaryDocuments {
                       .addContent(
                           new Element("TaxAmount", cbc)
                               .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                              .setText(String.valueOf(detalle.getIgv().getTotal()))))
-              .addContent(
-                  new Element("TaxCategory", cac)
+                              .setText(String.valueOf(detalle.getIgv().getTotal())))
                       .addContent(
-                          new Element("TaxScheme", cac)
+                          new Element("TaxCategory", cac)
                               .addContent(
-                                  new Element("ID", cbc).setText(detalle.getIgv().getCodigo()))
-                              .addContent(
-                                  new Element("Name", cbc)
-                                      .setText(detalle.getIgv().getDescripcion()))
-                              .addContent(
-                                  new Element("TaxTypeCode", cbc)
-                                      .setText(detalle.getIgv().getCodigoInternacional()))));
+                                  new Element("TaxScheme", cac)
+                                      .addContent(
+                                          new Element("ID", cbc)
+                                              .setText(detalle.getIgv().getCodigo()))
+                                      .addContent(
+                                          new Element("Name", cbc)
+                                              .setText(detalle.getIgv().getDescripcion()))
+                                      .addContent(
+                                          new Element("TaxTypeCode", cbc)
+                                              .setText(
+                                                  detalle.getIgv().getCodigoInternacional())))));
       summaryDocumentsLine.addContent(taxTotal);
 
       if (detalle.getIsc() != null) {
@@ -341,19 +343,21 @@ public class SummaryDocuments {
                         .addContent(
                             new Element("TaxAmount", cbc)
                                 .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                                .setText(String.valueOf(detalle.getIsc().getTotal()))))
-                .addContent(
-                    new Element("TaxCategory", cac)
+                                .setText(String.valueOf(detalle.getIsc().getTotal())))
                         .addContent(
-                            new Element("TaxScheme", cac)
+                            new Element("TaxCategory", cac)
                                 .addContent(
-                                    new Element("ID", cbc).setText(detalle.getIsc().getCodigo()))
-                                .addContent(
-                                    new Element("Name", cbc)
-                                        .setText(detalle.getIsc().getDescripcion()))
-                                .addContent(
-                                    new Element("TaxTypeCode", cbc)
-                                        .setText(detalle.getIsc().getCodigoInternacional()))));
+                                    new Element("TaxScheme", cac)
+                                        .addContent(
+                                            new Element("ID", cbc)
+                                                .setText(detalle.getIsc().getCodigo()))
+                                        .addContent(
+                                            new Element("Name", cbc)
+                                                .setText(detalle.getIsc().getDescripcion()))
+                                        .addContent(
+                                            new Element("TaxTypeCode", cbc)
+                                                .setText(
+                                                    detalle.getIsc().getCodigoInternacional())))));
         summaryDocumentsLine.addContent(taxTotal);
       }
 
@@ -369,21 +373,24 @@ public class SummaryDocuments {
                         .addContent(
                             new Element("TaxAmount", cbc)
                                 .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                                .setText(String.valueOf(detalle.getOtrosTributos().getTotal()))))
-                .addContent(
-                    new Element("TaxCategory", cac)
+                                .setText(String.valueOf(detalle.getOtrosTributos().getTotal())))
                         .addContent(
-                            new Element("TaxScheme", cac)
+                            new Element("TaxCategory", cac)
                                 .addContent(
-                                    new Element("ID", cbc)
-                                        .setText(detalle.getOtrosTributos().getCodigo()))
-                                .addContent(
-                                    new Element("Name", cbc)
-                                        .setText(detalle.getOtrosTributos().getDescripcion()))
-                                .addContent(
-                                    new Element("TaxTypeCode", cbc)
-                                        .setText(
-                                            detalle.getOtrosTributos().getCodigoInternacional()))));
+                                    new Element("TaxScheme", cac)
+                                        .addContent(
+                                            new Element("ID", cbc)
+                                                .setText(detalle.getOtrosTributos().getCodigo()))
+                                        .addContent(
+                                            new Element("Name", cbc)
+                                                .setText(
+                                                    detalle.getOtrosTributos().getDescripcion()))
+                                        .addContent(
+                                            new Element("TaxTypeCode", cbc)
+                                                .setText(
+                                                    detalle
+                                                        .getOtrosTributos()
+                                                        .getCodigoInternacional())))));
         summaryDocumentsLine.addContent(taxTotal);
       }
 
@@ -399,21 +406,24 @@ public class SummaryDocuments {
                         .addContent(
                             new Element("TaxAmount", cbc)
                                 .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                                .setText(String.valueOf(detalle.getImpuestoBolsa().getTotal()))))
-                .addContent(
-                    new Element("TaxCategory", cac)
+                                .setText(String.valueOf(detalle.getImpuestoBolsa().getTotal())))
                         .addContent(
-                            new Element("TaxScheme", cac)
+                            new Element("TaxCategory", cac)
                                 .addContent(
-                                    new Element("ID", cbc)
-                                        .setText(detalle.getImpuestoBolsa().getCodigo()))
-                                .addContent(
-                                    new Element("Name", cbc)
-                                        .setText(detalle.getImpuestoBolsa().getDescripcion()))
-                                .addContent(
-                                    new Element("TaxTypeCode", cbc)
-                                        .setText(
-                                            detalle.getImpuestoBolsa().getCodigoInternacional()))));
+                                    new Element("TaxScheme", cac)
+                                        .addContent(
+                                            new Element("ID", cbc)
+                                                .setText(detalle.getImpuestoBolsa().getCodigo()))
+                                        .addContent(
+                                            new Element("Name", cbc)
+                                                .setText(
+                                                    detalle.getImpuestoBolsa().getDescripcion()))
+                                        .addContent(
+                                            new Element("TaxTypeCode", cbc)
+                                                .setText(
+                                                    detalle
+                                                        .getImpuestoBolsa()
+                                                        .getCodigoInternacional())))));
         summaryDocumentsLine.addContent(taxTotal);
       }
 

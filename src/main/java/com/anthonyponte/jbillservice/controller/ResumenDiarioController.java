@@ -252,7 +252,7 @@ public class ResumenDiarioController {
                       try {
                         resumenDiario = new ResumenDiario();
                         resumenDiario.setUbl("2.0");
-                        resumenDiario.setVersion("1.0");
+                        resumenDiario.setVersion("1.1");
 
                         resumenDiario.setTipoDocumento(
                             (TipoDocumento) iFrame.cbxTipo.getSelectedItem());
