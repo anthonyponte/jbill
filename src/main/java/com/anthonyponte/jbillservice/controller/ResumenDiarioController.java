@@ -61,8 +61,6 @@ import java.security.cert.CertificateException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
@@ -300,10 +298,7 @@ public class ResumenDiarioController {
                         resumenDiario.setNombreZip(zip.getName());
                         resumenDiario.setZip(byteArray);
                         int id = summaryDao.create(resumenDiario);
-                        System.out.println(".doInBackground() " + id);
                         resumenDiarioDao.create(id, eventList);
-                        System.out.println(".doInBackground() " + id);
-                        System.out.println(".doInBackground() " + resumenDiario);
 
                         sign.delete();
                         zip.delete();
@@ -348,8 +343,11 @@ public class ResumenDiarioController {
                               "Guardado",
                               JOptionPane.INFORMATION_MESSAGE);
                         } catch (InterruptedException | ExecutionException ex) {
-                          Logger.getLogger(ResumenDiarioController.class.getName())
-                              .log(Level.SEVERE, null, ex);
+                          JOptionPane.showMessageDialog(
+                              null,
+                              ex.getMessage(),
+                              ResumenDiarioController.class.getName(),
+                              JOptionPane.ERROR_MESSAGE);
                         }
                       }
                     }
@@ -417,7 +415,11 @@ public class ResumenDiarioController {
 
               iFrame.tfDocumentoIdentidadNumero.requestFocus();
             } catch (BadLocationException ex) {
-              Logger.getLogger(ResumenDiarioController.class.getName()).log(Level.SEVERE, null, ex);
+              JOptionPane.showMessageDialog(
+                  null,
+                  ex.getMessage(),
+                  ResumenDiarioController.class.getName(),
+                  JOptionPane.ERROR_MESSAGE);
             }
           }
         });
@@ -534,7 +536,7 @@ public class ResumenDiarioController {
             Impuesto igv = new Impuesto();
             igv.setTotal(Double.parseDouble(iFrame.tfIgv.getText()));
             igv.setCodigo("1000");
-            igv.setDescripcion("IGV Impuesto General a las Ventas");
+            igv.setDescripcion("IGV");
             igv.setCodigoInternacional("VAT");
             detalle.setIgv(igv);
 
@@ -542,7 +544,7 @@ public class ResumenDiarioController {
               Impuesto isc = new Impuesto();
               isc.setTotal(Double.parseDouble(iFrame.tfIsc.getText()));
               isc.setCodigo("2000");
-              isc.setDescripcion("ISC Impuesto Selectivo al Consumo");
+              isc.setDescripcion("ISC");
               isc.setCodigoInternacional("EXC");
               detalle.setIsc(isc);
             }
@@ -624,7 +626,11 @@ public class ResumenDiarioController {
 
             iFrame.btnGuardar.setEnabled(true);
           } catch (BadLocationException ex) {
-            Logger.getLogger(ResumenDiarioController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                null,
+                ex.getMessage(),
+                ResumenDiarioController.class.getName(),
+                JOptionPane.ERROR_MESSAGE);
           }
         });
 
@@ -918,7 +924,11 @@ public class ResumenDiarioController {
 
       iFrame.btnLimpiar.setEnabled(false);
     } catch (BadLocationException ex) {
-      Logger.getLogger(ResumenDiarioController.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(
+          null,
+          ex.getMessage(),
+          ResumenDiarioController.class.getName(),
+          JOptionPane.ERROR_MESSAGE);
     }
   }
 

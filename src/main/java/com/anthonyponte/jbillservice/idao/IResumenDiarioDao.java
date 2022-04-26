@@ -67,7 +67,7 @@ public class IResumenDiarioDao implements ResumenDiarioDao {
       for (int i = 0; i < resumenDiarioDetalles.size(); i++) {
         ResumenDiarioDetalle get = resumenDiarioDetalles.get(i);
         ps.setInt(1, id);
-        ps.setInt(2, get.getNumero());
+        ps.setInt(2, i + 1);
         ps.setString(3, get.getDocumento().getSerie());
         ps.setInt(4, get.getDocumento().getCorrelativo());
         ps.setString(5, get.getDocumento().getTipoDocumento().getCodigo());
