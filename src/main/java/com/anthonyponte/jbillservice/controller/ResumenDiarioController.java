@@ -49,6 +49,7 @@ import com.anthonyponte.jbillservice.model.TipoDocumento;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.ResumenDiarioIFrame;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
@@ -632,6 +633,11 @@ public class ResumenDiarioController {
                 ResumenDiarioController.class.getName(),
                 JOptionPane.ERROR_MESSAGE);
           }
+        });
+
+    iFrame.btnEliminar.addActionListener(
+        (ActionEvent ae) -> {
+          selectionModel.getSelected();
         });
 
     iFrame.tfDocumentoSerie.getDocument().addDocumentListener(dlEnabled);
