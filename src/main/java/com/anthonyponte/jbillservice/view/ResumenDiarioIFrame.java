@@ -65,87 +65,87 @@ public class ResumenDiarioIFrame extends JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tabbed = new JTabbedPane();
-        pnlEncabezado = new JPanel();
-        lblTipo = new JLabel();
-        lblSerie = new JLabel();
-        tfSerie = new JTextField();
-        lblCorrelativo = new JLabel();
-        tfCorrelativo = new JTextField();
-        lblFechaGeneracion = new JLabel();
-        lblFechaEmision = new JLabel();
-        dpFechaEmision = new JXDatePicker();
-        dpFechaGeneracion = new JXDatePicker();
-        cbxTipo = new JComboBox<>();
-        pnlDetalle = new JPanel();
-        lblEstado = new JLabel();
-        cbxEstado = new JComboBox<>();
-        lblMoneda = new JLabel();
-        cbxMoneda = new JComboBox<>();
-        tbbdDetalle = new JTabbedPane();
-        pnlDocumento = new JPanel();
-        lblDocumentoTipo = new JLabel();
-        cbxDocumentoTipo = new JComboBox<>();
-        lblDocumentoSerie = new JLabel();
-        tfDocumentoSerie = new JTextField();
-        lblDocumentoCorrelativo = new JLabel();
-        tfDocumentoCorrelativo = new JTextField();
-        pnlRemitente = new JPanel();
-        lblDocumentoIdentidadTipo = new JLabel();
-        cbxDocumentoIdentidadTipo = new JComboBox<>();
-        lblDocumentoIdentidadNumero = new JLabel();
-        tfDocumentoIdentidadNumero = new JTextField();
-        pnlReferencia = new JPanel();
-        lblReferenciaTipo = new JLabel();
-        cbxDocumentoReferenciaTipo = new JComboBox<>();
-        lblReferenciaSerie = new JLabel();
-        tfDocumentoReferenciaSerie = new JTextField();
-        lblReferenciaCorrelativo = new JLabel();
-        tfDocumentoReferenciaCorrelativo = new JTextField();
-        spnImportes = new JScrollPane();
-        pnlImportes = new JPanel();
-        lblImporteTotal = new JLabel();
-        tfImporteTotal = new JFormattedTextField();
-        lblGravadas = new JLabel();
-        tfGravadas = new JFormattedTextField();
-        lblExoneradas = new JLabel();
-        tfExoneradas = new JFormattedTextField();
-        lblInafectas = new JLabel();
-        tfInafectas = new JFormattedTextField();
-        lblGratuitas = new JLabel();
-        tfGratuitas = new JFormattedTextField();
-        lblExportacion = new JLabel();
-        tfExportacion = new JFormattedTextField();
-        lblOtrosCargos = new JLabel();
-        tfOtrosCargos = new JFormattedTextField();
-        lblIgv = new JLabel();
-        tfIgv = new JFormattedTextField();
-        lblIsc = new JLabel();
-        tfIsc = new JFormattedTextField();
-        lblOtrosTributos = new JLabel();
-        tfOtrosTributos = new JFormattedTextField();
-        lblBolsasPlasticas = new JLabel();
-        tfBolsasPlasticas = new JFormattedTextField();
-        spnPercepcion = new JScrollPane();
-        pnlPercepcion = new JPanel();
-        cbxPercepcionRegimen = new JComboBox<>();
-        lblPercepcionRegimen = new JLabel();
-        lblPercepcionTasa = new JLabel();
-        tfPercepcionTasa = new JTextField();
-        tfPercepcionMonto = new JFormattedTextField();
-        lblPercepcionMonto = new JLabel();
-        tfPercepcionMontoTotal = new JFormattedTextField();
-        lblPercepcionMontoTotal = new JLabel();
-        tfPercepcionBase = new JFormattedTextField();
-        lblPercepcionBase = new JLabel();
-        btnAgregar = new JButton();
-        btnEliminar = new JButton();
-        spane = new JScrollPane();
-        table = new JTable();
-        separator = new JSeparator();
-        btnNuevo = new JButton();
-        btnGuardar = new JButton();
-        btnLimpiar = new JButton();
+        tabbed = new javax.swing.JTabbedPane();
+        pnlEncabezado = new javax.swing.JPanel();
+        lblTipo = new javax.swing.JLabel();
+        lblSerie = new javax.swing.JLabel();
+        tfSerie = new javax.swing.JTextField();
+        lblCorrelativo = new javax.swing.JLabel();
+        tfCorrelativo = new javax.swing.JTextField();
+        lblFechaGeneracion = new javax.swing.JLabel();
+        lblFechaEmision = new javax.swing.JLabel();
+        dpFechaEmision = new org.jdesktop.swingx.JXDatePicker();
+        dpFechaGeneracion = new org.jdesktop.swingx.JXDatePicker();
+        cbxTipo = new javax.swing.JComboBox<>();
+        pnlDetalle = new javax.swing.JPanel();
+        lblEstado = new javax.swing.JLabel();
+        cbxEstado = new javax.swing.JComboBox<>();
+        lblMoneda = new javax.swing.JLabel();
+        cbxMoneda = new javax.swing.JComboBox<>();
+        tbbdDetalle = new javax.swing.JTabbedPane();
+        pnlDocumento = new javax.swing.JPanel();
+        lblDocumentoTipo = new javax.swing.JLabel();
+        cbxDocumentoTipo = new javax.swing.JComboBox<>();
+        lblDocumentoSerie = new javax.swing.JLabel();
+        tfDocumentoSerie = new javax.swing.JTextField();
+        lblDocumentoCorrelativo = new javax.swing.JLabel();
+        tfDocumentoCorrelativo = new javax.swing.JTextField();
+        pnlRemitente = new javax.swing.JPanel();
+        lblDocumentoIdentidadTipo = new javax.swing.JLabel();
+        cbxDocumentoIdentidadTipo = new javax.swing.JComboBox<>();
+        lblDocumentoIdentidadNumero = new javax.swing.JLabel();
+        tfDocumentoIdentidadNumero = new javax.swing.JTextField();
+        pnlReferencia = new javax.swing.JPanel();
+        lblReferenciaTipo = new javax.swing.JLabel();
+        cbxDocumentoReferenciaTipo = new javax.swing.JComboBox<>();
+        lblReferenciaSerie = new javax.swing.JLabel();
+        tfDocumentoReferenciaSerie = new javax.swing.JTextField();
+        lblReferenciaCorrelativo = new javax.swing.JLabel();
+        tfDocumentoReferenciaCorrelativo = new javax.swing.JTextField();
+        spnImportes = new javax.swing.JScrollPane();
+        pnlImportes = new javax.swing.JPanel();
+        lblImporteTotal = new javax.swing.JLabel();
+        tfImporteTotal = new javax.swing.JFormattedTextField();
+        lblGravadas = new javax.swing.JLabel();
+        tfGravadas = new javax.swing.JFormattedTextField();
+        lblExoneradas = new javax.swing.JLabel();
+        tfExoneradas = new javax.swing.JFormattedTextField();
+        lblInafectas = new javax.swing.JLabel();
+        tfInafectas = new javax.swing.JFormattedTextField();
+        lblGratuitas = new javax.swing.JLabel();
+        tfGratuitas = new javax.swing.JFormattedTextField();
+        lblExportacion = new javax.swing.JLabel();
+        tfExportacion = new javax.swing.JFormattedTextField();
+        lblOtrosCargos = new javax.swing.JLabel();
+        tfOtrosCargos = new javax.swing.JFormattedTextField();
+        lblIgv = new javax.swing.JLabel();
+        tfIgv = new javax.swing.JFormattedTextField();
+        lblIsc = new javax.swing.JLabel();
+        tfIsc = new javax.swing.JFormattedTextField();
+        lblOtrosTributos = new javax.swing.JLabel();
+        tfOtrosTributos = new javax.swing.JFormattedTextField();
+        lblBolsasPlasticas = new javax.swing.JLabel();
+        tfBolsasPlasticas = new javax.swing.JFormattedTextField();
+        spnPercepcion = new javax.swing.JScrollPane();
+        pnlPercepcion = new javax.swing.JPanel();
+        cbxPercepcionRegimen = new javax.swing.JComboBox<>();
+        lblPercepcionRegimen = new javax.swing.JLabel();
+        lblPercepcionTasa = new javax.swing.JLabel();
+        tfPercepcionTasa = new javax.swing.JTextField();
+        tfPercepcionMonto = new javax.swing.JFormattedTextField();
+        lblPercepcionMonto = new javax.swing.JLabel();
+        tfPercepcionMontoTotal = new javax.swing.JFormattedTextField();
+        lblPercepcionMontoTotal = new javax.swing.JLabel();
+        tfPercepcionBase = new javax.swing.JFormattedTextField();
+        lblPercepcionBase = new javax.swing.JLabel();
+        btnAgregar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        spane = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
+        separator = new javax.swing.JSeparator();
+        btnNuevo = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -157,37 +157,37 @@ public class ResumenDiarioIFrame extends JInternalFrame {
 
         pnlEncabezado.setMaximumSize(null);
 
-        lblTipo.setFont(lblTipo.getFont().deriveFont(lblTipo.getFont().getStyle() | Font.BOLD, lblTipo.getFont().getSize()-2));
+        lblTipo.setFont(lblTipo.getFont().deriveFont(lblTipo.getFont().getStyle() | java.awt.Font.BOLD, lblTipo.getFont().getSize()-2));
         lblTipo.setText("Tipo");
 
-        lblSerie.setFont(lblSerie.getFont().deriveFont(lblSerie.getFont().getStyle() | Font.BOLD, lblSerie.getFont().getSize()-2));
+        lblSerie.setFont(lblSerie.getFont().deriveFont(lblSerie.getFont().getStyle() | java.awt.Font.BOLD, lblSerie.getFont().getSize()-2));
         lblSerie.setText("Serie");
 
         tfSerie.setEnabled(false);
         tfSerie.setMaximumSize(null);
         tfSerie.setMinimumSize(null);
-        tfSerie.setPreferredSize(new Dimension(150, 30));
+        tfSerie.setPreferredSize(new java.awt.Dimension(150, 30));
 
-        lblCorrelativo.setFont(lblCorrelativo.getFont().deriveFont(lblCorrelativo.getFont().getStyle() | Font.BOLD, lblCorrelativo.getFont().getSize()-2));
+        lblCorrelativo.setFont(lblCorrelativo.getFont().deriveFont(lblCorrelativo.getFont().getStyle() | java.awt.Font.BOLD, lblCorrelativo.getFont().getSize()-2));
         lblCorrelativo.setText("Correlativo");
         lblCorrelativo.setName(""); // NOI18N
 
         tfCorrelativo.setEnabled(false);
         tfCorrelativo.setMaximumSize(null);
         tfCorrelativo.setMinimumSize(null);
-        tfCorrelativo.setPreferredSize(new Dimension(150, 30));
+        tfCorrelativo.setPreferredSize(new java.awt.Dimension(150, 30));
 
-        lblFechaGeneracion.setFont(lblFechaGeneracion.getFont().deriveFont(lblFechaGeneracion.getFont().getStyle() | Font.BOLD, lblFechaGeneracion.getFont().getSize()-2));
+        lblFechaGeneracion.setFont(lblFechaGeneracion.getFont().deriveFont(lblFechaGeneracion.getFont().getStyle() | java.awt.Font.BOLD, lblFechaGeneracion.getFont().getSize()-2));
         lblFechaGeneracion.setText("Fecha generacion");
 
-        lblFechaEmision.setFont(lblFechaEmision.getFont().deriveFont(lblFechaEmision.getFont().getStyle() | Font.BOLD, lblFechaEmision.getFont().getSize()-2));
+        lblFechaEmision.setFont(lblFechaEmision.getFont().deriveFont(lblFechaEmision.getFont().getStyle() | java.awt.Font.BOLD, lblFechaEmision.getFont().getSize()-2));
         lblFechaEmision.setText("Fecha emision");
 
         dpFechaEmision.setEnabled(false);
         dpFechaEmision.setFormats(new SimpleDateFormat("d MMMM y"));
         dpFechaEmision.setMaximumSize(null);
         dpFechaEmision.setMinimumSize(null);
-        dpFechaEmision.setPreferredSize(new Dimension(150, 30));
+        dpFechaEmision.setPreferredSize(new java.awt.Dimension(150, 30));
         dpFechaEmision.getEditor().setEditable(false);
 
         dpFechaGeneracion.setEditable(false);
@@ -195,14 +195,14 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         dpFechaGeneracion.setFormats(new SimpleDateFormat("d MMMM y"));
         dpFechaGeneracion.setMaximumSize(null);
         dpFechaGeneracion.setMinimumSize(null);
-        dpFechaGeneracion.setPreferredSize(new Dimension(150, 30));
+        dpFechaGeneracion.setPreferredSize(new java.awt.Dimension(150, 30));
 
         cbxTipo.setModel(new DefaultComboBoxModel(new TipoDocumento[] {
             new TipoDocumento("RC", "Resumen Diario")
         }));
         cbxTipo.setEnabled(false);
         cbxTipo.setMaximumSize(null);
-        cbxTipo.setPreferredSize(new Dimension(150, 30));
+        cbxTipo.setPreferredSize(new java.awt.Dimension(150, 30));
         cbxTipo.setRenderer(new DefaultListCellRenderer(){
             @Override
             public Component getListCellRendererComponent(
@@ -216,46 +216,48 @@ public class ResumenDiarioIFrame extends JInternalFrame {
             }
         });
 
-        GroupLayout pnlEncabezadoLayout = new GroupLayout(pnlEncabezado);
+        javax.swing.GroupLayout pnlEncabezadoLayout = new javax.swing.GroupLayout(pnlEncabezado);
         pnlEncabezado.setLayout(pnlEncabezadoLayout);
-        pnlEncabezadoLayout.setHorizontalGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        pnlEncabezadoLayout.setHorizontalGroup(
+            pnlEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEncabezadoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(tfSerie, GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-                    .addComponent(tfCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tfSerie, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                    .addComponent(tfCorrelativo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblTipo)
                     .addComponent(lblSerie)
                     .addComponent(lblCorrelativo)
                     .addComponent(lblFechaGeneracion)
                     .addComponent(lblFechaEmision)
-                    .addComponent(dpFechaEmision, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(dpFechaGeneracion, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbxTipo, GroupLayout.Alignment.TRAILING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(dpFechaEmision, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dpFechaGeneracion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbxTipo, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        pnlEncabezadoLayout.setVerticalGroup(pnlEncabezadoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        pnlEncabezadoLayout.setVerticalGroup(
+            pnlEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEncabezadoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTipo)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblSerie)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblCorrelativo)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfCorrelativo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblFechaGeneracion)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dpFechaGeneracion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dpFechaGeneracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblFechaEmision)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dpFechaEmision, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dpFechaEmision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -265,7 +267,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
 
         pnlDetalle.setMaximumSize(null);
 
-        lblEstado.setFont(lblEstado.getFont().deriveFont(lblEstado.getFont().getStyle() | Font.BOLD, lblEstado.getFont().getSize()-2));
+        lblEstado.setFont(lblEstado.getFont().deriveFont(lblEstado.getFont().getStyle() | java.awt.Font.BOLD, lblEstado.getFont().getSize()-2));
         lblEstado.setText("Estado *");
 
         cbxEstado.setModel(new DefaultComboBoxModel(new Estado[] {
@@ -275,7 +277,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         }));
         cbxEstado.setEnabled(false);
         cbxEstado.setMaximumSize(null);
-        cbxEstado.setPreferredSize(new Dimension(150, 30));
+        cbxEstado.setPreferredSize(new java.awt.Dimension(150, 30));
         cbxEstado.setRenderer(new DefaultListCellRenderer(){
             @Override
             public Component getListCellRendererComponent(
@@ -289,7 +291,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
             }
         });
 
-        lblMoneda.setFont(lblMoneda.getFont().deriveFont(lblMoneda.getFont().getStyle() | Font.BOLD, lblMoneda.getFont().getSize()-2));
+        lblMoneda.setFont(lblMoneda.getFont().deriveFont(lblMoneda.getFont().getStyle() | java.awt.Font.BOLD, lblMoneda.getFont().getSize()-2));
         lblMoneda.setText("Moneda *");
 
         cbxMoneda.setModel(new DefaultComboBoxModel(new Moneda[] {
@@ -298,7 +300,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
 cbxMoneda.setEnabled(false);
 cbxMoneda.setMaximumSize(null);
 cbxMoneda.setMinimumSize(null);
-cbxMoneda.setPreferredSize(new Dimension(150, 30));
+cbxMoneda.setPreferredSize(new java.awt.Dimension(150, 30));
 cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     @Override
     public Component getListCellRendererComponent(
@@ -312,7 +314,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     }
     });
 
-    lblDocumentoTipo.setFont(lblDocumentoTipo.getFont().deriveFont(lblDocumentoTipo.getFont().getStyle() | Font.BOLD, lblDocumentoTipo.getFont().getSize()-2));
+    lblDocumentoTipo.setFont(lblDocumentoTipo.getFont().deriveFont(lblDocumentoTipo.getFont().getStyle() | java.awt.Font.BOLD, lblDocumentoTipo.getFont().getSize()-2));
     lblDocumentoTipo.setText("Tipo *");
 
     cbxDocumentoTipo.setModel(new DefaultComboBoxModel(new TipoDocumento[] {
@@ -322,7 +324,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     }));
     cbxDocumentoTipo.setEnabled(false);
     cbxDocumentoTipo.setMaximumSize(null);
-    cbxDocumentoTipo.setPreferredSize(new Dimension(150, 30));
+    cbxDocumentoTipo.setPreferredSize(new java.awt.Dimension(150, 30));
     cbxDocumentoTipo.setRenderer(new DefaultListCellRenderer(){
         @Override
         public Component getListCellRendererComponent(
@@ -336,54 +338,56 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
         }
     });
 
-    lblDocumentoSerie.setFont(lblDocumentoSerie.getFont().deriveFont(lblDocumentoSerie.getFont().getStyle() | Font.BOLD, lblDocumentoSerie.getFont().getSize()-2));
+    lblDocumentoSerie.setFont(lblDocumentoSerie.getFont().deriveFont(lblDocumentoSerie.getFont().getStyle() | java.awt.Font.BOLD, lblDocumentoSerie.getFont().getSize()-2));
     lblDocumentoSerie.setText("Serie *");
 
     tfDocumentoSerie.setEnabled(false);
     tfDocumentoSerie.setMaximumSize(null);
     tfDocumentoSerie.setMinimumSize(null);
-    tfDocumentoSerie.setPreferredSize(new Dimension(150, 30));
+    tfDocumentoSerie.setPreferredSize(new java.awt.Dimension(150, 30));
     AbstractDocument adDocumentoSerie = (AbstractDocument) tfDocumentoSerie.getDocument();
     adDocumentoSerie.setDocumentFilter(new SerieFilter('B'));
 
-    lblDocumentoCorrelativo.setFont(lblDocumentoCorrelativo.getFont().deriveFont(lblDocumentoCorrelativo.getFont().getStyle() | Font.BOLD, lblDocumentoCorrelativo.getFont().getSize()-2));
+    lblDocumentoCorrelativo.setFont(lblDocumentoCorrelativo.getFont().deriveFont(lblDocumentoCorrelativo.getFont().getStyle() | java.awt.Font.BOLD, lblDocumentoCorrelativo.getFont().getSize()-2));
     lblDocumentoCorrelativo.setText("Correlativo *");
 
     tfDocumentoCorrelativo.setEnabled(false);
     tfDocumentoCorrelativo.setMaximumSize(null);
     tfDocumentoCorrelativo.setMinimumSize(null);
-    tfDocumentoCorrelativo.setPreferredSize(new Dimension(150, 30));
+    tfDocumentoCorrelativo.setPreferredSize(new java.awt.Dimension(150, 30));
     AbstractDocument adDocumentoCorrelativo = (AbstractDocument) tfDocumentoCorrelativo.getDocument();
     adDocumentoCorrelativo.setDocumentFilter(new IntegerFilter(8));
 
-        GroupLayout pnlDocumentoLayout = new GroupLayout(pnlDocumento);
+    javax.swing.GroupLayout pnlDocumentoLayout = new javax.swing.GroupLayout(pnlDocumento);
     pnlDocumento.setLayout(pnlDocumentoLayout);
-    pnlDocumentoLayout.setHorizontalGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    pnlDocumentoLayout.setHorizontalGroup(
+        pnlDocumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pnlDocumentoLayout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(cbxDocumentoTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfDocumentoSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlDocumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(cbxDocumentoTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfDocumentoSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblDocumentoTipo)
                 .addComponent(lblDocumentoSerie)
                 .addComponent(lblDocumentoCorrelativo)
-                .addComponent(tfDocumentoCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tfDocumentoCorrelativo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
     );
-    pnlDocumentoLayout.setVerticalGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    pnlDocumentoLayout.setVerticalGroup(
+        pnlDocumentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pnlDocumentoLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(lblDocumentoTipo)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cbxDocumentoTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(cbxDocumentoTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblDocumentoSerie)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfDocumentoSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfDocumentoSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblDocumentoCorrelativo)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfDocumentoCorrelativo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
     );
 
@@ -391,7 +395,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
 
     tbbdDetalle.addTab("Documento", pnlDocumento);
 
-    lblDocumentoIdentidadTipo.setFont(lblDocumentoIdentidadTipo.getFont().deriveFont(lblDocumentoIdentidadTipo.getFont().getStyle() | Font.BOLD, lblDocumentoIdentidadTipo.getFont().getSize()-2));
+    lblDocumentoIdentidadTipo.setFont(lblDocumentoIdentidadTipo.getFont().deriveFont(lblDocumentoIdentidadTipo.getFont().getStyle() | java.awt.Font.BOLD, lblDocumentoIdentidadTipo.getFont().getSize()-2));
     lblDocumentoIdentidadTipo.setText("Documento identidad");
 
     cbxDocumentoIdentidadTipo.setModel(new DefaultComboBoxModel(new DocumentoIdentidad[] {
@@ -403,7 +407,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     cbxDocumentoIdentidadTipo.setEnabled(false);
     cbxDocumentoIdentidadTipo.setMaximumSize(null);
     cbxDocumentoIdentidadTipo.setName(""); // NOI18N
-    cbxDocumentoIdentidadTipo.setPreferredSize(new Dimension(150, 30));
+    cbxDocumentoIdentidadTipo.setPreferredSize(new java.awt.Dimension(150, 30));
     cbxDocumentoIdentidadTipo.setRenderer(new DefaultListCellRenderer(){
         @Override
         public Component getListCellRendererComponent(
@@ -417,36 +421,38 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
         }
     });
 
-    lblDocumentoIdentidadNumero.setFont(lblDocumentoIdentidadNumero.getFont().deriveFont(lblDocumentoIdentidadNumero.getFont().getStyle() | Font.BOLD, lblDocumentoIdentidadNumero.getFont().getSize()-2));
+    lblDocumentoIdentidadNumero.setFont(lblDocumentoIdentidadNumero.getFont().deriveFont(lblDocumentoIdentidadNumero.getFont().getStyle() | java.awt.Font.BOLD, lblDocumentoIdentidadNumero.getFont().getSize()-2));
     lblDocumentoIdentidadNumero.setText("Numero");
 
     tfDocumentoIdentidadNumero.setEnabled(false);
     tfDocumentoIdentidadNumero.setMaximumSize(null);
     tfDocumentoIdentidadNumero.setMinimumSize(null);
-    tfDocumentoIdentidadNumero.setPreferredSize(new Dimension(150, 30));
+    tfDocumentoIdentidadNumero.setPreferredSize(new java.awt.Dimension(150, 30));
 
-        GroupLayout pnlRemitenteLayout = new GroupLayout(pnlRemitente);
+    javax.swing.GroupLayout pnlRemitenteLayout = new javax.swing.GroupLayout(pnlRemitente);
     pnlRemitente.setLayout(pnlRemitenteLayout);
-    pnlRemitenteLayout.setHorizontalGroup(pnlRemitenteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    pnlRemitenteLayout.setHorizontalGroup(
+        pnlRemitenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pnlRemitenteLayout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(pnlRemitenteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(cbxDocumentoIdentidadTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlRemitenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(cbxDocumentoIdentidadTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblDocumentoIdentidadTipo)
                 .addComponent(lblDocumentoIdentidadNumero)
-                .addComponent(tfDocumentoIdentidadNumero, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tfDocumentoIdentidadNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
     );
-    pnlRemitenteLayout.setVerticalGroup(pnlRemitenteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    pnlRemitenteLayout.setVerticalGroup(
+        pnlRemitenteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pnlRemitenteLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(lblDocumentoIdentidadTipo)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cbxDocumentoIdentidadTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(cbxDocumentoIdentidadTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblDocumentoIdentidadNumero)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfDocumentoIdentidadNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfDocumentoIdentidadNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
     );
 
@@ -454,7 +460,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
 
     tbbdDetalle.addTab("Remitente", pnlRemitente);
 
-    lblReferenciaTipo.setFont(lblReferenciaTipo.getFont().deriveFont(lblReferenciaTipo.getFont().getStyle() | Font.BOLD, lblReferenciaTipo.getFont().getSize()-2));
+    lblReferenciaTipo.setFont(lblReferenciaTipo.getFont().deriveFont(lblReferenciaTipo.getFont().getStyle() | java.awt.Font.BOLD, lblReferenciaTipo.getFont().getSize()-2));
     lblReferenciaTipo.setText("Tipo");
 
     cbxDocumentoReferenciaTipo.setModel(new DefaultComboBoxModel(new TipoDocumento[] {
@@ -463,7 +469,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     }));
     cbxDocumentoReferenciaTipo.setEnabled(false);
     cbxDocumentoReferenciaTipo.setMaximumSize(null);
-    cbxDocumentoReferenciaTipo.setPreferredSize(new Dimension(150, 30));
+    cbxDocumentoReferenciaTipo.setPreferredSize(new java.awt.Dimension(150, 30));
     cbxDocumentoReferenciaTipo.setRenderer(new DefaultListCellRenderer(){
         @Override
         public Component getListCellRendererComponent(
@@ -477,54 +483,56 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
         }
     });
 
-    lblReferenciaSerie.setFont(lblReferenciaSerie.getFont().deriveFont(lblReferenciaSerie.getFont().getStyle() | Font.BOLD, lblReferenciaSerie.getFont().getSize()-2));
+    lblReferenciaSerie.setFont(lblReferenciaSerie.getFont().deriveFont(lblReferenciaSerie.getFont().getStyle() | java.awt.Font.BOLD, lblReferenciaSerie.getFont().getSize()-2));
     lblReferenciaSerie.setText("Serie");
 
     tfDocumentoReferenciaSerie.setEnabled(false);
     tfDocumentoReferenciaSerie.setMaximumSize(null);
     tfDocumentoReferenciaSerie.setMinimumSize(null);
-    tfDocumentoReferenciaSerie.setPreferredSize(new Dimension(150, 30));
+    tfDocumentoReferenciaSerie.setPreferredSize(new java.awt.Dimension(150, 30));
     AbstractDocument adReferenciaSerie = (AbstractDocument) tfDocumentoReferenciaSerie.getDocument();
     adReferenciaSerie.setDocumentFilter(new SerieFilter('B'));
 
-    lblReferenciaCorrelativo.setFont(lblReferenciaCorrelativo.getFont().deriveFont(lblReferenciaCorrelativo.getFont().getStyle() | Font.BOLD, lblReferenciaCorrelativo.getFont().getSize()-2));
+    lblReferenciaCorrelativo.setFont(lblReferenciaCorrelativo.getFont().deriveFont(lblReferenciaCorrelativo.getFont().getStyle() | java.awt.Font.BOLD, lblReferenciaCorrelativo.getFont().getSize()-2));
     lblReferenciaCorrelativo.setText("Correlativo");
 
     tfDocumentoReferenciaCorrelativo.setEnabled(false);
     tfDocumentoReferenciaCorrelativo.setMaximumSize(null);
     tfDocumentoReferenciaCorrelativo.setMinimumSize(null);
-    tfDocumentoReferenciaCorrelativo.setPreferredSize(new Dimension(150, 30));
+    tfDocumentoReferenciaCorrelativo.setPreferredSize(new java.awt.Dimension(150, 30));
     AbstractDocument adReferenciaCorrelativo = (AbstractDocument) tfDocumentoReferenciaCorrelativo.getDocument();
     adReferenciaCorrelativo.setDocumentFilter(new IntegerFilter(8));
 
-        GroupLayout pnlReferenciaLayout = new GroupLayout(pnlReferencia);
+    javax.swing.GroupLayout pnlReferenciaLayout = new javax.swing.GroupLayout(pnlReferencia);
     pnlReferencia.setLayout(pnlReferenciaLayout);
-    pnlReferenciaLayout.setHorizontalGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    pnlReferenciaLayout.setHorizontalGroup(
+        pnlReferenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pnlReferenciaLayout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(cbxDocumentoReferenciaTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfDocumentoReferenciaSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlReferenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(cbxDocumentoReferenciaTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfDocumentoReferenciaSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblReferenciaTipo)
                 .addComponent(lblReferenciaSerie)
                 .addComponent(lblReferenciaCorrelativo)
-                .addComponent(tfDocumentoReferenciaCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tfDocumentoReferenciaCorrelativo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
     );
-    pnlReferenciaLayout.setVerticalGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    pnlReferenciaLayout.setVerticalGroup(
+        pnlReferenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pnlReferenciaLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(lblReferenciaTipo)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cbxDocumentoReferenciaTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(cbxDocumentoReferenciaTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblReferenciaSerie)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfDocumentoReferenciaSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfDocumentoReferenciaSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblReferenciaCorrelativo)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfDocumentoReferenciaCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfDocumentoReferenciaCorrelativo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
     );
 
@@ -535,126 +543,127 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     spnImportes.setBorder(null);
     spnImportes.setMaximumSize(null);
     spnImportes.setMinimumSize(null);
-    spnImportes.setPreferredSize(new Dimension(438, 200));
+    spnImportes.setPreferredSize(new java.awt.Dimension(438, 200));
 
     pnlImportes.setMaximumSize(null);
 
-    lblImporteTotal.setFont(lblImporteTotal.getFont().deriveFont(lblImporteTotal.getFont().getStyle() | Font.BOLD, lblImporteTotal.getFont().getSize()-2));
+    lblImporteTotal.setFont(lblImporteTotal.getFont().deriveFont(lblImporteTotal.getFont().getStyle() | java.awt.Font.BOLD, lblImporteTotal.getFont().getSize()-2));
     lblImporteTotal.setText("Importe total *");
 
-    tfImporteTotal.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfImporteTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfImporteTotal.setEnabled(false);
     tfImporteTotal.setMaximumSize(null);
     tfImporteTotal.setMinimumSize(null);
-    tfImporteTotal.setPreferredSize(new Dimension(150, 30));
+    tfImporteTotal.setPreferredSize(new java.awt.Dimension(150, 30));
     tfImporteTotal.setEditable(false);
 
-    lblGravadas.setFont(lblGravadas.getFont().deriveFont(lblGravadas.getFont().getStyle() | Font.BOLD, lblGravadas.getFont().getSize()-2));
+    lblGravadas.setFont(lblGravadas.getFont().deriveFont(lblGravadas.getFont().getStyle() | java.awt.Font.BOLD, lblGravadas.getFont().getSize()-2));
     lblGravadas.setText("Gravadas");
 
-    tfGravadas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfGravadas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfGravadas.setEnabled(false);
     tfGravadas.setMaximumSize(null);
     tfGravadas.setMinimumSize(null);
-    tfGravadas.setPreferredSize(new Dimension(150, 30));
+    tfGravadas.setPreferredSize(new java.awt.Dimension(150, 30));
 
-    lblExoneradas.setFont(lblExoneradas.getFont().deriveFont(lblExoneradas.getFont().getStyle() | Font.BOLD, lblExoneradas.getFont().getSize()-2));
+    lblExoneradas.setFont(lblExoneradas.getFont().deriveFont(lblExoneradas.getFont().getStyle() | java.awt.Font.BOLD, lblExoneradas.getFont().getSize()-2));
     lblExoneradas.setText("Exoneradas");
 
-    tfExoneradas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfExoneradas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfExoneradas.setEnabled(false);
     tfExoneradas.setMaximumSize(null);
     tfExoneradas.setMinimumSize(null);
-    tfExoneradas.setPreferredSize(new Dimension(150, 30));
+    tfExoneradas.setPreferredSize(new java.awt.Dimension(150, 30));
 
-    lblInafectas.setFont(lblInafectas.getFont().deriveFont(lblInafectas.getFont().getStyle() | Font.BOLD, lblInafectas.getFont().getSize()-2));
+    lblInafectas.setFont(lblInafectas.getFont().deriveFont(lblInafectas.getFont().getStyle() | java.awt.Font.BOLD, lblInafectas.getFont().getSize()-2));
     lblInafectas.setText("Inafectas");
 
-    tfInafectas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfInafectas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfInafectas.setEnabled(false);
     tfInafectas.setMaximumSize(null);
     tfInafectas.setMinimumSize(null);
-    tfInafectas.setPreferredSize(new Dimension(150, 30));
+    tfInafectas.setPreferredSize(new java.awt.Dimension(150, 30));
 
-    lblGratuitas.setFont(lblGratuitas.getFont().deriveFont(lblGratuitas.getFont().getStyle() | Font.BOLD, lblGratuitas.getFont().getSize()-2));
+    lblGratuitas.setFont(lblGratuitas.getFont().deriveFont(lblGratuitas.getFont().getStyle() | java.awt.Font.BOLD, lblGratuitas.getFont().getSize()-2));
     lblGratuitas.setText("Gratuitas");
 
-    tfGratuitas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfGratuitas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfGratuitas.setEnabled(false);
     tfGratuitas.setMaximumSize(null);
     tfGratuitas.setMinimumSize(null);
-    tfGratuitas.setPreferredSize(new Dimension(150, 30));
+    tfGratuitas.setPreferredSize(new java.awt.Dimension(150, 30));
 
-    lblExportacion.setFont(lblExportacion.getFont().deriveFont(lblExportacion.getFont().getStyle() | Font.BOLD, lblExportacion.getFont().getSize()-2));
+    lblExportacion.setFont(lblExportacion.getFont().deriveFont(lblExportacion.getFont().getStyle() | java.awt.Font.BOLD, lblExportacion.getFont().getSize()-2));
     lblExportacion.setText("Exportacion");
 
-    tfExportacion.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfExportacion.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfExportacion.setEnabled(false);
     tfExportacion.setMaximumSize(null);
     tfExportacion.setMinimumSize(null);
-    tfExportacion.setPreferredSize(new Dimension(150, 30));
+    tfExportacion.setPreferredSize(new java.awt.Dimension(150, 30));
 
-    lblOtrosCargos.setFont(lblOtrosCargos.getFont().deriveFont(lblOtrosCargos.getFont().getStyle() | Font.BOLD, lblOtrosCargos.getFont().getSize()-2));
+    lblOtrosCargos.setFont(lblOtrosCargos.getFont().deriveFont(lblOtrosCargos.getFont().getStyle() | java.awt.Font.BOLD, lblOtrosCargos.getFont().getSize()-2));
     lblOtrosCargos.setText("Otros cargos");
 
-    tfOtrosCargos.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfOtrosCargos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfOtrosCargos.setEnabled(false);
     tfOtrosCargos.setMaximumSize(null);
     tfOtrosCargos.setMinimumSize(null);
-    tfOtrosCargos.setPreferredSize(new Dimension(150, 30));
+    tfOtrosCargos.setPreferredSize(new java.awt.Dimension(150, 30));
 
-    lblIgv.setFont(lblIgv.getFont().deriveFont(lblIgv.getFont().getStyle() | Font.BOLD, lblIgv.getFont().getSize()-2));
+    lblIgv.setFont(lblIgv.getFont().deriveFont(lblIgv.getFont().getStyle() | java.awt.Font.BOLD, lblIgv.getFont().getSize()-2));
     lblIgv.setText("IGV *");
 
-    tfIgv.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfIgv.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfIgv.setEnabled(false);
     tfIgv.setMaximumSize(null);
     tfIgv.setMinimumSize(null);
-    tfIgv.setPreferredSize(new Dimension(150, 30));
+    tfIgv.setPreferredSize(new java.awt.Dimension(150, 30));
     tfIgv.setEditable(false);
 
-    lblIsc.setFont(lblIsc.getFont().deriveFont(lblIsc.getFont().getStyle() | Font.BOLD, lblIsc.getFont().getSize()-2));
+    lblIsc.setFont(lblIsc.getFont().deriveFont(lblIsc.getFont().getStyle() | java.awt.Font.BOLD, lblIsc.getFont().getSize()-2));
     lblIsc.setText("ISC");
 
-    tfIsc.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfIsc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfIsc.setEnabled(false);
     tfIsc.setMaximumSize(null);
     tfIsc.setMinimumSize(null);
-    tfIsc.setPreferredSize(new Dimension(150, 30));
+    tfIsc.setPreferredSize(new java.awt.Dimension(150, 30));
 
-    lblOtrosTributos.setFont(lblOtrosTributos.getFont().deriveFont(lblOtrosTributos.getFont().getStyle() | Font.BOLD, lblOtrosTributos.getFont().getSize()-2));
+    lblOtrosTributos.setFont(lblOtrosTributos.getFont().deriveFont(lblOtrosTributos.getFont().getStyle() | java.awt.Font.BOLD, lblOtrosTributos.getFont().getSize()-2));
     lblOtrosTributos.setText("Otros tributos");
 
-    tfOtrosTributos.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfOtrosTributos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfOtrosTributos.setEnabled(false);
     tfOtrosTributos.setMaximumSize(null);
     tfOtrosTributos.setMinimumSize(null);
-    tfOtrosTributos.setPreferredSize(new Dimension(150, 30));
+    tfOtrosTributos.setPreferredSize(new java.awt.Dimension(150, 30));
 
-    lblBolsasPlasticas.setFont(lblBolsasPlasticas.getFont().deriveFont(lblBolsasPlasticas.getFont().getStyle() | Font.BOLD, lblBolsasPlasticas.getFont().getSize()-2));
+    lblBolsasPlasticas.setFont(lblBolsasPlasticas.getFont().deriveFont(lblBolsasPlasticas.getFont().getStyle() | java.awt.Font.BOLD, lblBolsasPlasticas.getFont().getSize()-2));
     lblBolsasPlasticas.setText("Bolsas plasticas");
 
-    tfBolsasPlasticas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfBolsasPlasticas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfBolsasPlasticas.setEnabled(false);
     tfBolsasPlasticas.setMaximumSize(null);
     tfBolsasPlasticas.setMinimumSize(null);
-    tfBolsasPlasticas.setPreferredSize(new Dimension(150, 30));
+    tfBolsasPlasticas.setPreferredSize(new java.awt.Dimension(150, 30));
 
-        GroupLayout pnlImportesLayout = new GroupLayout(pnlImportes);
+    javax.swing.GroupLayout pnlImportesLayout = new javax.swing.GroupLayout(pnlImportes);
     pnlImportes.setLayout(pnlImportesLayout);
-    pnlImportesLayout.setHorizontalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    pnlImportesLayout.setHorizontalGroup(
+        pnlImportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pnlImportesLayout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(tfImporteTotal, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfGravadas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfExoneradas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfInafectas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfExportacion, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfGratuitas, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfOtrosCargos, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfIgv, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfIsc, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlImportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(tfImporteTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfGravadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfExoneradas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfInafectas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfExportacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfGratuitas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfOtrosCargos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfIgv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfIsc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblImporteTotal)
                 .addComponent(lblGravadas)
                 .addComponent(lblExoneradas)
@@ -665,57 +674,58 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
                 .addComponent(lblIgv)
                 .addComponent(lblIsc)
                 .addComponent(lblOtrosTributos)
-                .addComponent(tfOtrosTributos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfOtrosTributos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblBolsasPlasticas)
-                .addComponent(tfBolsasPlasticas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tfBolsasPlasticas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
     );
-    pnlImportesLayout.setVerticalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    pnlImportesLayout.setVerticalGroup(
+        pnlImportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pnlImportesLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(lblImporteTotal)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfImporteTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfImporteTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblGravadas)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfGravadas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfGravadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblExoneradas)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfExoneradas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfExoneradas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblInafectas)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfInafectas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfInafectas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblGratuitas)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfGratuitas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfGratuitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblExportacion)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfExportacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfExportacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblOtrosCargos)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfOtrosCargos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfOtrosCargos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblIgv)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfIgv, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfIgv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblIsc)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfIsc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfIsc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblOtrosTributos)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfOtrosTributos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfOtrosTributos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblBolsasPlasticas)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfBolsasPlasticas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfBolsasPlasticas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
     );
 
@@ -726,7 +736,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     spnPercepcion.setBorder(null);
     spnPercepcion.setMaximumSize(null);
     spnPercepcion.setMinimumSize(null);
-    spnPercepcion.setPreferredSize(new Dimension(450, 200));
+    spnPercepcion.setPreferredSize(new java.awt.Dimension(450, 200));
 
     pnlPercepcion.setMaximumSize(null);
 
@@ -737,7 +747,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     }));
     cbxPercepcionRegimen.setEnabled(false);
     cbxPercepcionRegimen.setMaximumSize(null);
-    cbxPercepcionRegimen.setPreferredSize(new Dimension(150, 30));
+    cbxPercepcionRegimen.setPreferredSize(new java.awt.Dimension(150, 30));
     cbxPercepcionRegimen.setRenderer(new DefaultListCellRenderer(){
         @Override
         public Component getListCellRendererComponent(
@@ -751,85 +761,87 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
         }
     });
 
-    lblPercepcionRegimen.setFont(lblPercepcionRegimen.getFont().deriveFont(lblPercepcionRegimen.getFont().getStyle() | Font.BOLD, lblPercepcionRegimen.getFont().getSize()-2));
+    lblPercepcionRegimen.setFont(lblPercepcionRegimen.getFont().deriveFont(lblPercepcionRegimen.getFont().getStyle() | java.awt.Font.BOLD, lblPercepcionRegimen.getFont().getSize()-2));
     lblPercepcionRegimen.setText("Regimen");
 
-    lblPercepcionTasa.setFont(lblPercepcionTasa.getFont().deriveFont(lblPercepcionTasa.getFont().getStyle() | Font.BOLD, lblPercepcionTasa.getFont().getSize()-2));
+    lblPercepcionTasa.setFont(lblPercepcionTasa.getFont().deriveFont(lblPercepcionTasa.getFont().getStyle() | java.awt.Font.BOLD, lblPercepcionTasa.getFont().getSize()-2));
     lblPercepcionTasa.setText("Tasa");
 
     tfPercepcionTasa.setEnabled(false);
     tfPercepcionTasa.setMaximumSize(null);
     tfPercepcionTasa.setMinimumSize(null);
-    tfPercepcionTasa.setPreferredSize(new Dimension(150, 30));
+    tfPercepcionTasa.setPreferredSize(new java.awt.Dimension(150, 30));
     tfPercepcionTasa.setEditable(false);
 
-    tfPercepcionMonto.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfPercepcionMonto.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfPercepcionMonto.setEnabled(false);
     tfPercepcionMonto.setMaximumSize(null);
     tfPercepcionMonto.setMinimumSize(null);
-    tfPercepcionMonto.setPreferredSize(new Dimension(150, 30));
+    tfPercepcionMonto.setPreferredSize(new java.awt.Dimension(150, 30));
 
-    lblPercepcionMonto.setFont(lblPercepcionMonto.getFont().deriveFont(lblPercepcionMonto.getFont().getStyle() | Font.BOLD, lblPercepcionMonto.getFont().getSize()-2));
+    lblPercepcionMonto.setFont(lblPercepcionMonto.getFont().deriveFont(lblPercepcionMonto.getFont().getStyle() | java.awt.Font.BOLD, lblPercepcionMonto.getFont().getSize()-2));
     lblPercepcionMonto.setText("Monto");
 
-    tfPercepcionMontoTotal.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfPercepcionMontoTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfPercepcionMontoTotal.setEnabled(false);
     tfPercepcionMontoTotal.setMaximumSize(null);
     tfPercepcionMontoTotal.setMinimumSize(null);
-    tfPercepcionMontoTotal.setPreferredSize(new Dimension(150, 30));
+    tfPercepcionMontoTotal.setPreferredSize(new java.awt.Dimension(150, 30));
 
-    lblPercepcionMontoTotal.setFont(lblPercepcionMontoTotal.getFont().deriveFont(lblPercepcionMontoTotal.getFont().getStyle() | Font.BOLD, lblPercepcionMontoTotal.getFont().getSize()-2));
+    lblPercepcionMontoTotal.setFont(lblPercepcionMontoTotal.getFont().deriveFont(lblPercepcionMontoTotal.getFont().getStyle() | java.awt.Font.BOLD, lblPercepcionMontoTotal.getFont().getSize()-2));
     lblPercepcionMontoTotal.setText("Monto total");
 
-    tfPercepcionBase.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfPercepcionBase.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfPercepcionBase.setEnabled(false);
     tfPercepcionBase.setMaximumSize(null);
     tfPercepcionBase.setMinimumSize(null);
-    tfPercepcionBase.setPreferredSize(new Dimension(150, 30));
+    tfPercepcionBase.setPreferredSize(new java.awt.Dimension(150, 30));
 
-    lblPercepcionBase.setFont(lblPercepcionBase.getFont().deriveFont(lblPercepcionBase.getFont().getStyle() | Font.BOLD, lblPercepcionBase.getFont().getSize()-2));
+    lblPercepcionBase.setFont(lblPercepcionBase.getFont().deriveFont(lblPercepcionBase.getFont().getStyle() | java.awt.Font.BOLD, lblPercepcionBase.getFont().getSize()-2));
     lblPercepcionBase.setText("Base");
 
-        GroupLayout pnlPercepcionLayout = new GroupLayout(pnlPercepcion);
+    javax.swing.GroupLayout pnlPercepcionLayout = new javax.swing.GroupLayout(pnlPercepcion);
     pnlPercepcion.setLayout(pnlPercepcionLayout);
-    pnlPercepcionLayout.setHorizontalGroup(pnlPercepcionLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    pnlPercepcionLayout.setHorizontalGroup(
+        pnlPercepcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pnlPercepcionLayout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(pnlPercepcionLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(cbxPercepcionRegimen, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlPercepcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(cbxPercepcionRegimen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblPercepcionRegimen)
-                .addComponent(tfPercepcionTasa, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfPercepcionTasa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblPercepcionTasa)
-                .addComponent(tfPercepcionMonto, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfPercepcionMonto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblPercepcionMonto)
-                .addComponent(tfPercepcionMontoTotal, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfPercepcionMontoTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblPercepcionMontoTotal)
-                .addComponent(tfPercepcionBase, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfPercepcionBase, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblPercepcionBase))
             .addContainerGap())
     );
-    pnlPercepcionLayout.setVerticalGroup(pnlPercepcionLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    pnlPercepcionLayout.setVerticalGroup(
+        pnlPercepcionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pnlPercepcionLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(lblPercepcionRegimen)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cbxPercepcionRegimen, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(cbxPercepcionRegimen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblPercepcionTasa)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfPercepcionTasa, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfPercepcionTasa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblPercepcionMonto)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfPercepcionMonto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfPercepcionMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblPercepcionMontoTotal)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfPercepcionMontoTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfPercepcionMontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblPercepcionBase)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfPercepcionBase, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(tfPercepcionBase, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
     );
 
@@ -842,21 +854,21 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     btnAgregar.setIcon(FontIcon.of(RemixiconAL.INSERT_ROW_BOTTOM, 16, Color.decode("#FFFFFF")));
     btnAgregar.setText("Agregar");
     btnAgregar.setEnabled(false);
-    btnAgregar.setMinimumSize(new Dimension(150, 30));
+    btnAgregar.setMinimumSize(new java.awt.Dimension(150, 30));
     btnAgregar.setName(""); // NOI18N
-    btnAgregar.setPreferredSize(new Dimension(150, 30));
+    btnAgregar.setPreferredSize(new java.awt.Dimension(150, 30));
 
     btnEliminar.setIcon(FontIcon.of(RemixiconAL.DELETE_ROW, 16, Color.decode("#FFFFFF")));
     btnEliminar.setText("Eliminar");
     btnEliminar.setEnabled(false);
-    btnEliminar.setMinimumSize(new Dimension(150, 30));
-    btnEliminar.setPreferredSize(new Dimension(150, 30));
+    btnEliminar.setMinimumSize(new java.awt.Dimension(150, 30));
+    btnEliminar.setPreferredSize(new java.awt.Dimension(150, 30));
 
     spane.setEnabled(false);
     spane.setMaximumSize(null);
-    spane.setPreferredSize(new Dimension(150, 100));
+    spane.setPreferredSize(new java.awt.Dimension(150, 100));
 
-    table.setModel(new DefaultTableModel(
+    table.setModel(new javax.swing.table.DefaultTableModel(
         new Object [][] {
 
         },
@@ -864,50 +876,49 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
 
         }
     ));
-    table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    table.setColumnSelectionAllowed(true);
-    table.setEnabled(false);
+    table.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
     table.setName(""); // NOI18N
     table.getTableHeader().setReorderingAllowed(false);
     spane.setViewportView(table);
-    table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        GroupLayout pnlDetalleLayout = new GroupLayout(pnlDetalle);
+    javax.swing.GroupLayout pnlDetalleLayout = new javax.swing.GroupLayout(pnlDetalle);
     pnlDetalle.setLayout(pnlDetalleLayout);
-    pnlDetalleLayout.setHorizontalGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    pnlDetalleLayout.setHorizontalGroup(
+        pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pnlDetalleLayout.createSequentialGroup()
             .addContainerGap()
-            .addGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(spane, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tbbdDetalle, GroupLayout.Alignment.TRAILING)
-                .addComponent(cbxEstado, GroupLayout.Alignment.TRAILING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cbxMoneda, GroupLayout.Alignment.TRAILING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(spane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tbbdDetalle, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(cbxEstado, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbxMoneda, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlDetalleLayout.createSequentialGroup()
-                    .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addComponent(lblEstado)
                 .addComponent(lblMoneda))
             .addContainerGap())
     );
-    pnlDetalleLayout.setVerticalGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    pnlDetalleLayout.setVerticalGroup(
+        pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pnlDetalleLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(lblEstado)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cbxEstado, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(cbxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblMoneda)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cbxMoneda, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(tbbdDetalle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(spane, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(cbxMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(tbbdDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(pnlDetalleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(spane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addContainerGap())
     );
 
@@ -919,52 +930,54 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
 
     separator.setMaximumSize(null);
     separator.setMinimumSize(null);
-    separator.setPreferredSize(new Dimension(5, 5));
+    separator.setPreferredSize(new java.awt.Dimension(5, 5));
 
     btnNuevo.setIcon(FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode("#FFFFFF")));
     btnNuevo.setText("Nuevo");
-    btnNuevo.setMinimumSize(new Dimension(150, 30));
-    btnNuevo.setPreferredSize(new Dimension(150, 30));
+    btnNuevo.setMinimumSize(new java.awt.Dimension(150, 30));
+    btnNuevo.setPreferredSize(new java.awt.Dimension(150, 30));
 
     btnGuardar.setIcon(FontIcon.of(RemixiconMZ.SAVE_LINE, 16, Color.decode("#FFFFFF")));
     btnGuardar.setText("Guardar");
     btnGuardar.setEnabled(false);
-    btnGuardar.setMinimumSize(new Dimension(150, 30));
-    btnGuardar.setPreferredSize(new Dimension(150, 30));
+    btnGuardar.setMinimumSize(new java.awt.Dimension(150, 30));
+    btnGuardar.setPreferredSize(new java.awt.Dimension(150, 30));
 
     btnLimpiar.setIcon(FontIcon.of(RemixiconAL.ERASER_LINE, 16, Color.decode("#FFFFFF")));
     btnLimpiar.setText("Limpiar");
     btnLimpiar.setEnabled(false);
-    btnLimpiar.setMinimumSize(new Dimension(150, 30));
-    btnLimpiar.setPreferredSize(new Dimension(150, 30));
+    btnLimpiar.setMinimumSize(new java.awt.Dimension(150, 30));
+    btnLimpiar.setPreferredSize(new java.awt.Dimension(150, 30));
 
-        GroupLayout layout = new GroupLayout(getContentPane());
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(btnNuevo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(btnGuardar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(btnLimpiar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addComponent(separator, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tabbed, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(separator, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tabbed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
-    layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(tabbed, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                .addComponent(btnGuardar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnLimpiar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnNuevo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+            .addComponent(tabbed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(separator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addContainerGap())
     );
 
@@ -972,86 +985,86 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public JButton btnAgregar;
-    public JButton btnEliminar;
-    public JButton btnGuardar;
-    public JButton btnLimpiar;
-    public JButton btnNuevo;
-    public JComboBox<String> cbxDocumentoIdentidadTipo;
-    public JComboBox<String> cbxDocumentoReferenciaTipo;
-    public JComboBox<String> cbxDocumentoTipo;
-    public JComboBox<String> cbxEstado;
-    public JComboBox<String> cbxMoneda;
-    public JComboBox<String> cbxPercepcionRegimen;
-    public JComboBox<String> cbxTipo;
-    public JXDatePicker dpFechaEmision;
-    public JXDatePicker dpFechaGeneracion;
-    public JLabel lblBolsasPlasticas;
-    public JLabel lblCorrelativo;
-    public JLabel lblDocumentoCorrelativo;
-    public JLabel lblDocumentoIdentidadNumero;
-    public JLabel lblDocumentoIdentidadTipo;
-    public JLabel lblDocumentoSerie;
-    public JLabel lblDocumentoTipo;
-    public JLabel lblEstado;
-    public JLabel lblExoneradas;
-    public JLabel lblExportacion;
-    public JLabel lblFechaEmision;
-    public JLabel lblFechaGeneracion;
-    public JLabel lblGratuitas;
-    public JLabel lblGravadas;
-    public JLabel lblIgv;
-    public JLabel lblImporteTotal;
-    public JLabel lblInafectas;
-    public JLabel lblIsc;
-    public JLabel lblMoneda;
-    public JLabel lblOtrosCargos;
-    public JLabel lblOtrosTributos;
-    public JLabel lblPercepcionBase;
-    public JLabel lblPercepcionMonto;
-    public JLabel lblPercepcionMontoTotal;
-    public JLabel lblPercepcionRegimen;
-    public JLabel lblPercepcionTasa;
-    public JLabel lblReferenciaCorrelativo;
-    public JLabel lblReferenciaSerie;
-    public JLabel lblReferenciaTipo;
-    public JLabel lblSerie;
-    public JLabel lblTipo;
-    public JPanel pnlDetalle;
-    public JPanel pnlDocumento;
-    public JPanel pnlEncabezado;
-    public JPanel pnlImportes;
-    public JPanel pnlPercepcion;
-    public JPanel pnlReferencia;
-    public JPanel pnlRemitente;
-    public JSeparator separator;
-    public JScrollPane spane;
-    public JScrollPane spnImportes;
-    public JScrollPane spnPercepcion;
-    public JTabbedPane tabbed;
-    public JTable table;
-    public JTabbedPane tbbdDetalle;
-    public JFormattedTextField tfBolsasPlasticas;
-    public JTextField tfCorrelativo;
-    public JTextField tfDocumentoCorrelativo;
-    public JTextField tfDocumentoIdentidadNumero;
-    public JTextField tfDocumentoReferenciaCorrelativo;
-    public JTextField tfDocumentoReferenciaSerie;
-    public JTextField tfDocumentoSerie;
-    public JFormattedTextField tfExoneradas;
-    public JFormattedTextField tfExportacion;
-    public JFormattedTextField tfGratuitas;
-    public JFormattedTextField tfGravadas;
-    public JFormattedTextField tfIgv;
-    public JFormattedTextField tfImporteTotal;
-    public JFormattedTextField tfInafectas;
-    public JFormattedTextField tfIsc;
-    public JFormattedTextField tfOtrosCargos;
-    public JFormattedTextField tfOtrosTributos;
-    public JFormattedTextField tfPercepcionBase;
-    public JFormattedTextField tfPercepcionMonto;
-    public JFormattedTextField tfPercepcionMontoTotal;
-    public JTextField tfPercepcionTasa;
-    public JTextField tfSerie;
+    public javax.swing.JButton btnAgregar;
+    public javax.swing.JButton btnEliminar;
+    public javax.swing.JButton btnGuardar;
+    public javax.swing.JButton btnLimpiar;
+    public javax.swing.JButton btnNuevo;
+    public javax.swing.JComboBox<String> cbxDocumentoIdentidadTipo;
+    public javax.swing.JComboBox<String> cbxDocumentoReferenciaTipo;
+    public javax.swing.JComboBox<String> cbxDocumentoTipo;
+    public javax.swing.JComboBox<String> cbxEstado;
+    public javax.swing.JComboBox<String> cbxMoneda;
+    public javax.swing.JComboBox<String> cbxPercepcionRegimen;
+    public javax.swing.JComboBox<String> cbxTipo;
+    public org.jdesktop.swingx.JXDatePicker dpFechaEmision;
+    public org.jdesktop.swingx.JXDatePicker dpFechaGeneracion;
+    public javax.swing.JLabel lblBolsasPlasticas;
+    public javax.swing.JLabel lblCorrelativo;
+    public javax.swing.JLabel lblDocumentoCorrelativo;
+    public javax.swing.JLabel lblDocumentoIdentidadNumero;
+    public javax.swing.JLabel lblDocumentoIdentidadTipo;
+    public javax.swing.JLabel lblDocumentoSerie;
+    public javax.swing.JLabel lblDocumentoTipo;
+    public javax.swing.JLabel lblEstado;
+    public javax.swing.JLabel lblExoneradas;
+    public javax.swing.JLabel lblExportacion;
+    public javax.swing.JLabel lblFechaEmision;
+    public javax.swing.JLabel lblFechaGeneracion;
+    public javax.swing.JLabel lblGratuitas;
+    public javax.swing.JLabel lblGravadas;
+    public javax.swing.JLabel lblIgv;
+    public javax.swing.JLabel lblImporteTotal;
+    public javax.swing.JLabel lblInafectas;
+    public javax.swing.JLabel lblIsc;
+    public javax.swing.JLabel lblMoneda;
+    public javax.swing.JLabel lblOtrosCargos;
+    public javax.swing.JLabel lblOtrosTributos;
+    public javax.swing.JLabel lblPercepcionBase;
+    public javax.swing.JLabel lblPercepcionMonto;
+    public javax.swing.JLabel lblPercepcionMontoTotal;
+    public javax.swing.JLabel lblPercepcionRegimen;
+    public javax.swing.JLabel lblPercepcionTasa;
+    public javax.swing.JLabel lblReferenciaCorrelativo;
+    public javax.swing.JLabel lblReferenciaSerie;
+    public javax.swing.JLabel lblReferenciaTipo;
+    public javax.swing.JLabel lblSerie;
+    public javax.swing.JLabel lblTipo;
+    public javax.swing.JPanel pnlDetalle;
+    public javax.swing.JPanel pnlDocumento;
+    public javax.swing.JPanel pnlEncabezado;
+    public javax.swing.JPanel pnlImportes;
+    public javax.swing.JPanel pnlPercepcion;
+    public javax.swing.JPanel pnlReferencia;
+    public javax.swing.JPanel pnlRemitente;
+    public javax.swing.JSeparator separator;
+    public javax.swing.JScrollPane spane;
+    public javax.swing.JScrollPane spnImportes;
+    public javax.swing.JScrollPane spnPercepcion;
+    public javax.swing.JTabbedPane tabbed;
+    public javax.swing.JTable table;
+    public javax.swing.JTabbedPane tbbdDetalle;
+    public javax.swing.JFormattedTextField tfBolsasPlasticas;
+    public javax.swing.JTextField tfCorrelativo;
+    public javax.swing.JTextField tfDocumentoCorrelativo;
+    public javax.swing.JTextField tfDocumentoIdentidadNumero;
+    public javax.swing.JTextField tfDocumentoReferenciaCorrelativo;
+    public javax.swing.JTextField tfDocumentoReferenciaSerie;
+    public javax.swing.JTextField tfDocumentoSerie;
+    public javax.swing.JFormattedTextField tfExoneradas;
+    public javax.swing.JFormattedTextField tfExportacion;
+    public javax.swing.JFormattedTextField tfGratuitas;
+    public javax.swing.JFormattedTextField tfGravadas;
+    public javax.swing.JFormattedTextField tfIgv;
+    public javax.swing.JFormattedTextField tfImporteTotal;
+    public javax.swing.JFormattedTextField tfInafectas;
+    public javax.swing.JFormattedTextField tfIsc;
+    public javax.swing.JFormattedTextField tfOtrosCargos;
+    public javax.swing.JFormattedTextField tfOtrosTributos;
+    public javax.swing.JFormattedTextField tfPercepcionBase;
+    public javax.swing.JFormattedTextField tfPercepcionMonto;
+    public javax.swing.JFormattedTextField tfPercepcionMontoTotal;
+    public javax.swing.JTextField tfPercepcionTasa;
+    public javax.swing.JTextField tfSerie;
     // End of variables declaration//GEN-END:variables
 }

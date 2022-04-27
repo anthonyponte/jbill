@@ -49,7 +49,6 @@ import com.anthonyponte.jbillservice.model.TipoDocumento;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.ResumenDiarioIFrame;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
@@ -67,6 +66,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 import javax.xml.crypto.MarshalException;
@@ -199,10 +199,13 @@ public class ResumenDiarioController {
                     iFrame.tfPercepcionTasa.setEnabled(true);
 
                     iFrame.tfPercepcionMonto.setEnabled(true);
+                    iFrame.tfPercepcionMonto.setText("0.00");
 
                     iFrame.tfPercepcionMontoTotal.setEnabled(true);
+                    iFrame.tfPercepcionMontoTotal.setText("0.00");
 
                     iFrame.tfPercepcionBase.setEnabled(true);
+                    iFrame.tfPercepcionBase.setText("0.00");
 
                     iFrame.btnNuevo.setEnabled(false);
 
@@ -323,7 +326,6 @@ public class ResumenDiarioController {
                             ResumenDiarioController.class.getName(),
                             JOptionPane.ERROR_MESSAGE);
                       }
-                      System.out.println(".doInBackground() " + resumenDiario);
                       return resumenDiario;
                     }
 
@@ -468,9 +470,8 @@ public class ResumenDiarioController {
             }
 
             if (iFrame.cbxPercepcionRegimen.getSelectedIndex() >= 0
-                && !iFrame.tfPercepcionTasa.getText().isEmpty()
-                && !iFrame.tfPercepcionMonto.getText().isEmpty()
-                && !iFrame.tfPercepcionMontoTotal.getText().isEmpty()) {
+                && !iFrame.tfPercepcionMonto.getText().equals("0.00")
+                && !iFrame.tfPercepcionMontoTotal.getText().equals("0.00")) {
               Percepcion percepcion = new Percepcion();
               percepcion.setRegimenPercepcion(
                   (RegimenPercepcion) iFrame.cbxPercepcionRegimen.getSelectedItem());
@@ -637,8 +638,27 @@ public class ResumenDiarioController {
 
     iFrame.btnEliminar.addActionListener(
         (ActionEvent ae) -> {
-          selectionModel.getSelected();
+          if (!selectionModel.isSelectionEmpty()) {
+            for (ResumenDiarioDetalle detalle : selectionModel.getSelected()) {
+              System.out.println(
+                  "com.anthonyponte.jbillservice.controller.ResumenDiarioController.init() "
+                      + detalle);
+            }
+          }
         });
+
+    iFrame
+        .table
+        .getSelectionModel()
+        .addListSelectionListener(
+            (ListSelectionEvent arg0) -> {
+              int selectedRow = iFrame.table.getSelectedRow();
+              if (selectedRow >= 0) {
+                iFrame.btnEliminar.setEnabled(true);
+              } else {
+                iFrame.btnEliminar.setEnabled(false);
+              }
+            });
 
     iFrame.tfDocumentoSerie.getDocument().addDocumentListener(dlEnabled);
 
@@ -811,8 +831,8 @@ public class ResumenDiarioController {
 
     tableModel = eventTableModelWithThreadProxyList(eventList, tableFormat);
     selectionModel = new DefaultEventSelectionModel<>(eventList);
-    iFrame.table.setModel(tableModel);
     iFrame.table.setSelectionModel(selectionModel);
+    iFrame.table.setModel(tableModel);
     MyTableResize.resize(iFrame.table);
 
     iFrame.show();
