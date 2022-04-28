@@ -542,7 +542,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblImporteTotal.setFont(lblImporteTotal.getFont().deriveFont(lblImporteTotal.getFont().getStyle() | Font.BOLD, lblImporteTotal.getFont().getSize()-2));
     lblImporteTotal.setText("Importe total *");
 
-    tfImporteTotal.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfImporteTotal.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter()));
     tfImporteTotal.setEnabled(false);
     tfImporteTotal.setMaximumSize(null);
     tfImporteTotal.setMinimumSize(null);
@@ -552,7 +552,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblGravadas.setFont(lblGravadas.getFont().deriveFont(lblGravadas.getFont().getStyle() | Font.BOLD, lblGravadas.getFont().getSize()-2));
     lblGravadas.setText("Gravadas");
 
-    tfGravadas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfGravadas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter()));
     tfGravadas.setEnabled(false);
     tfGravadas.setMaximumSize(null);
     tfGravadas.setMinimumSize(null);
@@ -561,7 +561,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblExoneradas.setFont(lblExoneradas.getFont().deriveFont(lblExoneradas.getFont().getStyle() | Font.BOLD, lblExoneradas.getFont().getSize()-2));
     lblExoneradas.setText("Exoneradas");
 
-    tfExoneradas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfExoneradas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter()));
     tfExoneradas.setEnabled(false);
     tfExoneradas.setMaximumSize(null);
     tfExoneradas.setMinimumSize(null);
@@ -570,7 +570,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblInafectas.setFont(lblInafectas.getFont().deriveFont(lblInafectas.getFont().getStyle() | Font.BOLD, lblInafectas.getFont().getSize()-2));
     lblInafectas.setText("Inafectas");
 
-    tfInafectas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfInafectas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter()));
     tfInafectas.setEnabled(false);
     tfInafectas.setMaximumSize(null);
     tfInafectas.setMinimumSize(null);
@@ -579,7 +579,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblGratuitas.setFont(lblGratuitas.getFont().deriveFont(lblGratuitas.getFont().getStyle() | Font.BOLD, lblGratuitas.getFont().getSize()-2));
     lblGratuitas.setText("Gratuitas");
 
-    tfGratuitas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfGratuitas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter()));
     tfGratuitas.setEnabled(false);
     tfGratuitas.setMaximumSize(null);
     tfGratuitas.setMinimumSize(null);
@@ -588,7 +588,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblExportacion.setFont(lblExportacion.getFont().deriveFont(lblExportacion.getFont().getStyle() | Font.BOLD, lblExportacion.getFont().getSize()-2));
     lblExportacion.setText("Exportacion");
 
-    tfExportacion.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfExportacion.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter()));
     tfExportacion.setEnabled(false);
     tfExportacion.setMaximumSize(null);
     tfExportacion.setMinimumSize(null);
@@ -597,7 +597,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblOtrosCargos.setFont(lblOtrosCargos.getFont().deriveFont(lblOtrosCargos.getFont().getStyle() | Font.BOLD, lblOtrosCargos.getFont().getSize()-2));
     lblOtrosCargos.setText("Otros cargos");
 
-    tfOtrosCargos.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfOtrosCargos.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter()));
     tfOtrosCargos.setEnabled(false);
     tfOtrosCargos.setMaximumSize(null);
     tfOtrosCargos.setMinimumSize(null);
@@ -606,7 +606,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblIgv.setFont(lblIgv.getFont().deriveFont(lblIgv.getFont().getStyle() | Font.BOLD, lblIgv.getFont().getSize()-2));
     lblIgv.setText("IGV *");
 
-    tfIgv.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfIgv.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter()));
     tfIgv.setEnabled(false);
     tfIgv.setMaximumSize(null);
     tfIgv.setMinimumSize(null);
@@ -616,7 +616,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblIsc.setFont(lblIsc.getFont().deriveFont(lblIsc.getFont().getStyle() | Font.BOLD, lblIsc.getFont().getSize()-2));
     lblIsc.setText("ISC");
 
-    tfIsc.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfIsc.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter()));
     tfIsc.setEnabled(false);
     tfIsc.setMaximumSize(null);
     tfIsc.setMinimumSize(null);
@@ -625,7 +625,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblOtrosTributos.setFont(lblOtrosTributos.getFont().deriveFont(lblOtrosTributos.getFont().getStyle() | Font.BOLD, lblOtrosTributos.getFont().getSize()-2));
     lblOtrosTributos.setText("Otros tributos");
 
-    tfOtrosTributos.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfOtrosTributos.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter()));
     tfOtrosTributos.setEnabled(false);
     tfOtrosTributos.setMaximumSize(null);
     tfOtrosTributos.setMinimumSize(null);
@@ -634,7 +634,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblBolsasPlasticas.setFont(lblBolsasPlasticas.getFont().deriveFont(lblBolsasPlasticas.getFont().getStyle() | Font.BOLD, lblBolsasPlasticas.getFont().getSize()-2));
     lblBolsasPlasticas.setText("Bolsas plasticas");
 
-    tfBolsasPlasticas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfBolsasPlasticas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter()));
     tfBolsasPlasticas.setEnabled(false);
     tfBolsasPlasticas.setMaximumSize(null);
     tfBolsasPlasticas.setMinimumSize(null);

@@ -1014,20 +1014,23 @@ public class ResumenDiarioController {
       Number inafectas = (Number) iFrame.tfInafectas.getValue();
       Number exportacion = (Number) iFrame.tfExportacion.getValue();
       Number otrosCargos = (Number) iFrame.tfOtrosCargos.getValue();
-      double igv = gravadas.doubleValue() * 0.18;
+      Number igv = gravadas.doubleValue() * 0.18;
       Number isc = (Number) iFrame.tfIsc.getValue();
       Number otrosTributos = (Number) iFrame.tfOtrosTributos.getValue();
       Number bolsas = (Number) iFrame.tfBolsasPlasticas.getValue();
-      double importeTotal =
+      Number importeTotal =
           gravadas.doubleValue()
               + exoneradas.doubleValue()
               + inafectas.doubleValue()
               + exportacion.doubleValue()
               + otrosCargos.doubleValue()
-              + igv
+              + igv.doubleValue()
               + isc.doubleValue()
               + otrosTributos.doubleValue()
               + bolsas.doubleValue();
+
+      System.out.println("com.anthonyponte.jbillservice.controller.ResumenDiarioController.sum() "+igv);
+      System.out.println("com.anthonyponte.jbillservice.controller.ResumenDiarioController.sum() "+importeTotal);
 
       iFrame.tfIgv.setValue(igv);
       iFrame.tfImporteTotal.setValue(importeTotal);
