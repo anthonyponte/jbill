@@ -158,40 +158,40 @@ public class ResumenDiarioController {
                     iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
 
                     iFrame.tfImporteTotal.setEnabled(true);
-                    iFrame.tfImporteTotal.setText("0.00");
+                    iFrame.tfImporteTotal.setValue(0.00);
 
                     iFrame.tfGravadas.setEnabled(true);
-                    iFrame.tfGravadas.setText("0.00");
+                    iFrame.tfGravadas.setValue(0.00);
 
                     iFrame.tfExoneradas.setEnabled(true);
-                    iFrame.tfExoneradas.setText("0.00");
+                    iFrame.tfExoneradas.setValue(0.00);
 
                     iFrame.tfInafectas.setEnabled(true);
-                    iFrame.tfInafectas.setText("0.00");
+                    iFrame.tfInafectas.setValue(0.00);
 
                     iFrame.tfGratuitas.setEnabled(true);
-                    iFrame.tfGratuitas.setText("0.00");
+                    iFrame.tfGratuitas.setValue(0.00);
 
                     iFrame.tfExportacion.setEnabled(true);
-                    iFrame.tfExportacion.setText("0.00");
+                    iFrame.tfExportacion.setValue(0.00);
 
                     iFrame.tfOtrosCargos.setEnabled(true);
-                    iFrame.tfOtrosCargos.setText("0.00");
+                    iFrame.tfOtrosCargos.setValue(0.00);
 
                     iFrame.tfIsc.setEnabled(true);
-                    iFrame.tfIsc.setText("0.00");
+                    iFrame.tfIsc.setValue(0.00);
 
                     iFrame.tfIgv.setEnabled(true);
-                    iFrame.tfIgv.setText("0.00");
+                    iFrame.tfIgv.setValue(0.00);
 
                     iFrame.tfIsc.setEnabled(true);
-                    iFrame.tfIsc.setText("0.00");
+                    iFrame.tfIsc.setValue(0.00);
 
                     iFrame.tfOtrosTributos.setEnabled(true);
-                    iFrame.tfOtrosTributos.setText("0.00");
+                    iFrame.tfOtrosTributos.setValue(0.00);
 
                     iFrame.tfBolsasPlasticas.setEnabled(true);
-                    iFrame.tfBolsasPlasticas.setText("0.00");
+                    iFrame.tfBolsasPlasticas.setValue(0.00);
 
                     iFrame.cbxPercepcionRegimen.setEnabled(true);
                     iFrame.cbxPercepcionRegimen.setSelectedIndex(0);
@@ -199,13 +199,13 @@ public class ResumenDiarioController {
                     iFrame.tfPercepcionTasa.setEnabled(true);
 
                     iFrame.tfPercepcionMonto.setEnabled(true);
-                    iFrame.tfPercepcionMonto.setText("0.00");
+                    iFrame.tfPercepcionMonto.setValue(0.00);
 
                     iFrame.tfPercepcionMontoTotal.setEnabled(true);
-                    iFrame.tfPercepcionMontoTotal.setText("0.00");
+                    iFrame.tfPercepcionMontoTotal.setValue(0.00);
 
                     iFrame.tfPercepcionBase.setEnabled(true);
-                    iFrame.tfPercepcionBase.setText("0.00");
+                    iFrame.tfPercepcionBase.setValue(0.00);
 
                     iFrame.btnNuevo.setEnabled(false);
 
@@ -339,7 +339,7 @@ public class ResumenDiarioController {
                         try {
                           start();
                           ResumenDiario get = get();
-                          System.out.println(".done() " + get);
+
                           JOptionPane.showMessageDialog(
                               iFrame,
                               get.getNombreZip() + " guardado",
@@ -470,99 +470,99 @@ public class ResumenDiarioController {
             }
 
             if (iFrame.cbxPercepcionRegimen.getSelectedIndex() >= 0
-                && !iFrame.tfPercepcionMonto.getText().equals("0.00")
-                && !iFrame.tfPercepcionMontoTotal.getText().equals("0.00")) {
+                && !iFrame.tfPercepcionMonto.getText().equals(0.00)
+                && !iFrame.tfPercepcionMontoTotal.getText().equals(0.00)) {
               Percepcion percepcion = new Percepcion();
               percepcion.setRegimenPercepcion(
                   (RegimenPercepcion) iFrame.cbxPercepcionRegimen.getSelectedItem());
-              percepcion.setMonto(Double.parseDouble(iFrame.tfPercepcionMonto.getText()));
-              percepcion.setMontoTotal(Double.parseDouble(iFrame.tfPercepcionMonto.getText()));
-              percepcion.setMonto(Double.parseDouble(iFrame.tfPercepcionMontoTotal.getText()));
-              percepcion.setBase(Double.parseDouble(iFrame.tfPercepcionBase.getText()));
+              percepcion.setMonto((Double) iFrame.tfPercepcionMonto.getValue());
+              percepcion.setMontoTotal((Double) iFrame.tfPercepcionMonto.getValue());
+              percepcion.setMonto((Double) iFrame.tfPercepcionMontoTotal.getValue());
+              percepcion.setBase((Double) iFrame.tfPercepcionBase.getValue());
               detalle.setPercepcion(percepcion);
             }
 
             detalle.setEstado((Estado) iFrame.cbxEstado.getSelectedItem());
 
-            detalle.setImporteTotal(Double.parseDouble(iFrame.tfImporteTotal.getText()));
+            detalle.setImporteTotal((Double) iFrame.tfImporteTotal.getValue());
 
             detalle.setMoneda((Moneda) iFrame.cbxMoneda.getSelectedItem());
 
-            if (!iFrame.tfGravadas.getText().equals("0.00")) {
+            if (!iFrame.tfGravadas.getText().equals(0.00)) {
               Operacion gravadas = new Operacion();
               gravadas.setCodigo("01");
               gravadas.setDescripcion("Gravado");
-              gravadas.setTotal(Double.parseDouble(iFrame.tfGravadas.getText()));
+              gravadas.setTotal((Double) iFrame.tfGravadas.getValue());
               detalle.setGravadas(gravadas);
             }
 
-            if (!iFrame.tfExoneradas.getText().equals("0.00")) {
+            if (!iFrame.tfExoneradas.getText().equals(0.00)) {
               Operacion exoneradas = new Operacion();
               exoneradas.setCodigo("02");
               exoneradas.setDescripcion("Exonerado");
-              exoneradas.setTotal(Double.parseDouble(iFrame.tfExoneradas.getText()));
+              exoneradas.setTotal((Double) iFrame.tfExoneradas.getValue());
               detalle.setExoneradas(exoneradas);
             }
 
-            if (!iFrame.tfInafectas.getText().equals("0.00")) {
+            if (!iFrame.tfInafectas.getText().equals(0.00)) {
               Operacion inafectas = new Operacion();
               inafectas.setCodigo("03");
               inafectas.setDescripcion("Inafecto");
-              inafectas.setTotal(Double.parseDouble(iFrame.tfInafectas.getText()));
+              inafectas.setTotal((Double) iFrame.tfInafectas.getValue());
               detalle.setInafectas(inafectas);
             }
 
-            if (!iFrame.tfExportacion.getText().equals("0.00")) {
+            if (!iFrame.tfExportacion.getText().equals(0.00)) {
               Operacion exportacion = new Operacion();
               exportacion.setCodigo("04");
               exportacion.setDescripcion("Exportación");
-              exportacion.setTotal(Double.parseDouble(iFrame.tfExportacion.getText()));
+              exportacion.setTotal((Double) iFrame.tfExportacion.getValue());
               detalle.setExportacion(exportacion);
             }
 
-            if (!iFrame.tfGratuitas.getText().equals("0.00")) {
+            if (!iFrame.tfGratuitas.getText().equals(0.00)) {
               Operacion gratuitas = new Operacion();
               gratuitas.setCodigo("05");
               gratuitas.setDescripcion("Gratuitas");
-              gratuitas.setTotal(Double.parseDouble(iFrame.tfGratuitas.getText()));
+              gratuitas.setTotal((Double) iFrame.tfGratuitas.getValue());
               detalle.setGratuitas(gratuitas);
             }
 
-            if (!iFrame.tfOtrosCargos.getText().equals("0.00")) {
+            if (!iFrame.tfOtrosCargos.getText().equals(0.00)) {
               OtrosCargos otrosCargos = new OtrosCargos();
               otrosCargos.setIndicador(true);
-              otrosCargos.setTotal(Double.parseDouble(iFrame.tfOtrosCargos.getText()));
+              otrosCargos.setTotal((Double) iFrame.tfOtrosCargos.getValue());
               detalle.setOtrosCargos(otrosCargos);
             }
 
             Impuesto igv = new Impuesto();
-            igv.setTotal(Double.parseDouble(iFrame.tfIgv.getText()));
+            igv.setTotal((Double) iFrame.tfIgv.getValue());
             igv.setCodigo("1000");
             igv.setDescripcion("IGV");
             igv.setCodigoInternacional("VAT");
             detalle.setIgv(igv);
 
-            if (!iFrame.tfIsc.getText().equals("0.00")) {
+            if (!iFrame.tfIsc.getText().equals(0.00)) {
               Impuesto isc = new Impuesto();
-              isc.setTotal(Double.parseDouble(iFrame.tfIsc.getText()));
+              isc.setTotal((Double) iFrame.tfIsc.getValue());
               isc.setCodigo("2000");
               isc.setDescripcion("ISC");
               isc.setCodigoInternacional("EXC");
               detalle.setIsc(isc);
             }
 
-            if (!iFrame.tfOtrosTributos.getText().equals("0.00")) {
+            if (!iFrame.tfOtrosTributos.getText().equals(0.00)) {
               Impuesto otrosTributos = new Impuesto();
-              otrosTributos.setTotal(Double.parseDouble(iFrame.tfOtrosTributos.getText()));
+              otrosTributos.setTotal((Double) iFrame.tfOtrosTributos.getValue());
               otrosTributos.setCodigo("9999");
               otrosTributos.setDescripcion("Otros tributos");
               otrosTributos.setCodigoInternacional("OTH");
               detalle.setOtrosTributos(otrosTributos);
             }
 
-            if (!iFrame.tfBolsasPlasticas.getText().equals("0.00")) {
+            if (!iFrame.tfBolsasPlasticas.getText().equals(0.00)) {
               Impuesto bolsas = new Impuesto();
-              bolsas.setTotal(Double.parseDouble(iFrame.tfBolsasPlasticas.getText()));
+              bolsas.setTotal((Double) iFrame.tfBolsasPlasticas.getValue());
               bolsas.setCodigo("7152");
               bolsas.setDescripcion("Impuesto a la bolsa plastica");
               bolsas.setCodigoInternacional("OTH");
@@ -594,37 +594,37 @@ public class ResumenDiarioController {
 
             iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
 
-            iFrame.tfImporteTotal.setText("0.00");
+            iFrame.tfImporteTotal.setValue(0.00);
 
-            iFrame.tfGravadas.setText("0.00");
+            iFrame.tfGravadas.setValue(0.00);
 
-            iFrame.tfExoneradas.setText("0.00");
+            iFrame.tfExoneradas.setValue(0.00);
 
-            iFrame.tfInafectas.setText("0.00");
+            iFrame.tfInafectas.setValue(0.00);
 
-            iFrame.tfGratuitas.setText("0.00");
+            iFrame.tfGratuitas.setValue(0.00);
 
-            iFrame.tfExportacion.setText("0.00");
+            iFrame.tfExportacion.setValue(0.00);
 
-            iFrame.tfOtrosCargos.setText("0.00");
+            iFrame.tfOtrosCargos.setValue(0.00);
 
-            iFrame.tfIsc.setText("0.00");
+            iFrame.tfIsc.setValue(0.00);
 
-            iFrame.tfIgv.setText("0.00");
+            iFrame.tfIgv.setValue(0.00);
 
-            iFrame.tfIsc.setText("0.00");
+            iFrame.tfIsc.setValue(0.00);
 
-            iFrame.tfOtrosTributos.setText("0.00");
+            iFrame.tfOtrosTributos.setValue(0.00);
 
-            iFrame.tfBolsasPlasticas.setText("0.00");
+            iFrame.tfBolsasPlasticas.setValue(0.00);
 
             iFrame.cbxPercepcionRegimen.setSelectedIndex(0);
 
-            iFrame.tfPercepcionMonto.setText("0.00");
+            iFrame.tfPercepcionMonto.setValue(0.00);
 
-            iFrame.tfPercepcionMontoTotal.setText("0.00");
+            iFrame.tfPercepcionMontoTotal.setValue(0.00);
 
-            iFrame.tfPercepcionBase.setText("0.00");
+            iFrame.tfPercepcionBase.setValue(0.00);
 
             iFrame.btnGuardar.setEnabled(true);
           } catch (BadLocationException ex) {
@@ -639,11 +639,7 @@ public class ResumenDiarioController {
     iFrame.btnEliminar.addActionListener(
         (ActionEvent ae) -> {
           if (!selectionModel.isSelectionEmpty()) {
-            for (ResumenDiarioDetalle detalle : selectionModel.getSelected()) {
-              System.out.println(
-                  "com.anthonyponte.jbillservice.controller.ResumenDiarioController.init() "
-                      + detalle);
-            }
+            eventList.removeAll(selectionModel.getSelected());
           }
         });
 
@@ -1012,25 +1008,26 @@ public class ResumenDiarioController {
         && !iFrame.tfIsc.getText().isEmpty()
         && !iFrame.tfOtrosTributos.getText().isEmpty()
         && !iFrame.tfBolsasPlasticas.getText().isEmpty()) {
-      double gravadas = Double.parseDouble(iFrame.tfGravadas.getText());
-      double exoneradas = Double.parseDouble(iFrame.tfExoneradas.getText());
-      double inafectas = Double.parseDouble(iFrame.tfInafectas.getText());
-      double exportacion = Double.parseDouble(iFrame.tfExportacion.getText());
-      double otrosCargos = Double.parseDouble(iFrame.tfOtrosCargos.getText());
-      double igv = gravadas * 0.18;
-      double isc = Double.parseDouble(iFrame.tfIsc.getText());
-      double otrosTributos = Double.parseDouble(iFrame.tfOtrosTributos.getText());
-      double bolsas = Double.parseDouble(iFrame.tfBolsasPlasticas.getText());
+
+      Number gravadas = (Number) iFrame.tfGravadas.getValue();
+      Number exoneradas = (Number) iFrame.tfExoneradas.getValue();
+      Number inafectas = (Number) iFrame.tfInafectas.getValue();
+      Number exportacion = (Number) iFrame.tfExportacion.getValue();
+      Number otrosCargos = (Number) iFrame.tfOtrosCargos.getValue();
+      double igv = gravadas.doubleValue() * 0.18;
+      Number isc = (Number) iFrame.tfIsc.getValue();
+      Number otrosTributos = (Number) iFrame.tfOtrosTributos.getValue();
+      Number bolsas = (Number) iFrame.tfBolsasPlasticas.getValue();
       double importeTotal =
-          gravadas
-              + exoneradas
-              + inafectas
-              + exportacion
-              + otrosCargos
+          gravadas.doubleValue()
+              + exoneradas.doubleValue()
+              + inafectas.doubleValue()
+              + exportacion.doubleValue()
+              + otrosCargos.doubleValue()
               + igv
-              + isc
-              + otrosTributos
-              + bolsas;
+              + isc.doubleValue()
+              + otrosTributos.doubleValue()
+              + bolsas.doubleValue();
 
       iFrame.tfIgv.setValue(igv);
       iFrame.tfImporteTotal.setValue(importeTotal);
