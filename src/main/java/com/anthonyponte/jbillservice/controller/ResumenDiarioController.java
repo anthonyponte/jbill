@@ -60,6 +60,7 @@ import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.prefs.Preferences;
 import javax.swing.JOptionPane;
@@ -492,7 +493,8 @@ public class ResumenDiarioController {
               Operacion gravadas = new Operacion();
               gravadas.setCodigo("01");
               gravadas.setDescripcion("Gravado");
-              gravadas.setTotal((Double) iFrame.tfGravadas.getValue());
+              Number total = (Number) iFrame.tfGravadas.getValue();
+              gravadas.setTotal(total.doubleValue());
               detalle.setGravadas(gravadas);
             }
 
@@ -500,7 +502,8 @@ public class ResumenDiarioController {
               Operacion exoneradas = new Operacion();
               exoneradas.setCodigo("02");
               exoneradas.setDescripcion("Exonerado");
-              exoneradas.setTotal((Double) iFrame.tfExoneradas.getValue());
+              Number total = (Number) iFrame.tfExoneradas.getValue();
+              exoneradas.setTotal(total.doubleValue());
               detalle.setExoneradas(exoneradas);
             }
 
@@ -508,7 +511,8 @@ public class ResumenDiarioController {
               Operacion inafectas = new Operacion();
               inafectas.setCodigo("03");
               inafectas.setDescripcion("Inafecto");
-              inafectas.setTotal((Double) iFrame.tfInafectas.getValue());
+              Number total = (Number) iFrame.tfInafectas.getValue();
+              inafectas.setTotal(total.doubleValue());
               detalle.setInafectas(inafectas);
             }
 
@@ -516,7 +520,8 @@ public class ResumenDiarioController {
               Operacion exportacion = new Operacion();
               exportacion.setCodigo("04");
               exportacion.setDescripcion("Exportación");
-              exportacion.setTotal((Double) iFrame.tfExportacion.getValue());
+              Number total = (Number) iFrame.tfExportacion.getValue();
+              exportacion.setTotal(total.doubleValue());
               detalle.setExportacion(exportacion);
             }
 
@@ -524,19 +529,22 @@ public class ResumenDiarioController {
               Operacion gratuitas = new Operacion();
               gratuitas.setCodigo("05");
               gratuitas.setDescripcion("Gratuitas");
-              gratuitas.setTotal((Double) iFrame.tfGratuitas.getValue());
+              Number total = (Number) iFrame.tfGratuitas.getValue();
+              gratuitas.setTotal(total.doubleValue());
               detalle.setGratuitas(gratuitas);
             }
 
             if (!iFrame.tfOtrosCargos.getText().equals(0.00)) {
               OtrosCargos otrosCargos = new OtrosCargos();
               otrosCargos.setIndicador(true);
-              otrosCargos.setTotal((Double) iFrame.tfOtrosCargos.getValue());
+              Number total = (Number) iFrame.tfOtrosCargos.getValue();
+              otrosCargos.setTotal(total.doubleValue());
               detalle.setOtrosCargos(otrosCargos);
             }
 
             Impuesto igv = new Impuesto();
-            igv.setTotal((Double) iFrame.tfIgv.getValue());
+            Number total = (Number) iFrame.tfIgv.getValue();
+            igv.setTotal(total.doubleValue());
             igv.setCodigo("1000");
             igv.setDescripcion("IGV");
             igv.setCodigoInternacional("VAT");
@@ -544,7 +552,8 @@ public class ResumenDiarioController {
 
             if (!iFrame.tfIsc.getText().equals(0.00)) {
               Impuesto isc = new Impuesto();
-              isc.setTotal((Double) iFrame.tfIsc.getValue());
+              total = (Number) iFrame.tfIsc.getValue();
+              isc.setTotal(total.doubleValue());
               isc.setCodigo("2000");
               isc.setDescripcion("ISC");
               isc.setCodigoInternacional("EXC");
@@ -553,7 +562,8 @@ public class ResumenDiarioController {
 
             if (!iFrame.tfOtrosTributos.getText().equals(0.00)) {
               Impuesto otrosTributos = new Impuesto();
-              otrosTributos.setTotal((Double) iFrame.tfOtrosTributos.getValue());
+              total = (Number) iFrame.tfOtrosTributos.getValue();
+              otrosTributos.setTotal(total.doubleValue());
               otrosTributos.setCodigo("9999");
               otrosTributos.setDescripcion("Otros tributos");
               otrosTributos.setCodigoInternacional("OTH");
@@ -562,7 +572,8 @@ public class ResumenDiarioController {
 
             if (!iFrame.tfBolsasPlasticas.getText().equals(0.00)) {
               Impuesto bolsas = new Impuesto();
-              bolsas.setTotal((Double) iFrame.tfBolsasPlasticas.getValue());
+              total = (Number) iFrame.tfBolsasPlasticas.getValue();
+              bolsas.setTotal(total.doubleValue());
               bolsas.setCodigo("7152");
               bolsas.setDescripcion("Impuesto a la bolsa plastica");
               bolsas.setCodigoInternacional("OTH");
@@ -1028,9 +1039,6 @@ public class ResumenDiarioController {
               + isc.doubleValue()
               + otrosTributos.doubleValue()
               + bolsas.doubleValue();
-
-      System.out.println("com.anthonyponte.jbillservice.controller.ResumenDiarioController.sum() "+igv);
-      System.out.println("com.anthonyponte.jbillservice.controller.ResumenDiarioController.sum() "+importeTotal);
 
       iFrame.tfIgv.setValue(igv);
       iFrame.tfImporteTotal.setValue(importeTotal);

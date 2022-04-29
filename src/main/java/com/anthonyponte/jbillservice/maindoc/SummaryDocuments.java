@@ -22,6 +22,7 @@ import com.anthonyponte.jbillservice.controller.UsuarioController;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
 import com.anthonyponte.jbillservice.model.ResumenDiario;
 import com.anthonyponte.jbillservice.model.ResumenDiarioDetalle;
+import java.util.Locale;
 import java.util.prefs.Preferences;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -206,14 +207,16 @@ public class SummaryDocuments {
                 .addContent(
                     new Element("TotalInvoiceAmount", cbc)
                         .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                        .setText(String.valueOf(detalle.getPercepcion().getMonto())))
+                        .setText(
+                            String.format(Locale.ROOT, "%.2f", detalle.getPercepcion().getMonto())))
                 .addContent(
                     new Element("SUNATTotalCashed", sac)
                         .setText(String.valueOf(detalle.getPercepcion().getMontoTotal())))
                 .addContent(
                     new Element("TaxableAmount", cbc)
                         .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                        .setText(String.valueOf(detalle.getPercepcion().getBase())));
+                        .setText(
+                            String.format(Locale.ROOT, "%.2f", detalle.getPercepcion().getBase())));
         summaryDocumentsLine.addContent(sunatPerceptionSummaryDocumentReference);
       }
 
@@ -226,7 +229,7 @@ public class SummaryDocuments {
       Element totalAmount =
           new Element("TotalAmount", sac)
               .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-              .setText(String.valueOf(detalle.getImporteTotal()));
+              .setText(String.format(Locale.ROOT,"%.2f", detalle.getImporteTotal()));
       summaryDocumentsLine.addContent(totalAmount);
 
       if (detalle.getGravadas() != null) {
@@ -235,7 +238,7 @@ public class SummaryDocuments {
                 .addContent(
                     new Element("PaidAmount", cbc)
                         .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                        .setText(String.valueOf(detalle.getGravadas().getTotal())))
+                        .setText(String.format(Locale.ROOT,"%.2f", detalle.getGravadas().getTotal())))
                 .addContent(
                     new Element("InstructionID", cbc).setText(detalle.getGravadas().getCodigo()));
         summaryDocumentsLine.addContent(billingPayment);
@@ -247,7 +250,7 @@ public class SummaryDocuments {
                 .addContent(
                     new Element("PaidAmount", cbc)
                         .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                        .setText(String.valueOf(detalle.getExoneradas().getTotal())))
+                        .setText(String.format(Locale.ROOT,"%.2f", detalle.getExoneradas().getTotal())))
                 .addContent(
                     new Element("InstructionID", cbc).setText(detalle.getExoneradas().getCodigo()));
         summaryDocumentsLine.addContent(billingPayment);
@@ -259,7 +262,7 @@ public class SummaryDocuments {
                 .addContent(
                     new Element("PaidAmount", cbc)
                         .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                        .setText(String.valueOf(detalle.getInafectas().getTotal())))
+                        .setText(String.format(Locale.ROOT,"%.2f", detalle.getInafectas().getTotal())))
                 .addContent(
                     new Element("InstructionID", cbc).setText(detalle.getInafectas().getCodigo()));
         summaryDocumentsLine.addContent(billingPayment);
@@ -271,7 +274,7 @@ public class SummaryDocuments {
                 .addContent(
                     new Element("PaidAmount", cbc)
                         .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                        .setText(String.valueOf(detalle.getGratuitas().getTotal())))
+                        .setText(String.format(Locale.ROOT,"%.2f", detalle.getGratuitas().getTotal())))
                 .addContent(
                     new Element("InstructionID", cbc).setText(detalle.getGratuitas().getCodigo()));
         summaryDocumentsLine.addContent(billingPayment);
@@ -283,7 +286,7 @@ public class SummaryDocuments {
                 .addContent(
                     new Element("PaidAmount", cbc)
                         .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                        .setText(String.valueOf(detalle.getExportacion().getTotal())))
+                        .setText(String.format(Locale.ROOT,"%.2f", detalle.getExportacion().getTotal())))
                 .addContent(
                     new Element("InstructionID", cbc)
                         .setText(detalle.getExportacion().getCodigo()));
@@ -299,7 +302,7 @@ public class SummaryDocuments {
                 .addContent(
                     new Element("Amount", cbc)
                         .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                        .setText(String.valueOf(detalle.getOtrosCargos().getTotal())));
+                        .setText(String.format(Locale.ROOT,"%.2f", detalle.getOtrosCargos().getTotal())));
         summaryDocumentsLine.addContent(allowanceCharge);
       }
 
@@ -308,13 +311,13 @@ public class SummaryDocuments {
               .addContent(
                   new Element("TaxAmount", cbc)
                       .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                      .setText(String.valueOf(detalle.getIgv().getTotal())))
+                      .setText(String.format(Locale.ROOT,"%.2f", detalle.getIgv().getTotal())))
               .addContent(
                   new Element("TaxSubtotal", cac)
                       .addContent(
                           new Element("TaxAmount", cbc)
                               .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                              .setText(String.valueOf(detalle.getIgv().getTotal())))
+                              .setText(String.format(Locale.ROOT,"%.2f", detalle.getIgv().getTotal())))
                       .addContent(
                           new Element("TaxCategory", cac)
                               .addContent(
@@ -337,13 +340,13 @@ public class SummaryDocuments {
                 .addContent(
                     new Element("TaxAmount", cbc)
                         .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                        .setText(String.valueOf(detalle.getIsc().getTotal())))
+                        .setText(String.format(Locale.ROOT,"%.2f", detalle.getIsc().getTotal())))
                 .addContent(
                     new Element("TaxSubtotal", cac)
                         .addContent(
                             new Element("TaxAmount", cbc)
                                 .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                                .setText(String.valueOf(detalle.getIsc().getTotal())))
+                                .setText(String.format(Locale.ROOT,"%.2f", detalle.getIsc().getTotal())))
                         .addContent(
                             new Element("TaxCategory", cac)
                                 .addContent(
@@ -367,13 +370,14 @@ public class SummaryDocuments {
                 .addContent(
                     new Element("TaxAmount", cbc)
                         .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                        .setText(String.valueOf(detalle.getOtrosTributos().getTotal())))
+                        .setText(String.format(Locale.ROOT,"%.2f", detalle.getOtrosTributos().getTotal())))
                 .addContent(
                     new Element("TaxSubtotal", cac)
                         .addContent(
                             new Element("TaxAmount", cbc)
                                 .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                                .setText(String.valueOf(detalle.getOtrosTributos().getTotal())))
+                                .setText(
+                                    String.format(Locale.ROOT,"%.2f", detalle.getOtrosTributos().getTotal())))
                         .addContent(
                             new Element("TaxCategory", cac)
                                 .addContent(
@@ -400,13 +404,14 @@ public class SummaryDocuments {
                 .addContent(
                     new Element("TaxAmount", cbc)
                         .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                        .setText(String.valueOf(detalle.getImpuestoBolsa().getTotal())))
+                        .setText(String.format(Locale.ROOT,"%.2f", detalle.getImpuestoBolsa().getTotal())))
                 .addContent(
                     new Element("TaxSubtotal", cac)
                         .addContent(
                             new Element("TaxAmount", cbc)
                                 .setAttribute("currencyID", detalle.getMoneda().getCodigo())
-                                .setText(String.valueOf(detalle.getImpuestoBolsa().getTotal())))
+                                .setText(
+                                    String.format(Locale.ROOT,"%.2f", detalle.getImpuestoBolsa().getTotal())))
                         .addContent(
                             new Element("TaxCategory", cac)
                                 .addContent(
