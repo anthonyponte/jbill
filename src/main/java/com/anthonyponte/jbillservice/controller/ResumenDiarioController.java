@@ -484,100 +484,100 @@ public class ResumenDiarioController {
             }
 
             detalle.setEstado((Estado) iFrame.cbxEstado.getSelectedItem());
-
-            detalle.setImporteTotal((Double) iFrame.tfImporteTotal.getValue());
+            Number importeTotal = (Number) iFrame.tfImporteTotal.getValue();
+            detalle.setImporteTotal(importeTotal.doubleValue());
 
             detalle.setMoneda((Moneda) iFrame.cbxMoneda.getSelectedItem());
 
-            if (!iFrame.tfGravadas.getText().equals(0.00)) {
-              Operacion gravadas = new Operacion();
-              gravadas.setCodigo("01");
-              gravadas.setDescripcion("Gravado");
-              Number total = (Number) iFrame.tfGravadas.getValue();
-              gravadas.setTotal(total.doubleValue());
-              detalle.setGravadas(gravadas);
+            Number gravadas = (Number) iFrame.tfGravadas.getValue();
+            if (gravadas.doubleValue() > 0) {
+              Operacion operacionGravadas = new Operacion();
+              operacionGravadas.setCodigo("01");
+              operacionGravadas.setDescripcion("Gravado");
+              operacionGravadas.setTotal(gravadas.doubleValue());
+              detalle.setGravadas(operacionGravadas);
             }
 
-            if (!iFrame.tfExoneradas.getText().equals(0.00)) {
-              Operacion exoneradas = new Operacion();
-              exoneradas.setCodigo("02");
-              exoneradas.setDescripcion("Exonerado");
-              Number total = (Number) iFrame.tfExoneradas.getValue();
-              exoneradas.setTotal(total.doubleValue());
-              detalle.setExoneradas(exoneradas);
+            Number exoneradas = (Number) iFrame.tfExoneradas.getValue();
+            if (exoneradas.doubleValue() > 0) {
+              Operacion operacionExoneradas = new Operacion();
+              operacionExoneradas.setCodigo("02");
+              operacionExoneradas.setDescripcion("Exonerado");
+              operacionExoneradas.setTotal(exoneradas.doubleValue());
+              detalle.setExoneradas(operacionExoneradas);
             }
 
-            if (!iFrame.tfInafectas.getText().equals(0.00)) {
-              Operacion inafectas = new Operacion();
-              inafectas.setCodigo("03");
-              inafectas.setDescripcion("Inafecto");
-              Number total = (Number) iFrame.tfInafectas.getValue();
-              inafectas.setTotal(total.doubleValue());
-              detalle.setInafectas(inafectas);
+            Number inafectas = (Number) iFrame.tfInafectas.getValue();
+            if (inafectas.doubleValue() > 0) {
+              Operacion operacionInafectas = new Operacion();
+              operacionInafectas.setCodigo("03");
+              operacionInafectas.setDescripcion("Inafecto");
+              operacionInafectas.setTotal(inafectas.doubleValue());
+              detalle.setInafectas(operacionInafectas);
             }
 
-            if (!iFrame.tfExportacion.getText().equals(0.00)) {
-              Operacion exportacion = new Operacion();
-              exportacion.setCodigo("04");
-              exportacion.setDescripcion("Exportación");
-              Number total = (Number) iFrame.tfExportacion.getValue();
-              exportacion.setTotal(total.doubleValue());
-              detalle.setExportacion(exportacion);
+            Number exportacion = (Number) iFrame.tfExportacion.getValue();
+            if (exportacion.doubleValue() > 0) {
+              Operacion operacionExportacion = new Operacion();
+              operacionExportacion.setCodigo("04");
+              operacionExportacion.setDescripcion("Exportación");
+              operacionExportacion.setTotal(exportacion.doubleValue());
+              detalle.setExportacion(operacionExportacion);
             }
 
-            if (!iFrame.tfGratuitas.getText().equals(0.00)) {
-              Operacion gratuitas = new Operacion();
-              gratuitas.setCodigo("05");
-              gratuitas.setDescripcion("Gratuitas");
-              Number total = (Number) iFrame.tfGratuitas.getValue();
-              gratuitas.setTotal(total.doubleValue());
-              detalle.setGratuitas(gratuitas);
+            Number gratuitas = (Number) iFrame.tfGratuitas.getValue();
+            if (gratuitas.doubleValue() > 0) {
+              Operacion operacionGratuitas = new Operacion();
+              operacionGratuitas.setCodigo("05");
+              operacionGratuitas.setDescripcion("Gratuitas");
+              operacionGratuitas.setTotal(gratuitas.doubleValue());
+              detalle.setGratuitas(operacionGratuitas);
             }
 
-            if (!iFrame.tfOtrosCargos.getText().equals(0.00)) {
-              OtrosCargos otrosCargos = new OtrosCargos();
-              otrosCargos.setIndicador(true);
-              Number total = (Number) iFrame.tfOtrosCargos.getValue();
-              otrosCargos.setTotal(total.doubleValue());
-              detalle.setOtrosCargos(otrosCargos);
+            Number otrosCargos = (Number) iFrame.tfOtrosCargos.getValue();
+            if (otrosCargos.doubleValue() > 0) {
+              OtrosCargos operacionOtrosCargos = new OtrosCargos();
+              operacionOtrosCargos.setIndicador(true);
+              operacionOtrosCargos.setTotal(otrosCargos.doubleValue());
+              detalle.setOtrosCargos(operacionOtrosCargos);
             }
 
-            Impuesto igv = new Impuesto();
-            Number total = (Number) iFrame.tfIgv.getValue();
-            igv.setTotal(total.doubleValue());
-            igv.setCodigo("1000");
-            igv.setDescripcion("IGV");
-            igv.setCodigoInternacional("VAT");
-            detalle.setIgv(igv);
+            Number igv = (Number) iFrame.tfIgv.getValue();
+            Impuesto impuestoIgv = new Impuesto();
+            impuestoIgv.setTotal(igv.doubleValue());
+            impuestoIgv.setCodigo("1000");
+            impuestoIgv.setDescripcion("IGV");
+            impuestoIgv.setCodigoInternacional("VAT");
+            detalle.setIgv(impuestoIgv);
 
-            if (!iFrame.tfIsc.getText().equals(0.00)) {
-              Impuesto isc = new Impuesto();
-              total = (Number) iFrame.tfIsc.getValue();
-              isc.setTotal(total.doubleValue());
-              isc.setCodigo("2000");
-              isc.setDescripcion("ISC");
-              isc.setCodigoInternacional("EXC");
-              detalle.setIsc(isc);
+            Number isc = (Number) iFrame.tfIsc.getValue();
+            if (isc.doubleValue() > 0) {
+              Impuesto impuestoIsc = new Impuesto();
+              impuestoIsc.setTotal(isc.doubleValue());
+              impuestoIsc.setCodigo("2000");
+              impuestoIsc.setDescripcion("ISC");
+              impuestoIsc.setCodigoInternacional("EXC");
+              detalle.setIsc(impuestoIsc);
             }
 
-            if (!iFrame.tfOtrosTributos.getText().equals(0.00)) {
-              Impuesto otrosTributos = new Impuesto();
-              total = (Number) iFrame.tfOtrosTributos.getValue();
-              otrosTributos.setTotal(total.doubleValue());
-              otrosTributos.setCodigo("9999");
-              otrosTributos.setDescripcion("Otros tributos");
-              otrosTributos.setCodigoInternacional("OTH");
-              detalle.setOtrosTributos(otrosTributos);
+            Number otrosTributos = (Number) iFrame.tfOtrosTributos.getValue();
+            if (otrosTributos.doubleValue() > 0) {
+              Impuesto impuestoOtrosTributos = new Impuesto();
+              impuestoOtrosTributos.setTotal(otrosTributos.doubleValue());
+              impuestoOtrosTributos.setCodigo("9999");
+              impuestoOtrosTributos.setDescripcion("Otros tributos");
+              impuestoOtrosTributos.setCodigoInternacional("OTH");
+              detalle.setOtrosTributos(impuestoOtrosTributos);
             }
 
-            if (!iFrame.tfBolsasPlasticas.getText().equals(0.00)) {
-              Impuesto bolsas = new Impuesto();
-              total = (Number) iFrame.tfBolsasPlasticas.getValue();
-              bolsas.setTotal(total.doubleValue());
-              bolsas.setCodigo("7152");
-              bolsas.setDescripcion("Impuesto a la bolsa plastica");
-              bolsas.setCodigoInternacional("OTH");
-              detalle.setImpuestoBolsa(bolsas);
+            Number bolsas = (Number) iFrame.tfBolsasPlasticas.getValue();
+            if (bolsas.doubleValue() > 0) {
+              Impuesto impuestoBolsas = new Impuesto();
+              impuestoBolsas.setTotal(bolsas.doubleValue());
+              impuestoBolsas.setCodigo("7152");
+              impuestoBolsas.setDescripcion("Impuesto a la bolsa plastica");
+              impuestoBolsas.setCodigoInternacional("OTH");
+              detalle.setImpuestoBolsa(impuestoBolsas);
             }
 
             eventList.add(detalle);
