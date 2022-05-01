@@ -19,9 +19,7 @@ package com.anthonyponte.jbillservice.model;
 
 /** @author AnthonyPonte */
 public class Percepcion {
-  private String codigo;
-  private String descripcion;
-  private double tasa;
+  private RegimenPercepcion regimenPercepcion;
   private double monto;
   private double montoTotal;
   private double base;
@@ -29,42 +27,19 @@ public class Percepcion {
   public Percepcion() {}
 
   public Percepcion(
-      String codigo,
-      String descripcion,
-      double tasa,
-      double monto,
-      double montoTotal,
-      double base) {
-    this.codigo = codigo;
-    this.descripcion = descripcion;
-    this.tasa = tasa;
+      RegimenPercepcion regimenPercepcion, double monto, double montoTotal, double base) {
+    this.regimenPercepcion = regimenPercepcion;
     this.monto = monto;
     this.montoTotal = montoTotal;
     this.base = base;
   }
 
-  public String getCodigo() {
-    return codigo;
+  public RegimenPercepcion getRegimenPercepcion() {
+    return regimenPercepcion;
   }
 
-  public void setCodigo(String codigo) {
-    this.codigo = codigo;
-  }
-
-  public String getDescripcion() {
-    return descripcion;
-  }
-
-  public void setDescripcion(String descripcion) {
-    this.descripcion = descripcion;
-  }
-
-  public double getTasa() {
-    return tasa;
-  }
-
-  public void setTasa(double tasa) {
-    this.tasa = tasa;
+  public void setRegimenPercepcion(RegimenPercepcion regimenPercepcion) {
+    this.regimenPercepcion = regimenPercepcion;
   }
 
   public double getMonto() {
@@ -94,12 +69,8 @@ public class Percepcion {
   @Override
   public String toString() {
     return "Percepcion{"
-        + "codigo="
-        + codigo
-        + ", descripcion="
-        + descripcion
-        + ", tasa="
-        + tasa
+        + "regimenPercepcion="
+        + regimenPercepcion
         + ", monto="
         + monto
         + ", montoTotal="

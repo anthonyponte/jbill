@@ -9,14 +9,18 @@ package com.anthonyponte.jbillservice.model;
 public class Empresa {
   private String ruc;
   private int tipo;
+  private DocumentoIdentidad documentoIdentidad;
+  private int documentoIdentidadNumero;
   private String razonSocial;
+  private String nombre;
 
   public Empresa() {}
 
-  public Empresa(String ruc, int tipo, String razonSocial) {
-    this.ruc = ruc;
-    this.tipo = tipo;
-    this.razonSocial = razonSocial;
+  public Empresa(
+      DocumentoIdentidad documentoIdentidad, int documentoIdentidadNumero, String nombre) {
+    this.documentoIdentidad = documentoIdentidad;
+    this.documentoIdentidadNumero = documentoIdentidadNumero;
+    this.nombre = nombre;
   }
 
   public String getRuc() {
@@ -35,6 +39,22 @@ public class Empresa {
     this.tipo = tipo;
   }
 
+  public DocumentoIdentidad getDocumentoIdentidad() {
+    return documentoIdentidad;
+  }
+
+  public void setDocumentoIdentidad(DocumentoIdentidad documentoIdentidad) {
+    this.documentoIdentidad = documentoIdentidad;
+  }
+
+  public int getDocumentoIdentidadNumero() {
+    return documentoIdentidadNumero;
+  }
+
+  public void setDocumentoIdentidadNumero(int documentoIdentidadNumero) {
+    this.documentoIdentidadNumero = documentoIdentidadNumero;
+  }
+
   public String getRazonSocial() {
     return razonSocial;
   }
@@ -43,8 +63,29 @@ public class Empresa {
     this.razonSocial = razonSocial;
   }
 
+  public String getNombre() {
+    return nombre;
+  }
+
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+
   @Override
   public String toString() {
-    return "Empresa{" + "ruc=" + ruc + ", tipo=" + tipo + ", razonSocial=" + razonSocial + '}';
+    return "Empresa{"
+        + "ruc="
+        + ruc
+        + ", tipo="
+        + tipo
+        + ", documentoIdentidad="
+        + documentoIdentidad
+        + ", documentoIdentidadNumero="
+        + documentoIdentidadNumero
+        + ", razonSocial="
+        + razonSocial
+        + ", nombre="
+        + nombre
+        + '}';
   }
 }

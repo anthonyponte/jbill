@@ -186,4 +186,33 @@ public class ISummaryDao implements SummaryDao {
 
     database.disconnect();
   }
+
+  @Override
+  public int count(TipoDocumento tipoDocumento, java.util.Date fechaEmision) throws SQLException {
+    int count = 0;
+
+    database.connect();
+
+    String query =
+        "SELECT TOP 1 CORRELATIVO "
+            + "FROM SUMMARY "
+            + "WHERE TIPO_CODIGO = ? AND FECHA_EMISION = ? "
+            + "ORDER BY CORRELATIVO DESC";
+
+    try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
+      ps.setString(1, tipoDocumento.getCodigo());
+      ps.setDate(2, new Date(fechaEmision.getTime()));
+
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          count = rs.getInt(1);
+        }
+      }
+
+      count = count + 1;
+    }
+    database.disconnect();
+
+    return count;
+  }
 }

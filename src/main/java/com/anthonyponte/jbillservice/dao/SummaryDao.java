@@ -18,7 +18,9 @@
 package com.anthonyponte.jbillservice.dao;
 
 import com.anthonyponte.jbillservice.model.Summary;
+import com.anthonyponte.jbillservice.model.TipoDocumento;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 /** @author AnthonyPonte */
@@ -32,4 +34,6 @@ public interface SummaryDao {
   public void update(int id, Summary summary) throws SQLException;
 
   public void delete(int id) throws SQLException;
+
+  public int count(TipoDocumento tipoDocumento, Date fechaEmision) throws SQLException;
 }
