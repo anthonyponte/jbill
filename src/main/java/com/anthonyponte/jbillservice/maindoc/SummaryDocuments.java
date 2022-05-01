@@ -211,6 +211,7 @@ public class SummaryDocuments {
                             String.format(Locale.ROOT, "%.2f", detalle.getPercepcion().getMonto())))
                 .addContent(
                     new Element("SUNATTotalCashed", sac)
+                        .setAttribute("currencyID", detalle.getMoneda().getCodigo())
                         .setText(String.valueOf(detalle.getPercepcion().getMontoTotal())))
                 .addContent(
                     new Element("TaxableAmount", cbc)

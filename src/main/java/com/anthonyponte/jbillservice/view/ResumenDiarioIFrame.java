@@ -80,8 +80,6 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         pnlDetalle = new JPanel();
         lblEstado = new JLabel();
         cbxEstado = new JComboBox<>();
-        lblMoneda = new JLabel();
-        cbxMoneda = new JComboBox<>();
         tbbdDetalle = new JTabbedPane();
         pnlDocumento = new JPanel();
         lblDocumentoTipo = new JLabel();
@@ -126,6 +124,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfOtrosTributos = new JFormattedTextField();
         lblBolsasPlasticas = new JLabel();
         tfBolsasPlasticas = new JFormattedTextField();
+        cbxMoneda = new JComboBox<>();
+        lblMoneda = new JLabel();
         spnPercepcion = new JScrollPane();
         pnlPercepcion = new JPanel();
         cbxPercepcionRegimen = new JComboBox<>();
@@ -289,8 +289,333 @@ public class ResumenDiarioIFrame extends JInternalFrame {
             }
         });
 
-        lblMoneda.setFont(lblMoneda.getFont().deriveFont(lblMoneda.getFont().getStyle() | Font.BOLD, lblMoneda.getFont().getSize()-2));
-        lblMoneda.setText("Moneda *");
+        lblDocumentoTipo.setFont(lblDocumentoTipo.getFont().deriveFont(lblDocumentoTipo.getFont().getStyle() | Font.BOLD, lblDocumentoTipo.getFont().getSize()-2));
+        lblDocumentoTipo.setText("Tipo *");
+
+        cbxDocumentoTipo.setModel(new DefaultComboBoxModel(new TipoDocumento[] {
+            new TipoDocumento("03", "Boleta de venta"),
+            new TipoDocumento("07", "Nota de crédito - boleta de venta"),
+            new TipoDocumento("08", "Nota de débito - boleta de venta")
+        }));
+        cbxDocumentoTipo.setEnabled(false);
+        cbxDocumentoTipo.setMaximumSize(null);
+        cbxDocumentoTipo.setPreferredSize(new Dimension(150, 30));
+        cbxDocumentoTipo.setRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(
+                JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof TipoDocumento) {
+                    TipoDocumento tipoDocumento = (TipoDocumento) value;
+                    setText(tipoDocumento.getDescripcion());
+                }
+                return this;
+            }
+        });
+
+        lblDocumentoSerie.setFont(lblDocumentoSerie.getFont().deriveFont(lblDocumentoSerie.getFont().getStyle() | Font.BOLD, lblDocumentoSerie.getFont().getSize()-2));
+        lblDocumentoSerie.setText("Serie *");
+
+        tfDocumentoSerie.setEnabled(false);
+        tfDocumentoSerie.setMaximumSize(null);
+        tfDocumentoSerie.setMinimumSize(null);
+        tfDocumentoSerie.setPreferredSize(new Dimension(150, 30));
+        AbstractDocument adDocumentoSerie = (AbstractDocument) tfDocumentoSerie.getDocument();
+        adDocumentoSerie.setDocumentFilter(new SerieFilter('B'));
+
+        lblDocumentoCorrelativo.setFont(lblDocumentoCorrelativo.getFont().deriveFont(lblDocumentoCorrelativo.getFont().getStyle() | Font.BOLD, lblDocumentoCorrelativo.getFont().getSize()-2));
+        lblDocumentoCorrelativo.setText("Correlativo *");
+
+        tfDocumentoCorrelativo.setEnabled(false);
+        tfDocumentoCorrelativo.setMaximumSize(null);
+        tfDocumentoCorrelativo.setMinimumSize(null);
+        tfDocumentoCorrelativo.setPreferredSize(new Dimension(150, 30));
+        AbstractDocument adDocumentoCorrelativo = (AbstractDocument) tfDocumentoCorrelativo.getDocument();
+        adDocumentoCorrelativo.setDocumentFilter(new IntegerFilter(8));
+
+        GroupLayout pnlDocumentoLayout = new GroupLayout(pnlDocumento);
+        pnlDocumento.setLayout(pnlDocumentoLayout);
+        pnlDocumentoLayout.setHorizontalGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDocumentoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxDocumentoTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfDocumentoSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblDocumentoTipo)
+                    .addComponent(lblDocumentoSerie)
+                    .addComponent(lblDocumentoCorrelativo)
+                    .addComponent(tfDocumentoCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        pnlDocumentoLayout.setVerticalGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(pnlDocumentoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblDocumentoTipo)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxDocumentoTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblDocumentoSerie)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfDocumentoSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblDocumentoCorrelativo)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        cbxDocumentoTipo.setSelectedIndex(-1);
+
+        tbbdDetalle.addTab("Documento", pnlDocumento);
+
+        lblDocumentoIdentidadTipo.setFont(lblDocumentoIdentidadTipo.getFont().deriveFont(lblDocumentoIdentidadTipo.getFont().getStyle() | Font.BOLD, lblDocumentoIdentidadTipo.getFont().getSize()-2));
+        lblDocumentoIdentidadTipo.setText("Documento identidad");
+
+        cbxDocumentoIdentidadTipo.setModel(new DefaultComboBoxModel(new DocumentoIdentidad[] {
+            new DocumentoIdentidad("0", "DOC.TRIB.NO.DOM.SIN.RUC"),
+            new DocumentoIdentidad("1", "Documento Nacional de Identidad"),
+            new DocumentoIdentidad("4", "Carnet de extranjería"),
+            new DocumentoIdentidad("6", "Registro Unico de Contributentes")
+        }));
+        cbxDocumentoIdentidadTipo.setEnabled(false);
+        cbxDocumentoIdentidadTipo.setMaximumSize(null);
+        cbxDocumentoIdentidadTipo.setName(""); // NOI18N
+        cbxDocumentoIdentidadTipo.setPreferredSize(new Dimension(150, 30));
+        cbxDocumentoIdentidadTipo.setRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(
+                JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof DocumentoIdentidad) {
+                    DocumentoIdentidad documentoIdentidad = (DocumentoIdentidad) value;
+                    setText(documentoIdentidad.getDescripcion());
+                }
+                return this;
+            }
+        });
+
+        lblDocumentoIdentidadNumero.setFont(lblDocumentoIdentidadNumero.getFont().deriveFont(lblDocumentoIdentidadNumero.getFont().getStyle() | Font.BOLD, lblDocumentoIdentidadNumero.getFont().getSize()-2));
+        lblDocumentoIdentidadNumero.setText("Numero");
+
+        tfDocumentoIdentidadNumero.setEnabled(false);
+        tfDocumentoIdentidadNumero.setMaximumSize(null);
+        tfDocumentoIdentidadNumero.setMinimumSize(null);
+        tfDocumentoIdentidadNumero.setPreferredSize(new Dimension(150, 30));
+
+        GroupLayout pnlRemitenteLayout = new GroupLayout(pnlRemitente);
+        pnlRemitente.setLayout(pnlRemitenteLayout);
+        pnlRemitenteLayout.setHorizontalGroup(pnlRemitenteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRemitenteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlRemitenteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxDocumentoIdentidadTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblDocumentoIdentidadTipo)
+                    .addComponent(lblDocumentoIdentidadNumero)
+                    .addComponent(tfDocumentoIdentidadNumero, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        pnlRemitenteLayout.setVerticalGroup(pnlRemitenteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRemitenteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblDocumentoIdentidadTipo)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxDocumentoIdentidadTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblDocumentoIdentidadNumero)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfDocumentoIdentidadNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
+
+        tbbdDetalle.addTab("Remitente", pnlRemitente);
+
+        lblReferenciaTipo.setFont(lblReferenciaTipo.getFont().deriveFont(lblReferenciaTipo.getFont().getStyle() | Font.BOLD, lblReferenciaTipo.getFont().getSize()-2));
+        lblReferenciaTipo.setText("Tipo");
+
+        cbxDocumentoReferenciaTipo.setModel(new DefaultComboBoxModel(new TipoDocumento[] {
+            new TipoDocumento("03", "Boleta de venta"),
+            new TipoDocumento("12", "Ticket de máquina registradora")
+        }));
+        cbxDocumentoReferenciaTipo.setEnabled(false);
+        cbxDocumentoReferenciaTipo.setMaximumSize(null);
+        cbxDocumentoReferenciaTipo.setPreferredSize(new Dimension(150, 30));
+        cbxDocumentoReferenciaTipo.setRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(
+                JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof TipoDocumento) {
+                    TipoDocumento tipoDocumento = (TipoDocumento) value;
+                    setText(tipoDocumento.getDescripcion());
+                }
+                return this;
+            }
+        });
+
+        lblReferenciaSerie.setFont(lblReferenciaSerie.getFont().deriveFont(lblReferenciaSerie.getFont().getStyle() | Font.BOLD, lblReferenciaSerie.getFont().getSize()-2));
+        lblReferenciaSerie.setText("Serie");
+
+        tfDocumentoReferenciaSerie.setEnabled(false);
+        tfDocumentoReferenciaSerie.setMaximumSize(null);
+        tfDocumentoReferenciaSerie.setMinimumSize(null);
+        tfDocumentoReferenciaSerie.setPreferredSize(new Dimension(150, 30));
+        AbstractDocument adReferenciaSerie = (AbstractDocument) tfDocumentoReferenciaSerie.getDocument();
+        adReferenciaSerie.setDocumentFilter(new SerieFilter('B'));
+
+        lblReferenciaCorrelativo.setFont(lblReferenciaCorrelativo.getFont().deriveFont(lblReferenciaCorrelativo.getFont().getStyle() | Font.BOLD, lblReferenciaCorrelativo.getFont().getSize()-2));
+        lblReferenciaCorrelativo.setText("Correlativo");
+
+        tfDocumentoReferenciaCorrelativo.setEnabled(false);
+        tfDocumentoReferenciaCorrelativo.setMaximumSize(null);
+        tfDocumentoReferenciaCorrelativo.setMinimumSize(null);
+        tfDocumentoReferenciaCorrelativo.setPreferredSize(new Dimension(150, 30));
+        AbstractDocument adReferenciaCorrelativo = (AbstractDocument) tfDocumentoReferenciaCorrelativo.getDocument();
+        adReferenciaCorrelativo.setDocumentFilter(new IntegerFilter(8));
+
+        GroupLayout pnlReferenciaLayout = new GroupLayout(pnlReferencia);
+        pnlReferencia.setLayout(pnlReferenciaLayout);
+        pnlReferenciaLayout.setHorizontalGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(pnlReferenciaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(cbxDocumentoReferenciaTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfDocumentoReferenciaSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblReferenciaTipo)
+                    .addComponent(lblReferenciaSerie)
+                    .addComponent(lblReferenciaCorrelativo)
+                    .addComponent(tfDocumentoReferenciaCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        pnlReferenciaLayout.setVerticalGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(pnlReferenciaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblReferenciaTipo)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxDocumentoReferenciaTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblReferenciaSerie)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfDocumentoReferenciaSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblReferenciaCorrelativo)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tfDocumentoReferenciaCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        cbxDocumentoReferenciaTipo.setSelectedIndex(-1);
+
+        tbbdDetalle.addTab("Referencia", pnlReferencia);
+
+        spnImportes.setBorder(null);
+        spnImportes.setMaximumSize(null);
+        spnImportes.setMinimumSize(null);
+        spnImportes.setPreferredSize(new Dimension(438, 200));
+
+        pnlImportes.setMaximumSize(null);
+
+        lblImporteTotal.setFont(lblImporteTotal.getFont().deriveFont(lblImporteTotal.getFont().getStyle() | Font.BOLD, lblImporteTotal.getFont().getSize()-2));
+        lblImporteTotal.setText("Importe total *");
+
+        tfImporteTotal.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
+        tfImporteTotal.setEnabled(false);
+        tfImporteTotal.setMaximumSize(null);
+        tfImporteTotal.setMinimumSize(null);
+        tfImporteTotal.setPreferredSize(new Dimension(150, 30));
+        tfImporteTotal.setEditable(false);
+
+        lblGravadas.setFont(lblGravadas.getFont().deriveFont(lblGravadas.getFont().getStyle() | Font.BOLD, lblGravadas.getFont().getSize()-2));
+        lblGravadas.setText("Gravadas");
+
+        tfGravadas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
+        tfGravadas.setEnabled(false);
+        tfGravadas.setMaximumSize(null);
+        tfGravadas.setMinimumSize(null);
+        tfGravadas.setPreferredSize(new Dimension(150, 30));
+
+        lblExoneradas.setFont(lblExoneradas.getFont().deriveFont(lblExoneradas.getFont().getStyle() | Font.BOLD, lblExoneradas.getFont().getSize()-2));
+        lblExoneradas.setText("Exoneradas");
+
+        tfExoneradas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
+        tfExoneradas.setEnabled(false);
+        tfExoneradas.setMaximumSize(null);
+        tfExoneradas.setMinimumSize(null);
+        tfExoneradas.setPreferredSize(new Dimension(150, 30));
+
+        lblInafectas.setFont(lblInafectas.getFont().deriveFont(lblInafectas.getFont().getStyle() | Font.BOLD, lblInafectas.getFont().getSize()-2));
+        lblInafectas.setText("Inafectas");
+
+        tfInafectas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
+        tfInafectas.setEnabled(false);
+        tfInafectas.setMaximumSize(null);
+        tfInafectas.setMinimumSize(null);
+        tfInafectas.setPreferredSize(new Dimension(150, 30));
+
+        lblGratuitas.setFont(lblGratuitas.getFont().deriveFont(lblGratuitas.getFont().getStyle() | Font.BOLD, lblGratuitas.getFont().getSize()-2));
+        lblGratuitas.setText("Gratuitas");
+
+        tfGratuitas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
+        tfGratuitas.setEnabled(false);
+        tfGratuitas.setMaximumSize(null);
+        tfGratuitas.setMinimumSize(null);
+        tfGratuitas.setPreferredSize(new Dimension(150, 30));
+
+        lblExportacion.setFont(lblExportacion.getFont().deriveFont(lblExportacion.getFont().getStyle() | Font.BOLD, lblExportacion.getFont().getSize()-2));
+        lblExportacion.setText("Exportacion");
+
+        tfExportacion.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
+        tfExportacion.setEnabled(false);
+        tfExportacion.setMaximumSize(null);
+        tfExportacion.setMinimumSize(null);
+        tfExportacion.setPreferredSize(new Dimension(150, 30));
+
+        lblOtrosCargos.setFont(lblOtrosCargos.getFont().deriveFont(lblOtrosCargos.getFont().getStyle() | Font.BOLD, lblOtrosCargos.getFont().getSize()-2));
+        lblOtrosCargos.setText("Otros cargos");
+
+        tfOtrosCargos.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
+        tfOtrosCargos.setEnabled(false);
+        tfOtrosCargos.setMaximumSize(null);
+        tfOtrosCargos.setMinimumSize(null);
+        tfOtrosCargos.setPreferredSize(new Dimension(150, 30));
+
+        lblIgv.setFont(lblIgv.getFont().deriveFont(lblIgv.getFont().getStyle() | Font.BOLD, lblIgv.getFont().getSize()-2));
+        lblIgv.setText("IGV *");
+
+        tfIgv.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
+        tfIgv.setEnabled(false);
+        tfIgv.setMaximumSize(null);
+        tfIgv.setMinimumSize(null);
+        tfIgv.setPreferredSize(new Dimension(150, 30));
+        tfIgv.setEditable(false);
+
+        lblIsc.setFont(lblIsc.getFont().deriveFont(lblIsc.getFont().getStyle() | Font.BOLD, lblIsc.getFont().getSize()-2));
+        lblIsc.setText("ISC");
+
+        tfIsc.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
+        tfIsc.setEnabled(false);
+        tfIsc.setMaximumSize(null);
+        tfIsc.setMinimumSize(null);
+        tfIsc.setPreferredSize(new Dimension(150, 30));
+
+        lblOtrosTributos.setFont(lblOtrosTributos.getFont().deriveFont(lblOtrosTributos.getFont().getStyle() | Font.BOLD, lblOtrosTributos.getFont().getSize()-2));
+        lblOtrosTributos.setText("Otros tributos");
+
+        tfOtrosTributos.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
+        tfOtrosTributos.setEnabled(false);
+        tfOtrosTributos.setMaximumSize(null);
+        tfOtrosTributos.setMinimumSize(null);
+        tfOtrosTributos.setPreferredSize(new Dimension(150, 30));
+
+        lblBolsasPlasticas.setFont(lblBolsasPlasticas.getFont().deriveFont(lblBolsasPlasticas.getFont().getStyle() | Font.BOLD, lblBolsasPlasticas.getFont().getSize()-2));
+        lblBolsasPlasticas.setText("Bolsas plasticas");
+
+        tfBolsasPlasticas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
+        tfBolsasPlasticas.setEnabled(false);
+        tfBolsasPlasticas.setMaximumSize(null);
+        tfBolsasPlasticas.setMinimumSize(null);
+        tfBolsasPlasticas.setPreferredSize(new Dimension(150, 30));
 
         cbxMoneda.setModel(new DefaultComboBoxModel(new Moneda[] {
             new Moneda("PEN", "Soles"),
@@ -312,333 +637,8 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     }
     });
 
-    lblDocumentoTipo.setFont(lblDocumentoTipo.getFont().deriveFont(lblDocumentoTipo.getFont().getStyle() | Font.BOLD, lblDocumentoTipo.getFont().getSize()-2));
-    lblDocumentoTipo.setText("Tipo *");
-
-    cbxDocumentoTipo.setModel(new DefaultComboBoxModel(new TipoDocumento[] {
-        new TipoDocumento("03", "Boleta de venta"),
-        new TipoDocumento("07", "Nota de crédito - boleta de venta"),
-        new TipoDocumento("08", "Nota de débito - boleta de venta")
-    }));
-    cbxDocumentoTipo.setEnabled(false);
-    cbxDocumentoTipo.setMaximumSize(null);
-    cbxDocumentoTipo.setPreferredSize(new Dimension(150, 30));
-    cbxDocumentoTipo.setRenderer(new DefaultListCellRenderer(){
-        @Override
-        public Component getListCellRendererComponent(
-            JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            if (value instanceof TipoDocumento) {
-                TipoDocumento tipoDocumento = (TipoDocumento) value;
-                setText(tipoDocumento.getDescripcion());
-            }
-            return this;
-        }
-    });
-
-    lblDocumentoSerie.setFont(lblDocumentoSerie.getFont().deriveFont(lblDocumentoSerie.getFont().getStyle() | Font.BOLD, lblDocumentoSerie.getFont().getSize()-2));
-    lblDocumentoSerie.setText("Serie *");
-
-    tfDocumentoSerie.setEnabled(false);
-    tfDocumentoSerie.setMaximumSize(null);
-    tfDocumentoSerie.setMinimumSize(null);
-    tfDocumentoSerie.setPreferredSize(new Dimension(150, 30));
-    AbstractDocument adDocumentoSerie = (AbstractDocument) tfDocumentoSerie.getDocument();
-    adDocumentoSerie.setDocumentFilter(new SerieFilter('B'));
-
-    lblDocumentoCorrelativo.setFont(lblDocumentoCorrelativo.getFont().deriveFont(lblDocumentoCorrelativo.getFont().getStyle() | Font.BOLD, lblDocumentoCorrelativo.getFont().getSize()-2));
-    lblDocumentoCorrelativo.setText("Correlativo *");
-
-    tfDocumentoCorrelativo.setEnabled(false);
-    tfDocumentoCorrelativo.setMaximumSize(null);
-    tfDocumentoCorrelativo.setMinimumSize(null);
-    tfDocumentoCorrelativo.setPreferredSize(new Dimension(150, 30));
-    AbstractDocument adDocumentoCorrelativo = (AbstractDocument) tfDocumentoCorrelativo.getDocument();
-    adDocumentoCorrelativo.setDocumentFilter(new IntegerFilter(8));
-
-        GroupLayout pnlDocumentoLayout = new GroupLayout(pnlDocumento);
-    pnlDocumento.setLayout(pnlDocumentoLayout);
-    pnlDocumentoLayout.setHorizontalGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-        .addGroup(pnlDocumentoLayout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(cbxDocumentoTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfDocumentoSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblDocumentoTipo)
-                .addComponent(lblDocumentoSerie)
-                .addComponent(lblDocumentoCorrelativo)
-                .addComponent(tfDocumentoCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addContainerGap())
-    );
-    pnlDocumentoLayout.setVerticalGroup(pnlDocumentoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-        .addGroup(pnlDocumentoLayout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(lblDocumentoTipo)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cbxDocumentoTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(lblDocumentoSerie)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfDocumentoSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(lblDocumentoCorrelativo)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfDocumentoCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addContainerGap())
-    );
-
-    cbxDocumentoTipo.setSelectedIndex(-1);
-
-    tbbdDetalle.addTab("Documento", pnlDocumento);
-
-    lblDocumentoIdentidadTipo.setFont(lblDocumentoIdentidadTipo.getFont().deriveFont(lblDocumentoIdentidadTipo.getFont().getStyle() | Font.BOLD, lblDocumentoIdentidadTipo.getFont().getSize()-2));
-    lblDocumentoIdentidadTipo.setText("Documento identidad");
-
-    cbxDocumentoIdentidadTipo.setModel(new DefaultComboBoxModel(new DocumentoIdentidad[] {
-        new DocumentoIdentidad("0", "DOC.TRIB.NO.DOM.SIN.RUC"),
-        new DocumentoIdentidad("1", "Documento Nacional de Identidad"),
-        new DocumentoIdentidad("4", "Carnet de extranjería"),
-        new DocumentoIdentidad("6", "Registro Unico de Contributentes")
-    }));
-    cbxDocumentoIdentidadTipo.setEnabled(false);
-    cbxDocumentoIdentidadTipo.setMaximumSize(null);
-    cbxDocumentoIdentidadTipo.setName(""); // NOI18N
-    cbxDocumentoIdentidadTipo.setPreferredSize(new Dimension(150, 30));
-    cbxDocumentoIdentidadTipo.setRenderer(new DefaultListCellRenderer(){
-        @Override
-        public Component getListCellRendererComponent(
-            JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            if (value instanceof DocumentoIdentidad) {
-                DocumentoIdentidad documentoIdentidad = (DocumentoIdentidad) value;
-                setText(documentoIdentidad.getDescripcion());
-            }
-            return this;
-        }
-    });
-
-    lblDocumentoIdentidadNumero.setFont(lblDocumentoIdentidadNumero.getFont().deriveFont(lblDocumentoIdentidadNumero.getFont().getStyle() | Font.BOLD, lblDocumentoIdentidadNumero.getFont().getSize()-2));
-    lblDocumentoIdentidadNumero.setText("Numero");
-
-    tfDocumentoIdentidadNumero.setEnabled(false);
-    tfDocumentoIdentidadNumero.setMaximumSize(null);
-    tfDocumentoIdentidadNumero.setMinimumSize(null);
-    tfDocumentoIdentidadNumero.setPreferredSize(new Dimension(150, 30));
-
-        GroupLayout pnlRemitenteLayout = new GroupLayout(pnlRemitente);
-    pnlRemitente.setLayout(pnlRemitenteLayout);
-    pnlRemitenteLayout.setHorizontalGroup(pnlRemitenteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-        .addGroup(pnlRemitenteLayout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(pnlRemitenteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(cbxDocumentoIdentidadTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblDocumentoIdentidadTipo)
-                .addComponent(lblDocumentoIdentidadNumero)
-                .addComponent(tfDocumentoIdentidadNumero, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addContainerGap())
-    );
-    pnlRemitenteLayout.setVerticalGroup(pnlRemitenteLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-        .addGroup(pnlRemitenteLayout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(lblDocumentoIdentidadTipo)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cbxDocumentoIdentidadTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(lblDocumentoIdentidadNumero)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfDocumentoIdentidadNumero, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addContainerGap())
-    );
-
-    cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
-
-    tbbdDetalle.addTab("Remitente", pnlRemitente);
-
-    lblReferenciaTipo.setFont(lblReferenciaTipo.getFont().deriveFont(lblReferenciaTipo.getFont().getStyle() | Font.BOLD, lblReferenciaTipo.getFont().getSize()-2));
-    lblReferenciaTipo.setText("Tipo");
-
-    cbxDocumentoReferenciaTipo.setModel(new DefaultComboBoxModel(new TipoDocumento[] {
-        new TipoDocumento("03", "Boleta de venta"),
-        new TipoDocumento("12", "Ticket de máquina registradora")
-    }));
-    cbxDocumentoReferenciaTipo.setEnabled(false);
-    cbxDocumentoReferenciaTipo.setMaximumSize(null);
-    cbxDocumentoReferenciaTipo.setPreferredSize(new Dimension(150, 30));
-    cbxDocumentoReferenciaTipo.setRenderer(new DefaultListCellRenderer(){
-        @Override
-        public Component getListCellRendererComponent(
-            JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            if (value instanceof TipoDocumento) {
-                TipoDocumento tipoDocumento = (TipoDocumento) value;
-                setText(tipoDocumento.getDescripcion());
-            }
-            return this;
-        }
-    });
-
-    lblReferenciaSerie.setFont(lblReferenciaSerie.getFont().deriveFont(lblReferenciaSerie.getFont().getStyle() | Font.BOLD, lblReferenciaSerie.getFont().getSize()-2));
-    lblReferenciaSerie.setText("Serie");
-
-    tfDocumentoReferenciaSerie.setEnabled(false);
-    tfDocumentoReferenciaSerie.setMaximumSize(null);
-    tfDocumentoReferenciaSerie.setMinimumSize(null);
-    tfDocumentoReferenciaSerie.setPreferredSize(new Dimension(150, 30));
-    AbstractDocument adReferenciaSerie = (AbstractDocument) tfDocumentoReferenciaSerie.getDocument();
-    adReferenciaSerie.setDocumentFilter(new SerieFilter('B'));
-
-    lblReferenciaCorrelativo.setFont(lblReferenciaCorrelativo.getFont().deriveFont(lblReferenciaCorrelativo.getFont().getStyle() | Font.BOLD, lblReferenciaCorrelativo.getFont().getSize()-2));
-    lblReferenciaCorrelativo.setText("Correlativo");
-
-    tfDocumentoReferenciaCorrelativo.setEnabled(false);
-    tfDocumentoReferenciaCorrelativo.setMaximumSize(null);
-    tfDocumentoReferenciaCorrelativo.setMinimumSize(null);
-    tfDocumentoReferenciaCorrelativo.setPreferredSize(new Dimension(150, 30));
-    AbstractDocument adReferenciaCorrelativo = (AbstractDocument) tfDocumentoReferenciaCorrelativo.getDocument();
-    adReferenciaCorrelativo.setDocumentFilter(new IntegerFilter(8));
-
-        GroupLayout pnlReferenciaLayout = new GroupLayout(pnlReferencia);
-    pnlReferencia.setLayout(pnlReferenciaLayout);
-    pnlReferenciaLayout.setHorizontalGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-        .addGroup(pnlReferenciaLayout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(cbxDocumentoReferenciaTipo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfDocumentoReferenciaSerie, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblReferenciaTipo)
-                .addComponent(lblReferenciaSerie)
-                .addComponent(lblReferenciaCorrelativo)
-                .addComponent(tfDocumentoReferenciaCorrelativo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addContainerGap())
-    );
-    pnlReferenciaLayout.setVerticalGroup(pnlReferenciaLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-        .addGroup(pnlReferenciaLayout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(lblReferenciaTipo)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cbxDocumentoReferenciaTipo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(lblReferenciaSerie)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfDocumentoReferenciaSerie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(lblReferenciaCorrelativo)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfDocumentoReferenciaCorrelativo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addContainerGap())
-    );
-
-    cbxDocumentoReferenciaTipo.setSelectedIndex(-1);
-
-    tbbdDetalle.addTab("Referencia", pnlReferencia);
-
-    spnImportes.setBorder(null);
-    spnImportes.setMaximumSize(null);
-    spnImportes.setMinimumSize(null);
-    spnImportes.setPreferredSize(new Dimension(438, 200));
-
-    pnlImportes.setMaximumSize(null);
-
-    lblImporteTotal.setFont(lblImporteTotal.getFont().deriveFont(lblImporteTotal.getFont().getStyle() | Font.BOLD, lblImporteTotal.getFont().getSize()-2));
-    lblImporteTotal.setText("Importe total *");
-
-    tfImporteTotal.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
-    tfImporteTotal.setEnabled(false);
-    tfImporteTotal.setMaximumSize(null);
-    tfImporteTotal.setMinimumSize(null);
-    tfImporteTotal.setPreferredSize(new Dimension(150, 30));
-    tfImporteTotal.setEditable(false);
-
-    lblGravadas.setFont(lblGravadas.getFont().deriveFont(lblGravadas.getFont().getStyle() | Font.BOLD, lblGravadas.getFont().getSize()-2));
-    lblGravadas.setText("Gravadas");
-
-    tfGravadas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
-    tfGravadas.setEnabled(false);
-    tfGravadas.setMaximumSize(null);
-    tfGravadas.setMinimumSize(null);
-    tfGravadas.setPreferredSize(new Dimension(150, 30));
-
-    lblExoneradas.setFont(lblExoneradas.getFont().deriveFont(lblExoneradas.getFont().getStyle() | Font.BOLD, lblExoneradas.getFont().getSize()-2));
-    lblExoneradas.setText("Exoneradas");
-
-    tfExoneradas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
-    tfExoneradas.setEnabled(false);
-    tfExoneradas.setMaximumSize(null);
-    tfExoneradas.setMinimumSize(null);
-    tfExoneradas.setPreferredSize(new Dimension(150, 30));
-
-    lblInafectas.setFont(lblInafectas.getFont().deriveFont(lblInafectas.getFont().getStyle() | Font.BOLD, lblInafectas.getFont().getSize()-2));
-    lblInafectas.setText("Inafectas");
-
-    tfInafectas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
-    tfInafectas.setEnabled(false);
-    tfInafectas.setMaximumSize(null);
-    tfInafectas.setMinimumSize(null);
-    tfInafectas.setPreferredSize(new Dimension(150, 30));
-
-    lblGratuitas.setFont(lblGratuitas.getFont().deriveFont(lblGratuitas.getFont().getStyle() | Font.BOLD, lblGratuitas.getFont().getSize()-2));
-    lblGratuitas.setText("Gratuitas");
-
-    tfGratuitas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
-    tfGratuitas.setEnabled(false);
-    tfGratuitas.setMaximumSize(null);
-    tfGratuitas.setMinimumSize(null);
-    tfGratuitas.setPreferredSize(new Dimension(150, 30));
-
-    lblExportacion.setFont(lblExportacion.getFont().deriveFont(lblExportacion.getFont().getStyle() | Font.BOLD, lblExportacion.getFont().getSize()-2));
-    lblExportacion.setText("Exportacion");
-
-    tfExportacion.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
-    tfExportacion.setEnabled(false);
-    tfExportacion.setMaximumSize(null);
-    tfExportacion.setMinimumSize(null);
-    tfExportacion.setPreferredSize(new Dimension(150, 30));
-
-    lblOtrosCargos.setFont(lblOtrosCargos.getFont().deriveFont(lblOtrosCargos.getFont().getStyle() | Font.BOLD, lblOtrosCargos.getFont().getSize()-2));
-    lblOtrosCargos.setText("Otros cargos");
-
-    tfOtrosCargos.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
-    tfOtrosCargos.setEnabled(false);
-    tfOtrosCargos.setMaximumSize(null);
-    tfOtrosCargos.setMinimumSize(null);
-    tfOtrosCargos.setPreferredSize(new Dimension(150, 30));
-
-    lblIgv.setFont(lblIgv.getFont().deriveFont(lblIgv.getFont().getStyle() | Font.BOLD, lblIgv.getFont().getSize()-2));
-    lblIgv.setText("IGV *");
-
-    tfIgv.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
-    tfIgv.setEnabled(false);
-    tfIgv.setMaximumSize(null);
-    tfIgv.setMinimumSize(null);
-    tfIgv.setPreferredSize(new Dimension(150, 30));
-    tfIgv.setEditable(false);
-
-    lblIsc.setFont(lblIsc.getFont().deriveFont(lblIsc.getFont().getStyle() | Font.BOLD, lblIsc.getFont().getSize()-2));
-    lblIsc.setText("ISC");
-
-    tfIsc.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
-    tfIsc.setEnabled(false);
-    tfIsc.setMaximumSize(null);
-    tfIsc.setMinimumSize(null);
-    tfIsc.setPreferredSize(new Dimension(150, 30));
-
-    lblOtrosTributos.setFont(lblOtrosTributos.getFont().deriveFont(lblOtrosTributos.getFont().getStyle() | Font.BOLD, lblOtrosTributos.getFont().getSize()-2));
-    lblOtrosTributos.setText("Otros tributos");
-
-    tfOtrosTributos.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
-    tfOtrosTributos.setEnabled(false);
-    tfOtrosTributos.setMaximumSize(null);
-    tfOtrosTributos.setMinimumSize(null);
-    tfOtrosTributos.setPreferredSize(new Dimension(150, 30));
-
-    lblBolsasPlasticas.setFont(lblBolsasPlasticas.getFont().deriveFont(lblBolsasPlasticas.getFont().getStyle() | Font.BOLD, lblBolsasPlasticas.getFont().getSize()-2));
-    lblBolsasPlasticas.setText("Bolsas plasticas");
-
-    tfBolsasPlasticas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
-    tfBolsasPlasticas.setEnabled(false);
-    tfBolsasPlasticas.setMaximumSize(null);
-    tfBolsasPlasticas.setMinimumSize(null);
-    tfBolsasPlasticas.setPreferredSize(new Dimension(150, 30));
+    lblMoneda.setFont(lblMoneda.getFont().deriveFont(lblMoneda.getFont().getStyle() | Font.BOLD, lblMoneda.getFont().getSize()-2));
+    lblMoneda.setText("Moneda *");
 
         GroupLayout pnlImportesLayout = new GroupLayout(pnlImportes);
     pnlImportes.setLayout(pnlImportesLayout);
@@ -655,24 +655,33 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
                 .addComponent(tfOtrosCargos, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfIgv, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfIsc, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblImporteTotal)
-                .addComponent(lblGravadas)
-                .addComponent(lblExoneradas)
-                .addComponent(lblInafectas)
-                .addComponent(lblGratuitas)
-                .addComponent(lblExportacion)
-                .addComponent(lblOtrosCargos)
-                .addComponent(lblIgv)
-                .addComponent(lblIsc)
-                .addComponent(lblOtrosTributos)
                 .addComponent(tfOtrosTributos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblBolsasPlasticas)
-                .addComponent(tfBolsasPlasticas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tfBolsasPlasticas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbxMoneda, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlImportesLayout.createSequentialGroup()
+                    .addGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(lblImporteTotal)
+                        .addComponent(lblGravadas)
+                        .addComponent(lblExoneradas)
+                        .addComponent(lblInafectas)
+                        .addComponent(lblGratuitas)
+                        .addComponent(lblExportacion)
+                        .addComponent(lblOtrosCargos)
+                        .addComponent(lblIgv)
+                        .addComponent(lblIsc)
+                        .addComponent(lblOtrosTributos)
+                        .addComponent(lblBolsasPlasticas)
+                        .addComponent(lblMoneda))
+                    .addGap(0, 0, 0)))
             .addContainerGap())
     );
     pnlImportesLayout.setVerticalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
         .addGroup(pnlImportesLayout.createSequentialGroup()
-            .addContainerGap()
+            .addGap(10, 10, 10)
+            .addComponent(lblMoneda)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(cbxMoneda, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblImporteTotal)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(tfImporteTotal, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -718,6 +727,8 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
             .addComponent(tfBolsasPlasticas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
     );
+
+    cbxMoneda.setSelectedIndex(-1);
 
     spnImportes.setViewportView(pnlImportes);
 
@@ -880,13 +891,11 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
                 .addComponent(spane, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tbbdDetalle, GroupLayout.Alignment.TRAILING)
                 .addComponent(cbxEstado, GroupLayout.Alignment.TRAILING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cbxMoneda, GroupLayout.Alignment.TRAILING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlDetalleLayout.createSequentialGroup()
                     .addComponent(btnAgregar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                .addComponent(lblEstado)
-                .addComponent(lblMoneda))
+                .addComponent(lblEstado))
             .addContainerGap())
     );
     pnlDetalleLayout.setVerticalGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -895,12 +904,8 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
             .addComponent(lblEstado)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(cbxEstado, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(lblMoneda)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(cbxMoneda, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(tbbdDetalle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addComponent(tbbdDetalle, GroupLayout.PREFERRED_SIZE, 301, GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(pnlDetalleLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(btnEliminar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -911,7 +916,6 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     );
 
     cbxEstado.setSelectedIndex(-1);
-    cbxMoneda.setSelectedIndex(-1);
     tbbdDetalle.setEnabledAt(2, false);
 
     tabbed.addTab("Detalle", FontIcon.of(RemixiconAL.LIST_ORDERED, 16, Color.decode("#FFFFFF")), pnlDetalle, "");
