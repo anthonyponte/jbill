@@ -692,7 +692,7 @@
                             <Font bold="true" component="lblReferenciaTipo" property="font" relativeSize="true" size="-2"/>
                           </FontInfo>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Tipo"/>
+                        <Property name="text" type="java.lang.String" value="Tipo *"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JComboBox" name="cbxDocumentoReferenciaTipo">
@@ -724,7 +724,7 @@
                             <Font bold="true" component="lblReferenciaSerie" property="font" relativeSize="true" size="-2"/>
                           </FontInfo>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Serie"/>
+                        <Property name="text" type="java.lang.String" value="Serie *"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="tfDocumentoReferenciaSerie">
@@ -751,7 +751,7 @@
                             <Font bold="true" component="lblReferenciaCorrelativo" property="font" relativeSize="true" size="-2"/>
                           </FontInfo>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Correlativo"/>
+                        <Property name="text" type="java.lang.String" value="Correlativo *"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="tfDocumentoReferenciaCorrelativo">

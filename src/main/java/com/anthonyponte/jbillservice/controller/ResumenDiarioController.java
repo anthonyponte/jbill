@@ -671,6 +671,10 @@ public class ResumenDiarioController {
 
     iFrame.tfDocumentoCorrelativo.getDocument().addDocumentListener(dlEnabled);
 
+    iFrame.tfDocumentoReferenciaSerie.getDocument().addDocumentListener(dlEnabled);
+
+    iFrame.tfDocumentoReferenciaCorrelativo.getDocument().addDocumentListener(dlEnabled);
+
     iFrame.tfGravadas.getDocument().addDocumentListener(dlSum);
 
     iFrame.tfExoneradas.getDocument().addDocumentListener(dlSum);
@@ -984,11 +988,22 @@ public class ResumenDiarioController {
       };
 
   private void enabled() {
-    if (iFrame.tfDocumentoSerie.getText().isEmpty()
-        || iFrame.tfDocumentoCorrelativo.getText().isEmpty()) {
-      iFrame.btnAgregar.setEnabled(false);
+    if (iFrame.cbxDocumentoTipo.getSelectedIndex() == 0) {
+      if (iFrame.tfDocumentoSerie.getText().isEmpty()
+          || iFrame.tfDocumentoCorrelativo.getText().isEmpty()) {
+        iFrame.btnAgregar.setEnabled(false);
+      } else {
+        iFrame.btnAgregar.setEnabled(true);
+      }
     } else {
-      iFrame.btnAgregar.setEnabled(true);
+      if (iFrame.tfDocumentoSerie.getText().isEmpty()
+          || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
+          || iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
+          || iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
+        iFrame.btnAgregar.setEnabled(false);
+      } else {
+        iFrame.btnAgregar.setEnabled(true);
+      }
     }
   }
 
