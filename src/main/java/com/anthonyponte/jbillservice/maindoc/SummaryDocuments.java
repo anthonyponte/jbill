@@ -206,16 +206,16 @@ public class SummaryDocuments {
                                 detalle.getPercepcion().getRegimenPercepcion().getPorcentaje())))
                 .addContent(
                     new Element("TotalInvoiceAmount", cbc)
-                        .setAttribute("currencyID", detalle.getMoneda().getCodigo())
+                        .setAttribute("currencyID", "PEN")
                         .setText(
                             String.format(Locale.ROOT, "%.2f", detalle.getPercepcion().getMonto())))
                 .addContent(
                     new Element("SUNATTotalCashed", sac)
-                        .setAttribute("currencyID", detalle.getMoneda().getCodigo())
+                        .setAttribute("currencyID", "PEN")
                         .setText(String.valueOf(detalle.getPercepcion().getMontoTotal())))
                 .addContent(
                     new Element("TaxableAmount", cbc)
-                        .setAttribute("currencyID", detalle.getMoneda().getCodigo())
+                        .setAttribute("currencyID", "PEN")
                         .setText(
                             String.format(Locale.ROOT, "%.2f", detalle.getPercepcion().getBase())));
         summaryDocumentsLine.addContent(sunatPerceptionSummaryDocumentReference);

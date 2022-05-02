@@ -15,12 +15,15 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JInternalFrame;
@@ -102,6 +105,9 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfDocumentoReferenciaCorrelativo = new javax.swing.JTextField();
         spnImportes = new javax.swing.JScrollPane();
         pnlImportes = new javax.swing.JPanel();
+        chckPercepcion = new javax.swing.JCheckBox();
+        lblMoneda = new javax.swing.JLabel();
+        cbxMoneda = new javax.swing.JComboBox<>();
         lblImporteTotal = new javax.swing.JLabel();
         tfImporteTotal = new javax.swing.JFormattedTextField();
         lblGravadas = new javax.swing.JLabel();
@@ -124,8 +130,6 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfOtrosTributos = new javax.swing.JFormattedTextField();
         lblBolsasPlasticas = new javax.swing.JLabel();
         tfBolsasPlasticas = new javax.swing.JFormattedTextField();
-        cbxMoneda = new javax.swing.JComboBox<>();
-        lblMoneda = new javax.swing.JLabel();
         spnPercepcion = new javax.swing.JScrollPane();
         pnlPercepcion = new javax.swing.JPanel();
         cbxPercepcionRegimen = new javax.swing.JComboBox<>();
@@ -373,7 +377,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tbbdDetalle.addTab("Documento", pnlDocumento);
 
         lblDocumentoIdentidadTipo.setFont(lblDocumentoIdentidadTipo.getFont().deriveFont(lblDocumentoIdentidadTipo.getFont().getStyle() | java.awt.Font.BOLD, lblDocumentoIdentidadTipo.getFont().getSize()-2));
-        lblDocumentoIdentidadTipo.setText("Documento identidad");
+        lblDocumentoIdentidadTipo.setText("Documento identidad *");
 
         cbxDocumentoIdentidadTipo.setModel(new DefaultComboBoxModel(new DocumentoIdentidad[] {
             new DocumentoIdentidad("0", "DOC.TRIB.NO.DOM.SIN.RUC"),
@@ -399,7 +403,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         });
 
         lblDocumentoIdentidadNumero.setFont(lblDocumentoIdentidadNumero.getFont().deriveFont(lblDocumentoIdentidadNumero.getFont().getStyle() | java.awt.Font.BOLD, lblDocumentoIdentidadNumero.getFont().getSize()-2));
-        lblDocumentoIdentidadNumero.setText("Numero");
+        lblDocumentoIdentidadNumero.setText("Numero *");
 
         tfDocumentoIdentidadNumero.setEnabled(false);
         tfDocumentoIdentidadNumero.setMaximumSize(null);
@@ -524,106 +528,11 @@ public class ResumenDiarioIFrame extends JInternalFrame {
 
         pnlImportes.setMaximumSize(null);
 
-        lblImporteTotal.setFont(lblImporteTotal.getFont().deriveFont(lblImporteTotal.getFont().getStyle() | java.awt.Font.BOLD, lblImporteTotal.getFont().getSize()-2));
-        lblImporteTotal.setText("Importe total *");
+        chckPercepcion.setText("Percepcion");
+        chckPercepcion.setEnabled(false);
 
-        tfImporteTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
-        tfImporteTotal.setEnabled(false);
-        tfImporteTotal.setMaximumSize(null);
-        tfImporteTotal.setMinimumSize(null);
-        tfImporteTotal.setPreferredSize(new java.awt.Dimension(150, 30));
-        tfImporteTotal.setEditable(false);
-
-        lblGravadas.setFont(lblGravadas.getFont().deriveFont(lblGravadas.getFont().getStyle() | java.awt.Font.BOLD, lblGravadas.getFont().getSize()-2));
-        lblGravadas.setText("Gravadas");
-
-        tfGravadas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
-        tfGravadas.setEnabled(false);
-        tfGravadas.setMaximumSize(null);
-        tfGravadas.setMinimumSize(null);
-        tfGravadas.setPreferredSize(new java.awt.Dimension(150, 30));
-
-        lblExoneradas.setFont(lblExoneradas.getFont().deriveFont(lblExoneradas.getFont().getStyle() | java.awt.Font.BOLD, lblExoneradas.getFont().getSize()-2));
-        lblExoneradas.setText("Exoneradas");
-
-        tfExoneradas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
-        tfExoneradas.setEnabled(false);
-        tfExoneradas.setMaximumSize(null);
-        tfExoneradas.setMinimumSize(null);
-        tfExoneradas.setPreferredSize(new java.awt.Dimension(150, 30));
-
-        lblInafectas.setFont(lblInafectas.getFont().deriveFont(lblInafectas.getFont().getStyle() | java.awt.Font.BOLD, lblInafectas.getFont().getSize()-2));
-        lblInafectas.setText("Inafectas");
-
-        tfInafectas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
-        tfInafectas.setEnabled(false);
-        tfInafectas.setMaximumSize(null);
-        tfInafectas.setMinimumSize(null);
-        tfInafectas.setPreferredSize(new java.awt.Dimension(150, 30));
-
-        lblGratuitas.setFont(lblGratuitas.getFont().deriveFont(lblGratuitas.getFont().getStyle() | java.awt.Font.BOLD, lblGratuitas.getFont().getSize()-2));
-        lblGratuitas.setText("Gratuitas");
-
-        tfGratuitas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
-        tfGratuitas.setEnabled(false);
-        tfGratuitas.setMaximumSize(null);
-        tfGratuitas.setMinimumSize(null);
-        tfGratuitas.setPreferredSize(new java.awt.Dimension(150, 30));
-
-        lblExportacion.setFont(lblExportacion.getFont().deriveFont(lblExportacion.getFont().getStyle() | java.awt.Font.BOLD, lblExportacion.getFont().getSize()-2));
-        lblExportacion.setText("Exportacion");
-
-        tfExportacion.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
-        tfExportacion.setEnabled(false);
-        tfExportacion.setMaximumSize(null);
-        tfExportacion.setMinimumSize(null);
-        tfExportacion.setPreferredSize(new java.awt.Dimension(150, 30));
-
-        lblOtrosCargos.setFont(lblOtrosCargos.getFont().deriveFont(lblOtrosCargos.getFont().getStyle() | java.awt.Font.BOLD, lblOtrosCargos.getFont().getSize()-2));
-        lblOtrosCargos.setText("Otros cargos");
-
-        tfOtrosCargos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
-        tfOtrosCargos.setEnabled(false);
-        tfOtrosCargos.setMaximumSize(null);
-        tfOtrosCargos.setMinimumSize(null);
-        tfOtrosCargos.setPreferredSize(new java.awt.Dimension(150, 30));
-
-        lblIgv.setFont(lblIgv.getFont().deriveFont(lblIgv.getFont().getStyle() | java.awt.Font.BOLD, lblIgv.getFont().getSize()-2));
-        lblIgv.setText("IGV *");
-
-        tfIgv.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
-        tfIgv.setEnabled(false);
-        tfIgv.setMaximumSize(null);
-        tfIgv.setMinimumSize(null);
-        tfIgv.setPreferredSize(new java.awt.Dimension(150, 30));
-        tfIgv.setEditable(false);
-
-        lblIsc.setFont(lblIsc.getFont().deriveFont(lblIsc.getFont().getStyle() | java.awt.Font.BOLD, lblIsc.getFont().getSize()-2));
-        lblIsc.setText("ISC");
-
-        tfIsc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
-        tfIsc.setEnabled(false);
-        tfIsc.setMaximumSize(null);
-        tfIsc.setMinimumSize(null);
-        tfIsc.setPreferredSize(new java.awt.Dimension(150, 30));
-
-        lblOtrosTributos.setFont(lblOtrosTributos.getFont().deriveFont(lblOtrosTributos.getFont().getStyle() | java.awt.Font.BOLD, lblOtrosTributos.getFont().getSize()-2));
-        lblOtrosTributos.setText("Otros tributos");
-
-        tfOtrosTributos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
-        tfOtrosTributos.setEnabled(false);
-        tfOtrosTributos.setMaximumSize(null);
-        tfOtrosTributos.setMinimumSize(null);
-        tfOtrosTributos.setPreferredSize(new java.awt.Dimension(150, 30));
-
-        lblBolsasPlasticas.setFont(lblBolsasPlasticas.getFont().deriveFont(lblBolsasPlasticas.getFont().getStyle() | java.awt.Font.BOLD, lblBolsasPlasticas.getFont().getSize()-2));
-        lblBolsasPlasticas.setText("Bolsas plasticas");
-
-        tfBolsasPlasticas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
-        tfBolsasPlasticas.setEnabled(false);
-        tfBolsasPlasticas.setMaximumSize(null);
-        tfBolsasPlasticas.setMinimumSize(null);
-        tfBolsasPlasticas.setPreferredSize(new java.awt.Dimension(150, 30));
+        lblMoneda.setFont(lblMoneda.getFont().deriveFont(lblMoneda.getFont().getStyle() | java.awt.Font.BOLD, lblMoneda.getFont().getSize()-2));
+        lblMoneda.setText("Moneda *");
 
         cbxMoneda.setModel(new DefaultComboBoxModel(new Moneda[] {
             new Moneda("PEN", "Soles"),
@@ -645,8 +554,106 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     }
     });
 
-    lblMoneda.setFont(lblMoneda.getFont().deriveFont(lblMoneda.getFont().getStyle() | java.awt.Font.BOLD, lblMoneda.getFont().getSize()-2));
-    lblMoneda.setText("Moneda *");
+    lblImporteTotal.setFont(lblImporteTotal.getFont().deriveFont(lblImporteTotal.getFont().getStyle() | java.awt.Font.BOLD, lblImporteTotal.getFont().getSize()-2));
+    lblImporteTotal.setText("Importe total *");
+
+    tfImporteTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
+    tfImporteTotal.setEnabled(false);
+    tfImporteTotal.setMaximumSize(null);
+    tfImporteTotal.setMinimumSize(null);
+    tfImporteTotal.setPreferredSize(new java.awt.Dimension(150, 30));
+    tfImporteTotal.setEditable(false);
+
+    lblGravadas.setFont(lblGravadas.getFont().deriveFont(lblGravadas.getFont().getStyle() | java.awt.Font.BOLD, lblGravadas.getFont().getSize()-2));
+    lblGravadas.setText("Gravadas");
+
+    tfGravadas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
+    tfGravadas.setEnabled(false);
+    tfGravadas.setMaximumSize(null);
+    tfGravadas.setMinimumSize(null);
+    tfGravadas.setPreferredSize(new java.awt.Dimension(150, 30));
+
+    lblExoneradas.setFont(lblExoneradas.getFont().deriveFont(lblExoneradas.getFont().getStyle() | java.awt.Font.BOLD, lblExoneradas.getFont().getSize()-2));
+    lblExoneradas.setText("Exoneradas");
+
+    tfExoneradas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
+    tfExoneradas.setEnabled(false);
+    tfExoneradas.setMaximumSize(null);
+    tfExoneradas.setMinimumSize(null);
+    tfExoneradas.setPreferredSize(new java.awt.Dimension(150, 30));
+
+    lblInafectas.setFont(lblInafectas.getFont().deriveFont(lblInafectas.getFont().getStyle() | java.awt.Font.BOLD, lblInafectas.getFont().getSize()-2));
+    lblInafectas.setText("Inafectas");
+
+    tfInafectas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
+    tfInafectas.setEnabled(false);
+    tfInafectas.setMaximumSize(null);
+    tfInafectas.setMinimumSize(null);
+    tfInafectas.setPreferredSize(new java.awt.Dimension(150, 30));
+
+    lblGratuitas.setFont(lblGratuitas.getFont().deriveFont(lblGratuitas.getFont().getStyle() | java.awt.Font.BOLD, lblGratuitas.getFont().getSize()-2));
+    lblGratuitas.setText("Gratuitas");
+
+    tfGratuitas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
+    tfGratuitas.setEnabled(false);
+    tfGratuitas.setMaximumSize(null);
+    tfGratuitas.setMinimumSize(null);
+    tfGratuitas.setPreferredSize(new java.awt.Dimension(150, 30));
+
+    lblExportacion.setFont(lblExportacion.getFont().deriveFont(lblExportacion.getFont().getStyle() | java.awt.Font.BOLD, lblExportacion.getFont().getSize()-2));
+    lblExportacion.setText("Exportacion");
+
+    tfExportacion.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
+    tfExportacion.setEnabled(false);
+    tfExportacion.setMaximumSize(null);
+    tfExportacion.setMinimumSize(null);
+    tfExportacion.setPreferredSize(new java.awt.Dimension(150, 30));
+
+    lblOtrosCargos.setFont(lblOtrosCargos.getFont().deriveFont(lblOtrosCargos.getFont().getStyle() | java.awt.Font.BOLD, lblOtrosCargos.getFont().getSize()-2));
+    lblOtrosCargos.setText("Otros cargos");
+
+    tfOtrosCargos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
+    tfOtrosCargos.setEnabled(false);
+    tfOtrosCargos.setMaximumSize(null);
+    tfOtrosCargos.setMinimumSize(null);
+    tfOtrosCargos.setPreferredSize(new java.awt.Dimension(150, 30));
+
+    lblIgv.setFont(lblIgv.getFont().deriveFont(lblIgv.getFont().getStyle() | java.awt.Font.BOLD, lblIgv.getFont().getSize()-2));
+    lblIgv.setText("IGV *");
+
+    tfIgv.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
+    tfIgv.setEnabled(false);
+    tfIgv.setMaximumSize(null);
+    tfIgv.setMinimumSize(null);
+    tfIgv.setPreferredSize(new java.awt.Dimension(150, 30));
+    tfIgv.setEditable(false);
+
+    lblIsc.setFont(lblIsc.getFont().deriveFont(lblIsc.getFont().getStyle() | java.awt.Font.BOLD, lblIsc.getFont().getSize()-2));
+    lblIsc.setText("ISC");
+
+    tfIsc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
+    tfIsc.setEnabled(false);
+    tfIsc.setMaximumSize(null);
+    tfIsc.setMinimumSize(null);
+    tfIsc.setPreferredSize(new java.awt.Dimension(150, 30));
+
+    lblOtrosTributos.setFont(lblOtrosTributos.getFont().deriveFont(lblOtrosTributos.getFont().getStyle() | java.awt.Font.BOLD, lblOtrosTributos.getFont().getSize()-2));
+    lblOtrosTributos.setText("Otros tributos");
+
+    tfOtrosTributos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
+    tfOtrosTributos.setEnabled(false);
+    tfOtrosTributos.setMaximumSize(null);
+    tfOtrosTributos.setMinimumSize(null);
+    tfOtrosTributos.setPreferredSize(new java.awt.Dimension(150, 30));
+
+    lblBolsasPlasticas.setFont(lblBolsasPlasticas.getFont().deriveFont(lblBolsasPlasticas.getFont().getStyle() | java.awt.Font.BOLD, lblBolsasPlasticas.getFont().getSize()-2));
+    lblBolsasPlasticas.setText("Bolsas plasticas");
+
+    tfBolsasPlasticas.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.####"))));
+    tfBolsasPlasticas.setEnabled(false);
+    tfBolsasPlasticas.setMaximumSize(null);
+    tfBolsasPlasticas.setMinimumSize(null);
+    tfBolsasPlasticas.setPreferredSize(new java.awt.Dimension(150, 30));
 
     javax.swing.GroupLayout pnlImportesLayout = new javax.swing.GroupLayout(pnlImportes);
     pnlImportes.setLayout(pnlImportesLayout);
@@ -655,6 +662,19 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
         .addGroup(pnlImportesLayout.createSequentialGroup()
             .addContainerGap()
             .addGroup(pnlImportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(chckPercepcion)
+                .addComponent(lblImporteTotal)
+                .addComponent(lblGravadas)
+                .addComponent(lblExoneradas)
+                .addComponent(lblInafectas)
+                .addComponent(lblGratuitas)
+                .addComponent(lblExportacion)
+                .addComponent(lblOtrosCargos)
+                .addComponent(lblIgv)
+                .addComponent(lblIsc)
+                .addComponent(lblOtrosTributos)
+                .addComponent(lblBolsasPlasticas)
+                .addComponent(lblMoneda)
                 .addComponent(tfImporteTotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfGravadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfExoneradas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -666,28 +686,15 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
                 .addComponent(tfIsc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfOtrosTributos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfBolsasPlasticas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cbxMoneda, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlImportesLayout.createSequentialGroup()
-                    .addGroup(pnlImportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblImporteTotal)
-                        .addComponent(lblGravadas)
-                        .addComponent(lblExoneradas)
-                        .addComponent(lblInafectas)
-                        .addComponent(lblGratuitas)
-                        .addComponent(lblExportacion)
-                        .addComponent(lblOtrosCargos)
-                        .addComponent(lblIgv)
-                        .addComponent(lblIsc)
-                        .addComponent(lblOtrosTributos)
-                        .addComponent(lblBolsasPlasticas)
-                        .addComponent(lblMoneda))
-                    .addGap(0, 0, 0)))
+                .addComponent(cbxMoneda, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
     );
     pnlImportesLayout.setVerticalGroup(
         pnlImportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(pnlImportesLayout.createSequentialGroup()
-            .addGap(10, 10, 10)
+            .addContainerGap()
+            .addComponent(chckPercepcion)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblMoneda)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(cbxMoneda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -773,10 +780,10 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     });
 
     lblPercepcionRegimen.setFont(lblPercepcionRegimen.getFont().deriveFont(lblPercepcionRegimen.getFont().getStyle() | java.awt.Font.BOLD, lblPercepcionRegimen.getFont().getSize()-2));
-    lblPercepcionRegimen.setText("Regimen");
+    lblPercepcionRegimen.setText("Regimen *");
 
     lblPercepcionTasa.setFont(lblPercepcionTasa.getFont().deriveFont(lblPercepcionTasa.getFont().getStyle() | java.awt.Font.BOLD, lblPercepcionTasa.getFont().getSize()-2));
-    lblPercepcionTasa.setText("Tasa");
+    lblPercepcionTasa.setText("Tasa *");
 
     tfPercepcionTasa.setEnabled(false);
     tfPercepcionTasa.setMaximumSize(null);
@@ -791,7 +798,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     tfPercepcionMonto.setPreferredSize(new java.awt.Dimension(150, 30));
 
     lblPercepcionMonto.setFont(lblPercepcionMonto.getFont().deriveFont(lblPercepcionMonto.getFont().getStyle() | java.awt.Font.BOLD, lblPercepcionMonto.getFont().getSize()-2));
-    lblPercepcionMonto.setText("Monto");
+    lblPercepcionMonto.setText("Monto *");
 
     tfPercepcionMontoTotal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfPercepcionMontoTotal.setEnabled(false);
@@ -800,7 +807,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     tfPercepcionMontoTotal.setPreferredSize(new java.awt.Dimension(150, 30));
 
     lblPercepcionMontoTotal.setFont(lblPercepcionMontoTotal.getFont().deriveFont(lblPercepcionMontoTotal.getFont().getStyle() | java.awt.Font.BOLD, lblPercepcionMontoTotal.getFont().getSize()-2));
-    lblPercepcionMontoTotal.setText("Monto total");
+    lblPercepcionMontoTotal.setText("Monto total *");
 
     tfPercepcionBase.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
     tfPercepcionBase.setEnabled(false);
@@ -809,7 +816,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     tfPercepcionBase.setPreferredSize(new java.awt.Dimension(150, 30));
 
     lblPercepcionBase.setFont(lblPercepcionBase.getFont().deriveFont(lblPercepcionBase.getFont().getStyle() | java.awt.Font.BOLD, lblPercepcionBase.getFont().getSize()-2));
-    lblPercepcionBase.setText("Base");
+    lblPercepcionBase.setText("Base *");
 
     javax.swing.GroupLayout pnlPercepcionLayout = new javax.swing.GroupLayout(pnlPercepcion);
     pnlPercepcion.setLayout(pnlPercepcionLayout);
@@ -930,7 +937,9 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     );
 
     cbxEstado.setSelectedIndex(-1);
+    tbbdDetalle.setEnabledAt(1, false);
     tbbdDetalle.setEnabledAt(2, false);
+    tbbdDetalle.setEnabledAt(4, false);
 
     tabbed.addTab("Detalle", FontIcon.of(RemixiconAL.LIST_ORDERED, 16, Color.decode("#FFFFFF")), pnlDetalle, "");
 
@@ -1003,6 +1012,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     public javax.swing.JComboBox<String> cbxMoneda;
     public javax.swing.JComboBox<String> cbxPercepcionRegimen;
     public javax.swing.JComboBox<String> cbxTipo;
+    public javax.swing.JCheckBox chckPercepcion;
     public org.jdesktop.swingx.JXDatePicker dpFechaEmision;
     public org.jdesktop.swingx.JXDatePicker dpFechaGeneracion;
     public javax.swing.JLabel lblBolsasPlasticas;

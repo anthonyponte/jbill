@@ -50,6 +50,7 @@ import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.ResumenDiarioIFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -60,8 +61,9 @@ import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.Locale;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
@@ -143,9 +145,6 @@ public class ResumenDiarioController {
                     iFrame.cbxEstado.setEnabled(true);
                     iFrame.cbxEstado.setSelectedIndex(0);
 
-                    iFrame.cbxMoneda.setEnabled(true);
-                    iFrame.cbxMoneda.setSelectedIndex(0);
-
                     iFrame.cbxDocumentoTipo.setEnabled(true);
                     iFrame.cbxDocumentoTipo.setSelectedIndex(0);
 
@@ -153,10 +152,10 @@ public class ResumenDiarioController {
 
                     iFrame.tfDocumentoCorrelativo.setEnabled(true);
 
-                    iFrame.cbxDocumentoIdentidadTipo.setEnabled(true);
-                    iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
+                    iFrame.chckPercepcion.setEnabled(true);
 
-                    iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
+                    iFrame.cbxMoneda.setEnabled(true);
+                    iFrame.cbxMoneda.setSelectedIndex(0);
 
                     iFrame.tfImporteTotal.setEnabled(true);
                     iFrame.tfImporteTotal.setValue(0.00);
@@ -193,20 +192,6 @@ public class ResumenDiarioController {
 
                     iFrame.tfBolsasPlasticas.setEnabled(true);
                     iFrame.tfBolsasPlasticas.setValue(0.00);
-
-                    iFrame.cbxPercepcionRegimen.setEnabled(true);
-                    iFrame.cbxPercepcionRegimen.setSelectedIndex(0);
-
-                    iFrame.tfPercepcionTasa.setEnabled(true);
-
-                    iFrame.tfPercepcionMonto.setEnabled(true);
-                    iFrame.tfPercepcionMonto.setValue(0.00);
-
-                    iFrame.tfPercepcionMontoTotal.setEnabled(true);
-                    iFrame.tfPercepcionMontoTotal.setValue(0.00);
-
-                    iFrame.tfPercepcionBase.setEnabled(true);
-                    iFrame.tfPercepcionBase.setValue(0.00);
 
                     iFrame.btnNuevo.setEnabled(false);
 
@@ -428,6 +413,43 @@ public class ResumenDiarioController {
           }
         });
 
+    iFrame.chckPercepcion.addItemListener(
+        (ItemEvent e) -> {
+          if (e.getStateChange() == ItemEvent.SELECTED) {
+            iFrame.tbbdDetalle.setEnabledAt(4, true);
+            iFrame.cbxPercepcionRegimen.setEnabled(true);
+            iFrame.cbxPercepcionRegimen.setSelectedIndex(0);
+
+            iFrame.tfPercepcionTasa.setEnabled(true);
+
+            iFrame.tfPercepcionMonto.setEnabled(true);
+            iFrame.tfPercepcionMonto.setValue(0.00);
+
+            iFrame.tfPercepcionMontoTotal.setEnabled(true);
+            iFrame.tfPercepcionMontoTotal.setValue(0.00);
+
+            iFrame.tfPercepcionBase.setEnabled(true);
+            iFrame.tfPercepcionBase.setValue(0.00);
+          } else if (e.getStateChange() == ItemEvent.DESELECTED) {
+            iFrame.tbbdDetalle.setEnabledAt(4, false);
+
+            iFrame.cbxPercepcionRegimen.setEnabled(false);
+            iFrame.cbxPercepcionRegimen.setSelectedIndex(-1);
+
+            iFrame.tfPercepcionTasa.setEnabled(false);
+            iFrame.tfPercepcionTasa.setText("");
+
+            iFrame.tfPercepcionMonto.setEnabled(false);
+            iFrame.tfPercepcionMonto.setText("");
+
+            iFrame.tfPercepcionMontoTotal.setEnabled(false);
+            iFrame.tfPercepcionMontoTotal.setText("");
+
+            iFrame.tfPercepcionBase.setEnabled(false);
+            iFrame.tfPercepcionBase.setText("");
+          }
+        });
+
     iFrame.cbxPercepcionRegimen.addItemListener(
         (ItemEvent ie) -> {
           if (ie.getStateChange() == ItemEvent.SELECTED) {
@@ -470,9 +492,7 @@ public class ResumenDiarioController {
               detalle.setDocumentoReferencia(documentoReferencia);
             }
 
-            if (iFrame.cbxPercepcionRegimen.getSelectedIndex() >= 0
-                && !iFrame.tfPercepcionMonto.getText().equals(0.00)
-                && !iFrame.tfPercepcionMontoTotal.getText().equals(0.00)) {
+            if (iFrame.cbxPercepcionRegimen.getSelectedIndex() >= 0) {
               Percepcion percepcion = new Percepcion();
               percepcion.setRegimenPercepcion(
                   (RegimenPercepcion) iFrame.cbxPercepcionRegimen.getSelectedItem());
@@ -670,6 +690,8 @@ public class ResumenDiarioController {
     iFrame.tfDocumentoSerie.getDocument().addDocumentListener(dlEnabled);
 
     iFrame.tfDocumentoCorrelativo.getDocument().addDocumentListener(dlEnabled);
+
+    iFrame.tfDocumentoIdentidadNumero.getDocument().addDocumentListener(dlEnabled);
 
     iFrame.tfDocumentoReferenciaSerie.getDocument().addDocumentListener(dlEnabled);
 
@@ -871,13 +893,12 @@ public class ResumenDiarioController {
       iFrame.dpFechaEmision.setDate(null);
 
       iFrame.tbbdDetalle.setSelectedIndex(0);
+      iFrame.tbbdDetalle.setEnabledAt(1, false);
       iFrame.tbbdDetalle.setEnabledAt(2, false);
+      iFrame.tbbdDetalle.setEnabledAt(4, false);
 
       iFrame.cbxEstado.setEnabled(false);
       iFrame.cbxEstado.setSelectedIndex(-1);
-
-      iFrame.cbxMoneda.setEnabled(false);
-      iFrame.cbxMoneda.setSelectedIndex(-1);
 
       iFrame.cbxDocumentoTipo.setEnabled(false);
       iFrame.cbxDocumentoTipo.setSelectedIndex(-1);
@@ -899,6 +920,12 @@ public class ResumenDiarioController {
           .tfDocumentoIdentidadNumero
           .getDocument()
           .remove(0, iFrame.tfDocumentoIdentidadNumero.getText().length());
+
+      iFrame.chckPercepcion.setSelected(false);
+      iFrame.chckPercepcion.setEnabled(false);
+
+      iFrame.cbxMoneda.setEnabled(false);
+      iFrame.cbxMoneda.setSelectedIndex(-1);
 
       iFrame.tfImporteTotal.setEnabled(false);
       iFrame.tfImporteTotal.setText("");
@@ -995,6 +1022,16 @@ public class ResumenDiarioController {
       } else {
         iFrame.btnAgregar.setEnabled(true);
       }
+    } else if (iFrame.cbxDocumentoIdentidadTipo.getSelectedIndex() >= 0) {
+      if (iFrame.tfDocumentoSerie.getText().isEmpty()
+          || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
+          || iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()
+          || iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
+          || iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
+        iFrame.btnAgregar.setEnabled(false);
+      } else {
+        iFrame.btnAgregar.setEnabled(true);
+      }
     } else {
       if (iFrame.tfDocumentoSerie.getText().isEmpty()
           || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
@@ -1057,6 +1094,30 @@ public class ResumenDiarioController {
 
       iFrame.tfIgv.setValue(igv);
       iFrame.tfImporteTotal.setValue(importeTotal);
+
+      if (importeTotal.doubleValue() > 700) {
+        iFrame.tbbdDetalle.setEnabledAt(1, true);
+
+        iFrame.cbxDocumentoIdentidadTipo.setEnabled(true);
+        iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
+
+        iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
+      } else {
+        try {
+          iFrame.tbbdDetalle.setEnabledAt(1, false);
+
+          iFrame.cbxDocumentoIdentidadTipo.setEnabled(false);
+          iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
+
+          iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
+          iFrame
+              .tfDocumentoIdentidadNumero
+              .getDocument()
+              .remove(0, iFrame.tfDocumentoIdentidadNumero.getText().length());
+        } catch (BadLocationException ex) {
+          Logger.getLogger(ResumenDiarioController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }
     }
   }
 }
