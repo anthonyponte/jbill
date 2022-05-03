@@ -476,6 +476,7 @@ public class ResumenDiarioController {
 
             iFrame.tfPercepcionBase.setEnabled(false);
             iFrame.tfPercepcionBase.setText("");
+            
           }
         });
 
