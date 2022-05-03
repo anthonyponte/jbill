@@ -50,7 +50,6 @@ import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.ResumenDiarioIFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -1147,6 +1146,8 @@ public class ResumenDiarioController {
         iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
 
         iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
+
+        enabled();
       } else {
         try {
           iFrame.tbbdDetalle.setEnabledAt(1, false);
@@ -1159,6 +1160,8 @@ public class ResumenDiarioController {
               .tfDocumentoIdentidadNumero
               .getDocument()
               .remove(0, iFrame.tfDocumentoIdentidadNumero.getText().length());
+
+          enabled();
         } catch (BadLocationException ex) {
           Logger.getLogger(ResumenDiarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
