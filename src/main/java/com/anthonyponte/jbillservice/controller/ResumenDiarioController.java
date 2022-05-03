@@ -364,23 +364,53 @@ public class ResumenDiarioController {
         (ItemEvent ie) -> {
           if (ie.getStateChange() == ItemEvent.SELECTED) {
             if (iFrame.cbxDocumentoTipo.getSelectedIndex() == 0) {
-              iFrame.tbbdDetalle.setEnabledAt(2, false);
+              try {
+                iFrame.tbbdDetalle.setEnabledAt(2, false);
 
-              iFrame.cbxDocumentoReferenciaTipo.setEnabled(false);
-              iFrame.cbxDocumentoReferenciaTipo.setSelectedIndex(-1);
+                iFrame.cbxDocumentoReferenciaTipo.setEnabled(false);
+                iFrame.cbxDocumentoReferenciaTipo.setSelectedIndex(-1);
 
-              iFrame.tfDocumentoReferenciaSerie.setEnabled(false);
+                iFrame.tfDocumentoReferenciaSerie.setEnabled(false);
+                iFrame
+                    .tfDocumentoReferenciaSerie
+                    .getDocument()
+                    .remove(0, iFrame.tfDocumentoReferenciaSerie.getText().length());
 
-              iFrame.tfDocumentoReferenciaCorrelativo.setEnabled(false);
+                iFrame.tfDocumentoReferenciaCorrelativo.setEnabled(false);
+                iFrame
+                    .tfDocumentoReferenciaCorrelativo
+                    .getDocument()
+                    .remove(0, iFrame.tfDocumentoReferenciaCorrelativo.getText().length());
+
+                enabled();
+              } catch (BadLocationException ex) {
+                Logger.getLogger(ResumenDiarioController.class.getName())
+                    .log(Level.SEVERE, null, ex);
+              }
             } else {
-              iFrame.tbbdDetalle.setEnabledAt(2, true);
+              try {
+                iFrame.tbbdDetalle.setEnabledAt(2, true);
 
-              iFrame.cbxDocumentoReferenciaTipo.setEnabled(true);
-              iFrame.cbxDocumentoReferenciaTipo.setSelectedIndex(0);
+                iFrame.cbxDocumentoReferenciaTipo.setEnabled(true);
+                iFrame.cbxDocumentoReferenciaTipo.setSelectedIndex(0);
 
-              iFrame.tfDocumentoReferenciaSerie.setEnabled(true);
+                iFrame.tfDocumentoReferenciaSerie.setEnabled(true);
+                iFrame
+                    .tfDocumentoReferenciaSerie
+                    .getDocument()
+                    .remove(0, iFrame.tfDocumentoReferenciaSerie.getText().length());
 
-              iFrame.tfDocumentoReferenciaCorrelativo.setEnabled(true);
+                iFrame.tfDocumentoReferenciaCorrelativo.setEnabled(true);
+                iFrame
+                    .tfDocumentoReferenciaCorrelativo
+                    .getDocument()
+                    .remove(0, iFrame.tfDocumentoReferenciaCorrelativo.getText().length());
+
+                enabled();
+              } catch (BadLocationException ex) {
+                Logger.getLogger(ResumenDiarioController.class.getName())
+                    .log(Level.SEVERE, null, ex);
+              }
             }
           }
         });
@@ -920,6 +950,21 @@ public class ResumenDiarioController {
           .tfDocumentoIdentidadNumero
           .getDocument()
           .remove(0, iFrame.tfDocumentoIdentidadNumero.getText().length());
+
+      iFrame.cbxDocumentoReferenciaTipo.setEnabled(false);
+      iFrame.cbxDocumentoReferenciaTipo.setSelectedIndex(-1);
+
+      iFrame.tfDocumentoReferenciaSerie.setEnabled(false);
+      iFrame
+          .tfDocumentoReferenciaSerie
+          .getDocument()
+          .remove(0, iFrame.tfDocumentoReferenciaSerie.getText().length());
+
+      iFrame.tfDocumentoReferenciaCorrelativo.setEnabled(false);
+      iFrame
+          .tfDocumentoReferenciaCorrelativo
+          .getDocument()
+          .remove(0, iFrame.tfDocumentoReferenciaCorrelativo.getText().length());
 
       iFrame.chckPercepcion.setSelected(false);
       iFrame.chckPercepcion.setEnabled(false);
