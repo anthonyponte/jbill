@@ -183,9 +183,6 @@ public class ResumenDiarioController {
                     iFrame.tfIgv.setEnabled(true);
                     iFrame.tfIgv.setValue(0.00);
 
-                    iFrame.tfIsc.setEnabled(true);
-                    iFrame.tfIsc.setValue(0.00);
-
                     iFrame.tfOtrosTributos.setEnabled(true);
                     iFrame.tfOtrosTributos.setValue(0.00);
 
@@ -476,7 +473,6 @@ public class ResumenDiarioController {
 
             iFrame.tfPercepcionBase.setEnabled(false);
             iFrame.tfPercepcionBase.setText("");
-            
           }
         });
 
@@ -672,8 +668,6 @@ public class ResumenDiarioController {
             iFrame.tfIsc.setValue(0.00);
 
             iFrame.tfIgv.setValue(0.00);
-
-            iFrame.tfIsc.setValue(0.00);
 
             iFrame.tfOtrosTributos.setValue(0.00);
 
@@ -999,9 +993,6 @@ public class ResumenDiarioController {
       iFrame.tfIgv.setEnabled(false);
       iFrame.tfIgv.setText("");
 
-      iFrame.tfIsc.setEnabled(false);
-      iFrame.tfIsc.setText("");
-
       iFrame.tfOtrosTributos.setEnabled(false);
       iFrame.tfOtrosTributos.setText("");
 
@@ -1108,65 +1099,70 @@ public class ResumenDiarioController {
       };
 
   private void sum() {
-    if (!iFrame.tfGravadas.getText().isEmpty()
-        && !iFrame.tfExoneradas.getText().isEmpty()
-        && !iFrame.tfInafectas.getText().isEmpty()
-        && !iFrame.tfExportacion.getText().isEmpty()
-        && !iFrame.tfOtrosCargos.getText().isEmpty()
-        && !iFrame.tfIsc.getText().isEmpty()
-        && !iFrame.tfOtrosTributos.getText().isEmpty()
-        && !iFrame.tfBolsasPlasticas.getText().isEmpty()) {
+    Number gravadas = (Number) iFrame.tfGravadas.getValue();
+    Number exoneradas = (Number) iFrame.tfExoneradas.getValue();
+    Number inafectas = (Number) iFrame.tfInafectas.getValue();
+    Number exportacion = (Number) iFrame.tfExportacion.getValue();
+    Number otrosCargos = (Number) iFrame.tfOtrosCargos.getValue();
+    Number isc = (Number) iFrame.tfIsc.getValue();
+    Number otrosTributos = (Number) iFrame.tfOtrosTributos.getValue();
+    Number bolsas = (Number) iFrame.tfBolsasPlasticas.getValue();
 
-      Number gravadas = (Number) iFrame.tfGravadas.getValue();
-      Number exoneradas = (Number) iFrame.tfExoneradas.getValue();
-      Number inafectas = (Number) iFrame.tfInafectas.getValue();
-      Number exportacion = (Number) iFrame.tfExportacion.getValue();
-      Number otrosCargos = (Number) iFrame.tfOtrosCargos.getValue();
-      Number igv = gravadas.doubleValue() * 0.18;
-      Number isc = (Number) iFrame.tfIsc.getValue();
-      Number otrosTributos = (Number) iFrame.tfOtrosTributos.getValue();
-      Number bolsas = (Number) iFrame.tfBolsasPlasticas.getValue();
-      Number importeTotal =
-          gravadas.doubleValue()
-              + exoneradas.doubleValue()
-              + inafectas.doubleValue()
-              + exportacion.doubleValue()
-              + otrosCargos.doubleValue()
-              + igv.doubleValue()
-              + isc.doubleValue()
-              + otrosTributos.doubleValue()
-              + bolsas.doubleValue();
+    System.out.println("gravadas " + gravadas);
+    System.out.println("exoneradas " + exoneradas);
 
-      iFrame.tfIgv.setValue(igv);
-      iFrame.tfImporteTotal.setValue(importeTotal);
-
-      if (importeTotal.doubleValue() > 700) {
-        iFrame.tbbdDetalle.setEnabledAt(1, true);
-
-        iFrame.cbxDocumentoIdentidadTipo.setEnabled(true);
-        iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
-
-        iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
-
-        enabled();
-      } else {
-        try {
-          iFrame.tbbdDetalle.setEnabledAt(1, false);
-
-          iFrame.cbxDocumentoIdentidadTipo.setEnabled(false);
-          iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
-
-          iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
-          iFrame
-              .tfDocumentoIdentidadNumero
-              .getDocument()
-              .remove(0, iFrame.tfDocumentoIdentidadNumero.getText().length());
-
-          enabled();
-        } catch (BadLocationException ex) {
-          Logger.getLogger(ResumenDiarioController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-      }
-    }
+    //    if (gravadas.doubleValue() >= 0
+    //        && exoneradas.doubleValue() >= 0
+    //        && inafectas.doubleValue() >= 0
+    //        && exportacion.doubleValue() >= 0
+    //        && otrosCargos.doubleValue() >= 0
+    //        && isc.doubleValue() >= 0
+    //        && otrosTributos.doubleValue() >= 0
+    //        && bolsas.doubleValue() >= 0) {
+    //
+    //      Number igv = gravadas.doubleValue() * 0.18;
+    //      Number importeTotal =
+    //          gravadas.doubleValue()
+    //              + exoneradas.doubleValue()
+    //              + inafectas.doubleValue()
+    //              + exportacion.doubleValue()
+    //              + otrosCargos.doubleValue()
+    //              + igv.doubleValue()
+    //              + isc.doubleValue()
+    //              + otrosTributos.doubleValue()
+    //              + bolsas.doubleValue();
+    //
+    //      iFrame.tfIgv.setValue(igv);
+    //      iFrame.tfImporteTotal.setValue(importeTotal);
+    //
+    //      if (importeTotal.doubleValue() > 700) {
+    //        iFrame.tbbdDetalle.setEnabledAt(1, true);
+    //
+    //        iFrame.cbxDocumentoIdentidadTipo.setEnabled(true);
+    //        iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
+    //
+    //        iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
+    //
+    //        enabled();
+    //      } else {
+    //        try {
+    //          iFrame.tbbdDetalle.setEnabledAt(1, false);
+    //
+    //          iFrame.cbxDocumentoIdentidadTipo.setEnabled(false);
+    //          iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
+    //
+    //          iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
+    //          iFrame
+    //              .tfDocumentoIdentidadNumero
+    //              .getDocument()
+    //              .remove(0, iFrame.tfDocumentoIdentidadNumero.getText().length());
+    //
+    //          enabled();
+    //        } catch (BadLocationException ex) {
+    //          Logger.getLogger(ResumenDiarioController.class.getName()).log(Level.SEVERE, null,
+    // ex);
+    //        }
+    //      }
+    //    }
   }
 }
