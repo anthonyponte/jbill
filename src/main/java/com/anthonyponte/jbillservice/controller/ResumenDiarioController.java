@@ -160,10 +160,10 @@ public class ResumenDiarioController {
                     iFrame.tfImporteTotal.setValue(0.00);
 
                     iFrame.tfGravadas.setEnabled(true);
-                    iFrame.tfGravadas.setValue(0.00);
+                    iFrame.tfGravadas.setText("0.00");
 
                     iFrame.tfExoneradas.setEnabled(true);
-                    iFrame.tfExoneradas.setValue(0.00);
+                    iFrame.tfExoneradas.setText("0.00");
 
                     iFrame.tfInafectas.setEnabled(true);
                     iFrame.tfInafectas.setValue(0.00);
@@ -535,23 +535,23 @@ public class ResumenDiarioController {
 
             detalle.setMoneda((Moneda) iFrame.cbxMoneda.getSelectedItem());
 
-            Number gravadas = (Number) iFrame.tfGravadas.getValue();
-            if (gravadas.doubleValue() > 0) {
-              Operacion operacionGravadas = new Operacion();
-              operacionGravadas.setCodigo("01");
-              operacionGravadas.setDescripcion("Gravado");
-              operacionGravadas.setTotal(gravadas.doubleValue());
-              detalle.setGravadas(operacionGravadas);
-            }
-
-            Number exoneradas = (Number) iFrame.tfExoneradas.getValue();
-            if (exoneradas.doubleValue() > 0) {
-              Operacion operacionExoneradas = new Operacion();
-              operacionExoneradas.setCodigo("02");
-              operacionExoneradas.setDescripcion("Exonerado");
-              operacionExoneradas.setTotal(exoneradas.doubleValue());
-              detalle.setExoneradas(operacionExoneradas);
-            }
+            //            Number gravadas = (Number) iFrame.tfGravadas.getValue();
+            //            if (gravadas.doubleValue() > 0) {
+            //              Operacion operacionGravadas = new Operacion();
+            //              operacionGravadas.setCodigo("01");
+            //              operacionGravadas.setDescripcion("Gravado");
+            //              operacionGravadas.setTotal(gravadas.doubleValue());
+            //              detalle.setGravadas(operacionGravadas);
+            //            }
+            //
+            //            Number exoneradas = (Number) iFrame.tfExoneradas.getValue();
+            //            if (exoneradas.doubleValue() > 0) {
+            //              Operacion operacionExoneradas = new Operacion();
+            //              operacionExoneradas.setCodigo("02");
+            //              operacionExoneradas.setDescripcion("Exonerado");
+            //              operacionExoneradas.setTotal(exoneradas.doubleValue());
+            //              detalle.setExoneradas(operacionExoneradas);
+            //            }
 
             Number inafectas = (Number) iFrame.tfInafectas.getValue();
             if (inafectas.doubleValue() > 0) {
@@ -653,9 +653,9 @@ public class ResumenDiarioController {
 
             iFrame.tfImporteTotal.setValue(0.00);
 
-            iFrame.tfGravadas.setValue(0.00);
+            iFrame.tfGravadas.setText("0.00");
 
-            iFrame.tfExoneradas.setValue(0.00);
+            iFrame.tfExoneradas.setText("0.00");
 
             iFrame.tfInafectas.setValue(0.00);
 
@@ -722,19 +722,12 @@ public class ResumenDiarioController {
     iFrame.tfDocumentoReferenciaCorrelativo.getDocument().addDocumentListener(dlEnabled);
 
     iFrame.tfGravadas.getDocument().addDocumentListener(dlSum);
-
     iFrame.tfExoneradas.getDocument().addDocumentListener(dlSum);
-
     iFrame.tfInafectas.getDocument().addDocumentListener(dlSum);
-
     iFrame.tfExportacion.getDocument().addDocumentListener(dlSum);
-
     iFrame.tfOtrosCargos.getDocument().addDocumentListener(dlSum);
-
     iFrame.tfIsc.getDocument().addDocumentListener(dlSum);
-
     iFrame.tfOtrosTributos.getDocument().addDocumentListener(dlSum);
-
     iFrame.tfBolsasPlasticas.getDocument().addDocumentListener(dlSum);
   }
 
@@ -1093,32 +1086,43 @@ public class ResumenDiarioController {
         }
 
         @Override
-        public void changedUpdate(DocumentEvent arg0) {
-          sum();
-        }
+        public void changedUpdate(DocumentEvent arg0) {}
       };
 
   private void sum() {
-    Number gravadas = (Number) iFrame.tfGravadas.getValue();
-    Number exoneradas = (Number) iFrame.tfExoneradas.getValue();
-    Number inafectas = (Number) iFrame.tfInafectas.getValue();
-    Number exportacion = (Number) iFrame.tfExportacion.getValue();
-    Number otrosCargos = (Number) iFrame.tfOtrosCargos.getValue();
-    Number isc = (Number) iFrame.tfIsc.getValue();
-    Number otrosTributos = (Number) iFrame.tfOtrosTributos.getValue();
-    Number bolsas = (Number) iFrame.tfBolsasPlasticas.getValue();
 
-    System.out.println("gravadas " + gravadas);
-    System.out.println("exoneradas " + exoneradas);
+    double importeTotal = 0;
+    Number igv = 0;
 
-    //    if (gravadas.doubleValue() >= 0
-    //        && exoneradas.doubleValue() >= 0
-    //        && inafectas.doubleValue() >= 0
-    //        && exportacion.doubleValue() >= 0
-    //        && otrosCargos.doubleValue() >= 0
-    //        && isc.doubleValue() >= 0
-    //        && otrosTributos.doubleValue() >= 0
-    //        && bolsas.doubleValue() >= 0) {
+    //    Number exoneradas = (Number) iFrame.tfExoneradas.getValue();
+    //    Number inafectas = (Number) iFrame.tfInafectas.getValue();
+    //    Number exportacion = (Number) iFrame.tfExportacion.getValue();
+    //    Number otrosCargos = (Number) iFrame.tfOtrosCargos.getValue();
+    //    Number isc = (Number) iFrame.tfIsc.getValue();
+    //    Number otrosTributos = (Number) iFrame.tfOtrosTributos.getValue();
+    //    Number bolsas = (Number) iFrame.tfBolsasPlasticas.getValue();
+
+    if (!iFrame.tfGravadas.getText().isEmpty()) {
+      double gravadas = Double.parseDouble(iFrame.tfGravadas.getText());
+      importeTotal += gravadas;
+    }
+
+    if (!iFrame.tfExoneradas.getText().isEmpty()) {
+      double exoneradas = Double.parseDouble(iFrame.tfExoneradas.getText());
+      importeTotal += exoneradas;
+    }
+
+    iFrame.tfIgv.setValue(igv);
+    iFrame.tfImporteTotal.setValue(importeTotal);
+
+    //    if (gravadas != null
+    //        && exoneradas != null
+    //        && inafectas != null
+    //        && exportacion != null
+    //        && otrosCargos != null
+    //        && isc != null
+    //        && otrosTributos != null
+    //        && bolsas != null) {
     //
     //      Number igv = gravadas.doubleValue() * 0.18;
     //      Number importeTotal =

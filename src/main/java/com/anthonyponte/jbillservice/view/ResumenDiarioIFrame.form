@@ -825,8 +825,6 @@
                                       <Component id="lblBolsasPlasticas" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblMoneda" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="tfImporteTotal" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="tfGravadas" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="tfExoneradas" alignment="0" max="32767" attributes="0"/>
                                       <Component id="tfInafectas" alignment="0" max="32767" attributes="0"/>
                                       <Component id="tfExportacion" alignment="1" max="32767" attributes="0"/>
                                       <Component id="tfGratuitas" alignment="1" max="32767" attributes="0"/>
@@ -836,6 +834,8 @@
                                       <Component id="tfOtrosTributos" alignment="0" max="32767" attributes="0"/>
                                       <Component id="tfBolsasPlasticas" alignment="0" max="32767" attributes="0"/>
                                       <Component id="cbxMoneda" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="tfGravadas" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="tfExoneradas" alignment="1" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
@@ -980,23 +980,6 @@
                             <Property name="text" type="java.lang.String" value="Gravadas"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JFormattedTextField" name="tfGravadas">
-                          <Properties>
-                            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                              <Format format="#0.####" subtype="-1" type="0"/>
-                            </Property>
-                            <Property name="enabled" type="boolean" value="false"/>
-                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="null"/>
-                            </Property>
-                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="null"/>
-                            </Property>
-                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[150, 30]"/>
-                            </Property>
-                          </Properties>
-                        </Component>
                         <Component class="javax.swing.JLabel" name="lblExoneradas">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
@@ -1005,23 +988,6 @@
                               </FontInfo>
                             </Property>
                             <Property name="text" type="java.lang.String" value="Exoneradas"/>
-                          </Properties>
-                        </Component>
-                        <Component class="javax.swing.JFormattedTextField" name="tfExoneradas">
-                          <Properties>
-                            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-                              <Format format="#0.####" subtype="-1" type="0"/>
-                            </Property>
-                            <Property name="enabled" type="boolean" value="false"/>
-                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="null"/>
-                            </Property>
-                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="null"/>
-                            </Property>
-                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[150, 30]"/>
-                            </Property>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lblInafectas">
@@ -1238,6 +1204,22 @@
                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="null"/>
                             </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 30]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="tfGravadas">
+                          <Properties>
+                            <Property name="enabled" type="boolean" value="false"/>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 30]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="tfExoneradas">
+                          <Properties>
+                            <Property name="enabled" type="boolean" value="false"/>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[150, 30]"/>
                             </Property>

@@ -109,9 +109,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         lblImporteTotal = new JLabel();
         tfImporteTotal = new JFormattedTextField();
         lblGravadas = new JLabel();
-        tfGravadas = new JFormattedTextField();
         lblExoneradas = new JLabel();
-        tfExoneradas = new JFormattedTextField();
         lblInafectas = new JLabel();
         tfInafectas = new JFormattedTextField();
         lblGratuitas = new JLabel();
@@ -128,6 +126,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfOtrosTributos = new JFormattedTextField();
         lblBolsasPlasticas = new JLabel();
         tfBolsasPlasticas = new JFormattedTextField();
+        tfGravadas = new JTextField();
+        tfExoneradas = new JTextField();
         spnPercepcion = new JScrollPane();
         pnlPercepcion = new JPanel();
         cbxPercepcionRegimen = new JComboBox<>();
@@ -557,20 +557,8 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblGravadas.setFont(lblGravadas.getFont().deriveFont(lblGravadas.getFont().getStyle() | Font.BOLD, lblGravadas.getFont().getSize()-2));
     lblGravadas.setText("Gravadas");
 
-    tfGravadas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
-    tfGravadas.setEnabled(false);
-    tfGravadas.setMaximumSize(null);
-    tfGravadas.setMinimumSize(null);
-    tfGravadas.setPreferredSize(new Dimension(150, 30));
-
     lblExoneradas.setFont(lblExoneradas.getFont().deriveFont(lblExoneradas.getFont().getStyle() | Font.BOLD, lblExoneradas.getFont().getSize()-2));
     lblExoneradas.setText("Exoneradas");
-
-    tfExoneradas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.####"))));
-    tfExoneradas.setEnabled(false);
-    tfExoneradas.setMaximumSize(null);
-    tfExoneradas.setMinimumSize(null);
-    tfExoneradas.setPreferredSize(new Dimension(150, 30));
 
     lblInafectas.setFont(lblInafectas.getFont().deriveFont(lblInafectas.getFont().getStyle() | Font.BOLD, lblInafectas.getFont().getSize()-2));
     lblInafectas.setText("Inafectas");
@@ -645,6 +633,12 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     tfBolsasPlasticas.setMinimumSize(null);
     tfBolsasPlasticas.setPreferredSize(new Dimension(150, 30));
 
+    tfGravadas.setEnabled(false);
+    tfGravadas.setPreferredSize(new Dimension(150, 30));
+
+    tfExoneradas.setEnabled(false);
+    tfExoneradas.setPreferredSize(new Dimension(150, 30));
+
         GroupLayout pnlImportesLayout = new GroupLayout(pnlImportes);
     pnlImportes.setLayout(pnlImportesLayout);
     pnlImportesLayout.setHorizontalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -665,8 +659,6 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
                 .addComponent(lblBolsasPlasticas)
                 .addComponent(lblMoneda)
                 .addComponent(tfImporteTotal, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfGravadas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfExoneradas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfInafectas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfExportacion, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfGratuitas, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -675,7 +667,9 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
                 .addComponent(tfIsc, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfOtrosTributos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfBolsasPlasticas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cbxMoneda, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(cbxMoneda, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfGravadas, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfExoneradas, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
     );
     pnlImportesLayout.setVerticalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -1049,10 +1043,10 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     public JTextField tfDocumentoReferenciaCorrelativo;
     public JTextField tfDocumentoReferenciaSerie;
     public JTextField tfDocumentoSerie;
-    public JFormattedTextField tfExoneradas;
+    public JTextField tfExoneradas;
     public JFormattedTextField tfExportacion;
     public JFormattedTextField tfGratuitas;
-    public JFormattedTextField tfGravadas;
+    public JTextField tfGravadas;
     public JFormattedTextField tfIgv;
     public JFormattedTextField tfImporteTotal;
     public JFormattedTextField tfInafectas;
