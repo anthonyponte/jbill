@@ -157,7 +157,7 @@ public class ResumenDiarioController {
                     iFrame.cbxMoneda.setSelectedIndex(0);
 
                     iFrame.tfImporteTotal.setEnabled(true);
-                    iFrame.tfImporteTotal.setValue(0.00);
+                    iFrame.tfImporteTotal.setText("0.00");
 
                     iFrame.tfGravadas.setEnabled(true);
                     iFrame.tfGravadas.setText("0.00");
@@ -166,28 +166,28 @@ public class ResumenDiarioController {
                     iFrame.tfExoneradas.setText("0.00");
 
                     iFrame.tfInafectas.setEnabled(true);
-                    iFrame.tfInafectas.setValue(0.00);
+                    iFrame.tfInafectas.setText("0.00");
 
                     iFrame.tfGratuitas.setEnabled(true);
-                    iFrame.tfGratuitas.setValue(0.00);
+                    iFrame.tfGratuitas.setText("0.00");
 
                     iFrame.tfExportacion.setEnabled(true);
-                    iFrame.tfExportacion.setValue(0.00);
+                    iFrame.tfExportacion.setText("0.00");
 
                     iFrame.tfOtrosCargos.setEnabled(true);
-                    iFrame.tfOtrosCargos.setValue(0.00);
-
-                    iFrame.tfIsc.setEnabled(true);
-                    iFrame.tfIsc.setValue(0.00);
+                    iFrame.tfOtrosCargos.setText("0.00");
 
                     iFrame.tfIgv.setEnabled(true);
-                    iFrame.tfIgv.setValue(0.00);
+                    iFrame.tfIgv.setText("0.00");
+
+                    iFrame.tfIsc.setEnabled(true);
+                    iFrame.tfIsc.setText("0.00");
 
                     iFrame.tfOtrosTributos.setEnabled(true);
-                    iFrame.tfOtrosTributos.setValue(0.00);
+                    iFrame.tfOtrosTributos.setText("0.00");
 
                     iFrame.tfBolsasPlasticas.setEnabled(true);
-                    iFrame.tfBolsasPlasticas.setValue(0.00);
+                    iFrame.tfBolsasPlasticas.setText("0.00");
 
                     iFrame.btnNuevo.setEnabled(false);
 
@@ -530,8 +530,8 @@ public class ResumenDiarioController {
             }
 
             detalle.setEstado((Estado) iFrame.cbxEstado.getSelectedItem());
-            Number importeTotal = (Number) iFrame.tfImporteTotal.getValue();
-            detalle.setImporteTotal(importeTotal.doubleValue());
+            //            Number importeTotal = (Number) iFrame.tfImporteTotal.getValue();
+            //            detalle.setImporteTotal(importeTotal.doubleValue());
 
             detalle.setMoneda((Moneda) iFrame.cbxMoneda.getSelectedItem());
 
@@ -552,79 +552,79 @@ public class ResumenDiarioController {
             //              operacionExoneradas.setTotal(exoneradas.doubleValue());
             //              detalle.setExoneradas(operacionExoneradas);
             //            }
-
-            Number inafectas = (Number) iFrame.tfInafectas.getValue();
-            if (inafectas.doubleValue() > 0) {
-              Operacion operacionInafectas = new Operacion();
-              operacionInafectas.setCodigo("03");
-              operacionInafectas.setDescripcion("Inafecto");
-              operacionInafectas.setTotal(inafectas.doubleValue());
-              detalle.setInafectas(operacionInafectas);
-            }
-
-            Number exportacion = (Number) iFrame.tfExportacion.getValue();
-            if (exportacion.doubleValue() > 0) {
-              Operacion operacionExportacion = new Operacion();
-              operacionExportacion.setCodigo("04");
-              operacionExportacion.setDescripcion("Exportación");
-              operacionExportacion.setTotal(exportacion.doubleValue());
-              detalle.setExportacion(operacionExportacion);
-            }
-
-            Number gratuitas = (Number) iFrame.tfGratuitas.getValue();
-            if (gratuitas.doubleValue() > 0) {
-              Operacion operacionGratuitas = new Operacion();
-              operacionGratuitas.setCodigo("05");
-              operacionGratuitas.setDescripcion("Gratuitas");
-              operacionGratuitas.setTotal(gratuitas.doubleValue());
-              detalle.setGratuitas(operacionGratuitas);
-            }
-
-            Number otrosCargos = (Number) iFrame.tfOtrosCargos.getValue();
-            if (otrosCargos.doubleValue() > 0) {
-              OtrosCargos operacionOtrosCargos = new OtrosCargos();
-              operacionOtrosCargos.setIndicador(true);
-              operacionOtrosCargos.setTotal(otrosCargos.doubleValue());
-              detalle.setOtrosCargos(operacionOtrosCargos);
-            }
-
-            Number igv = (Number) iFrame.tfIgv.getValue();
-            Impuesto impuestoIgv = new Impuesto();
-            impuestoIgv.setTotal(igv.doubleValue());
-            impuestoIgv.setCodigo("1000");
-            impuestoIgv.setDescripcion("IGV");
-            impuestoIgv.setCodigoInternacional("VAT");
-            detalle.setIgv(impuestoIgv);
-
-            Number isc = (Number) iFrame.tfIsc.getValue();
-            if (isc.doubleValue() > 0) {
-              Impuesto impuestoIsc = new Impuesto();
-              impuestoIsc.setTotal(isc.doubleValue());
-              impuestoIsc.setCodigo("2000");
-              impuestoIsc.setDescripcion("ISC");
-              impuestoIsc.setCodigoInternacional("EXC");
-              detalle.setIsc(impuestoIsc);
-            }
-
-            Number otrosTributos = (Number) iFrame.tfOtrosTributos.getValue();
-            if (otrosTributos.doubleValue() > 0) {
-              Impuesto impuestoOtrosTributos = new Impuesto();
-              impuestoOtrosTributos.setTotal(otrosTributos.doubleValue());
-              impuestoOtrosTributos.setCodigo("9999");
-              impuestoOtrosTributos.setDescripcion("Otros tributos");
-              impuestoOtrosTributos.setCodigoInternacional("OTH");
-              detalle.setOtrosTributos(impuestoOtrosTributos);
-            }
-
-            Number bolsas = (Number) iFrame.tfBolsasPlasticas.getValue();
-            if (bolsas.doubleValue() > 0) {
-              Impuesto impuestoBolsas = new Impuesto();
-              impuestoBolsas.setTotal(bolsas.doubleValue());
-              impuestoBolsas.setCodigo("7152");
-              impuestoBolsas.setDescripcion("Impuesto a la bolsa plastica");
-              impuestoBolsas.setCodigoInternacional("OTH");
-              detalle.setImpuestoBolsa(impuestoBolsas);
-            }
+            //
+            //            Number inafectas = (Number) iFrame.tfInafectas.getValue();
+            //            if (inafectas.doubleValue() > 0) {
+            //              Operacion operacionInafectas = new Operacion();
+            //              operacionInafectas.setCodigo("03");
+            //              operacionInafectas.setDescripcion("Inafecto");
+            //              operacionInafectas.setTotal(inafectas.doubleValue());
+            //              detalle.setInafectas(operacionInafectas);
+            //            }
+            //
+            //            Number exportacion = (Number) iFrame.tfExportacion.getValue();
+            //            if (exportacion.doubleValue() > 0) {
+            //              Operacion operacionExportacion = new Operacion();
+            //              operacionExportacion.setCodigo("04");
+            //              operacionExportacion.setDescripcion("Exportación");
+            //              operacionExportacion.setTotal(exportacion.doubleValue());
+            //              detalle.setExportacion(operacionExportacion);
+            //            }
+            //
+            //            Number gratuitas = (Number) iFrame.tfGratuitas.getValue();
+            //            if (gratuitas.doubleValue() > 0) {
+            //              Operacion operacionGratuitas = new Operacion();
+            //              operacionGratuitas.setCodigo("05");
+            //              operacionGratuitas.setDescripcion("Gratuitas");
+            //              operacionGratuitas.setTotal(gratuitas.doubleValue());
+            //              detalle.setGratuitas(operacionGratuitas);
+            //            }
+            //
+            //            Number otrosCargos = (Number) iFrame.tfImporteTotal.getValue();
+            //            if (otrosCargos.doubleValue() > 0) {
+            //              OtrosCargos operacionOtrosCargos = new OtrosCargos();
+            //              operacionOtrosCargos.setIndicador(true);
+            //              operacionOtrosCargos.setTotal(otrosCargos.doubleValue());
+            //              detalle.setOtrosCargos(operacionOtrosCargos);
+            //            }
+            //
+            //            Number igv = (Number) iFrame.tfImporteTotal.getValue();
+            //            Impuesto impuestoIgv = new Impuesto();
+            //            impuestoIgv.setTotal(igv.doubleValue());
+            //            impuestoIgv.setCodigo("1000");
+            //            impuestoIgv.setDescripcion("IGV");
+            //            impuestoIgv.setCodigoInternacional("VAT");
+            //            detalle.setIgv(impuestoIgv);
+            //
+            //            Number isc = (Number) iFrame.tfImporteTotal.getValue();
+            //            if (isc.doubleValue() > 0) {
+            //              Impuesto impuestoIsc = new Impuesto();
+            //              impuestoIsc.setTotal(isc.doubleValue());
+            //              impuestoIsc.setCodigo("2000");
+            //              impuestoIsc.setDescripcion("ISC");
+            //              impuestoIsc.setCodigoInternacional("EXC");
+            //              detalle.setIsc(impuestoIsc);
+            //            }
+            //
+            //            Number otrosTributos = (Number) iFrame.tfBolsasPlasticas.getValue();
+            //            if (otrosTributos.doubleValue() > 0) {
+            //              Impuesto impuestoOtrosTributos = new Impuesto();
+            //              impuestoOtrosTributos.setTotal(otrosTributos.doubleValue());
+            //              impuestoOtrosTributos.setCodigo("9999");
+            //              impuestoOtrosTributos.setDescripcion("Otros tributos");
+            //              impuestoOtrosTributos.setCodigoInternacional("OTH");
+            //              detalle.setOtrosTributos(impuestoOtrosTributos);
+            //            }
+            //
+            //            Number bolsas = (Number) iFrame.tfBolsasPlasticas.getValue();
+            //            if (bolsas.doubleValue() > 0) {
+            //              Impuesto impuestoBolsas = new Impuesto();
+            //              impuestoBolsas.setTotal(bolsas.doubleValue());
+            //              impuestoBolsas.setCodigo("7152");
+            //              impuestoBolsas.setDescripcion("Impuesto a la bolsa plastica");
+            //              impuestoBolsas.setCodigoInternacional("OTH");
+            //              detalle.setImpuestoBolsa(impuestoBolsas);
+            //            }
 
             eventList.add(detalle);
 
@@ -651,35 +651,35 @@ public class ResumenDiarioController {
 
             iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
 
-            iFrame.tfImporteTotal.setValue(0.00);
+            iFrame.tfImporteTotal.setText("0.00");
 
             iFrame.tfGravadas.setText("0.00");
 
             iFrame.tfExoneradas.setText("0.00");
 
-            iFrame.tfInafectas.setValue(0.00);
+            iFrame.tfInafectas.setText("0.00");
 
-            iFrame.tfGratuitas.setValue(0.00);
+            iFrame.tfGratuitas.setText("0.00");
 
-            iFrame.tfExportacion.setValue(0.00);
+            iFrame.tfExportacion.setText("0.00");
 
-            iFrame.tfOtrosCargos.setValue(0.00);
+            iFrame.tfImporteTotal.setText("0.00");
 
-            iFrame.tfIsc.setValue(0.00);
+            iFrame.tfImporteTotal.setText("0.00");
 
-            iFrame.tfIgv.setValue(0.00);
+            iFrame.tfImporteTotal.setText("0.00");
 
-            iFrame.tfOtrosTributos.setValue(0.00);
+            iFrame.tfBolsasPlasticas.setText("0.00");
 
-            iFrame.tfBolsasPlasticas.setValue(0.00);
+            iFrame.tfBolsasPlasticas.setText("0.00");
 
             iFrame.cbxPercepcionRegimen.setSelectedIndex(0);
 
-            iFrame.tfPercepcionMonto.setValue(0.00);
+            iFrame.tfPercepcionMonto.setText("0.00");
 
-            iFrame.tfPercepcionMontoTotal.setValue(0.00);
+            iFrame.tfPercepcionMontoTotal.setText("0.00");
 
-            iFrame.tfPercepcionBase.setValue(0.00);
+            iFrame.tfPercepcionBase.setText("0.00");
 
             iFrame.btnGuardar.setEnabled(true);
           } catch (BadLocationException ex) {
@@ -980,11 +980,11 @@ public class ResumenDiarioController {
       iFrame.tfOtrosCargos.setEnabled(false);
       iFrame.tfOtrosCargos.setText("");
 
-      iFrame.tfIsc.setEnabled(false);
-      iFrame.tfIsc.setText("");
-
       iFrame.tfIgv.setEnabled(false);
       iFrame.tfIgv.setText("");
+
+      iFrame.tfIsc.setEnabled(false);
+      iFrame.tfIsc.setText("");
 
       iFrame.tfOtrosTributos.setEnabled(false);
       iFrame.tfOtrosTributos.setText("");
@@ -1086,24 +1086,18 @@ public class ResumenDiarioController {
         }
 
         @Override
-        public void changedUpdate(DocumentEvent arg0) {}
+        public void changedUpdate(DocumentEvent arg0) {
+          sum();
+        }
       };
 
   private void sum() {
-
     double importeTotal = 0;
-    Number igv = 0;
-
-    //    Number exoneradas = (Number) iFrame.tfExoneradas.getValue();
-    //    Number inafectas = (Number) iFrame.tfInafectas.getValue();
-    //    Number exportacion = (Number) iFrame.tfExportacion.getValue();
-    //    Number otrosCargos = (Number) iFrame.tfOtrosCargos.getValue();
-    //    Number isc = (Number) iFrame.tfIsc.getValue();
-    //    Number otrosTributos = (Number) iFrame.tfOtrosTributos.getValue();
-    //    Number bolsas = (Number) iFrame.tfBolsasPlasticas.getValue();
+    double igv = 0;
 
     if (!iFrame.tfGravadas.getText().isEmpty()) {
       double gravadas = Double.parseDouble(iFrame.tfGravadas.getText());
+      igv = gravadas * 0.18;
       importeTotal += gravadas;
     }
 
@@ -1112,61 +1106,41 @@ public class ResumenDiarioController {
       importeTotal += exoneradas;
     }
 
-    iFrame.tfIgv.setValue(igv);
-    iFrame.tfImporteTotal.setValue(importeTotal);
+    if (!iFrame.tfInafectas.getText().isEmpty()) {
+      double inafectas = Double.parseDouble(iFrame.tfInafectas.getText());
+      importeTotal += inafectas;
+    }
 
-    //    if (gravadas != null
-    //        && exoneradas != null
-    //        && inafectas != null
-    //        && exportacion != null
-    //        && otrosCargos != null
-    //        && isc != null
-    //        && otrosTributos != null
-    //        && bolsas != null) {
-    //
-    //      Number igv = gravadas.doubleValue() * 0.18;
-    //      Number importeTotal =
-    //          gravadas.doubleValue()
-    //              + exoneradas.doubleValue()
-    //              + inafectas.doubleValue()
-    //              + exportacion.doubleValue()
-    //              + otrosCargos.doubleValue()
-    //              + igv.doubleValue()
-    //              + isc.doubleValue()
-    //              + otrosTributos.doubleValue()
-    //              + bolsas.doubleValue();
-    //
-    //      iFrame.tfIgv.setValue(igv);
-    //      iFrame.tfImporteTotal.setValue(importeTotal);
-    //
-    //      if (importeTotal.doubleValue() > 700) {
-    //        iFrame.tbbdDetalle.setEnabledAt(1, true);
-    //
-    //        iFrame.cbxDocumentoIdentidadTipo.setEnabled(true);
-    //        iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
-    //
-    //        iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
-    //
-    //        enabled();
-    //      } else {
-    //        try {
-    //          iFrame.tbbdDetalle.setEnabledAt(1, false);
-    //
-    //          iFrame.cbxDocumentoIdentidadTipo.setEnabled(false);
-    //          iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
-    //
-    //          iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
-    //          iFrame
-    //              .tfDocumentoIdentidadNumero
-    //              .getDocument()
-    //              .remove(0, iFrame.tfDocumentoIdentidadNumero.getText().length());
-    //
-    //          enabled();
-    //        } catch (BadLocationException ex) {
-    //          Logger.getLogger(ResumenDiarioController.class.getName()).log(Level.SEVERE, null,
-    // ex);
-    //        }
-    //      }
-    //    }
+    if (!iFrame.tfExportacion.getText().isEmpty()) {
+      double exportacion = Double.parseDouble(iFrame.tfExportacion.getText());
+      importeTotal += exportacion;
+    }
+
+    if (!iFrame.tfOtrosCargos.getText().isEmpty()) {
+      double otrosCargos = Double.parseDouble(iFrame.tfOtrosCargos.getText());
+      importeTotal += otrosCargos;
+    }
+
+    if (!iFrame.tfIgv.getText().isEmpty()) {
+      importeTotal += igv;
+    }
+
+    if (!iFrame.tfIsc.getText().isEmpty()) {
+      double isc = Double.parseDouble(iFrame.tfIsc.getText());
+      importeTotal += isc;
+    }
+
+    if (!iFrame.tfOtrosTributos.getText().isEmpty()) {
+      double otrosTributos = Double.parseDouble(iFrame.tfOtrosTributos.getText());
+      importeTotal += otrosTributos;
+    }
+
+    if (!iFrame.tfBolsasPlasticas.getText().isEmpty()) {
+      double bolsas = Double.parseDouble(iFrame.tfBolsasPlasticas.getText());
+      importeTotal += bolsas;
+    }
+
+    iFrame.tfIgv.setText(String.valueOf(igv));
+    iFrame.tfImporteTotal.setText(String.valueOf(importeTotal));
   }
 }

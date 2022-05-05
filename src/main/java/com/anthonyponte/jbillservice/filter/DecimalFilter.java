@@ -23,8 +23,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 /** @author AnthonyPonte */
-public class LetterNumberFilter extends DocumentFilter {
-  private final Pattern regexCheck = Pattern.compile("[a-zA-Z0-9 ]+");
+public class DecimalFilter extends DocumentFilter {
+  private final Pattern regexCheck = Pattern.compile("^[0-9]+[.]?[0-9]{0,}$");
 
   @Override
   public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)

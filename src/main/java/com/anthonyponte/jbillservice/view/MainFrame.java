@@ -65,8 +65,6 @@ public class MainFrame extends JFrame {
         setIconImages(list);
         setMinimumSize(new Dimension(1024, 768));
 
-        dpane.setBackground(new Color(250, 202, 222));
-
         GroupLayout dpaneLayout = new GroupLayout(dpane);
         dpane.setLayout(dpaneLayout);
         dpaneLayout.setHorizontalGroup(dpaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
