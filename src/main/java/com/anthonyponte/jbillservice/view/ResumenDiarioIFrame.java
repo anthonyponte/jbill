@@ -110,7 +110,6 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         lblImporteTotal = new JLabel();
         tfImporteTotal = new JTextField();
         lblGravadas = new JLabel();
-        tfGravadas = new JTextField();
         lblExoneradas = new JLabel();
         tfExoneradas = new JTextField();
         lblInafectas = new JLabel();
@@ -129,6 +128,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         tfOtrosTributos = new JTextField();
         lblBolsasPlasticas = new JLabel();
         tfBolsasPlasticas = new JTextField();
+        tfGravadas = new JTextField();
         spnPercepcion = new JScrollPane();
         pnlPercepcion = new JPanel();
         cbxPercepcionRegimen = new JComboBox<>();
@@ -554,9 +554,6 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblGravadas.setFont(lblGravadas.getFont().deriveFont(lblGravadas.getFont().getStyle() | Font.BOLD, lblGravadas.getFont().getSize()-2));
     lblGravadas.setText("Gravadas");
 
-    tfGravadas.setEnabled(false);
-    tfGravadas.setPreferredSize(new Dimension(150, 30));
-
     lblExoneradas.setFont(lblExoneradas.getFont().deriveFont(lblExoneradas.getFont().getStyle() | Font.BOLD, lblExoneradas.getFont().getSize()-2));
     lblExoneradas.setText("Exoneradas");
 
@@ -611,6 +608,9 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     tfBolsasPlasticas.setEnabled(false);
     tfBolsasPlasticas.setPreferredSize(new Dimension(150, 30));
 
+    tfGravadas.setEnabled(false);
+    tfGravadas.setPreferredSize(new Dimension(150, 30));
+
         GroupLayout pnlImportesLayout = new GroupLayout(pnlImportes);
     pnlImportes.setLayout(pnlImportesLayout);
     pnlImportesLayout.setHorizontalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -630,8 +630,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
                 .addComponent(lblOtrosTributos)
                 .addComponent(lblBolsasPlasticas)
                 .addComponent(lblMoneda)
-                .addComponent(cbxMoneda, 0, 428, Short.MAX_VALUE)
-                .addComponent(tfGravadas, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbxMoneda, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfExoneradas, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfInafectas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfGratuitas, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -641,7 +640,8 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
                 .addComponent(tfBolsasPlasticas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfOtrosTributos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfIsc, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfIgv, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tfIgv, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfGravadas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
     );
     pnlImportesLayout.setVerticalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -701,9 +701,9 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
 
     cbxMoneda.setSelectedIndex(-1);
     tfImporteTotal.setEditable(false);
+    tfIgv.setEditable(false);
     AbstractDocument adGravadas = (AbstractDocument) tfGravadas.getDocument();
     adGravadas.setDocumentFilter(new DecimalFilter());
-    tfIgv.setEditable(false);
 
     spnImportes.setViewportView(pnlImportes);
 

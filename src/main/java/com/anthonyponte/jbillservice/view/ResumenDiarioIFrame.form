@@ -824,8 +824,7 @@
                                       <Component id="lblOtrosTributos" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblBolsasPlasticas" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblMoneda" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="cbxMoneda" alignment="0" pref="428" max="32767" attributes="0"/>
-                                      <Component id="tfGravadas" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="cbxMoneda" alignment="0" max="32767" attributes="0"/>
                                       <Component id="tfExoneradas" alignment="1" max="32767" attributes="0"/>
                                       <Component id="tfInafectas" alignment="0" max="32767" attributes="0"/>
                                       <Component id="tfGratuitas" alignment="1" max="32767" attributes="0"/>
@@ -836,6 +835,7 @@
                                       <Component id="tfOtrosTributos" alignment="0" max="32767" attributes="0"/>
                                       <Component id="tfIsc" alignment="0" max="32767" attributes="0"/>
                                       <Component id="tfIgv" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="tfGravadas" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
@@ -970,17 +970,6 @@
                             </Property>
                             <Property name="text" type="java.lang.String" value="Gravadas"/>
                           </Properties>
-                        </Component>
-                        <Component class="javax.swing.JTextField" name="tfGravadas">
-                          <Properties>
-                            <Property name="enabled" type="boolean" value="false"/>
-                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[150, 30]"/>
-                            </Property>
-                          </Properties>
-                          <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="AbstractDocument adGravadas = (AbstractDocument) tfGravadas.getDocument();&#xa;adGravadas.setDocumentFilter(new DecimalFilter());"/>
-                          </AuxValues>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lblExoneradas">
                           <Properties>
@@ -1146,6 +1135,17 @@
                               <Dimension value="[150, 30]"/>
                             </Property>
                           </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="tfGravadas">
+                          <Properties>
+                            <Property name="enabled" type="boolean" value="false"/>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 30]"/>
+                            </Property>
+                          </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="AbstractDocument adGravadas = (AbstractDocument) tfGravadas.getDocument();&#xa;adGravadas.setDocumentFilter(new DecimalFilter());"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>

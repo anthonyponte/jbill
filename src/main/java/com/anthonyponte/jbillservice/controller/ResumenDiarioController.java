@@ -721,7 +721,7 @@ public class ResumenDiarioController {
 
     iFrame.tfDocumentoReferenciaCorrelativo.getDocument().addDocumentListener(dlEnabled);
 
-    iFrame.tfGravadas.getDocument().addDocumentListener(dlSum);
+//    iFrame.tfGravadas.getDocument().addDocumentListener(dlSum);
     iFrame.tfExoneradas.getDocument().addDocumentListener(dlSum);
     iFrame.tfInafectas.getDocument().addDocumentListener(dlSum);
     iFrame.tfExportacion.getDocument().addDocumentListener(dlSum);
