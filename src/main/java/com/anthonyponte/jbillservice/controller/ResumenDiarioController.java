@@ -157,37 +157,37 @@ public class ResumenDiarioController {
                     iFrame.cbxMoneda.setSelectedIndex(0);
 
                     iFrame.tfImporteTotal.setEnabled(true);
-                    iFrame.tfImporteTotal.setText("0.00");
+                    iFrame.tfImporteTotal.setValue(0.00);
 
                     iFrame.tfGravadas.setEnabled(true);
-                    iFrame.tfGravadas.setText("0.00");
+                    iFrame.tfGravadas.setValue(0.00);
 
                     iFrame.tfExoneradas.setEnabled(true);
-                    iFrame.tfExoneradas.setText("0.00");
+                    iFrame.tfExoneradas.setValue(0.00);
 
                     iFrame.tfInafectas.setEnabled(true);
-                    iFrame.tfInafectas.setText("0.00");
+                    iFrame.tfInafectas.setValue(0.00);
 
                     iFrame.tfOtrosCargos.setEnabled(true);
-                    iFrame.tfOtrosCargos.setText("0.00");
+                    iFrame.tfOtrosCargos.setValue(0.00);
 
                     iFrame.tfOtrosCargos.setEnabled(true);
-                    iFrame.tfOtrosCargos.setText("0.00");
+                    iFrame.tfOtrosCargos.setValue(0.00);
 
                     iFrame.tfOtrosCargos.setEnabled(true);
-                    iFrame.tfOtrosCargos.setText("0.00");
+                    iFrame.tfOtrosCargos.setValue(0.00);
 
                     iFrame.tfIgv.setEnabled(true);
-                    iFrame.tfIgv.setText("0.00");
+                    iFrame.tfIgv.setValue(0.00);
 
                     iFrame.tfIsc.setEnabled(true);
-                    iFrame.tfIsc.setText("0.00");
+                    iFrame.tfIsc.setValue(0.00);
 
                     iFrame.tfOtrosTributos.setEnabled(true);
-                    iFrame.tfOtrosTributos.setText("0.00");
+                    iFrame.tfOtrosTributos.setValue(0.00);
 
                     iFrame.tfBolsasPlasticas.setEnabled(true);
-                    iFrame.tfBolsasPlasticas.setText("0.00");
+                    iFrame.tfBolsasPlasticas.setValue(0.00);
 
                     iFrame.btnNuevo.setEnabled(false);
 
@@ -651,35 +651,35 @@ public class ResumenDiarioController {
 
             iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
 
-            iFrame.tfImporteTotal.setText("0.00");
+            iFrame.tfImporteTotal.setValue(0.00);
 
-            iFrame.tfGravadas.setText("0.00");
+            iFrame.tfGravadas.setValue(0.00);
 
-            iFrame.tfExoneradas.setText("0.00");
+            iFrame.tfExoneradas.setValue(0.00);
 
-            iFrame.tfInafectas.setText("0.00");
+            iFrame.tfInafectas.setValue(0.00);
 
-            iFrame.tfOtrosCargos.setText("0.00");
+            iFrame.tfOtrosCargos.setValue(0.00);
 
-            iFrame.tfOtrosCargos.setText("0.00");
+            iFrame.tfOtrosCargos.setValue(0.00);
 
-            iFrame.tfImporteTotal.setText("0.00");
+            iFrame.tfImporteTotal.setValue(0.00);
 
-            iFrame.tfImporteTotal.setText("0.00");
+            iFrame.tfImporteTotal.setValue(0.00);
 
-            iFrame.tfImporteTotal.setText("0.00");
+            iFrame.tfImporteTotal.setValue(0.00);
 
-            iFrame.tfBolsasPlasticas.setText("0.00");
+            iFrame.tfBolsasPlasticas.setValue(0.00);
 
-            iFrame.tfBolsasPlasticas.setText("0.00");
+            iFrame.tfBolsasPlasticas.setValue(0.00);
 
             iFrame.cbxPercepcionRegimen.setSelectedIndex(0);
 
-            iFrame.tfPercepcionMonto.setText("0.00");
+            iFrame.tfPercepcionMonto.setValue(0.00);
 
-            iFrame.tfPercepcionMontoTotal.setText("0.00");
+            iFrame.tfPercepcionMontoTotal.setValue(0.00);
 
-            iFrame.tfPercepcionBase.setText("0.00");
+            iFrame.tfPercepcionBase.setValue(0.00);
 
             iFrame.btnGuardar.setEnabled(true);
           } catch (BadLocationException ex) {
