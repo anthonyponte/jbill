@@ -168,11 +168,11 @@ public class ResumenDiarioController {
                     iFrame.tfInafectas.setEnabled(true);
                     iFrame.tfInafectas.setText("0.00");
 
-                    iFrame.tfGratuitas.setEnabled(true);
-                    iFrame.tfGratuitas.setText("0.00");
+                    iFrame.tfOtrosCargos.setEnabled(true);
+                    iFrame.tfOtrosCargos.setText("0.00");
 
-                    iFrame.tfExportacion.setEnabled(true);
-                    iFrame.tfExportacion.setText("0.00");
+                    iFrame.tfOtrosCargos.setEnabled(true);
+                    iFrame.tfOtrosCargos.setText("0.00");
 
                     iFrame.tfOtrosCargos.setEnabled(true);
                     iFrame.tfOtrosCargos.setText("0.00");
@@ -659,9 +659,9 @@ public class ResumenDiarioController {
 
             iFrame.tfInafectas.setText("0.00");
 
-            iFrame.tfGratuitas.setText("0.00");
+            iFrame.tfOtrosCargos.setText("0.00");
 
-            iFrame.tfExportacion.setText("0.00");
+            iFrame.tfOtrosCargos.setText("0.00");
 
             iFrame.tfImporteTotal.setText("0.00");
 
@@ -721,10 +721,10 @@ public class ResumenDiarioController {
 
     iFrame.tfDocumentoReferenciaCorrelativo.getDocument().addDocumentListener(dlEnabled);
 
-//    iFrame.tfGravadas.getDocument().addDocumentListener(dlSum);
+    iFrame.tfGravadas.getDocument().addDocumentListener(dlSum);
     iFrame.tfExoneradas.getDocument().addDocumentListener(dlSum);
     iFrame.tfInafectas.getDocument().addDocumentListener(dlSum);
-    iFrame.tfExportacion.getDocument().addDocumentListener(dlSum);
+    iFrame.tfOtrosCargos.getDocument().addDocumentListener(dlSum);
     iFrame.tfOtrosCargos.getDocument().addDocumentListener(dlSum);
     iFrame.tfIsc.getDocument().addDocumentListener(dlSum);
     iFrame.tfOtrosTributos.getDocument().addDocumentListener(dlSum);
@@ -971,11 +971,11 @@ public class ResumenDiarioController {
       iFrame.tfInafectas.setEnabled(false);
       iFrame.tfInafectas.setText("");
 
-      iFrame.tfGratuitas.setEnabled(false);
-      iFrame.tfGratuitas.setText("");
+      iFrame.tfOtrosCargos.setEnabled(false);
+      iFrame.tfOtrosCargos.setText("");
 
-      iFrame.tfExportacion.setEnabled(false);
-      iFrame.tfExportacion.setText("");
+      iFrame.tfOtrosCargos.setEnabled(false);
+      iFrame.tfOtrosCargos.setText("");
 
       iFrame.tfOtrosCargos.setEnabled(false);
       iFrame.tfOtrosCargos.setText("");
@@ -1111,8 +1111,8 @@ public class ResumenDiarioController {
       importeTotal += inafectas;
     }
 
-    if (!iFrame.tfExportacion.getText().isEmpty()) {
-      double exportacion = Double.parseDouble(iFrame.tfExportacion.getText());
+    if (!iFrame.tfOtrosCargos.getText().isEmpty()) {
+      double exportacion = Double.parseDouble(iFrame.tfOtrosCargos.getText());
       importeTotal += exportacion;
     }
 

@@ -108,27 +108,27 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         lblMoneda = new JLabel();
         cbxMoneda = new JComboBox<>();
         lblImporteTotal = new JLabel();
-        tfImporteTotal = new JTextField();
+        tfImporteTotal = new JFormattedTextField();
         lblGravadas = new JLabel();
+        tfGravadas = new JFormattedTextField();
         lblExoneradas = new JLabel();
-        tfExoneradas = new JTextField();
+        tfExoneradas = new JFormattedTextField();
         lblInafectas = new JLabel();
-        tfInafectas = new JTextField();
+        tfInafectas = new JFormattedTextField();
         lblGratuitas = new JLabel();
-        tfGratuitas = new JTextField();
+        tfGratuitas1 = new JFormattedTextField();
         lblExportacion = new JLabel();
-        tfExportacion = new JTextField();
+        tfExportacion1 = new JFormattedTextField();
         lblOtrosCargos = new JLabel();
-        tfOtrosCargos = new JTextField();
+        tfOtrosCargos = new JFormattedTextField();
         lblIgv = new JLabel();
-        tfIgv = new JTextField();
+        tfIgv = new JFormattedTextField();
         lblIsc = new JLabel();
-        tfIsc = new JTextField();
+        tfIsc = new JFormattedTextField();
         lblOtrosTributos = new JLabel();
-        tfOtrosTributos = new JTextField();
+        tfOtrosTributos = new JFormattedTextField();
         lblBolsasPlasticas = new JLabel();
-        tfBolsasPlasticas = new JTextField();
-        tfGravadas = new JTextField();
+        tfBolsasPlasticas = new JFormattedTextField();
         spnPercepcion = new JScrollPane();
         pnlPercepcion = new JPanel();
         cbxPercepcionRegimen = new JComboBox<>();
@@ -548,68 +548,79 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblImporteTotal.setFont(lblImporteTotal.getFont().deriveFont(lblImporteTotal.getFont().getStyle() | Font.BOLD, lblImporteTotal.getFont().getSize()-2));
     lblImporteTotal.setText("Importe total *");
 
+    tfImporteTotal.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
     tfImporteTotal.setEnabled(false);
     tfImporteTotal.setPreferredSize(new Dimension(150, 30));
 
     lblGravadas.setFont(lblGravadas.getFont().deriveFont(lblGravadas.getFont().getStyle() | Font.BOLD, lblGravadas.getFont().getSize()-2));
     lblGravadas.setText("Gravadas");
 
+    tfGravadas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfGravadas.setEnabled(false);
+    tfGravadas.setPreferredSize(new Dimension(150, 30));
+
     lblExoneradas.setFont(lblExoneradas.getFont().deriveFont(lblExoneradas.getFont().getStyle() | Font.BOLD, lblExoneradas.getFont().getSize()-2));
     lblExoneradas.setText("Exoneradas");
 
+    tfExoneradas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
     tfExoneradas.setEnabled(false);
     tfExoneradas.setPreferredSize(new Dimension(150, 30));
 
     lblInafectas.setFont(lblInafectas.getFont().deriveFont(lblInafectas.getFont().getStyle() | Font.BOLD, lblInafectas.getFont().getSize()-2));
     lblInafectas.setText("Inafectas");
 
+    tfInafectas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
     tfInafectas.setEnabled(false);
     tfInafectas.setPreferredSize(new Dimension(150, 30));
 
     lblGratuitas.setFont(lblGratuitas.getFont().deriveFont(lblGratuitas.getFont().getStyle() | Font.BOLD, lblGratuitas.getFont().getSize()-2));
     lblGratuitas.setText("Gratuitas");
 
-    tfGratuitas.setEnabled(false);
-    tfGratuitas.setPreferredSize(new Dimension(150, 30));
+    tfGratuitas1.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfGratuitas1.setEnabled(false);
+    tfGratuitas1.setPreferredSize(new Dimension(150, 30));
 
     lblExportacion.setFont(lblExportacion.getFont().deriveFont(lblExportacion.getFont().getStyle() | Font.BOLD, lblExportacion.getFont().getSize()-2));
     lblExportacion.setText("Exportacion");
 
-    tfExportacion.setEnabled(false);
-    tfExportacion.setPreferredSize(new Dimension(150, 30));
+    tfExportacion1.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfExportacion1.setEnabled(false);
+    tfExportacion1.setPreferredSize(new Dimension(150, 30));
 
     lblOtrosCargos.setFont(lblOtrosCargos.getFont().deriveFont(lblOtrosCargos.getFont().getStyle() | Font.BOLD, lblOtrosCargos.getFont().getSize()-2));
     lblOtrosCargos.setText("Otros cargos");
 
+    tfOtrosCargos.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
     tfOtrosCargos.setEnabled(false);
     tfOtrosCargos.setPreferredSize(new Dimension(150, 30));
 
     lblIgv.setFont(lblIgv.getFont().deriveFont(lblIgv.getFont().getStyle() | Font.BOLD, lblIgv.getFont().getSize()-2));
     lblIgv.setText("IGV *");
 
+    tfIgv.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
     tfIgv.setEnabled(false);
     tfIgv.setPreferredSize(new Dimension(150, 30));
 
     lblIsc.setFont(lblIsc.getFont().deriveFont(lblIsc.getFont().getStyle() | Font.BOLD, lblIsc.getFont().getSize()-2));
     lblIsc.setText("ISC");
 
+    tfIsc.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
     tfIsc.setEnabled(false);
     tfIsc.setPreferredSize(new Dimension(150, 30));
 
     lblOtrosTributos.setFont(lblOtrosTributos.getFont().deriveFont(lblOtrosTributos.getFont().getStyle() | Font.BOLD, lblOtrosTributos.getFont().getSize()-2));
     lblOtrosTributos.setText("Otros tributos");
 
+    tfOtrosTributos.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
     tfOtrosTributos.setEnabled(false);
     tfOtrosTributos.setPreferredSize(new Dimension(150, 30));
 
     lblBolsasPlasticas.setFont(lblBolsasPlasticas.getFont().deriveFont(lblBolsasPlasticas.getFont().getStyle() | Font.BOLD, lblBolsasPlasticas.getFont().getSize()-2));
     lblBolsasPlasticas.setText("Bolsas plasticas");
 
+    tfBolsasPlasticas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
     tfBolsasPlasticas.setEnabled(false);
     tfBolsasPlasticas.setPreferredSize(new Dimension(150, 30));
-
-    tfGravadas.setEnabled(false);
-    tfGravadas.setPreferredSize(new Dimension(150, 30));
 
         GroupLayout pnlImportesLayout = new GroupLayout(pnlImportes);
     pnlImportes.setLayout(pnlImportesLayout);
@@ -630,18 +641,18 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
                 .addComponent(lblOtrosTributos)
                 .addComponent(lblBolsasPlasticas)
                 .addComponent(lblMoneda)
-                .addComponent(cbxMoneda, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfExoneradas, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbxMoneda, 0, 236, Short.MAX_VALUE)
+                .addComponent(tfGravadas, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfExoneradas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfInafectas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfGratuitas, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfExportacion, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfImporteTotal, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfOtrosCargos, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfBolsasPlasticas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfOtrosTributos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfIsc, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfGratuitas1, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfImporteTotal, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfExportacion1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfIgv, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfGravadas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tfIsc, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfOtrosTributos, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfBolsasPlasticas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addContainerGap())
     );
     pnlImportesLayout.setVerticalGroup(pnlImportesLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -671,11 +682,11 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblGratuitas)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfGratuitas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addComponent(tfGratuitas1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblExportacion)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfExportacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addComponent(tfExportacion1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblOtrosCargos)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -684,11 +695,11 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
             .addComponent(lblIgv)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(tfIgv, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addGap(12, 12, 12)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblIsc)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(tfIsc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-            .addGap(12, 12, 12)
+            .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblOtrosTributos)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(tfOtrosTributos, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -700,10 +711,6 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     );
 
     cbxMoneda.setSelectedIndex(-1);
-    tfImporteTotal.setEditable(false);
-    tfIgv.setEditable(false);
-    AbstractDocument adGravadas = (AbstractDocument) tfGravadas.getDocument();
-    adGravadas.setDocumentFilter(new DecimalFilter());
 
     spnImportes.setViewportView(pnlImportes);
 
@@ -1012,23 +1019,23 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     public JTabbedPane tabbed;
     public JTable table;
     public JTabbedPane tbbdDetalle;
-    public JTextField tfBolsasPlasticas;
+    public JFormattedTextField tfBolsasPlasticas;
     public JTextField tfCorrelativo;
     public JTextField tfDocumentoCorrelativo;
     public JTextField tfDocumentoIdentidadNumero;
     public JTextField tfDocumentoReferenciaCorrelativo;
     public JTextField tfDocumentoReferenciaSerie;
     public JTextField tfDocumentoSerie;
-    public JTextField tfExoneradas;
-    public JTextField tfExportacion;
-    public JTextField tfGratuitas;
-    public JTextField tfGravadas;
-    public JTextField tfIgv;
-    public JTextField tfImporteTotal;
-    public JTextField tfInafectas;
-    public JTextField tfIsc;
-    public JTextField tfOtrosCargos;
-    public JTextField tfOtrosTributos;
+    public JFormattedTextField tfExoneradas;
+    public JFormattedTextField tfExportacion1;
+    public JFormattedTextField tfGratuitas1;
+    public JFormattedTextField tfGravadas;
+    public JFormattedTextField tfIgv;
+    public JFormattedTextField tfImporteTotal;
+    public JFormattedTextField tfInafectas;
+    public JFormattedTextField tfIsc;
+    public JFormattedTextField tfOtrosCargos;
+    public JFormattedTextField tfOtrosTributos;
     public JFormattedTextField tfPercepcionBase;
     public JFormattedTextField tfPercepcionMonto;
     public JFormattedTextField tfPercepcionMontoTotal;
