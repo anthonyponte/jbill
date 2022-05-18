@@ -116,7 +116,7 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         lblInafectas = new JLabel();
         tfInafectas = new JFormattedTextField();
         lblGratuitas = new JLabel();
-        tfGratuitas1 = new JFormattedTextField();
+        tfGratuitas = new JFormattedTextField();
         lblExportacion = new JLabel();
         tfExportacion = new JFormattedTextField();
         lblOtrosCargos = new JLabel();
@@ -576,9 +576,9 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     lblGratuitas.setFont(lblGratuitas.getFont().deriveFont(lblGratuitas.getFont().getStyle() | Font.BOLD, lblGratuitas.getFont().getSize()-2));
     lblGratuitas.setText("Gratuitas");
 
-    tfGratuitas1.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
-    tfGratuitas1.setEnabled(false);
-    tfGratuitas1.setPreferredSize(new Dimension(150, 30));
+    tfGratuitas.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0.00"))));
+    tfGratuitas.setEnabled(false);
+    tfGratuitas.setPreferredSize(new Dimension(150, 30));
 
     lblExportacion.setFont(lblExportacion.getFont().deriveFont(lblExportacion.getFont().getStyle() | Font.BOLD, lblExportacion.getFont().getSize()-2));
     lblExportacion.setText("Exportacion");
@@ -646,7 +646,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
                 .addComponent(tfExoneradas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfInafectas, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfOtrosCargos, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tfGratuitas1, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfGratuitas, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfImporteTotal, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfExportacion, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tfIgv, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -682,7 +682,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblGratuitas)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(tfGratuitas1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+            .addComponent(tfGratuitas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(lblExportacion)
             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -1028,7 +1028,7 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     public JTextField tfDocumentoSerie;
     public JFormattedTextField tfExoneradas;
     public JFormattedTextField tfExportacion;
-    public JFormattedTextField tfGratuitas1;
+    public JFormattedTextField tfGratuitas;
     public JFormattedTextField tfGravadas;
     public JFormattedTextField tfIgv;
     public JFormattedTextField tfImporteTotal;

@@ -130,6 +130,7 @@ public class ResumenDiarioController {
                     dialog.dispose();
 
                     iFrame.tabbed.setSelectedIndex(0);
+                    iFrame.tbbdDetalle.setSelectedIndex(0);
 
                     Date fechaGeneracion = iFrame.dpFechaGeneracion.getDate();
                     iFrame.tfSerie.setText(MyDateFormat.yyyyMMdd(fechaGeneracion));
@@ -167,11 +168,11 @@ public class ResumenDiarioController {
                     iFrame.tfInafectas.setEnabled(true);
                     iFrame.tfInafectas.setValue(0);
 
-                    iFrame.tfOtrosCargos.setEnabled(true);
-                    iFrame.tfOtrosCargos.setValue(0);
+                    iFrame.tfGratuitas.setEnabled(true);
+                    iFrame.tfGratuitas.setValue(0);
 
-                    iFrame.tfOtrosCargos.setEnabled(true);
-                    iFrame.tfOtrosCargos.setValue(0);
+                    iFrame.tfExportacion.setEnabled(true);
+                    iFrame.tfExportacion.setValue(0);
 
                     iFrame.tfOtrosCargos.setEnabled(true);
                     iFrame.tfOtrosCargos.setValue(0);

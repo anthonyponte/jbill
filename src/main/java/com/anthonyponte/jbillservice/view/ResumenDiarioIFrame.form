@@ -829,7 +829,7 @@
                                       <Component id="tfExoneradas" alignment="0" max="32767" attributes="0"/>
                                       <Component id="tfInafectas" alignment="0" max="32767" attributes="0"/>
                                       <Component id="tfOtrosCargos" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="tfGratuitas1" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="tfGratuitas" alignment="1" max="32767" attributes="0"/>
                                       <Component id="tfImporteTotal" alignment="1" max="32767" attributes="0"/>
                                       <Component id="tfExportacion" alignment="0" max="32767" attributes="0"/>
                                       <Component id="tfIgv" alignment="0" max="32767" attributes="0"/>
@@ -869,7 +869,7 @@
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="lblGratuitas" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="tfGratuitas1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="tfGratuitas" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="lblExportacion" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -1034,7 +1034,7 @@
                             <Property name="text" type="java.lang.String" value="Gratuitas"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JFormattedTextField" name="tfGratuitas1">
+                        <Component class="javax.swing.JFormattedTextField" name="tfGratuitas">
                           <Properties>
                             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                               <Format format="#0.00" subtype="-1" type="0"/>
