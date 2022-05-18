@@ -156,38 +156,36 @@ public class ResumenDiarioController {
                     iFrame.cbxMoneda.setEnabled(true);
                     iFrame.cbxMoneda.setSelectedIndex(0);
 
-                    iFrame.tfImporteTotal.setEnabled(true);
-                    iFrame.tfImporteTotal.setValue(0.00);
+                    iFrame.tfImporteTotal.setValue(0);
 
                     iFrame.tfGravadas.setEnabled(true);
-                    iFrame.tfGravadas.setValue(0.00);
+                    iFrame.tfGravadas.setValue(0);
 
                     iFrame.tfExoneradas.setEnabled(true);
-                    iFrame.tfExoneradas.setValue(0.00);
+                    iFrame.tfExoneradas.setValue(0);
 
                     iFrame.tfInafectas.setEnabled(true);
-                    iFrame.tfInafectas.setValue(0.00);
+                    iFrame.tfInafectas.setValue(0);
 
                     iFrame.tfOtrosCargos.setEnabled(true);
-                    iFrame.tfOtrosCargos.setValue(0.00);
+                    iFrame.tfOtrosCargos.setValue(0);
 
                     iFrame.tfOtrosCargos.setEnabled(true);
-                    iFrame.tfOtrosCargos.setValue(0.00);
+                    iFrame.tfOtrosCargos.setValue(0);
 
                     iFrame.tfOtrosCargos.setEnabled(true);
-                    iFrame.tfOtrosCargos.setValue(0.00);
+                    iFrame.tfOtrosCargos.setValue(0);
 
-                    iFrame.tfIgv.setEnabled(true);
-                    iFrame.tfIgv.setValue(0.00);
+                    iFrame.tfIgv.setValue(0);
 
                     iFrame.tfIsc.setEnabled(true);
-                    iFrame.tfIsc.setValue(0.00);
+                    iFrame.tfIsc.setValue(0);
 
                     iFrame.tfOtrosTributos.setEnabled(true);
-                    iFrame.tfOtrosTributos.setValue(0.00);
+                    iFrame.tfOtrosTributos.setValue(0);
 
                     iFrame.tfBolsasPlasticas.setEnabled(true);
-                    iFrame.tfBolsasPlasticas.setValue(0.00);
+                    iFrame.tfBolsasPlasticas.setValue(0);
 
                     iFrame.btnNuevo.setEnabled(false);
 
@@ -449,13 +447,13 @@ public class ResumenDiarioController {
             iFrame.tfPercepcionTasa.setEnabled(true);
 
             iFrame.tfPercepcionMonto.setEnabled(true);
-            iFrame.tfPercepcionMonto.setValue(0.00);
+            iFrame.tfPercepcionMonto.setValue(0);
 
             iFrame.tfPercepcionMontoTotal.setEnabled(true);
-            iFrame.tfPercepcionMontoTotal.setValue(0.00);
+            iFrame.tfPercepcionMontoTotal.setValue(0);
 
             iFrame.tfPercepcionBase.setEnabled(true);
-            iFrame.tfPercepcionBase.setValue(0.00);
+            iFrame.tfPercepcionBase.setValue(0);
           } else if (e.getStateChange() == ItemEvent.DESELECTED) {
             iFrame.tbbdDetalle.setEnabledAt(4, false);
 
@@ -651,35 +649,35 @@ public class ResumenDiarioController {
 
             iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
 
-            iFrame.tfImporteTotal.setValue(0.00);
+            iFrame.tfImporteTotal.setValue(0);
 
-            iFrame.tfGravadas.setValue(0.00);
+            iFrame.tfGravadas.setValue(0);
 
-            iFrame.tfExoneradas.setValue(0.00);
+            iFrame.tfExoneradas.setValue(0);
 
-            iFrame.tfInafectas.setValue(0.00);
+            iFrame.tfInafectas.setValue(0);
 
-            iFrame.tfOtrosCargos.setValue(0.00);
+            iFrame.tfOtrosCargos.setValue(0);
 
-            iFrame.tfOtrosCargos.setValue(0.00);
+            iFrame.tfOtrosCargos.setValue(0);
 
-            iFrame.tfImporteTotal.setValue(0.00);
+            iFrame.tfImporteTotal.setValue(0);
 
-            iFrame.tfImporteTotal.setValue(0.00);
+            iFrame.tfImporteTotal.setValue(0);
 
-            iFrame.tfImporteTotal.setValue(0.00);
+            iFrame.tfImporteTotal.setValue(0);
 
-            iFrame.tfBolsasPlasticas.setValue(0.00);
+            iFrame.tfBolsasPlasticas.setValue(0);
 
-            iFrame.tfBolsasPlasticas.setValue(0.00);
+            iFrame.tfBolsasPlasticas.setValue(0);
 
             iFrame.cbxPercepcionRegimen.setSelectedIndex(0);
 
-            iFrame.tfPercepcionMonto.setValue(0.00);
+            iFrame.tfPercepcionMonto.setValue(0);
 
-            iFrame.tfPercepcionMontoTotal.setValue(0.00);
+            iFrame.tfPercepcionMontoTotal.setValue(0);
 
-            iFrame.tfPercepcionBase.setValue(0.00);
+            iFrame.tfPercepcionBase.setValue(0);
 
             iFrame.btnGuardar.setEnabled(true);
           } catch (BadLocationException ex) {
@@ -1092,52 +1090,67 @@ public class ResumenDiarioController {
       };
 
   private void sum() {
-    double importeTotal = 0;
     double igv = 0;
+    double importeTotal = 0;
 
-    if (!iFrame.tfGravadas.getText().isEmpty()) {
-      double gravadas = Double.parseDouble(iFrame.tfGravadas.getText());
-      igv = gravadas * 0.18;
-      importeTotal += gravadas;
+    if (iFrame.tfGravadas.getValue() != null) {
+      double gravadas = ((Number) iFrame.tfGravadas.getValue()).doubleValue();
+      if (gravadas > 0) {
+        igv = gravadas * 0.18;
+        importeTotal += gravadas;
+      }
     }
 
-    if (!iFrame.tfExoneradas.getText().isEmpty()) {
-      double exoneradas = Double.parseDouble(iFrame.tfExoneradas.getText());
-      importeTotal += exoneradas;
+    if (iFrame.tfExoneradas.getValue() != null) {
+      double exoneradas = ((Number) iFrame.tfExoneradas.getValue()).doubleValue();
+      if (exoneradas > 0) {
+        importeTotal += exoneradas;
+      }
     }
 
-    if (!iFrame.tfInafectas.getText().isEmpty()) {
-      double inafectas = Double.parseDouble(iFrame.tfInafectas.getText());
-      importeTotal += inafectas;
+    if (iFrame.tfInafectas.getValue() != null) {
+      double inafectas = ((Number) iFrame.tfInafectas.getValue()).doubleValue();
+      if (inafectas > 0) {
+        importeTotal += inafectas;
+      }
     }
 
-    if (!iFrame.tfOtrosCargos.getText().isEmpty()) {
-      double exportacion = Double.parseDouble(iFrame.tfOtrosCargos.getText());
-      importeTotal += exportacion;
+    if (iFrame.tfExportacion.getValue() != null) {
+      double exportacion = ((Number) iFrame.tfExportacion.getValue()).doubleValue();
+      if (exportacion > 0) {
+        importeTotal += exportacion;
+      }
     }
 
-    if (!iFrame.tfOtrosCargos.getText().isEmpty()) {
-      double otrosCargos = Double.parseDouble(iFrame.tfOtrosCargos.getText());
-      importeTotal += otrosCargos;
+    if (iFrame.tfOtrosCargos.getValue() != null) {
+      double otrosCargos = ((Number) iFrame.tfOtrosCargos.getValue()).doubleValue();
+      if (otrosCargos > 0) {
+        importeTotal += otrosCargos;
+      }
     }
 
-    if (!iFrame.tfIgv.getText().isEmpty()) {
+    if (igv > 0) {
       importeTotal += igv;
     }
 
-    if (!iFrame.tfIsc.getText().isEmpty()) {
-      double isc = Double.parseDouble(iFrame.tfIsc.getText());
-      importeTotal += isc;
+    if (iFrame.tfIsc.getValue() != null) {
+      double isc = ((Number) iFrame.tfIsc.getValue()).doubleValue();
+      if (isc > 0) {
+        importeTotal += isc;
+      }
     }
 
-    if (!iFrame.tfOtrosTributos.getText().isEmpty()) {
-      double otrosTributos = Double.parseDouble(iFrame.tfOtrosTributos.getText());
-      importeTotal += otrosTributos;
+    if (iFrame.tfOtrosTributos.getValue() != null) {
+      double otrosTributos = ((Number) iFrame.tfOtrosTributos.getValue()).doubleValue();
+      if (otrosTributos > 0) {
+        importeTotal += otrosTributos;
+      }
     }
-
-    if (!iFrame.tfBolsasPlasticas.getText().isEmpty()) {
-      double bolsas = Double.parseDouble(iFrame.tfBolsasPlasticas.getText());
-      importeTotal += bolsas;
+    if (iFrame.tfBolsasPlasticas.getValue() != null) {
+      double bolsas = ((Number) iFrame.tfBolsasPlasticas.getValue()).doubleValue();
+      if (bolsas > 0) {
+        importeTotal += bolsas;
+      }
     }
 
     iFrame.tfIgv.setText(String.valueOf(igv));
