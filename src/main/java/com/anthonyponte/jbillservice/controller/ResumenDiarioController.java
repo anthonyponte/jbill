@@ -379,8 +379,11 @@ public class ResumenDiarioController {
 
                 enabled();
               } catch (BadLocationException ex) {
-                Logger.getLogger(ResumenDiarioController.class.getName())
-                    .log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(
+                    null,
+                    ex.getMessage(),
+                    ResumenDiarioController.class.getName(),
+                    JOptionPane.ERROR_MESSAGE);
               }
             } else {
               try {
@@ -403,8 +406,11 @@ public class ResumenDiarioController {
 
                 enabled();
               } catch (BadLocationException ex) {
-                Logger.getLogger(ResumenDiarioController.class.getName())
-                    .log(Level.SEVERE, null, ex);
+                             JOptionPane.showMessageDialog(
+                              null,
+                              ex.getMessage(),
+                              ResumenDiarioController.class.getName(),
+                              JOptionPane.ERROR_MESSAGE);
               }
             }
           }
@@ -658,17 +664,17 @@ public class ResumenDiarioController {
 
             iFrame.tfInafectas.setValue(0);
 
-            iFrame.tfOtrosCargos.setValue(0);
+            iFrame.tfGratuitas.setValue(0);
+
+            iFrame.tfExportacion.setValue(0);
 
             iFrame.tfOtrosCargos.setValue(0);
 
-            iFrame.tfImporteTotal.setValue(0);
+            iFrame.tfIgv.setValue(0);
 
-            iFrame.tfImporteTotal.setValue(0);
+            iFrame.tfIsc.setValue(0);
 
-            iFrame.tfImporteTotal.setValue(0);
-
-            iFrame.tfBolsasPlasticas.setValue(0);
+            iFrame.tfOtrosTributos.setValue(0);
 
             iFrame.tfBolsasPlasticas.setValue(0);
 
