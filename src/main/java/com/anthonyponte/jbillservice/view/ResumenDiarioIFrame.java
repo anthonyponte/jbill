@@ -4,7 +4,6 @@
  */
 package com.anthonyponte.jbillservice.view;
 
-import com.anthonyponte.jbillservice.filter.DecimalFilter;
 import com.anthonyponte.jbillservice.filter.IntegerFilter;
 import com.anthonyponte.jbillservice.filter.SerieFilter;
 import com.anthonyponte.jbillservice.model.DocumentoIdentidad;
