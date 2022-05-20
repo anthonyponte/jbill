@@ -61,8 +61,6 @@ import java.security.cert.CertificateException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
@@ -406,11 +404,11 @@ public class ResumenDiarioController {
 
                 enabled();
               } catch (BadLocationException ex) {
-                             JOptionPane.showMessageDialog(
-                              null,
-                              ex.getMessage(),
-                              ResumenDiarioController.class.getName(),
-                              JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(
+                    null,
+                    ex.getMessage(),
+                    ResumenDiarioController.class.getName(),
+                    JOptionPane.ERROR_MESSAGE);
               }
             }
           }
@@ -471,13 +469,13 @@ public class ResumenDiarioController {
             iFrame.tfPercepcionTasa.setText("");
 
             iFrame.tfPercepcionMonto.setEnabled(false);
-            iFrame.tfPercepcionMonto.setText("");
+            iFrame.tfPercepcionMonto.setValue(null);
 
             iFrame.tfPercepcionMontoTotal.setEnabled(false);
-            iFrame.tfPercepcionMontoTotal.setText("");
+            iFrame.tfPercepcionMontoTotal.setValue(null);
 
             iFrame.tfPercepcionBase.setEnabled(false);
-            iFrame.tfPercepcionBase.setText("");
+            iFrame.tfPercepcionBase.setValue(null);
           }
         });
 
