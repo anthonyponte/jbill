@@ -466,13 +466,14 @@ public class ResumenDiarioController {
             iFrame.cbxPercepcionRegimen.setSelectedIndex(-1);
 
             iFrame.tfPercepcionTasa.setEnabled(false);
-            iFrame.tfPercepcionTasa.setText("");
+            iFrame.tfPercepcionTasa.setValue(null);
 
             iFrame.tfPercepcionMonto.setEnabled(false);
             iFrame.tfPercepcionMonto.setValue(null);
 
             iFrame.tfPercepcionMontoTotal.setEnabled(false);
             iFrame.tfPercepcionMontoTotal.setValue(null);
+
             iFrame.tfPercepcionBase.setEnabled(false);
             iFrame.tfPercepcionBase.setValue(null);
           }
@@ -653,6 +654,8 @@ public class ResumenDiarioController {
 
             iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
 
+            iFrame.chckPercepcion.setSelected(false);
+
             iFrame.tfImporteTotal.setValue(0);
 
             iFrame.tfGravadas.setValue(0);
@@ -675,13 +678,15 @@ public class ResumenDiarioController {
 
             iFrame.tfBolsasPlasticas.setValue(0);
 
-            iFrame.cbxPercepcionRegimen.setSelectedIndex(0);
+            iFrame.cbxPercepcionRegimen.setSelectedIndex(-1);
 
-            iFrame.tfPercepcionMonto.setValue(0);
+            iFrame.tfPercepcionTasa.setValue(null);
 
-            iFrame.tfPercepcionMontoTotal.setValue(0);
+            iFrame.tfPercepcionMonto.setValue(null);
 
-            iFrame.tfPercepcionBase.setValue(0);
+            iFrame.tfPercepcionMontoTotal.setValue(null);
+
+            iFrame.tfPercepcionBase.setValue(null);
 
             iFrame.btnGuardar.setEnabled(true);
           } catch (BadLocationException ex) {
@@ -998,7 +1003,7 @@ public class ResumenDiarioController {
       iFrame.cbxPercepcionRegimen.setSelectedIndex(-1);
 
       iFrame.tfPercepcionTasa.setEnabled(false);
-      iFrame.tfPercepcionTasa.setText("");
+      iFrame.tfPercepcionTasa.setValue(null);
 
       iFrame.tfPercepcionMonto.setEnabled(false);
       iFrame.tfPercepcionMonto.setValue(null);
