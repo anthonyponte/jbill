@@ -473,7 +473,6 @@ public class ResumenDiarioController {
 
             iFrame.tfPercepcionMontoTotal.setEnabled(false);
             iFrame.tfPercepcionMontoTotal.setValue(null);
-
             iFrame.tfPercepcionBase.setEnabled(false);
             iFrame.tfPercepcionBase.setValue(null);
           }
