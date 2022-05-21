@@ -1164,5 +1164,11 @@ public class ResumenDiarioController {
 
     iFrame.tfIgv.setText(String.valueOf(igv));
     iFrame.tfImporteTotal.setText(String.valueOf(importeTotal));
+
+    if (importeTotal > 700) {
+      iFrame.tbbdDetalle.setEnabledAt(2, true);
+    } else {
+      iFrame.tbbdDetalle.setEnabledAt(2, false);
+    }
   }
 }
