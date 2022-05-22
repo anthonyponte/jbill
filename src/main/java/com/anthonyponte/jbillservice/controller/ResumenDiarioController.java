@@ -374,6 +374,8 @@ public class ResumenDiarioController {
                     .tfDocumentoReferenciaCorrelativo
                     .getDocument()
                     .remove(0, iFrame.tfDocumentoReferenciaCorrelativo.getText().length());
+
+                enabled();
               } catch (BadLocationException ex) {
                 JOptionPane.showMessageDialog(
                     null,
@@ -399,6 +401,8 @@ public class ResumenDiarioController {
                     .tfDocumentoReferenciaCorrelativo
                     .getDocument()
                     .remove(0, iFrame.tfDocumentoReferenciaCorrelativo.getText().length());
+
+                enabled();
               } catch (BadLocationException ex) {
                 JOptionPane.showMessageDialog(
                     null,
@@ -716,6 +720,7 @@ public class ResumenDiarioController {
 
     iFrame.tfDocumentoSerie.getDocument().addDocumentListener(dlEnabled);
     iFrame.tfDocumentoCorrelativo.getDocument().addDocumentListener(dlEnabled);
+    iFrame.tfDocumentoIdentidadNumero.getDocument().addDocumentListener(dlEnabled);
     iFrame.tfDocumentoReferenciaSerie.getDocument().addDocumentListener(dlEnabled);
     iFrame.tfDocumentoReferenciaCorrelativo.getDocument().addDocumentListener(dlEnabled);
 
@@ -1043,20 +1048,42 @@ public class ResumenDiarioController {
 
   private void enabled() {
     if (iFrame.cbxDocumentoTipo.getSelectedIndex() == 0) {
-      if (iFrame.tfDocumentoSerie.getText().isEmpty()
-          || iFrame.tfDocumentoCorrelativo.getText().isEmpty()) {
-        iFrame.btnAgregar.setEnabled(false);
+      if (iFrame.tbbdDetalle.isEnabledAt(1)) {
+        if (iFrame.tfDocumentoSerie.getText().isEmpty()
+            || iFrame.tfDocumentoCorrelativo.getText().isEmpty()) {
+          iFrame.btnAgregar.setEnabled(false);
+        } else {
+          iFrame.btnAgregar.setEnabled(true);
+        }
       } else {
-        iFrame.btnAgregar.setEnabled(true);
+        if (iFrame.tfDocumentoSerie.getText().isEmpty()
+            || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
+            || iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()) {
+          iFrame.btnAgregar.setEnabled(false);
+        } else {
+          iFrame.btnAgregar.setEnabled(true);
+        }
       }
     } else {
-      if (iFrame.tfDocumentoSerie.getText().isEmpty()
-          || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
-          || iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
-          || iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
-        iFrame.btnAgregar.setEnabled(false);
+      if (iFrame.tbbdDetalle.isEnabledAt(1)) {
+        if (iFrame.tfDocumentoSerie.getText().isEmpty()
+            || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
+            || iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
+            || iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
+          iFrame.btnAgregar.setEnabled(false);
+        } else {
+          iFrame.btnAgregar.setEnabled(true);
+        }
       } else {
-        iFrame.btnAgregar.setEnabled(true);
+        if (iFrame.tfDocumentoSerie.getText().isEmpty()
+            || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
+            || iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()
+            || iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
+            || iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
+          iFrame.btnAgregar.setEnabled(false);
+        } else {
+          iFrame.btnAgregar.setEnabled(true);
+        }
       }
     }
   }
@@ -1148,18 +1175,22 @@ public class ResumenDiarioController {
     iFrame.tfImporteTotal.setText(String.valueOf(importeTotal));
 
     if (importeTotal > 700) {
-      iFrame.tbbdDetalle.setEnabledAt(2, true);
+      iFrame.tbbdDetalle.setEnabledAt(1, true);
 
+      iFrame.cbxDocumentoIdentidadTipo.setEnabled(true);
       iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
+
+      iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
     } else {
       try {
-        iFrame.tbbdDetalle.setEnabledAt(2, false);
+        iFrame.tbbdDetalle.setEnabledAt(1, false);
 
+        iFrame.cbxDocumentoIdentidadTipo.setEnabled(false);
         iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
 
+        iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
         AbstractDocument adtfDocumentoIdentidadNumero =
             (AbstractDocument) iFrame.tfDocumentoIdentidadNumero.getDocument();
-
         adtfDocumentoIdentidadNumero.remove(
             0, iFrame.tfDocumentoIdentidadNumero.getText().length());
       } catch (BadLocationException ex) {
