@@ -374,8 +374,6 @@ public class ResumenDiarioController {
                     .tfDocumentoReferenciaCorrelativo
                     .getDocument()
                     .remove(0, iFrame.tfDocumentoReferenciaCorrelativo.getText().length());
-
-                enabled();
               } catch (BadLocationException ex) {
                 JOptionPane.showMessageDialog(
                     null,
@@ -401,8 +399,6 @@ public class ResumenDiarioController {
                     .tfDocumentoReferenciaCorrelativo
                     .getDocument()
                     .remove(0, iFrame.tfDocumentoReferenciaCorrelativo.getText().length());
-
-                enabled();
               } catch (BadLocationException ex) {
                 JOptionPane.showMessageDialog(
                     null,
@@ -719,13 +715,8 @@ public class ResumenDiarioController {
             });
 
     iFrame.tfDocumentoSerie.getDocument().addDocumentListener(dlEnabled);
-
     iFrame.tfDocumentoCorrelativo.getDocument().addDocumentListener(dlEnabled);
-
-    iFrame.tfDocumentoIdentidadNumero.getDocument().addDocumentListener(dlEnabled);
-
     iFrame.tfDocumentoReferenciaSerie.getDocument().addDocumentListener(dlEnabled);
-
     iFrame.tfDocumentoReferenciaCorrelativo.getDocument().addDocumentListener(dlEnabled);
 
     iFrame.tfGravadas.getDocument().addDocumentListener(dlSum);
@@ -1058,16 +1049,6 @@ public class ResumenDiarioController {
       } else {
         iFrame.btnAgregar.setEnabled(true);
       }
-    } else if (iFrame.cbxDocumentoIdentidadTipo.getSelectedIndex() >= 0) {
-      if (iFrame.tfDocumentoSerie.getText().isEmpty()
-          || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
-          || iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()
-          || iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
-          || iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
-        iFrame.btnAgregar.setEnabled(false);
-      } else {
-        iFrame.btnAgregar.setEnabled(true);
-      }
     } else {
       if (iFrame.tfDocumentoSerie.getText().isEmpty()
           || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
@@ -1163,12 +1144,31 @@ public class ResumenDiarioController {
     }
 
     iFrame.tfIgv.setText(String.valueOf(igv));
+
     iFrame.tfImporteTotal.setText(String.valueOf(importeTotal));
 
     if (importeTotal > 700) {
       iFrame.tbbdDetalle.setEnabledAt(2, true);
+
+      iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
     } else {
-      iFrame.tbbdDetalle.setEnabledAt(2, false);
+      try {
+        iFrame.tbbdDetalle.setEnabledAt(2, false);
+
+        iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
+
+        AbstractDocument adtfDocumentoIdentidadNumero =
+            (AbstractDocument) iFrame.tfDocumentoIdentidadNumero.getDocument();
+
+        adtfDocumentoIdentidadNumero.remove(
+            0, iFrame.tfDocumentoIdentidadNumero.getText().length());
+      } catch (BadLocationException ex) {
+        JOptionPane.showMessageDialog(
+            null,
+            ex.getMessage(),
+            ResumenDiarioController.class.getName(),
+            JOptionPane.ERROR_MESSAGE);
+      }
     }
   }
 }
