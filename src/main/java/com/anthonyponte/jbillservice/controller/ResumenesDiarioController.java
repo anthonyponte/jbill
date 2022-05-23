@@ -48,9 +48,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import org.joda.time.DateTime;
 
@@ -109,11 +108,17 @@ public class ResumenesDiarioController {
 
                     fos.flush();
                   } catch (FileNotFoundException ex) {
-                    Logger.getLogger(ComunicacionesBajaController.class.getName())
-                        .log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(
+                        null,
+                        ex.getMessage(),
+                        ResumenesDiarioController.class.getName(),
+                        JOptionPane.ERROR_MESSAGE);
                   } catch (IOException ex) {
-                    Logger.getLogger(ComunicacionesBajaController.class.getName())
-                        .log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(
+                        null,
+                        ex.getMessage(),
+                        ResumenesDiarioController.class.getName(),
+                        JOptionPane.ERROR_MESSAGE);
                   }
                 }
               }
@@ -259,8 +264,11 @@ public class ResumenesDiarioController {
               if (!get.isEmpty()) iFrame.tfFiltrar.requestFocus();
               else iFrame.dpMesAno.requestFocus();
             } catch (InterruptedException | ExecutionException ex) {
-              Logger.getLogger(ComunicacionesBajaController.class.getName())
-                  .log(Level.SEVERE, null, ex);
+              JOptionPane.showMessageDialog(
+                  null,
+                  ex.getMessage(),
+                  ResumenesDiarioController.class.getName(),
+                  JOptionPane.ERROR_MESSAGE);
             }
           }
         };
