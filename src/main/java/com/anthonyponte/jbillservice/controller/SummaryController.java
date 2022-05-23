@@ -18,6 +18,7 @@ import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThr
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
+import com.anthonyponte.jbillservice.custom.MyTableResize;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.view.SummaryIFrame;
 import jakarta.activation.DataHandler;
@@ -39,7 +40,6 @@ import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.model.Summary;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.google.common.util.concurrent.Uninterruptibles;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -54,10 +54,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.KeyStroke;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumnModel;
 
 /** @author anthony */
 public class SummaryController {
@@ -397,7 +394,7 @@ public class SummaryController {
               eventList.clear();
               eventList.addAll(get);
 
-              resize(iFrame.table);
+              MyTableResize.resize(iFrame.table);
 
               if (!get.isEmpty()) iFrame.tfFiltrar.requestFocus();
             } catch (InterruptedException | ExecutionException ex) {
@@ -412,19 +409,5 @@ public class SummaryController {
           }
         };
     worker.execute();
-  }
-
-  private void resize(JTable table) {
-    TableColumnModel columnModel = table.getColumnModel();
-    for (int column = 0; column < table.getColumnCount(); column++) {
-      int width = 150;
-      for (int row = 0; row < table.getRowCount(); row++) {
-        TableCellRenderer renderer = table.getCellRenderer(row, column);
-        Component comp = table.prepareRenderer(renderer, row, column);
-        width = Math.max(comp.getPreferredSize().width + 1, width);
-      }
-      if (width > 300) width = 300;
-      columnModel.getColumn(column).setPreferredWidth(width);
-    }
   }
 }

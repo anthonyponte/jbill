@@ -19,11 +19,16 @@ package com.anthonyponte.jbillservice.idao;
 
 import com.anthonyponte.jbillservice.custom.MyHsqldbConnection;
 import com.anthonyponte.jbillservice.dao.ResumenDiarioDao;
+import com.anthonyponte.jbillservice.model.ComunicacionBaja;
+import com.anthonyponte.jbillservice.model.Empresa;
 import com.anthonyponte.jbillservice.model.ResumenDiario;
 import com.anthonyponte.jbillservice.model.ResumenDiarioDetalle;
+import com.anthonyponte.jbillservice.model.TipoDocumento;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;
 
@@ -229,8 +234,59 @@ public class IResumenDiarioDao implements ResumenDiarioDao {
 
   @Override
   public List<ResumenDiario> read(DateTime dateTime) throws SQLException {
-    throw new UnsupportedOperationException("Not supported yet."); // Generated from
-    // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    List<ResumenDiario> list = new ArrayList<>();
+
+    database.connect();
+
+    String query =
+        "SELECT "
+            + "ID, TIPO_CODIGO, TIPO_DESCRIPCION, SERIE, CORRELATIVO, FECHA_EMISION, "
+            + "FECHA_REFERENCIA, RUC, RAZON_SOCIAL, ZIP_NOMBRE, ZIP, TICKET,  STATUS_CODE, "
+            + "CONTENT_NOMBRE, CONTENT "
+            + "FROM SUMMARY "
+            + "WHERE MONTH(FECHA_EMISION) = ? AND YEAR(FECHA_EMISION) = ? AND TICKET IS NOT NULL "
+            + "AND STATUS_CODE IS NOT NULL AND CONTENT_NOMBRE IS NOT NULL AND CONTENT IS NOT NULL "
+            + "AND TIPO_CODIGO = 'RC' "
+            + "ORDER BY FECHA_EMISION DESC";
+
+    try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
+      ps.setInt(1, dateTime.getMonthOfYear());
+      ps.setInt(2, dateTime.getYear());
+
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          ResumenDiario resumenDiario = new ResumenDiario();
+          resumenDiario.setId(rs.getInt(1));
+
+          TipoDocumento tipoDocumento = new TipoDocumento();
+          tipoDocumento.setCodigo(rs.getString(2));
+          tipoDocumento.setDescripcion(rs.getString(3));
+          resumenDiario.setTipoDocumento(tipoDocumento);
+
+          resumenDiario.setSerie(rs.getString(4));
+          resumenDiario.setCorrelativo(rs.getInt(5));
+          resumenDiario.setFechaEmision(rs.getDate(6));
+          resumenDiario.setFechaReferencia(rs.getDate(7));
+
+          Empresa emisor = new Empresa();
+          emisor.setNumeroDocumentoIdentidad(rs.getString(8));
+          emisor.setNombre(rs.getString(9));
+          resumenDiario.setEmisor(emisor);
+
+          resumenDiario.setNombreZip(rs.getString(10));
+          resumenDiario.setZip(rs.getBytes(11));
+          resumenDiario.setTicket(rs.getString(12));
+          resumenDiario.setStatusCode(rs.getString(13));
+          resumenDiario.setNombreContent(rs.getString(14));
+          resumenDiario.setContent(rs.getBytes(15));
+          list.add(resumenDiario);
+        }
+      }
+    }
+
+    database.disconnect();
+
+    return list;
   }
 
   @Override

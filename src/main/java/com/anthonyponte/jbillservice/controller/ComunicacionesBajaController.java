@@ -19,6 +19,7 @@ import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThr
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
+import com.anthonyponte.jbillservice.custom.MyTableResize;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
@@ -34,18 +35,13 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 import org.joda.time.DateTime;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
-import java.awt.Component;
-import javax.swing.JTable;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumnModel;
+import javax.swing.JOptionPane;
 
 /** @author AnthonyPonte */
 public class ComunicacionesBajaController {
@@ -103,11 +99,17 @@ public class ComunicacionesBajaController {
 
                     fos.flush();
                   } catch (FileNotFoundException ex) {
-                    Logger.getLogger(ComunicacionesBajaController.class.getName())
-                        .log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(
+                        null,
+                        ex.getMessage(),
+                        ComunicacionesBajaController.class.getName(),
+                        JOptionPane.ERROR_MESSAGE);
                   } catch (IOException ex) {
-                    Logger.getLogger(ComunicacionesBajaController.class.getName())
-                        .log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(
+                        null,
+                        ex.getMessage(),
+                        ComunicacionesBajaController.class.getName(),
+                        JOptionPane.ERROR_MESSAGE);
                   }
                 }
 
@@ -153,8 +155,11 @@ public class ComunicacionesBajaController {
                           }
                           model.addRow(row);
                         } catch (InterruptedException | ExecutionException ex) {
-                          Logger.getLogger(ComunicacionesBajaController.class.getName())
-                              .log(Level.SEVERE, null, ex);
+                          JOptionPane.showMessageDialog(
+                              null,
+                              ex.getMessage(),
+                              ComunicacionesBajaController.class.getName(),
+                              JOptionPane.ERROR_MESSAGE);
                         }
                       }
                     };
@@ -298,30 +303,19 @@ public class ComunicacionesBajaController {
               eventList.clear();
               eventList.addAll(get);
 
-              resize(iFrame.tblEncabezado);
+              MyTableResize.resize(iFrame.tblEncabezado);
 
               if (!get.isEmpty()) iFrame.tfFiltrar.requestFocus();
               else iFrame.dpMesAno.requestFocus();
             } catch (InterruptedException | ExecutionException ex) {
-              Logger.getLogger(ComunicacionesBajaController.class.getName())
-                  .log(Level.SEVERE, null, ex);
+              JOptionPane.showMessageDialog(
+                  null,
+                  ex.getMessage(),
+                  ComunicacionesBajaController.class.getName(),
+                  JOptionPane.ERROR_MESSAGE);
             }
           }
         };
     worker.execute();
-  }
-
-  private void resize(JTable table) {
-    TableColumnModel columnModel = table.getColumnModel();
-    for (int column = 0; column < table.getColumnCount(); column++) {
-      int width = 150;
-      for (int row = 0; row < table.getRowCount(); row++) {
-        TableCellRenderer renderer = table.getCellRenderer(row, column);
-        Component comp = table.prepareRenderer(renderer, row, column);
-        width = Math.max(comp.getPreferredSize().width + 1, width);
-      }
-      if (width > 300) width = 300;
-      columnModel.getColumn(column).setPreferredWidth(width);
-    }
   }
 }
