@@ -11,6 +11,7 @@ import com.anthonyponte.jbillservice.view.ComunicacionBajaIFrame;
 import com.anthonyponte.jbillservice.view.ComunicacionesBajaIFrame;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.ResumenDiarioIFrame;
+import com.anthonyponte.jbillservice.view.ResumenesDiarioIFrame;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -35,6 +36,7 @@ public class MainController {
   private ResumenDiarioIFrame resumenDiarioIFrame;
   private SummaryIFrame summaryIFrame;
   private ComunicacionesBajaIFrame comunicacionesBajaIFrame;
+  private ResumenesDiarioIFrame resumenesDiarioIFrame;
   private LoadingDialog dialog;
   private Server server = null;
   private final String ALIAS = "jbs";
@@ -84,6 +86,18 @@ public class MainController {
             new ComunicacionesBajaController(comunicacionesBajaIFrame, dialog).init();
           } else {
             iframeClosed(comunicacionesBajaIFrame);
+          }
+        });
+
+    frame.miResumenesDiario.addActionListener(
+        (ActionEvent arg0) -> {
+          if (isIframeClosed(resumenesDiarioIFrame)) {
+            resumenesDiarioIFrame = new ResumenesDiarioIFrame();
+            frame.dpane.add(resumenesDiarioIFrame);
+            resumenesDiarioIFrame.setLocation(centerIFrame(resumenesDiarioIFrame));
+            new ResumenesDiarioController(resumenesDiarioIFrame, dialog).init();
+          } else {
+            iframeClosed(resumenesDiarioIFrame);
           }
         });
 

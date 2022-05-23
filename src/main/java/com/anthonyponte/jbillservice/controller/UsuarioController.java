@@ -95,6 +95,7 @@ public class UsuarioController {
             frame.miComunicacionBaja.setEnabled(true);
             frame.miResumenDiario.setEnabled(true);
             frame.miComunicacionesBaja.setEnabled(true);
+            frame.miResumenesDiario.setEnabled(true);
             frame.miSummary.setEnabled(true);
           } catch (BackingStoreException ex) {
             Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
