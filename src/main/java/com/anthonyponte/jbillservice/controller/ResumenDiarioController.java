@@ -61,8 +61,6 @@ import java.security.cert.CertificateException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
@@ -130,6 +128,7 @@ public class ResumenDiarioController {
                     dialog.dispose();
 
                     iFrame.tabbed.setSelectedIndex(0);
+                    iFrame.tbbdDetalle.setSelectedIndex(0);
 
                     Date fechaGeneracion = iFrame.dpFechaGeneracion.getDate();
                     iFrame.tfSerie.setText(MyDateFormat.yyyyMMdd(fechaGeneracion));
@@ -156,38 +155,36 @@ public class ResumenDiarioController {
                     iFrame.cbxMoneda.setEnabled(true);
                     iFrame.cbxMoneda.setSelectedIndex(0);
 
-                    iFrame.tfImporteTotal.setEnabled(true);
-                    iFrame.tfImporteTotal.setText("0.00");
+                    iFrame.tfImporteTotal.setValue(0);
 
                     iFrame.tfGravadas.setEnabled(true);
-                    iFrame.tfGravadas.setText("0.00");
+                    iFrame.tfGravadas.setValue(0);
 
                     iFrame.tfExoneradas.setEnabled(true);
-                    iFrame.tfExoneradas.setText("0.00");
+                    iFrame.tfExoneradas.setValue(0);
 
                     iFrame.tfInafectas.setEnabled(true);
-                    iFrame.tfInafectas.setText("0.00");
+                    iFrame.tfInafectas.setValue(0);
 
                     iFrame.tfGratuitas.setEnabled(true);
-                    iFrame.tfGratuitas.setText("0.00");
+                    iFrame.tfGratuitas.setValue(0);
 
                     iFrame.tfExportacion.setEnabled(true);
-                    iFrame.tfExportacion.setText("0.00");
+                    iFrame.tfExportacion.setValue(0);
 
                     iFrame.tfOtrosCargos.setEnabled(true);
-                    iFrame.tfOtrosCargos.setText("0.00");
+                    iFrame.tfOtrosCargos.setValue(0);
 
-                    iFrame.tfIgv.setEnabled(true);
-                    iFrame.tfIgv.setText("0.00");
+                    iFrame.tfIgv.setValue(0);
 
                     iFrame.tfIsc.setEnabled(true);
-                    iFrame.tfIsc.setText("0.00");
+                    iFrame.tfIsc.setValue(0);
 
                     iFrame.tfOtrosTributos.setEnabled(true);
-                    iFrame.tfOtrosTributos.setText("0.00");
+                    iFrame.tfOtrosTributos.setValue(0);
 
                     iFrame.tfBolsasPlasticas.setEnabled(true);
-                    iFrame.tfBolsasPlasticas.setText("0.00");
+                    iFrame.tfBolsasPlasticas.setValue(0);
 
                     iFrame.btnNuevo.setEnabled(false);
 
@@ -380,8 +377,11 @@ public class ResumenDiarioController {
 
                 enabled();
               } catch (BadLocationException ex) {
-                Logger.getLogger(ResumenDiarioController.class.getName())
-                    .log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(
+                    null,
+                    ex.getMessage(),
+                    ResumenDiarioController.class.getName(),
+                    JOptionPane.ERROR_MESSAGE);
               }
             } else {
               try {
@@ -404,8 +404,11 @@ public class ResumenDiarioController {
 
                 enabled();
               } catch (BadLocationException ex) {
-                Logger.getLogger(ResumenDiarioController.class.getName())
-                    .log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(
+                    null,
+                    ex.getMessage(),
+                    ResumenDiarioController.class.getName(),
+                    JOptionPane.ERROR_MESSAGE);
               }
             }
           }
@@ -449,13 +452,13 @@ public class ResumenDiarioController {
             iFrame.tfPercepcionTasa.setEnabled(true);
 
             iFrame.tfPercepcionMonto.setEnabled(true);
-            iFrame.tfPercepcionMonto.setValue(0.00);
+            iFrame.tfPercepcionMonto.setValue(0);
 
             iFrame.tfPercepcionMontoTotal.setEnabled(true);
-            iFrame.tfPercepcionMontoTotal.setValue(0.00);
+            iFrame.tfPercepcionMontoTotal.setValue(0);
 
             iFrame.tfPercepcionBase.setEnabled(true);
-            iFrame.tfPercepcionBase.setValue(0.00);
+            iFrame.tfPercepcionBase.setValue(0);
           } else if (e.getStateChange() == ItemEvent.DESELECTED) {
             iFrame.tbbdDetalle.setEnabledAt(4, false);
 
@@ -463,16 +466,16 @@ public class ResumenDiarioController {
             iFrame.cbxPercepcionRegimen.setSelectedIndex(-1);
 
             iFrame.tfPercepcionTasa.setEnabled(false);
-            iFrame.tfPercepcionTasa.setText("");
+            iFrame.tfPercepcionTasa.setValue(null);
 
             iFrame.tfPercepcionMonto.setEnabled(false);
-            iFrame.tfPercepcionMonto.setText("");
+            iFrame.tfPercepcionMonto.setValue(null);
 
             iFrame.tfPercepcionMontoTotal.setEnabled(false);
-            iFrame.tfPercepcionMontoTotal.setText("");
+            iFrame.tfPercepcionMontoTotal.setValue(null);
 
             iFrame.tfPercepcionBase.setEnabled(false);
-            iFrame.tfPercepcionBase.setText("");
+            iFrame.tfPercepcionBase.setValue(null);
           }
         });
 
@@ -530,101 +533,101 @@ public class ResumenDiarioController {
             }
 
             detalle.setEstado((Estado) iFrame.cbxEstado.getSelectedItem());
-            //            Number importeTotal = (Number) iFrame.tfImporteTotal.getValue();
-            //            detalle.setImporteTotal(importeTotal.doubleValue());
+            Number importeTotal = (Number) iFrame.tfImporteTotal.getValue();
+            detalle.setImporteTotal(importeTotal.doubleValue());
 
             detalle.setMoneda((Moneda) iFrame.cbxMoneda.getSelectedItem());
 
-            //            Number gravadas = (Number) iFrame.tfGravadas.getValue();
-            //            if (gravadas.doubleValue() > 0) {
-            //              Operacion operacionGravadas = new Operacion();
-            //              operacionGravadas.setCodigo("01");
-            //              operacionGravadas.setDescripcion("Gravado");
-            //              operacionGravadas.setTotal(gravadas.doubleValue());
-            //              detalle.setGravadas(operacionGravadas);
-            //            }
-            //
-            //            Number exoneradas = (Number) iFrame.tfExoneradas.getValue();
-            //            if (exoneradas.doubleValue() > 0) {
-            //              Operacion operacionExoneradas = new Operacion();
-            //              operacionExoneradas.setCodigo("02");
-            //              operacionExoneradas.setDescripcion("Exonerado");
-            //              operacionExoneradas.setTotal(exoneradas.doubleValue());
-            //              detalle.setExoneradas(operacionExoneradas);
-            //            }
-            //
-            //            Number inafectas = (Number) iFrame.tfInafectas.getValue();
-            //            if (inafectas.doubleValue() > 0) {
-            //              Operacion operacionInafectas = new Operacion();
-            //              operacionInafectas.setCodigo("03");
-            //              operacionInafectas.setDescripcion("Inafecto");
-            //              operacionInafectas.setTotal(inafectas.doubleValue());
-            //              detalle.setInafectas(operacionInafectas);
-            //            }
-            //
-            //            Number exportacion = (Number) iFrame.tfExportacion.getValue();
-            //            if (exportacion.doubleValue() > 0) {
-            //              Operacion operacionExportacion = new Operacion();
-            //              operacionExportacion.setCodigo("04");
-            //              operacionExportacion.setDescripcion("Exportación");
-            //              operacionExportacion.setTotal(exportacion.doubleValue());
-            //              detalle.setExportacion(operacionExportacion);
-            //            }
-            //
-            //            Number gratuitas = (Number) iFrame.tfGratuitas.getValue();
-            //            if (gratuitas.doubleValue() > 0) {
-            //              Operacion operacionGratuitas = new Operacion();
-            //              operacionGratuitas.setCodigo("05");
-            //              operacionGratuitas.setDescripcion("Gratuitas");
-            //              operacionGratuitas.setTotal(gratuitas.doubleValue());
-            //              detalle.setGratuitas(operacionGratuitas);
-            //            }
-            //
-            //            Number otrosCargos = (Number) iFrame.tfImporteTotal.getValue();
-            //            if (otrosCargos.doubleValue() > 0) {
-            //              OtrosCargos operacionOtrosCargos = new OtrosCargos();
-            //              operacionOtrosCargos.setIndicador(true);
-            //              operacionOtrosCargos.setTotal(otrosCargos.doubleValue());
-            //              detalle.setOtrosCargos(operacionOtrosCargos);
-            //            }
-            //
-            //            Number igv = (Number) iFrame.tfImporteTotal.getValue();
-            //            Impuesto impuestoIgv = new Impuesto();
-            //            impuestoIgv.setTotal(igv.doubleValue());
-            //            impuestoIgv.setCodigo("1000");
-            //            impuestoIgv.setDescripcion("IGV");
-            //            impuestoIgv.setCodigoInternacional("VAT");
-            //            detalle.setIgv(impuestoIgv);
-            //
-            //            Number isc = (Number) iFrame.tfImporteTotal.getValue();
-            //            if (isc.doubleValue() > 0) {
-            //              Impuesto impuestoIsc = new Impuesto();
-            //              impuestoIsc.setTotal(isc.doubleValue());
-            //              impuestoIsc.setCodigo("2000");
-            //              impuestoIsc.setDescripcion("ISC");
-            //              impuestoIsc.setCodigoInternacional("EXC");
-            //              detalle.setIsc(impuestoIsc);
-            //            }
-            //
-            //            Number otrosTributos = (Number) iFrame.tfBolsasPlasticas.getValue();
-            //            if (otrosTributos.doubleValue() > 0) {
-            //              Impuesto impuestoOtrosTributos = new Impuesto();
-            //              impuestoOtrosTributos.setTotal(otrosTributos.doubleValue());
-            //              impuestoOtrosTributos.setCodigo("9999");
-            //              impuestoOtrosTributos.setDescripcion("Otros tributos");
-            //              impuestoOtrosTributos.setCodigoInternacional("OTH");
-            //              detalle.setOtrosTributos(impuestoOtrosTributos);
-            //            }
-            //
-            //            Number bolsas = (Number) iFrame.tfBolsasPlasticas.getValue();
-            //            if (bolsas.doubleValue() > 0) {
-            //              Impuesto impuestoBolsas = new Impuesto();
-            //              impuestoBolsas.setTotal(bolsas.doubleValue());
-            //              impuestoBolsas.setCodigo("7152");
-            //              impuestoBolsas.setDescripcion("Impuesto a la bolsa plastica");
-            //              impuestoBolsas.setCodigoInternacional("OTH");
-            //              detalle.setImpuestoBolsa(impuestoBolsas);
-            //            }
+            Number gravadas = (Number) iFrame.tfGravadas.getValue();
+            if (gravadas.doubleValue() > 0) {
+              Operacion operacionGravadas = new Operacion();
+              operacionGravadas.setCodigo("01");
+              operacionGravadas.setDescripcion("Gravado");
+              operacionGravadas.setTotal(gravadas.doubleValue());
+              detalle.setGravadas(operacionGravadas);
+            }
+
+            Number exoneradas = (Number) iFrame.tfExoneradas.getValue();
+            if (exoneradas.doubleValue() > 0) {
+              Operacion operacionExoneradas = new Operacion();
+              operacionExoneradas.setCodigo("02");
+              operacionExoneradas.setDescripcion("Exonerado");
+              operacionExoneradas.setTotal(exoneradas.doubleValue());
+              detalle.setExoneradas(operacionExoneradas);
+            }
+
+            Number inafectas = (Number) iFrame.tfInafectas.getValue();
+            if (inafectas.doubleValue() > 0) {
+              Operacion operacionInafectas = new Operacion();
+              operacionInafectas.setCodigo("03");
+              operacionInafectas.setDescripcion("Inafecto");
+              operacionInafectas.setTotal(inafectas.doubleValue());
+              detalle.setInafectas(operacionInafectas);
+            }
+
+            Number exportacion = (Number) iFrame.tfExportacion.getValue();
+            if (exportacion.doubleValue() > 0) {
+              Operacion operacionExportacion = new Operacion();
+              operacionExportacion.setCodigo("04");
+              operacionExportacion.setDescripcion("Exportación");
+              operacionExportacion.setTotal(exportacion.doubleValue());
+              detalle.setExportacion(operacionExportacion);
+            }
+
+            Number gratuitas = (Number) iFrame.tfGratuitas.getValue();
+            if (gratuitas.doubleValue() > 0) {
+              Operacion operacionGratuitas = new Operacion();
+              operacionGratuitas.setCodigo("05");
+              operacionGratuitas.setDescripcion("Gratuitas");
+              operacionGratuitas.setTotal(gratuitas.doubleValue());
+              detalle.setGratuitas(operacionGratuitas);
+            }
+
+            Number otrosCargos = (Number) iFrame.tfImporteTotal.getValue();
+            if (otrosCargos.doubleValue() > 0) {
+              OtrosCargos operacionOtrosCargos = new OtrosCargos();
+              operacionOtrosCargos.setIndicador(true);
+              operacionOtrosCargos.setTotal(otrosCargos.doubleValue());
+              detalle.setOtrosCargos(operacionOtrosCargos);
+            }
+
+            Number igv = (Number) iFrame.tfImporteTotal.getValue();
+            Impuesto impuestoIgv = new Impuesto();
+            impuestoIgv.setTotal(igv.doubleValue());
+            impuestoIgv.setCodigo("1000");
+            impuestoIgv.setDescripcion("IGV");
+            impuestoIgv.setCodigoInternacional("VAT");
+            detalle.setIgv(impuestoIgv);
+
+            Number isc = (Number) iFrame.tfImporteTotal.getValue();
+            if (isc.doubleValue() > 0) {
+              Impuesto impuestoIsc = new Impuesto();
+              impuestoIsc.setTotal(isc.doubleValue());
+              impuestoIsc.setCodigo("2000");
+              impuestoIsc.setDescripcion("ISC");
+              impuestoIsc.setCodigoInternacional("EXC");
+              detalle.setIsc(impuestoIsc);
+            }
+
+            Number otrosTributos = (Number) iFrame.tfBolsasPlasticas.getValue();
+            if (otrosTributos.doubleValue() > 0) {
+              Impuesto impuestoOtrosTributos = new Impuesto();
+              impuestoOtrosTributos.setTotal(otrosTributos.doubleValue());
+              impuestoOtrosTributos.setCodigo("9999");
+              impuestoOtrosTributos.setDescripcion("Otros tributos");
+              impuestoOtrosTributos.setCodigoInternacional("OTH");
+              detalle.setOtrosTributos(impuestoOtrosTributos);
+            }
+
+            Number bolsas = (Number) iFrame.tfBolsasPlasticas.getValue();
+            if (bolsas.doubleValue() > 0) {
+              Impuesto impuestoBolsas = new Impuesto();
+              impuestoBolsas.setTotal(bolsas.doubleValue());
+              impuestoBolsas.setCodigo("7152");
+              impuestoBolsas.setDescripcion("Impuesto a la bolsa plastica");
+              impuestoBolsas.setCodigoInternacional("OTH");
+              detalle.setImpuestoBolsa(impuestoBolsas);
+            }
 
             eventList.add(detalle);
 
@@ -651,35 +654,39 @@ public class ResumenDiarioController {
 
             iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
 
-            iFrame.tfImporteTotal.setText("0.00");
+            iFrame.chckPercepcion.setSelected(false);
 
-            iFrame.tfGravadas.setText("0.00");
+            iFrame.tfImporteTotal.setValue(0);
 
-            iFrame.tfExoneradas.setText("0.00");
+            iFrame.tfGravadas.setValue(0);
 
-            iFrame.tfInafectas.setText("0.00");
+            iFrame.tfExoneradas.setValue(0);
 
-            iFrame.tfGratuitas.setText("0.00");
+            iFrame.tfInafectas.setValue(0);
 
-            iFrame.tfExportacion.setText("0.00");
+            iFrame.tfGratuitas.setValue(0);
 
-            iFrame.tfImporteTotal.setText("0.00");
+            iFrame.tfExportacion.setValue(0);
 
-            iFrame.tfImporteTotal.setText("0.00");
+            iFrame.tfOtrosCargos.setValue(0);
 
-            iFrame.tfImporteTotal.setText("0.00");
+            iFrame.tfIgv.setValue(0);
 
-            iFrame.tfBolsasPlasticas.setText("0.00");
+            iFrame.tfIsc.setValue(0);
 
-            iFrame.tfBolsasPlasticas.setText("0.00");
+            iFrame.tfOtrosTributos.setValue(0);
 
-            iFrame.cbxPercepcionRegimen.setSelectedIndex(0);
+            iFrame.tfBolsasPlasticas.setValue(0);
 
-            iFrame.tfPercepcionMonto.setText("0.00");
+            iFrame.cbxPercepcionRegimen.setSelectedIndex(-1);
 
-            iFrame.tfPercepcionMontoTotal.setText("0.00");
+            iFrame.tfPercepcionTasa.setValue(null);
 
-            iFrame.tfPercepcionBase.setText("0.00");
+            iFrame.tfPercepcionMonto.setValue(null);
+
+            iFrame.tfPercepcionMontoTotal.setValue(null);
+
+            iFrame.tfPercepcionBase.setValue(null);
 
             iFrame.btnGuardar.setEnabled(true);
           } catch (BadLocationException ex) {
@@ -712,19 +719,15 @@ public class ResumenDiarioController {
             });
 
     iFrame.tfDocumentoSerie.getDocument().addDocumentListener(dlEnabled);
-
     iFrame.tfDocumentoCorrelativo.getDocument().addDocumentListener(dlEnabled);
-
     iFrame.tfDocumentoIdentidadNumero.getDocument().addDocumentListener(dlEnabled);
-
     iFrame.tfDocumentoReferenciaSerie.getDocument().addDocumentListener(dlEnabled);
-
     iFrame.tfDocumentoReferenciaCorrelativo.getDocument().addDocumentListener(dlEnabled);
 
     iFrame.tfGravadas.getDocument().addDocumentListener(dlSum);
     iFrame.tfExoneradas.getDocument().addDocumentListener(dlSum);
     iFrame.tfInafectas.getDocument().addDocumentListener(dlSum);
-    iFrame.tfExportacion.getDocument().addDocumentListener(dlSum);
+    iFrame.tfOtrosCargos.getDocument().addDocumentListener(dlSum);
     iFrame.tfOtrosCargos.getDocument().addDocumentListener(dlSum);
     iFrame.tfIsc.getDocument().addDocumentListener(dlSum);
     iFrame.tfOtrosTributos.getDocument().addDocumentListener(dlSum);
@@ -960,52 +963,52 @@ public class ResumenDiarioController {
       iFrame.cbxMoneda.setSelectedIndex(-1);
 
       iFrame.tfImporteTotal.setEnabled(false);
-      iFrame.tfImporteTotal.setText("");
+      iFrame.tfImporteTotal.setValue(null);
 
       iFrame.tfGravadas.setEnabled(false);
-      iFrame.tfGravadas.setText("");
+      iFrame.tfGravadas.setValue(null);
 
       iFrame.tfExoneradas.setEnabled(false);
-      iFrame.tfExoneradas.setText("");
+      iFrame.tfExoneradas.setValue(null);
 
       iFrame.tfInafectas.setEnabled(false);
-      iFrame.tfInafectas.setText("");
+      iFrame.tfInafectas.setValue(null);
 
       iFrame.tfGratuitas.setEnabled(false);
-      iFrame.tfGratuitas.setText("");
+      iFrame.tfGratuitas.setValue(null);
 
       iFrame.tfExportacion.setEnabled(false);
-      iFrame.tfExportacion.setText("");
+      iFrame.tfExportacion.setValue(null);
 
       iFrame.tfOtrosCargos.setEnabled(false);
-      iFrame.tfOtrosCargos.setText("");
+      iFrame.tfOtrosCargos.setValue(null);
 
       iFrame.tfIgv.setEnabled(false);
-      iFrame.tfIgv.setText("");
+      iFrame.tfIgv.setValue(null);
 
       iFrame.tfIsc.setEnabled(false);
-      iFrame.tfIsc.setText("");
+      iFrame.tfIsc.setValue(null);
 
       iFrame.tfOtrosTributos.setEnabled(false);
-      iFrame.tfOtrosTributos.setText("");
+      iFrame.tfOtrosTributos.setValue(null);
 
       iFrame.tfBolsasPlasticas.setEnabled(false);
-      iFrame.tfBolsasPlasticas.setText("");
+      iFrame.tfBolsasPlasticas.setValue(null);
 
       iFrame.cbxPercepcionRegimen.setEnabled(false);
       iFrame.cbxPercepcionRegimen.setSelectedIndex(-1);
 
       iFrame.tfPercepcionTasa.setEnabled(false);
-      iFrame.tfPercepcionTasa.setText("");
+      iFrame.tfPercepcionTasa.setValue(null);
 
       iFrame.tfPercepcionMonto.setEnabled(false);
-      iFrame.tfPercepcionMonto.setText("");
+      iFrame.tfPercepcionMonto.setValue(null);
 
       iFrame.tfPercepcionMontoTotal.setEnabled(false);
-      iFrame.tfPercepcionMontoTotal.setText("");
+      iFrame.tfPercepcionMontoTotal.setValue(null);
 
       iFrame.tfPercepcionBase.setEnabled(false);
-      iFrame.tfPercepcionBase.setText("");
+      iFrame.tfPercepcionBase.setValue(null);
 
       eventList.clear();
       selectionModel.clearSelection();
@@ -1045,30 +1048,42 @@ public class ResumenDiarioController {
 
   private void enabled() {
     if (iFrame.cbxDocumentoTipo.getSelectedIndex() == 0) {
-      if (iFrame.tfDocumentoSerie.getText().isEmpty()
-          || iFrame.tfDocumentoCorrelativo.getText().isEmpty()) {
-        iFrame.btnAgregar.setEnabled(false);
+      if (iFrame.tbbdDetalle.isEnabledAt(1)) {
+        if (iFrame.tfDocumentoSerie.getText().isEmpty()
+            || iFrame.tfDocumentoCorrelativo.getText().isEmpty()) {
+          iFrame.btnAgregar.setEnabled(false);
+        } else {
+          iFrame.btnAgregar.setEnabled(true);
+        }
       } else {
-        iFrame.btnAgregar.setEnabled(true);
-      }
-    } else if (iFrame.cbxDocumentoIdentidadTipo.getSelectedIndex() >= 0) {
-      if (iFrame.tfDocumentoSerie.getText().isEmpty()
-          || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
-          || iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()
-          || iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
-          || iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
-        iFrame.btnAgregar.setEnabled(false);
-      } else {
-        iFrame.btnAgregar.setEnabled(true);
+        if (iFrame.tfDocumentoSerie.getText().isEmpty()
+            || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
+            || iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()) {
+          iFrame.btnAgregar.setEnabled(false);
+        } else {
+          iFrame.btnAgregar.setEnabled(true);
+        }
       }
     } else {
-      if (iFrame.tfDocumentoSerie.getText().isEmpty()
-          || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
-          || iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
-          || iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
-        iFrame.btnAgregar.setEnabled(false);
+      if (iFrame.tbbdDetalle.isEnabledAt(1)) {
+        if (iFrame.tfDocumentoSerie.getText().isEmpty()
+            || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
+            || iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
+            || iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
+          iFrame.btnAgregar.setEnabled(false);
+        } else {
+          iFrame.btnAgregar.setEnabled(true);
+        }
       } else {
-        iFrame.btnAgregar.setEnabled(true);
+        if (iFrame.tfDocumentoSerie.getText().isEmpty()
+            || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
+            || iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()
+            || iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
+            || iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
+          iFrame.btnAgregar.setEnabled(false);
+        } else {
+          iFrame.btnAgregar.setEnabled(true);
+        }
       }
     }
   }
@@ -1092,55 +1107,99 @@ public class ResumenDiarioController {
       };
 
   private void sum() {
-    double importeTotal = 0;
     double igv = 0;
+    double importeTotal = 0;
 
-    if (!iFrame.tfGravadas.getText().isEmpty()) {
-      double gravadas = Double.parseDouble(iFrame.tfGravadas.getText());
-      igv = gravadas * 0.18;
-      importeTotal += gravadas;
+    if (iFrame.tfGravadas.getValue() != null) {
+      double gravadas = ((Number) iFrame.tfGravadas.getValue()).doubleValue();
+      if (gravadas > 0) {
+        igv = gravadas * 0.18;
+        importeTotal += gravadas;
+      }
     }
 
-    if (!iFrame.tfExoneradas.getText().isEmpty()) {
-      double exoneradas = Double.parseDouble(iFrame.tfExoneradas.getText());
-      importeTotal += exoneradas;
+    if (iFrame.tfExoneradas.getValue() != null) {
+      double exoneradas = ((Number) iFrame.tfExoneradas.getValue()).doubleValue();
+      if (exoneradas > 0) {
+        importeTotal += exoneradas;
+      }
     }
 
-    if (!iFrame.tfInafectas.getText().isEmpty()) {
-      double inafectas = Double.parseDouble(iFrame.tfInafectas.getText());
-      importeTotal += inafectas;
+    if (iFrame.tfInafectas.getValue() != null) {
+      double inafectas = ((Number) iFrame.tfInafectas.getValue()).doubleValue();
+      if (inafectas > 0) {
+        importeTotal += inafectas;
+      }
     }
 
-    if (!iFrame.tfExportacion.getText().isEmpty()) {
-      double exportacion = Double.parseDouble(iFrame.tfExportacion.getText());
-      importeTotal += exportacion;
+    if (iFrame.tfExportacion.getValue() != null) {
+      double exportacion = ((Number) iFrame.tfExportacion.getValue()).doubleValue();
+      if (exportacion > 0) {
+        importeTotal += exportacion;
+      }
     }
 
-    if (!iFrame.tfOtrosCargos.getText().isEmpty()) {
-      double otrosCargos = Double.parseDouble(iFrame.tfOtrosCargos.getText());
-      importeTotal += otrosCargos;
+    if (iFrame.tfOtrosCargos.getValue() != null) {
+      double otrosCargos = ((Number) iFrame.tfOtrosCargos.getValue()).doubleValue();
+      if (otrosCargos > 0) {
+        importeTotal += otrosCargos;
+      }
     }
 
-    if (!iFrame.tfIgv.getText().isEmpty()) {
+    if (igv > 0) {
       importeTotal += igv;
     }
 
-    if (!iFrame.tfIsc.getText().isEmpty()) {
-      double isc = Double.parseDouble(iFrame.tfIsc.getText());
-      importeTotal += isc;
+    if (iFrame.tfIsc.getValue() != null) {
+      double isc = ((Number) iFrame.tfIsc.getValue()).doubleValue();
+      if (isc > 0) {
+        importeTotal += isc;
+      }
     }
 
-    if (!iFrame.tfOtrosTributos.getText().isEmpty()) {
-      double otrosTributos = Double.parseDouble(iFrame.tfOtrosTributos.getText());
-      importeTotal += otrosTributos;
+    if (iFrame.tfOtrosTributos.getValue() != null) {
+      double otrosTributos = ((Number) iFrame.tfOtrosTributos.getValue()).doubleValue();
+      if (otrosTributos > 0) {
+        importeTotal += otrosTributos;
+      }
     }
-
-    if (!iFrame.tfBolsasPlasticas.getText().isEmpty()) {
-      double bolsas = Double.parseDouble(iFrame.tfBolsasPlasticas.getText());
-      importeTotal += bolsas;
+    if (iFrame.tfBolsasPlasticas.getValue() != null) {
+      double bolsas = ((Number) iFrame.tfBolsasPlasticas.getValue()).doubleValue();
+      if (bolsas > 0) {
+        importeTotal += bolsas;
+      }
     }
 
     iFrame.tfIgv.setText(String.valueOf(igv));
+
     iFrame.tfImporteTotal.setText(String.valueOf(importeTotal));
+
+    if (importeTotal > 700) {
+      iFrame.tbbdDetalle.setEnabledAt(1, true);
+
+      iFrame.cbxDocumentoIdentidadTipo.setEnabled(true);
+      iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
+
+      iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
+    } else {
+      try {
+        iFrame.tbbdDetalle.setEnabledAt(1, false);
+
+        iFrame.cbxDocumentoIdentidadTipo.setEnabled(false);
+        iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(-1);
+
+        iFrame.tfDocumentoIdentidadNumero.setEnabled(false);
+        AbstractDocument adtfDocumentoIdentidadNumero =
+            (AbstractDocument) iFrame.tfDocumentoIdentidadNumero.getDocument();
+        adtfDocumentoIdentidadNumero.remove(
+            0, iFrame.tfDocumentoIdentidadNumero.getText().length());
+      } catch (BadLocationException ex) {
+        JOptionPane.showMessageDialog(
+            null,
+            ex.getMessage(),
+            ResumenDiarioController.class.getName(),
+            JOptionPane.ERROR_MESSAGE);
+      }
+    }
   }
 }
