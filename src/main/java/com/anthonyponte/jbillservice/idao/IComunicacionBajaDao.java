@@ -96,8 +96,8 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
           comunicacionBaja.setFechaReferencia(rs.getDate(7));
 
           Empresa emisor = new Empresa();
-          emisor.setRuc(rs.getString(8));
-          emisor.setRazonSocial(rs.getString(9));
+          emisor.setNumeroDocumentoIdentidad(rs.getString(8));
+          emisor.setNombre(rs.getString(9));
           comunicacionBaja.setEmisor(emisor);
 
           comunicacionBaja.setNombreZip(rs.getString(10));

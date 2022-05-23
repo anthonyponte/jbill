@@ -102,12 +102,16 @@ public class VoidedDocuments {
                     .addContent(
                         new Element("PartyIdentification", cac)
                             .addContent(
-                                new Element("ID", cbc).setText(comunicacionBaja.getEmisor().getRuc())))
+                                new Element("ID", cbc)
+                                    .setText(
+                                        comunicacionBaja
+                                            .getEmisor()
+                                            .getNumeroDocumentoIdentidad())))
                     .addContent(
                         new Element("PartyName", cac)
                             .addContent(
                                 new Element("Name", cbc)
-                                    .setText(comunicacionBaja.getEmisor().getRazonSocial()))))
+                                    .setText(comunicacionBaja.getEmisor().getNombre()))))
             .addContent(
                 new Element("DigitalSignatureAttachment", cac)
                     .addContent(
@@ -123,7 +127,7 @@ public class VoidedDocuments {
         new Element("AccountingSupplierParty", cac)
             .addContent(
                 new Element("CustomerAssignedAccountID", cbc)
-                    .setText(comunicacionBaja.getEmisor().getRuc()))
+                    .setText(comunicacionBaja.getEmisor().getNumeroDocumentoIdentidad()))
             .addContent(
                 new Element("AdditionalAccountID", cbc)
                     .setText(String.valueOf(comunicacionBaja.getEmisor().getTipo())))
@@ -133,7 +137,7 @@ public class VoidedDocuments {
                         new Element("PartyLegalEntity", cac)
                             .addContent(
                                 new Element("RegistrationName", cbc)
-                                    .setText(comunicacionBaja.getEmisor().getRazonSocial()))));
+                                    .setText(comunicacionBaja.getEmisor().getNombre()))));
     document.getRootElement().addContent(accountingSupplierParty);
 
     for (int i = 0; i < comunicacionBaja.getComunicacionBajaDetalles().size(); i++) {

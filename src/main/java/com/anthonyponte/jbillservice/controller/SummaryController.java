@@ -346,7 +346,7 @@ public class SummaryController {
               case 0:
                 return MyDateFormat.d_MMMM_Y(summary.getFechaEmision());
               case 1:
-                return summary.getEmisor().getRuc();
+                return summary.getEmisor().getNumeroDocumentoIdentidad();
               case 2:
                 return summary.getTipoDocumento().getCodigo();
               case 3:

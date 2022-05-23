@@ -34,7 +34,7 @@ import com.anthonyponte.jbillservice.idao.IResumenDiarioDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.maindoc.SummaryDocuments;
 import com.anthonyponte.jbillservice.model.Documento;
-import com.anthonyponte.jbillservice.model.DocumentoIdentidad;
+import com.anthonyponte.jbillservice.model.TipoDocumentoIdentidad;
 import com.anthonyponte.jbillservice.model.Empresa;
 import com.anthonyponte.jbillservice.model.Estado;
 import com.anthonyponte.jbillservice.model.Impuesto;
@@ -246,9 +246,10 @@ public class ResumenDiarioController {
                         resumenDiario.setFechaReferencia(iFrame.dpFechaEmision.getDate());
 
                         Empresa emisor = new Empresa();
-                        emisor.setRuc(preferences.get(UsuarioController.RUC, ""));
+                        emisor.setNumeroDocumentoIdentidad(
+                            preferences.get(UsuarioController.RUC, ""));
                         emisor.setTipo(preferences.getInt(UsuarioController.RUC_TIPO, 0));
-                        emisor.setRazonSocial(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
+                        emisor.setNombre(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
                         resumenDiario.setEmisor(emisor);
 
                         resumenDiario.setResumenDiarioDetalles(eventList);
@@ -502,10 +503,9 @@ public class ResumenDiarioController {
             if (iFrame.cbxDocumentoIdentidadTipo.getSelectedIndex() >= 0
                 && !iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()) {
               Empresa adquiriente = new Empresa();
-              adquiriente.setDocumentoIdentidadNumero(
-                  Integer.valueOf(iFrame.tfDocumentoIdentidadNumero.getText()));
-              adquiriente.setDocumentoIdentidad(
-                  (DocumentoIdentidad) iFrame.cbxDocumentoIdentidadTipo.getSelectedItem());
+              adquiriente.setNumeroDocumentoIdentidad(iFrame.tfDocumentoIdentidadNumero.getText());
+              adquiriente.setTipoDocumentoIdentidad(
+                  (TipoDocumentoIdentidad) iFrame.cbxDocumentoIdentidadTipo.getSelectedItem());
               detalle.setAdquiriente(adquiriente);
             }
 
@@ -812,7 +812,8 @@ public class ResumenDiarioController {
               case 2:
                 return detalle.getDocumento().getTipoDocumento().getDescripcion();
               case 3:
-                if (detalle.getAdquiriente() != null) return detalle.getAdquiriente().getRuc();
+                if (detalle.getAdquiriente() != null)
+                  return detalle.getAdquiriente().getNumeroDocumentoIdentidad();
                 else return "";
               case 4:
                 if (detalle.getDocumentoReferencia() != null)

@@ -61,9 +61,9 @@ public class ISummaryDao implements SummaryDao {
       ps.setInt(6, summary.getCorrelativo());
       ps.setDate(7, new Date(summary.getFechaEmision().getTime()));
       ps.setDate(8, new Date(summary.getFechaReferencia().getTime()));
-      ps.setString(9, summary.getEmisor().getRuc());
+      ps.setString(9, summary.getEmisor().getNumeroDocumentoIdentidad());
       ps.setInt(10, summary.getEmisor().getTipo());
-      ps.setString(11, summary.getEmisor().getRazonSocial());
+      ps.setString(11, summary.getEmisor().getNombre());
       ps.setString(12, summary.getNombreZip());
       ps.setBytes(13, summary.getZip());
 
@@ -102,7 +102,7 @@ public class ISummaryDao implements SummaryDao {
           summary.setFechaEmision(rs.getDate(2));
 
           Empresa emisor = new Empresa();
-          emisor.setRuc(rs.getString(3));
+          emisor.setNumeroDocumentoIdentidad(rs.getString(3));
           summary.setEmisor(emisor);
 
           TipoDocumento tipoDocumento = new TipoDocumento();

@@ -243,9 +243,9 @@ public class ComunicacionesBajaController {
               case 5:
                 return MyDateFormat.d_MMMM_Y(comunicacionBaja.getFechaReferencia());
               case 6:
-                return comunicacionBaja.getEmisor().getRuc();
+                return comunicacionBaja.getEmisor().getNumeroDocumentoIdentidad();
               case 7:
-                return comunicacionBaja.getEmisor().getRazonSocial();
+                return comunicacionBaja.getEmisor().getNombre();
               case 8:
                 return comunicacionBaja.getNombreZip();
               case 9:

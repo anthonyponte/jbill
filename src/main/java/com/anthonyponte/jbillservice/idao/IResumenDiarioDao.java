@@ -74,9 +74,9 @@ public class IResumenDiarioDao implements ResumenDiarioDao {
         ps.setString(6, get.getDocumento().getTipoDocumento().getDescripcion());
 
         if (get.getAdquiriente() != null) {
-          ps.setInt(7, get.getAdquiriente().getDocumentoIdentidadNumero());
-          ps.setString(8, get.getAdquiriente().getDocumentoIdentidad().getCodigo());
-          ps.setString(9, get.getAdquiriente().getDocumentoIdentidad().getDescripcion());
+          ps.setString(7, get.getAdquiriente().getNumeroDocumentoIdentidad());
+          ps.setString(8, get.getAdquiriente().getTipoDocumentoIdentidad().getCodigo());
+          ps.setString(9, get.getAdquiriente().getTipoDocumentoIdentidad().getDescripcion());
         } else {
           ps.setNull(7, Types.INTEGER);
           ps.setNull(8, Types.VARCHAR);
