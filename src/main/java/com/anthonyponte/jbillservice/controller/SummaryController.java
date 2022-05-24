@@ -20,6 +20,7 @@ import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
 import com.anthonyponte.jbillservice.custom.MyTableResize;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
+import com.anthonyponte.jbillservice.dao.ResumenDiarioDao;
 import com.anthonyponte.jbillservice.view.SummaryIFrame;
 import jakarta.activation.DataHandler;
 import jakarta.activation.DataSource;
@@ -36,6 +37,7 @@ import pe.gob.sunat.StatusResponse;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.idao.IBillService;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
+import com.anthonyponte.jbillservice.idao.IResumenDiarioDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.model.Summary;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
@@ -63,6 +65,7 @@ public class SummaryController {
   private final LoadingDialog dialog;
   private SummaryDao summaryDao;
   private ComunicacionBajaDao comunicacionBajaDao;
+  private ResumenDiarioDao resumenDiarioDao;
   private BillService service;
   private EventList<Summary> eventList;
   private SortedList<Summary> sortedList;
@@ -246,7 +249,14 @@ public class SummaryController {
                             List<Summary> list = new ArrayList<>();
                             for (int i = 0; i < selected.size(); i++) {
                               Summary get = selected.get(i);
-                              comunicacionBajaDao.delete(get.getId());
+
+                              if (get.getTipoDocumento().getCodigo().equals("RA")
+                                  || get.getTipoDocumento().getCodigo().equals("RR")) {
+                                comunicacionBajaDao.delete(get.getId());
+                              } else if (get.getTipoDocumento().getCodigo().equals("RC")) {
+                                resumenDiarioDao.delete(get.getId());
+                              }
+
                               summaryDao.delete(get.getId());
                               list.add(get);
                             }
@@ -288,6 +298,7 @@ public class SummaryController {
   private void initComponents() {
     summaryDao = new ISummaryDao();
     comunicacionBajaDao = new IComunicacionBajaDao();
+    resumenDiarioDao = new IResumenDiarioDao();
     service = new IBillService();
     eventList = new BasicEventList<>();
 

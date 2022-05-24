@@ -19,7 +19,6 @@ package com.anthonyponte.jbillservice.idao;
 
 import com.anthonyponte.jbillservice.custom.MyHsqldbConnection;
 import com.anthonyponte.jbillservice.dao.ResumenDiarioDao;
-import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.Empresa;
 import com.anthonyponte.jbillservice.model.ResumenDiario;
 import com.anthonyponte.jbillservice.model.ResumenDiarioDetalle;
@@ -297,7 +296,15 @@ public class IResumenDiarioDao implements ResumenDiarioDao {
 
   @Override
   public void delete(int id) throws SQLException {
-    throw new UnsupportedOperationException("Not supported yet."); // Generated from
-    // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    database.connect();
+
+    String query = "DELETE FROM RESUMEN_DIARIO_DETALLE WHERE SUMMARY_ID = ?";
+
+    try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
+      ps.setInt(1, id);
+      ps.executeUpdate();
+    }
+
+    database.disconnect();
   }
 }

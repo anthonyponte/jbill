@@ -6,7 +6,7 @@
     <!-- The Basics -->
     <groupId>com.anthonyponte.jbillservice</groupId>
     <artifactId>JBillService</artifactId>
-    <version>1.2.4</version>
+    <version>1.2.5</version>
     <dependencies>           
         <dependency>
             <groupId>org.hsqldb</groupId>
