@@ -533,6 +533,7 @@ public class ResumenDiarioController {
             }
 
             detalle.setEstado((Estado) iFrame.cbxEstado.getSelectedItem());
+
             Number importeTotal = (Number) iFrame.tfImporteTotal.getValue();
             detalle.setImporteTotal(importeTotal.doubleValue());
 
@@ -583,7 +584,7 @@ public class ResumenDiarioController {
               detalle.setGratuitas(operacionGratuitas);
             }
 
-            Number otrosCargos = (Number) iFrame.tfImporteTotal.getValue();
+            Number otrosCargos = (Number) iFrame.tfOtrosCargos.getValue();
             if (otrosCargos.doubleValue() > 0) {
               OtrosCargos operacionOtrosCargos = new OtrosCargos();
               operacionOtrosCargos.setIndicador(true);
@@ -591,7 +592,7 @@ public class ResumenDiarioController {
               detalle.setOtrosCargos(operacionOtrosCargos);
             }
 
-            Number igv = (Number) iFrame.tfImporteTotal.getValue();
+            Number igv = (Number) iFrame.tfIgv.getValue();
             Impuesto impuestoIgv = new Impuesto();
             impuestoIgv.setTotal(igv.doubleValue());
             impuestoIgv.setCodigo("1000");
@@ -599,7 +600,7 @@ public class ResumenDiarioController {
             impuestoIgv.setCodigoInternacional("VAT");
             detalle.setIgv(impuestoIgv);
 
-            Number isc = (Number) iFrame.tfImporteTotal.getValue();
+            Number isc = (Number) iFrame.tfIsc.getValue();
             if (isc.doubleValue() > 0) {
               Impuesto impuestoIsc = new Impuesto();
               impuestoIsc.setTotal(isc.doubleValue());
@@ -609,7 +610,7 @@ public class ResumenDiarioController {
               detalle.setIsc(impuestoIsc);
             }
 
-            Number otrosTributos = (Number) iFrame.tfBolsasPlasticas.getValue();
+            Number otrosTributos = (Number) iFrame.tfOtrosTributos.getValue();
             if (otrosTributos.doubleValue() > 0) {
               Impuesto impuestoOtrosTributos = new Impuesto();
               impuestoOtrosTributos.setTotal(otrosTributos.doubleValue());
@@ -1171,9 +1172,9 @@ public class ResumenDiarioController {
       }
     }
 
-    iFrame.tfIgv.setText(String.valueOf(igv));
+    iFrame.tfIgv.setValue(igv);
 
-    iFrame.tfImporteTotal.setText(String.valueOf(importeTotal));
+    iFrame.tfImporteTotal.setValue(importeTotal);
 
     if (importeTotal > 700) {
       iFrame.tbbdDetalle.setEnabledAt(1, true);
