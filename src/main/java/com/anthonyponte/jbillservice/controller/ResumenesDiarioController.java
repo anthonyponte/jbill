@@ -35,6 +35,8 @@ import com.anthonyponte.jbillservice.custom.MyTableResize;
 import com.anthonyponte.jbillservice.dao.ResumenDiarioDao;
 import com.anthonyponte.jbillservice.idao.IResumenDiarioDao;
 import com.anthonyponte.jbillservice.model.ResumenDiario;
+import com.anthonyponte.jbillservice.model.ResumenDiarioDetalle;
+import com.anthonyponte.jbillservice.tableformat.ResumenDiarioDetalleTableFormat;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.ResumenesDiarioIFrame;
 import java.awt.event.ActionEvent;
@@ -44,6 +46,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -59,6 +62,7 @@ public class ResumenesDiarioController {
   private final LoadingDialog dialog;
   private ResumenDiarioDao dao;
   private EventList<ResumenDiario> eventList;
+  private EventList<ResumenDiarioDetalle> elDetalle;
   private SortedList<ResumenDiario> sortedList;
   private AdvancedListSelectionModel<ResumenDiario> selectionModel;
   private AdvancedTableModel<ResumenDiario> tableModel;
@@ -121,6 +125,22 @@ public class ResumenesDiarioController {
                         JOptionPane.ERROR_MESSAGE);
                   }
                 }
+              } else {
+                try {
+                  ResumenDiario selected = selectionModel.getSelected().get(0);
+                  List<ResumenDiarioDetalle> get = dao.read(selected);
+
+                  elDetalle.clear();
+                  elDetalle.addAll(get);
+
+                  MyTableResize.resize(iFrame.tblEncabezado);
+                } catch (SQLException ex) {
+                  JOptionPane.showMessageDialog(
+                      null,
+                      ex.getMessage(),
+                      ResumenesDiarioController.class.getName(),
+                      JOptionPane.ERROR_MESSAGE);
+                }
               }
             }
           }
@@ -130,6 +150,7 @@ public class ResumenesDiarioController {
   private void initComponents() {
     dao = new IResumenDiarioDao();
     eventList = new BasicEventList<>();
+    elDetalle = new BasicEventList<>();
 
     Comparator comparator =
         (Comparator<ResumenDiario>)
@@ -228,6 +249,10 @@ public class ResumenesDiarioController {
 
     TableComparatorChooser.install(
         iFrame.tblEncabezado, sortedList, TableComparatorChooser.SINGLE_COLUMN);
+
+    AdvancedTableModel<ResumenDiarioDetalle> ttmDetalle =
+        eventTableModelWithThreadProxyList(elDetalle, new ResumenDiarioDetalleTableFormat());
+    iFrame.tblDetalle.setModel(ttmDetalle);
 
     iFrame.show();
 

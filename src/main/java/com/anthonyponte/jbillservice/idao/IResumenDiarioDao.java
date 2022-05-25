@@ -19,10 +19,19 @@ package com.anthonyponte.jbillservice.idao;
 
 import com.anthonyponte.jbillservice.custom.MyHsqldbConnection;
 import com.anthonyponte.jbillservice.dao.ResumenDiarioDao;
+import com.anthonyponte.jbillservice.model.Documento;
 import com.anthonyponte.jbillservice.model.Empresa;
+import com.anthonyponte.jbillservice.model.Estado;
+import com.anthonyponte.jbillservice.model.Impuesto;
+import com.anthonyponte.jbillservice.model.Moneda;
+import com.anthonyponte.jbillservice.model.Operacion;
+import com.anthonyponte.jbillservice.model.OtrosCargos;
+import com.anthonyponte.jbillservice.model.Percepcion;
+import com.anthonyponte.jbillservice.model.RegimenPercepcion;
 import com.anthonyponte.jbillservice.model.ResumenDiario;
 import com.anthonyponte.jbillservice.model.ResumenDiarioDetalle;
 import com.anthonyponte.jbillservice.model.TipoDocumento;
+import com.anthonyponte.jbillservice.model.TipoDocumentoIdentidad;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -290,8 +299,207 @@ public class IResumenDiarioDao implements ResumenDiarioDao {
 
   @Override
   public List<ResumenDiarioDetalle> read(ResumenDiario resumenDiario) throws SQLException {
-    throw new UnsupportedOperationException("Not supported yet."); // Generated from
-    // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    List<ResumenDiarioDetalle> resumenDiarioDetalles = new ArrayList<>();
+
+    database.connect();
+
+    String query =
+        "SELECT "
+            + "ID, NUMERO, SERIE, CORRELATIVO, TIPO_CODIGO, TIPO_DESCRIPCION, "
+            + "DOCUMENTO_IDENTIDAD, DOCUMENTO_IDENTIDAD_TIPO, DOCUMENTO_IDENTIDAD_DESCRIPCION, "
+            + "REFERENCIA_SERIE, REFERENCIA_CORRELATIVO, REFERENCIA_TIPO_CODIGO, "
+            + "REFERENCIA_TIPO_DESCRIPCION, PERCEPCION_REGIMEN_CODIGO, "
+            + "PERCEPCION_REGIMEN_DESCRIPCION, PERCEPCION_REGIMEN_PORCENTAJE, PERCEPCION_MONTO, "
+            + "PERCEPCION_MONTO_TOTAL, PERCEPCION_BASE, ESTADO_CODIGO, ESTADO_DESCRIPCION, "
+            + "IMPORTE_TOTAL, MONEDA_CODIGO, MONEDA_DESCRIPCION, GRAVADAS_TOTAL, GRAVADAS_CODIGO, "
+            + "GRAVADAS_DESCRIPCION, EXONERADAS_TOTAL, EXONERADAS_CODIGO, EXONERADAS_DESCRIPCION, "
+            + "INAFECTAS_TOTAL, INAFECTAS_CODIGO, INAFECTAS_DESCRIPCION, GRATUITAS_TOTAL, "
+            + "GRATUITAS_CODIGO, GRATUITAS_DESCRIPCION, EXPORTACION_TOTAL, EXPORTACION_CODIGO, "
+            + "EXPORTACION_DESCRIPCION, OTROS_CARGOS_INDICADOR, OTROS_CARGOS_TOTAL, IGV_TOTAL, "
+            + "IGV_CODIGO, IGV_DESCRIPCION, IGV_CODIGO_INTERNACIONAL, ISC_TOTAL, ISC_CODIGO, "
+            + "ISC_DESCRIPCION, ISC_CODIGO_INTERNACIONAL, OTRO_TRIBUTOS_TOTAL, OTRO_TRIBUTOS_CODIGO, "
+            + "OTRO_TRIBUTOS_DESCRIPCION, OTRO_TRIBUTOS_CODIGO_INTERNACIONAL, IMPUESTO_BOLSA_TOTAL, "
+            + "IMPUESTO_BOLSA_CODIGO, IMPUESTO_BOLSA_DESCRIPCION, IMPUESTO_BOLSA_CODIGO_INTERNACIONAL "
+            + "FROM RESUMEN_DIARIO_DETALLE "
+            + "WHERE SUMMARY_ID = ?";
+
+    try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
+
+      ps.setInt(1, resumenDiario.getId());
+
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          ResumenDiarioDetalle resumenDiarioDetalle = new ResumenDiarioDetalle();
+
+          resumenDiarioDetalle.setResumenDiario(resumenDiario);
+          resumenDiarioDetalle.setId(rs.getInt(1));
+          resumenDiarioDetalle.setNumero(rs.getInt(2));
+
+          Documento documento = new Documento();
+          documento.setSerie(rs.getString(3));
+          documento.setCorrelativo(rs.getInt(4));
+
+          TipoDocumento tipoDocumento = new TipoDocumento();
+          tipoDocumento.setCodigo(rs.getString(5));
+          tipoDocumento.setDescripcion(rs.getString(6));
+          documento.setTipoDocumento(tipoDocumento);
+
+          resumenDiarioDetalle.setDocumento(documento);
+
+          rs.getString(7);
+          if (!rs.wasNull()) {
+            Empresa adquiriente = new Empresa();
+            adquiriente.setNumeroDocumentoIdentidad(rs.getString(7));
+
+            TipoDocumentoIdentidad tipoDocumentoIdentidad = new TipoDocumentoIdentidad();
+            tipoDocumentoIdentidad.setCodigo(rs.getString(8));
+            tipoDocumentoIdentidad.setDescripcion(rs.getString(9));
+            adquiriente.setTipoDocumentoIdentidad(tipoDocumentoIdentidad);
+
+            resumenDiarioDetalle.setAdquiriente(adquiriente);
+          }
+
+          rs.getString(10);
+          if (!rs.wasNull()) {
+            Documento documentoReferencia = new Documento();
+            documentoReferencia.setSerie(rs.getString(10));
+            documentoReferencia.setCorrelativo(rs.getInt(11));
+
+            TipoDocumento tipoDocumentoReferencia = new TipoDocumento();
+            tipoDocumentoReferencia.setCodigo(rs.getString(12));
+            tipoDocumentoReferencia.setDescripcion(rs.getString(13));
+            documentoReferencia.setTipoDocumento(tipoDocumentoReferencia);
+
+            resumenDiarioDetalle.setDocumentoReferencia(documentoReferencia);
+          }
+
+          rs.getString(14);
+          if (!rs.wasNull()) {
+            Percepcion percepcion = new Percepcion();
+
+            RegimenPercepcion regimenPercepcion = new RegimenPercepcion();
+            regimenPercepcion.setCodigo(rs.getString(14));
+            regimenPercepcion.setDescripcion(rs.getString(15));
+            regimenPercepcion.setPorcentaje(rs.getDouble(16));
+            percepcion.setRegimenPercepcion(regimenPercepcion);
+
+            percepcion.setMonto(rs.getDouble(17));
+            percepcion.setMontoTotal(rs.getDouble(18));
+            percepcion.setBase(rs.getDouble(19));
+
+            resumenDiarioDetalle.setPercepcion(percepcion);
+          }
+
+          Estado estado = new Estado();
+          estado.setCodigo(rs.getString(20));
+          estado.setDescripcion(rs.getString(21));
+          resumenDiarioDetalle.setEstado(estado);
+
+          resumenDiarioDetalle.setImporteTotal(rs.getDouble(22));
+
+          Moneda moneda = new Moneda();
+          moneda.setCodigo(rs.getString(23));
+          moneda.setDescripcion(rs.getString(24));
+          resumenDiarioDetalle.setMoneda(moneda);
+
+          rs.getString(25);
+          if (!rs.wasNull()) {
+            Operacion gravadas = new Operacion();
+            gravadas.setTotal(rs.getDouble(25));
+            gravadas.setCodigo(rs.getString(26));
+            gravadas.setDescripcion(rs.getString(27));
+            resumenDiarioDetalle.setGravadas(gravadas);
+          }
+
+          rs.getString(28);
+          if (!rs.wasNull()) {
+            Operacion exoneradas = new Operacion();
+            exoneradas.setTotal(rs.getDouble(28));
+            exoneradas.setCodigo(rs.getString(29));
+            exoneradas.setDescripcion(rs.getString(30));
+            resumenDiarioDetalle.setExoneradas(exoneradas);
+          }
+
+          rs.getString(31);
+          if (!rs.wasNull()) {
+            Operacion inafectas = new Operacion();
+            inafectas.setTotal(rs.getDouble(31));
+            inafectas.setCodigo(rs.getString(32));
+            inafectas.setDescripcion(rs.getString(33));
+            resumenDiarioDetalle.setInafectas(inafectas);
+          }
+
+          rs.getString(34);
+          if (!rs.wasNull()) {
+            Operacion gratuitas = new Operacion();
+            gratuitas.setTotal(rs.getDouble(34));
+            gratuitas.setCodigo(rs.getString(35));
+            gratuitas.setDescripcion(rs.getString(36));
+            resumenDiarioDetalle.setGratuitas(gratuitas);
+          }
+
+          rs.getString(37);
+          if (!rs.wasNull()) {
+            Operacion exportacion = new Operacion();
+            exportacion.setTotal(rs.getDouble(37));
+            exportacion.setCodigo(rs.getString(38));
+            exportacion.setDescripcion(rs.getString(39));
+            resumenDiarioDetalle.setExportacion(exportacion);
+          }
+
+          rs.getString(40);
+          if (!rs.wasNull()) {
+            OtrosCargos otrosCargos = new OtrosCargos();
+            otrosCargos.setIndicador(rs.getBoolean(40));
+            otrosCargos.setTotal(rs.getDouble(41));
+            resumenDiarioDetalle.setOtrosCargos(otrosCargos);
+          }
+
+          Impuesto igv = new Impuesto();
+          igv.setTotal(rs.getDouble(42));
+          igv.setCodigo(rs.getString(43));
+          igv.setDescripcion(rs.getString(44));
+          igv.setCodigoInternacional(rs.getString(45));
+          resumenDiarioDetalle.setIgv(igv);
+
+          rs.getString(46);
+          if (!rs.wasNull()) {
+            Impuesto isc = new Impuesto();
+            isc.setTotal(rs.getDouble(46));
+            isc.setCodigo(rs.getString(47));
+            isc.setDescripcion(rs.getString(48));
+            isc.setCodigoInternacional(rs.getString(49));
+            resumenDiarioDetalle.setIsc(isc);
+          }
+
+          rs.getString(50);
+          if (!rs.wasNull()) {
+            Impuesto otrosTributos = new Impuesto();
+            otrosTributos.setTotal(rs.getDouble(50));
+            otrosTributos.setCodigo(rs.getString(51));
+            otrosTributos.setDescripcion(rs.getString(52));
+            otrosTributos.setCodigoInternacional(rs.getString(53));
+            resumenDiarioDetalle.setOtrosTributos(otrosTributos);
+          }
+
+          rs.getString(54);
+          if (!rs.wasNull()) {
+            Impuesto impuestoBolsa = new Impuesto();
+            impuestoBolsa.setTotal(rs.getDouble(54));
+            impuestoBolsa.setCodigo(rs.getString(55));
+            impuestoBolsa.setDescripcion(rs.getString(56));
+            impuestoBolsa.setCodigoInternacional(rs.getString(57));
+            resumenDiarioDetalle.setImpuestoBolsa(impuestoBolsa);
+          }
+
+          resumenDiarioDetalles.add(resumenDiarioDetalle);
+        }
+      }
+    }
+
+    database.disconnect();
+
+    return resumenDiarioDetalles;
   }
 
   @Override

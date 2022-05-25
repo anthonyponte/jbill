@@ -105,6 +105,7 @@ public class ResumenesDiarioIFrame extends JInternalFrame {
 
             }
         ));
+        tblDetalle.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tblDetalle.getTableHeader().setReorderingAllowed(false);
         scrllDetalle.setViewportView(tblDetalle);
 
