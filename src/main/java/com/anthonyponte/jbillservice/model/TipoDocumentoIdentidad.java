@@ -18,13 +18,13 @@
 package com.anthonyponte.jbillservice.model;
 
 /** @author anthony */
-public class DocumentoIdentidad {
+public class TipoDocumentoIdentidad {
   private String codigo;
   private String descripcion;
 
-  public DocumentoIdentidad() {}
+  public TipoDocumentoIdentidad() {}
 
-  public DocumentoIdentidad(String codigo, String descripcion) {
+  public TipoDocumentoIdentidad(String codigo, String descripcion) {
     this.codigo = codigo;
     this.descripcion = descripcion;
   }

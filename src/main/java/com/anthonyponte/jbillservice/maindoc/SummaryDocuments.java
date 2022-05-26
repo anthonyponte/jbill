@@ -115,12 +115,12 @@ public class SummaryDocuments {
                     .addContent(
                         new Element("PartyIdentification", cac)
                             .addContent(
-                                new Element("ID", cbc).setText(resumenDiario.getEmisor().getRuc())))
+                                new Element("ID", cbc).setText(resumenDiario.getEmisor().getNumeroDocumentoIdentidad())))
                     .addContent(
                         new Element("PartyName", cac)
                             .addContent(
                                 new Element("Name", cbc)
-                                    .setText(resumenDiario.getEmisor().getRazonSocial()))))
+                                    .setText(resumenDiario.getEmisor().getNombre()))))
             .addContent(
                 new Element("DigitalSignatureAttachment", cac)
                     .addContent(
@@ -136,7 +136,7 @@ public class SummaryDocuments {
         new Element("AccountingSupplierParty", cac)
             .addContent(
                 new Element("CustomerAssignedAccountID", cbc)
-                    .setText(resumenDiario.getEmisor().getRuc()))
+                    .setText(resumenDiario.getEmisor().getNumeroDocumentoIdentidad()))
             .addContent(
                 new Element("AdditionalAccountID", cbc)
                     .setText(String.valueOf(resumenDiario.getEmisor().getTipo())))
@@ -146,7 +146,7 @@ public class SummaryDocuments {
                         new Element("PartyLegalEntity", cac)
                             .addContent(
                                 new Element("RegistrationName", cbc)
-                                    .setText(resumenDiario.getEmisor().getRazonSocial()))));
+                                    .setText(resumenDiario.getEmisor().getNombre()))));
     document.getRootElement().addContent(accountingSupplierParty);
 
     for (int i = 0; i < resumenDiario.getResumenDiarioDetalles().size(); i++) {
@@ -170,7 +170,7 @@ public class SummaryDocuments {
             new Element("AccountingCustomerParty", cac)
                 .addContent(
                     new Element("CustomerAssignedAccountID", cbc)
-                        .setText(detalle.getAdquiriente().getRuc()))
+                        .setText(detalle.getAdquiriente().getNumeroDocumentoIdentidad()))
                 .addContent(
                     new Element("AdditionalAccountID", cbc)
                         .setText(String.valueOf(detalle.getAdquiriente().getTipo())));

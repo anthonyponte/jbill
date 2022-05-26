@@ -34,7 +34,7 @@ import com.anthonyponte.jbillservice.idao.IResumenDiarioDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.maindoc.SummaryDocuments;
 import com.anthonyponte.jbillservice.model.Documento;
-import com.anthonyponte.jbillservice.model.DocumentoIdentidad;
+import com.anthonyponte.jbillservice.model.TipoDocumentoIdentidad;
 import com.anthonyponte.jbillservice.model.Empresa;
 import com.anthonyponte.jbillservice.model.Estado;
 import com.anthonyponte.jbillservice.model.Impuesto;
@@ -246,9 +246,10 @@ public class ResumenDiarioController {
                         resumenDiario.setFechaReferencia(iFrame.dpFechaEmision.getDate());
 
                         Empresa emisor = new Empresa();
-                        emisor.setRuc(preferences.get(UsuarioController.RUC, ""));
+                        emisor.setNumeroDocumentoIdentidad(
+                            preferences.get(UsuarioController.RUC, ""));
                         emisor.setTipo(preferences.getInt(UsuarioController.RUC_TIPO, 0));
-                        emisor.setRazonSocial(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
+                        emisor.setNombre(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
                         resumenDiario.setEmisor(emisor);
 
                         resumenDiario.setResumenDiarioDetalles(eventList);
@@ -502,10 +503,9 @@ public class ResumenDiarioController {
             if (iFrame.cbxDocumentoIdentidadTipo.getSelectedIndex() >= 0
                 && !iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()) {
               Empresa adquiriente = new Empresa();
-              adquiriente.setDocumentoIdentidadNumero(
-                  Integer.valueOf(iFrame.tfDocumentoIdentidadNumero.getText()));
-              adquiriente.setDocumentoIdentidad(
-                  (DocumentoIdentidad) iFrame.cbxDocumentoIdentidadTipo.getSelectedItem());
+              adquiriente.setNumeroDocumentoIdentidad(iFrame.tfDocumentoIdentidadNumero.getText());
+              adquiriente.setTipoDocumentoIdentidad(
+                  (TipoDocumentoIdentidad) iFrame.cbxDocumentoIdentidadTipo.getSelectedItem());
               detalle.setAdquiriente(adquiriente);
             }
 
@@ -533,6 +533,7 @@ public class ResumenDiarioController {
             }
 
             detalle.setEstado((Estado) iFrame.cbxEstado.getSelectedItem());
+
             Number importeTotal = (Number) iFrame.tfImporteTotal.getValue();
             detalle.setImporteTotal(importeTotal.doubleValue());
 
@@ -583,7 +584,7 @@ public class ResumenDiarioController {
               detalle.setGratuitas(operacionGratuitas);
             }
 
-            Number otrosCargos = (Number) iFrame.tfImporteTotal.getValue();
+            Number otrosCargos = (Number) iFrame.tfOtrosCargos.getValue();
             if (otrosCargos.doubleValue() > 0) {
               OtrosCargos operacionOtrosCargos = new OtrosCargos();
               operacionOtrosCargos.setIndicador(true);
@@ -591,7 +592,7 @@ public class ResumenDiarioController {
               detalle.setOtrosCargos(operacionOtrosCargos);
             }
 
-            Number igv = (Number) iFrame.tfImporteTotal.getValue();
+            Number igv = (Number) iFrame.tfIgv.getValue();
             Impuesto impuestoIgv = new Impuesto();
             impuestoIgv.setTotal(igv.doubleValue());
             impuestoIgv.setCodigo("1000");
@@ -599,7 +600,7 @@ public class ResumenDiarioController {
             impuestoIgv.setCodigoInternacional("VAT");
             detalle.setIgv(impuestoIgv);
 
-            Number isc = (Number) iFrame.tfImporteTotal.getValue();
+            Number isc = (Number) iFrame.tfIsc.getValue();
             if (isc.doubleValue() > 0) {
               Impuesto impuestoIsc = new Impuesto();
               impuestoIsc.setTotal(isc.doubleValue());
@@ -609,7 +610,7 @@ public class ResumenDiarioController {
               detalle.setIsc(impuestoIsc);
             }
 
-            Number otrosTributos = (Number) iFrame.tfBolsasPlasticas.getValue();
+            Number otrosTributos = (Number) iFrame.tfOtrosTributos.getValue();
             if (otrosTributos.doubleValue() > 0) {
               Impuesto impuestoOtrosTributos = new Impuesto();
               impuestoOtrosTributos.setTotal(otrosTributos.doubleValue());
@@ -812,7 +813,8 @@ public class ResumenDiarioController {
               case 2:
                 return detalle.getDocumento().getTipoDocumento().getDescripcion();
               case 3:
-                if (detalle.getAdquiriente() != null) return detalle.getAdquiriente().getRuc();
+                if (detalle.getAdquiriente() != null)
+                  return detalle.getAdquiriente().getNumeroDocumentoIdentidad();
                 else return "";
               case 4:
                 if (detalle.getDocumentoReferencia() != null)
@@ -1050,15 +1052,19 @@ public class ResumenDiarioController {
     if (iFrame.cbxDocumentoTipo.getSelectedIndex() == 0) {
       if (iFrame.tbbdDetalle.isEnabledAt(1)) {
         if (iFrame.tfDocumentoSerie.getText().isEmpty()
-            || iFrame.tfDocumentoCorrelativo.getText().isEmpty()) {
+            || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
+            || iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()) {
           iFrame.btnAgregar.setEnabled(false);
+          System.out.println(
+              "com.anthonyponte.jbillservice.controller.ResumenDiarioController.enabled() .setEnabled(false)");
         } else {
           iFrame.btnAgregar.setEnabled(true);
+          System.out.println(
+              "com.anthonyponte.jbillservice.controller.ResumenDiarioController.enabled() .setEnabled(true)");
         }
       } else {
         if (iFrame.tfDocumentoSerie.getText().isEmpty()
-            || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
-            || iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()) {
+            || iFrame.tfDocumentoCorrelativo.getText().isEmpty()) {
           iFrame.btnAgregar.setEnabled(false);
         } else {
           iFrame.btnAgregar.setEnabled(true);
@@ -1068,6 +1074,7 @@ public class ResumenDiarioController {
       if (iFrame.tbbdDetalle.isEnabledAt(1)) {
         if (iFrame.tfDocumentoSerie.getText().isEmpty()
             || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
+            || iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()
             || iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
             || iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
           iFrame.btnAgregar.setEnabled(false);
@@ -1077,7 +1084,6 @@ public class ResumenDiarioController {
       } else {
         if (iFrame.tfDocumentoSerie.getText().isEmpty()
             || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
-            || iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()
             || iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
             || iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
           iFrame.btnAgregar.setEnabled(false);
@@ -1170,9 +1176,9 @@ public class ResumenDiarioController {
       }
     }
 
-    iFrame.tfIgv.setText(String.valueOf(igv));
+    iFrame.tfIgv.setValue(igv);
 
-    iFrame.tfImporteTotal.setText(String.valueOf(importeTotal));
+    iFrame.tfImporteTotal.setValue(importeTotal);
 
     if (importeTotal > 700) {
       iFrame.tbbdDetalle.setEnabledAt(1, true);
@@ -1181,6 +1187,8 @@ public class ResumenDiarioController {
       iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
 
       iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
+
+      enabled();
     } else {
       try {
         iFrame.tbbdDetalle.setEnabledAt(1, false);
@@ -1193,6 +1201,8 @@ public class ResumenDiarioController {
             (AbstractDocument) iFrame.tfDocumentoIdentidadNumero.getDocument();
         adtfDocumentoIdentidadNumero.remove(
             0, iFrame.tfDocumentoIdentidadNumero.getText().length());
+
+        enabled();
       } catch (BadLocationException ex) {
         JOptionPane.showMessageDialog(
             null,

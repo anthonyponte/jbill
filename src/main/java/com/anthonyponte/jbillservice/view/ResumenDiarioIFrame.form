@@ -592,7 +592,7 @@
                     <Component class="javax.swing.JComboBox" name="cbxDocumentoIdentidadTipo">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="new DefaultComboBoxModel(new DocumentoIdentidad[] {&#xa;    new DocumentoIdentidad(&quot;0&quot;, &quot;DOC.TRIB.NO.DOM.SIN.RUC&quot;),&#xa;    new DocumentoIdentidad(&quot;1&quot;, &quot;Documento Nacional de Identidad&quot;),&#xa;    new DocumentoIdentidad(&quot;4&quot;, &quot;Carnet de extranjer&#xed;a&quot;),&#xa;    new DocumentoIdentidad(&quot;6&quot;, &quot;Registro Unico de Contributentes&quot;)&#xa;})" type="code"/>
+                          <Connection code="new DefaultComboBoxModel(new com.anthonyponte.jbillservice.model.TipoDocumentoIdentidad[] {&#xa;    new com.anthonyponte.jbillservice.model.TipoDocumentoIdentidad(&quot;0&quot;, &quot;DOC.TRIB.NO.DOM.SIN.RUC&quot;),&#xa;    new com.anthonyponte.jbillservice.model.TipoDocumentoIdentidad(&quot;1&quot;, &quot;Documento Nacional de Identidad&quot;),&#xa;    new com.anthonyponte.jbillservice.model.TipoDocumentoIdentidad(&quot;4&quot;, &quot;Carnet de extranjer&#xed;a&quot;),&#xa;    new com.anthonyponte.jbillservice.model.TipoDocumentoIdentidad(&quot;6&quot;, &quot;Registro Unico de Contributentes&quot;)&#xa;})" type="code"/>
                         </Property>
                         <Property name="enabled" type="boolean" value="false"/>
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -603,7 +603,7 @@
                           <Dimension value="[150, 30]"/>
                         </Property>
                         <Property name="renderer" type="javax.swing.ListCellRenderer" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="new DefaultListCellRenderer(){&#xa;    @Override&#xa;    public Component getListCellRendererComponent(&#xa;        JList&lt;?&gt; list, Object value, int index, boolean isSelected, boolean cellHasFocus) {&#xa;        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);&#xa;        if (value instanceof DocumentoIdentidad) {&#xa;            DocumentoIdentidad documentoIdentidad = (DocumentoIdentidad) value;&#xa;            setText(documentoIdentidad.getDescripcion());&#xa;        }&#xa;        return this;&#xa;    }&#xa;}" type="code"/>
+                          <Connection code="new DefaultListCellRenderer(){&#xa;    @Override&#xa;    public Component getListCellRendererComponent(&#xa;        JList&lt;?&gt; list, Object value, int index, boolean isSelected, boolean cellHasFocus) {&#xa;        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);&#xa;        if (value instanceof com.anthonyponte.jbillservice.model.TipoDocumentoIdentidad) {&#xa;            com.anthonyponte.jbillservice.model.TipoDocumentoIdentidad documentoIdentidad = (com.anthonyponte.jbillservice.model.TipoDocumentoIdentidad) value;&#xa;            setText(documentoIdentidad.getDescripcion());&#xa;        }&#xa;        return this;&#xa;    }&#xa;}" type="code"/>
                         </Property>
                       </Properties>
                       <AuxValues>

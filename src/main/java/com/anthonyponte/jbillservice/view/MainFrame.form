@@ -61,6 +61,12 @@
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="miResumenesDiario">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Resumenes diario"/>
+                    <Property name="enabled" type="boolean" value="false"/>
+                  </Properties>
+                </MenuItem>
               </SubComponents>
             </Menu>
             <Menu class="javax.swing.JMenu" name="menuBillService">
@@ -139,6 +145,11 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JDesktopPane" name="dpane">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="de" green="ca" red="fa" type="rgb"/>
+        </Property>
+      </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
       </AuxValues>

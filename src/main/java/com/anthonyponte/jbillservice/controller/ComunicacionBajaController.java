@@ -206,9 +206,9 @@ public class ComunicacionBajaController {
           comunicacionBaja.setFechaReferencia(new Date());
 
           Empresa emisor = new Empresa();
-          emisor.setRuc(preferences.get(UsuarioController.RUC, ""));
+          emisor.setNumeroDocumentoIdentidad(preferences.get(UsuarioController.RUC, ""));
           emisor.setTipo(preferences.getInt(UsuarioController.RUC_TIPO, 0));
-          emisor.setRazonSocial(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
+          emisor.setNombre(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
           comunicacionBaja.setEmisor(emisor);
 
           iFrame.tfFecha.setEnabled(true);

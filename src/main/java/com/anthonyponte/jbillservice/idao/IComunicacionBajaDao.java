@@ -67,9 +67,13 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
 
     String query =
         "SELECT "
-            + "ID, TIPO_CODIGO, TIPO_DESCRIPCION, SERIE, CORRELATIVO, FECHA_EMISION, FECHA_REFERENCIA, RUC, RAZON_SOCIAL, ZIP_NOMBRE, ZIP, TICKET,  STATUS_CODE,  CONTENT_NOMBRE, CONTENT "
+            + "ID, TIPO_CODIGO, TIPO_DESCRIPCION, SERIE, CORRELATIVO, FECHA_EMISION, "
+            + "FECHA_REFERENCIA, RUC, RAZON_SOCIAL, ZIP_NOMBRE, ZIP, TICKET,  STATUS_CODE, "
+            + "CONTENT_NOMBRE, CONTENT "
             + "FROM SUMMARY "
-            + "WHERE MONTH(FECHA_EMISION) = ? AND YEAR(FECHA_EMISION) = ? AND TICKET IS NOT NULL  AND STATUS_CODE IS NOT NULL AND CONTENT_NOMBRE IS NOT NULL AND CONTENT IS NOT NULL "
+            + "WHERE MONTH(FECHA_EMISION) = ? AND YEAR(FECHA_EMISION) = ? AND TICKET IS NOT NULL "
+            + "AND STATUS_CODE IS NOT NULL AND CONTENT_NOMBRE IS NOT NULL AND CONTENT IS NOT NULL "
+            + "AND (TIPO_CODIGO = 'RA' OR TIPO_CODIGO = 'RR') "
             + "ORDER BY FECHA_EMISION DESC";
 
     try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
@@ -92,8 +96,8 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
           comunicacionBaja.setFechaReferencia(rs.getDate(7));
 
           Empresa emisor = new Empresa();
-          emisor.setRuc(rs.getString(8));
-          emisor.setRazonSocial(rs.getString(9));
+          emisor.setNumeroDocumentoIdentidad(rs.getString(8));
+          emisor.setNombre(rs.getString(9));
           comunicacionBaja.setEmisor(emisor);
 
           comunicacionBaja.setNombreZip(rs.getString(10));

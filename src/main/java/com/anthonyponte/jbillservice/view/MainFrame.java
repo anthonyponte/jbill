@@ -56,6 +56,7 @@ public class MainFrame extends JFrame {
         miResumenDiario = new JMenuItem();
         menuVer = new JMenu();
         miComunicacionesBaja = new JMenuItem();
+        miResumenesDiario = new JMenuItem();
         menuBillService = new JMenu();
         miSummary = new JMenuItem();
         menuSalir = new JMenuItem();
@@ -64,6 +65,8 @@ public class MainFrame extends JFrame {
         setTitle("JBillService");
         setIconImages(list);
         setMinimumSize(new Dimension(1024, 768));
+
+        dpane.setBackground(new Color(250, 202, 222));
 
         GroupLayout dpaneLayout = new GroupLayout(dpane);
         dpane.setLayout(dpaneLayout);
@@ -98,6 +101,10 @@ public class MainFrame extends JFrame {
         miComunicacionesBaja.setText("Comunicaciones de baja");
         miComunicacionesBaja.setEnabled(false);
         menuVer.add(miComunicacionesBaja);
+
+        miResumenesDiario.setText("Resumenes diario");
+        miResumenesDiario.setEnabled(false);
+        menuVer.add(miResumenesDiario);
 
         menuMain.add(menuVer);
 
@@ -149,6 +156,7 @@ public class MainFrame extends JFrame {
     public JMenuItem miComunicacionBaja;
     public JMenuItem miComunicacionesBaja;
     public JMenuItem miResumenDiario;
+    public JMenuItem miResumenesDiario;
     public JMenuItem miSummary;
     // End of variables declaration//GEN-END:variables
 }

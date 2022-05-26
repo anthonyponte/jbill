@@ -18,7 +18,9 @@ import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThr
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
+import com.anthonyponte.jbillservice.custom.MyTableResize;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
+import com.anthonyponte.jbillservice.dao.ResumenDiarioDao;
 import com.anthonyponte.jbillservice.view.SummaryIFrame;
 import jakarta.activation.DataHandler;
 import jakarta.activation.DataSource;
@@ -35,11 +37,11 @@ import pe.gob.sunat.StatusResponse;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.idao.IBillService;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
+import com.anthonyponte.jbillservice.idao.IResumenDiarioDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.model.Summary;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.google.common.util.concurrent.Uninterruptibles;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -54,10 +56,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.KeyStroke;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumnModel;
 
 /** @author anthony */
 public class SummaryController {
@@ -66,6 +65,7 @@ public class SummaryController {
   private final LoadingDialog dialog;
   private SummaryDao summaryDao;
   private ComunicacionBajaDao comunicacionBajaDao;
+  private ResumenDiarioDao resumenDiarioDao;
   private BillService service;
   private EventList<Summary> eventList;
   private SortedList<Summary> sortedList;
@@ -249,7 +249,14 @@ public class SummaryController {
                             List<Summary> list = new ArrayList<>();
                             for (int i = 0; i < selected.size(); i++) {
                               Summary get = selected.get(i);
-                              comunicacionBajaDao.delete(get.getId());
+
+                              if (get.getTipoDocumento().getCodigo().equals("RA")
+                                  || get.getTipoDocumento().getCodigo().equals("RR")) {
+                                comunicacionBajaDao.delete(get.getId());
+                              } else if (get.getTipoDocumento().getCodigo().equals("RC")) {
+                                resumenDiarioDao.delete(get.getId());
+                              }
+
                               summaryDao.delete(get.getId());
                               list.add(get);
                             }
@@ -291,6 +298,7 @@ public class SummaryController {
   private void initComponents() {
     summaryDao = new ISummaryDao();
     comunicacionBajaDao = new IComunicacionBajaDao();
+    resumenDiarioDao = new IResumenDiarioDao();
     service = new IBillService();
     eventList = new BasicEventList<>();
 
@@ -346,7 +354,7 @@ public class SummaryController {
               case 0:
                 return MyDateFormat.d_MMMM_Y(summary.getFechaEmision());
               case 1:
-                return summary.getEmisor().getRuc();
+                return summary.getEmisor().getNumeroDocumentoIdentidad();
               case 2:
                 return summary.getTipoDocumento().getCodigo();
               case 3:
@@ -397,7 +405,7 @@ public class SummaryController {
               eventList.clear();
               eventList.addAll(get);
 
-              resize(iFrame.table);
+              MyTableResize.resize(iFrame.table);
 
               if (!get.isEmpty()) iFrame.tfFiltrar.requestFocus();
             } catch (InterruptedException | ExecutionException ex) {
@@ -412,19 +420,5 @@ public class SummaryController {
           }
         };
     worker.execute();
-  }
-
-  private void resize(JTable table) {
-    TableColumnModel columnModel = table.getColumnModel();
-    for (int column = 0; column < table.getColumnCount(); column++) {
-      int width = 150;
-      for (int row = 0; row < table.getRowCount(); row++) {
-        TableCellRenderer renderer = table.getCellRenderer(row, column);
-        Component comp = table.prepareRenderer(renderer, row, column);
-        width = Math.max(comp.getPreferredSize().width + 1, width);
-      }
-      if (width > 300) width = 300;
-      columnModel.getColumn(column).setPreferredWidth(width);
-    }
   }
 }

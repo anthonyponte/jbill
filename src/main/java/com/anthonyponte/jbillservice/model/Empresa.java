@@ -7,28 +7,22 @@ package com.anthonyponte.jbillservice.model;
 
 /** @author AnthonyPonte */
 public class Empresa {
-  private String ruc;
   private int tipo;
-  private DocumentoIdentidad documentoIdentidad;
-  private int documentoIdentidadNumero;
-  private String razonSocial;
+  private TipoDocumentoIdentidad tipoDocumentoIdentidad;
+  private String numeroDocumentoIdentidad;
   private String nombre;
 
   public Empresa() {}
 
   public Empresa(
-      DocumentoIdentidad documentoIdentidad, int documentoIdentidadNumero, String nombre) {
-    this.documentoIdentidad = documentoIdentidad;
-    this.documentoIdentidadNumero = documentoIdentidadNumero;
+      int tipo,
+      TipoDocumentoIdentidad tipoDocumentoIdentidad,
+      String numeroDocumentoIdentidad,
+      String nombre) {
+    this.tipo = tipo;
+    this.tipoDocumentoIdentidad = tipoDocumentoIdentidad;
+    this.numeroDocumentoIdentidad = numeroDocumentoIdentidad;
     this.nombre = nombre;
-  }
-
-  public String getRuc() {
-    return ruc;
-  }
-
-  public void setRuc(String ruc) {
-    this.ruc = ruc;
   }
 
   public int getTipo() {
@@ -39,28 +33,20 @@ public class Empresa {
     this.tipo = tipo;
   }
 
-  public DocumentoIdentidad getDocumentoIdentidad() {
-    return documentoIdentidad;
+  public TipoDocumentoIdentidad getTipoDocumentoIdentidad() {
+    return tipoDocumentoIdentidad;
   }
 
-  public void setDocumentoIdentidad(DocumentoIdentidad documentoIdentidad) {
-    this.documentoIdentidad = documentoIdentidad;
+  public void setTipoDocumentoIdentidad(TipoDocumentoIdentidad tipoDocumentoIdentidad) {
+    this.tipoDocumentoIdentidad = tipoDocumentoIdentidad;
   }
 
-  public int getDocumentoIdentidadNumero() {
-    return documentoIdentidadNumero;
+  public String getNumeroDocumentoIdentidad() {
+    return numeroDocumentoIdentidad;
   }
 
-  public void setDocumentoIdentidadNumero(int documentoIdentidadNumero) {
-    this.documentoIdentidadNumero = documentoIdentidadNumero;
-  }
-
-  public String getRazonSocial() {
-    return razonSocial;
-  }
-
-  public void setRazonSocial(String razonSocial) {
-    this.razonSocial = razonSocial;
+  public void setNumeroDocumentoIdentidad(String numeroDocumentoIdentidad) {
+    this.numeroDocumentoIdentidad = numeroDocumentoIdentidad;
   }
 
   public String getNombre() {
@@ -74,16 +60,12 @@ public class Empresa {
   @Override
   public String toString() {
     return "Empresa{"
-        + "ruc="
-        + ruc
-        + ", tipo="
+        + "tipo="
         + tipo
-        + ", documentoIdentidad="
-        + documentoIdentidad
-        + ", documentoIdentidadNumero="
-        + documentoIdentidadNumero
-        + ", razonSocial="
-        + razonSocial
+        + ", tipoDocumentoIdentidad="
+        + tipoDocumentoIdentidad
+        + ", numeroDocumentoIdentidad="
+        + numeroDocumentoIdentidad
         + ", nombre="
         + nombre
         + '}';

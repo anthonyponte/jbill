@@ -6,7 +6,7 @@ package com.anthonyponte.jbillservice.view;
 
 import com.anthonyponte.jbillservice.filter.IntegerFilter;
 import com.anthonyponte.jbillservice.filter.SerieFilter;
-import com.anthonyponte.jbillservice.model.DocumentoIdentidad;
+import com.anthonyponte.jbillservice.model.TipoDocumentoIdentidad;
 import com.anthonyponte.jbillservice.model.Estado;
 import com.anthonyponte.jbillservice.model.Moneda;
 import com.anthonyponte.jbillservice.model.RegimenPercepcion;
@@ -377,11 +377,11 @@ public class ResumenDiarioIFrame extends JInternalFrame {
         lblDocumentoIdentidadTipo.setFont(lblDocumentoIdentidadTipo.getFont().deriveFont(lblDocumentoIdentidadTipo.getFont().getStyle() | java.awt.Font.BOLD, lblDocumentoIdentidadTipo.getFont().getSize()-2));
         lblDocumentoIdentidadTipo.setText("Documento identidad *");
 
-        cbxDocumentoIdentidadTipo.setModel(new DefaultComboBoxModel(new DocumentoIdentidad[] {
-            new DocumentoIdentidad("0", "DOC.TRIB.NO.DOM.SIN.RUC"),
-            new DocumentoIdentidad("1", "Documento Nacional de Identidad"),
-            new DocumentoIdentidad("4", "Carnet de extranjería"),
-            new DocumentoIdentidad("6", "Registro Unico de Contributentes")
+        cbxDocumentoIdentidadTipo.setModel(new DefaultComboBoxModel(new TipoDocumentoIdentidad[] {
+            new TipoDocumentoIdentidad("0", "DOC.TRIB.NO.DOM.SIN.RUC"),
+            new TipoDocumentoIdentidad("1", "Documento Nacional de Identidad"),
+            new TipoDocumentoIdentidad("4", "Carnet de extranjería"),
+            new TipoDocumentoIdentidad("6", "Registro Unico de Contributentes")
         }));
         cbxDocumentoIdentidadTipo.setEnabled(false);
         cbxDocumentoIdentidadTipo.setMaximumSize(null);
@@ -392,8 +392,8 @@ public class ResumenDiarioIFrame extends JInternalFrame {
             public Component getListCellRendererComponent(
                 JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                if (value instanceof DocumentoIdentidad) {
-                    DocumentoIdentidad documentoIdentidad = (DocumentoIdentidad) value;
+                if (value instanceof TipoDocumentoIdentidad) {
+                    TipoDocumentoIdentidad documentoIdentidad = (TipoDocumentoIdentidad) value;
                     setText(documentoIdentidad.getDescripcion());
                 }
                 return this;
