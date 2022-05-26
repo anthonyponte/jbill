@@ -1,16 +1,20 @@
 ![logo](https://github.com/anthonyrponte/JBillService/blob/master/res/logo.png)
 # JBillService
-Implementación java del servicio web de SUNAT 
-![screenshot_1](https://github.com/anthonyrponte/JBillService/blob/master/res/screenshot_1.png)
-![screenshot_2](https://github.com/anthonyrponte/JBillService/blob/master/res/screenshot_2.png)
-![screenshot_3](https://github.com/anthonyrponte/JBillService/blob/master/res/screenshot_3.png)
-![screenshot_4](https://github.com/anthonyrponte/JBillService/blob/master/res/screenshot_4.png)
+Implementación java del servicio web de envio de SUNAT 
+![2022-05-26 10_07_27-JBillService](https://github.com/anthonyrponte/JBillService/blob/master/res/2022-05-26 10_07_27-JBillService.png)
+![2022-05-26 10_09_05-JBillService](https://github.com/anthonyrponte/JBillService/blob/master/res/2022-05-26 10_09_05-JBillService.png)
+![2022-05-26 10_09_23-JBillService](https://github.com/anthonyrponte/JBillService/blob/master/res/2022-05-26 10_09_23-JBillService.png)
+![2022-05-26 10_10_45-JBillService](https://github.com/anthonyrponte/JBillService/blob/master/res/2022-05-26 10_10_45-JBillService.png)
+![2022-05-26 10_13_37-JBillService](https://github.com/anthonyrponte/JBillService/blob/master/res/2022-05-26 10_13_37-JBillService.png)
+![2022-05-26 10_13_52-JBillService](https://github.com/anthonyrponte/JBillService/blob/master/res/2022-05-26 10_13_52-JBillService.png)
 ## Requisitos
 Java 11
 ## Caraterísticas
 * Ingresar comunicación de baja/resumen de reversiones
+* Ingresar resumen diario
 * Enviar documentos ingresados
-* Consultar documentos enviados
+* Consultar comunicaciones de baja enviados
+* Consultar resumenes diarios enviados
 ## Descargar
 Puede descargar la última versión estable de JBillService [aquí](https://github.com/anthonyrponte/JBillService/releases).
 ## Licencia
