@@ -1055,8 +1055,12 @@ public class ResumenDiarioController {
             || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
             || iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()) {
           iFrame.btnAgregar.setEnabled(false);
+          System.out.println(
+              "com.anthonyponte.jbillservice.controller.ResumenDiarioController.enabled() .setEnabled(false)");
         } else {
           iFrame.btnAgregar.setEnabled(true);
+          System.out.println(
+              "com.anthonyponte.jbillservice.controller.ResumenDiarioController.enabled() .setEnabled(true)");
         }
       } else {
         if (iFrame.tfDocumentoSerie.getText().isEmpty()
@@ -1183,6 +1187,8 @@ public class ResumenDiarioController {
       iFrame.cbxDocumentoIdentidadTipo.setSelectedIndex(0);
 
       iFrame.tfDocumentoIdentidadNumero.setEnabled(true);
+
+      enabled();
     } else {
       try {
         iFrame.tbbdDetalle.setEnabledAt(1, false);
@@ -1195,6 +1201,8 @@ public class ResumenDiarioController {
             (AbstractDocument) iFrame.tfDocumentoIdentidadNumero.getDocument();
         adtfDocumentoIdentidadNumero.remove(
             0, iFrame.tfDocumentoIdentidadNumero.getText().length());
+
+        enabled();
       } catch (BadLocationException ex) {
         JOptionPane.showMessageDialog(
             null,
