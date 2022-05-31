@@ -29,8 +29,6 @@ public interface SummaryDao {
 
   public List<Summary> read() throws SQLException;
 
-  public int read(Summary summary) throws SQLException;
-
   public void update(int id, Summary summary) throws SQLException;
 
   public void delete(int id) throws SQLException;

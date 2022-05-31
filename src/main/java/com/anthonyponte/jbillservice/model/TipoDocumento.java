@@ -30,24 +30,7 @@ public class TipoDocumento {
   }
 
   public String getCodigo() {
-    switch (descripcion) {
-      case "Factura":
-        return codigo = "01";
-      case "Nota de crédito":
-        return codigo = "07";
-      case "Nota de débito":
-        return codigo = "08";
-      case "Comprobante de retención":
-        return codigo = "20";
-      case "Comunicación de baja":
-        return codigo = "RA";
-      case "Resumen de reversiones":
-        return codigo = "RR";
-      case "Resumen diario":
-        return codigo = "RC";
-      default:
-        return codigo;
-    }
+    return codigo;
   }
 
   public void setCodigo(String codigo) {
@@ -55,16 +38,7 @@ public class TipoDocumento {
   }
 
   public String getDescripcion() {
-    switch (codigo) {
-      case "RA":
-        return descripcion = "Comunicación de baja";
-      case "RR":
-        return descripcion = "Resumen de reversiones";
-      case "RC":
-        return descripcion = "Resumen diario";
-      default:
-        return descripcion;
-    }
+    return descripcion;
   }
 
   public void setDescripcion(String descripcion) {
