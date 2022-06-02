@@ -60,26 +60,29 @@
             <artifactId>swingx-all</artifactId>
             <version>1.6.5-1</version>
         </dependency>
-        
-        
+        <dependency>
+            <groupId>jakarta.jws</groupId>
+            <artifactId>jakarta.jws-api</artifactId>
+            <version>3.0.0</version>
+            <type>jar</type>
+        </dependency>
         <dependency>
             <groupId>jakarta.xml.ws</groupId>
             <artifactId>jakarta.xml.ws-api</artifactId>
-            <version>3.0.0</version>
+            <version>4.0.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>2.0.1</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
-            <artifactId>jaxws-rt</artifactId>
-            <version>3.0.0</version>
-            <scope>runtime</scope>
+            <artifactId>rt</artifactId>
+            <version>3.0.2</version>
         </dependency>
-        <dependency>
-            <groupId>com.sun.xml.ws</groupId>
-            <artifactId>jaxws-ri</artifactId>
-            <version>2.3.1</version>
-            <type>pom</type>
-        </dependency>
-        
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -143,15 +146,16 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.jvnet.jax-ws-commons</groupId>
+                <groupId>com.sun.xml.ws</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
-                <version>2.3</version>
+                <version>3.0.2</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>wsimport</goal>
                         </goals>
                         <configuration>
+                            <extension>true</extension>
                             <wsdlFiles>
                                 <wsdlFile>e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService.wsdl</wsdlFile>
                             </wsdlFiles>
@@ -166,6 +170,24 @@
                         <phase>generate-sources</phase>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>jakarta.xml.bind</groupId>
+                        <artifactId>jakarta.xml.bind-api</artifactId>
+                        <version>3.0.0</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>javax.transaction</groupId>
+                                <artifactId>javax.transaction-api</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                    <dependency>
+                        <groupId>jakarta.xml.ws</groupId>
+                        <artifactId>jakarta.xml.ws-api</artifactId>
+                        <version>3.0.0</version>
+                    </dependency>
+                </dependencies>
                 <configuration>
                     <sourceDestDir>${project.build.directory}/generated-sources/jaxws-wsimport</sourceDestDir>
                     <xnocompile>true</xnocompile>
