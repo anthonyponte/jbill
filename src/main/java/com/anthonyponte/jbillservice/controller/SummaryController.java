@@ -28,8 +28,6 @@ import jakarta.mail.util.ByteArrayDataSource;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.SwingWorker;
 import javax.swing.event.ListSelectionEvent;
 import pe.gob.sunat.BillService;
@@ -58,7 +56,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-/** @author anthony */
+/**
+ * @author anthony
+ */
 public class SummaryController {
 
   private final SummaryIFrame iFrame;
@@ -148,9 +148,6 @@ public class SummaryController {
                           "Enviados",
                           JOptionPane.INFORMATION_MESSAGE);
                     } catch (InterruptedException | ExecutionException ex) {
-                      Logger.getLogger(SummaryController.class.getName())
-                          .log(Level.SEVERE, null, ex);
-
                       JOptionPane.showMessageDialog(
                           null,
                           ex.getMessage(),
@@ -186,11 +183,17 @@ public class SummaryController {
 
                     fos.flush();
                   } catch (FileNotFoundException ex) {
-                    Logger.getLogger(ComunicacionesBajaController.class.getName())
-                        .log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(
+                        null,
+                        ex.getMessage(),
+                        SummaryController.class.getName(),
+                        JOptionPane.ERROR_MESSAGE);
                   } catch (IOException ex) {
-                    Logger.getLogger(ComunicacionesBajaController.class.getName())
-                        .log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(
+                        null,
+                        ex.getMessage(),
+                        SummaryController.class.getName(),
+                        JOptionPane.ERROR_MESSAGE);
                   }
                 }
               }
@@ -277,9 +280,6 @@ public class SummaryController {
                                   "Eliminados",
                                   JOptionPane.INFORMATION_MESSAGE);
                             } catch (InterruptedException | ExecutionException ex) {
-                              Logger.getLogger(SummaryController.class.getName())
-                                  .log(Level.SEVERE, null, ex);
-
                               JOptionPane.showMessageDialog(
                                   null,
                                   ex.getMessage(),
@@ -409,8 +409,6 @@ public class SummaryController {
 
               if (!get.isEmpty()) iFrame.tfFiltrar.requestFocus();
             } catch (InterruptedException | ExecutionException ex) {
-              Logger.getLogger(SummaryController.class.getName()).log(Level.SEVERE, null, ex);
-
               JOptionPane.showMessageDialog(
                   null,
                   ex.getMessage(),
