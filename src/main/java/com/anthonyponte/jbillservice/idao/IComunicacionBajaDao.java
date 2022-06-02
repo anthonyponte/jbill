@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import com.anthonyponte.jbillservice.model.Documento;
+import com.anthonyponte.jbillservice.model.Bill;
 import com.anthonyponte.jbillservice.model.Empresa;
 import java.util.ArrayList;
 import org.joda.time.DateTime;
@@ -44,7 +44,7 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
       for (int i = 0; i < comunicacionBajaDetalles.size(); i++) {
         ComunicacionBajaDetalle get = comunicacionBajaDetalles.get(i);
         ps.setInt(1, id);
-        ps.setInt(2, get.getNumero());
+        ps.setInt(2, i + 1);
         ps.setString(3, get.getDocumento().getTipoDocumento().getCodigo());
         ps.setString(4, get.getDocumento().getTipoDocumento().getDescripcion());
         ps.setString(5, get.getDocumento().getSerie());
@@ -141,7 +141,7 @@ public class IComunicacionBajaDao implements ComunicacionBajaDao {
           comunicacionBajaDetalle.setId(rs.getInt(1));
           comunicacionBajaDetalle.setNumero(rs.getInt(2));
 
-          Documento documento = new Documento();
+          Bill documento = new Bill();
 
           TipoDocumento tipoDocumento = new TipoDocumento();
           tipoDocumento.setCodigo(rs.getString(3));

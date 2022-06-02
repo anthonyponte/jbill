@@ -19,7 +19,7 @@ package com.anthonyponte.jbillservice.idao;
 
 import com.anthonyponte.jbillservice.custom.MyHsqldbConnection;
 import com.anthonyponte.jbillservice.dao.ResumenDiarioDao;
-import com.anthonyponte.jbillservice.model.Documento;
+import com.anthonyponte.jbillservice.model.Bill;
 import com.anthonyponte.jbillservice.model.Empresa;
 import com.anthonyponte.jbillservice.model.Estado;
 import com.anthonyponte.jbillservice.model.Impuesto;
@@ -335,7 +335,7 @@ public class IResumenDiarioDao implements ResumenDiarioDao {
           resumenDiarioDetalle.setId(rs.getInt(1));
           resumenDiarioDetalle.setNumero(rs.getInt(2));
 
-          Documento documento = new Documento();
+          Bill documento = new Bill();
           documento.setSerie(rs.getString(3));
           documento.setCorrelativo(rs.getInt(4));
 
@@ -361,7 +361,7 @@ public class IResumenDiarioDao implements ResumenDiarioDao {
 
           rs.getString(10);
           if (!rs.wasNull()) {
-            Documento documentoReferencia = new Documento();
+            Bill documentoReferencia = new Bill();
             documentoReferencia.setSerie(rs.getString(10));
             documentoReferencia.setCorrelativo(rs.getInt(11));
 

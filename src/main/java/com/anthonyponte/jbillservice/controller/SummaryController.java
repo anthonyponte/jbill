@@ -24,14 +24,11 @@ import com.anthonyponte.jbillservice.dao.ResumenDiarioDao;
 import com.anthonyponte.jbillservice.view.SummaryIFrame;
 import jakarta.activation.DataHandler;
 import jakarta.activation.DataSource;
-import jakarta.mail.util.ByteArrayDataSource;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
 import javax.swing.event.ListSelectionEvent;
-import pe.gob.sunat.BillService;
-import pe.gob.sunat.StatusResponse;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.idao.IBillService;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
@@ -40,6 +37,7 @@ import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.model.Summary;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.google.common.util.concurrent.Uninterruptibles;
+import jakarta.mail.util.ByteArrayDataSource;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -55,6 +53,8 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+import sunat.gob.pe.BillService;
+import sunat.gob.pe.StatusResponse;
 
 /**
  * @author anthony

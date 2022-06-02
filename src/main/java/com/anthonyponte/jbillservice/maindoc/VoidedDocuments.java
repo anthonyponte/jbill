@@ -145,7 +145,7 @@ public class VoidedDocuments {
 
       Element voidedDocumentsLine =
           new Element("VoidedDocumentsLine", sac)
-              .addContent(new Element("LineID", cbc).setText(String.valueOf(detalle.getNumero())))
+              .addContent(new Element("LineID", cbc).setText(String.valueOf(i + 1)))
               .addContent(
                   new Element("DocumentTypeCode", cbc)
                       .setText(detalle.getDocumento().getTipoDocumento().getCodigo()))

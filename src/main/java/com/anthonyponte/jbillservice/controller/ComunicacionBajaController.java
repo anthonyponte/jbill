@@ -4,17 +4,21 @@
  */
 package com.anthonyponte.jbillservice.controller;
 
+import ca.odell.glazedlists.BasicEventList;
+import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.swing.AdvancedListSelectionModel;
+import ca.odell.glazedlists.swing.AdvancedTableModel;
+import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
+import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThreadProxyList;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
 import com.anthonyponte.jbillservice.custom.MyFileCreator;
+import com.anthonyponte.jbillservice.custom.MyTableResize;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
-import com.anthonyponte.jbillservice.model.ComunicacionBaja;
 import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
-import com.anthonyponte.jbillservice.model.Documento;
+import com.anthonyponte.jbillservice.model.Bill;
 import com.anthonyponte.jbillservice.view.ComunicacionBajaIFrame;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -24,7 +28,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
 import com.anthonyponte.jbillservice.maindoc.VoidedDocuments;
-import com.anthonyponte.jbillservice.model.Empresa;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.prefs.Preferences;
@@ -33,7 +36,10 @@ import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
 import com.anthonyponte.jbillservice.filter.SerieFilter;
+import com.anthonyponte.jbillservice.model.ComunicacionBaja;
+import com.anthonyponte.jbillservice.model.Empresa;
 import com.anthonyponte.jbillservice.model.TipoDocumento;
+import com.anthonyponte.jbillservice.tableformat.ComunicacionBajaDetalleTableFormat;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import java.awt.event.ItemEvent;
 import java.io.IOException;
@@ -43,6 +49,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 import java.sql.SQLException;
+import java.util.concurrent.ExecutionException;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 import javax.xml.crypto.MarshalException;
@@ -57,10 +64,12 @@ public class ComunicacionBajaController {
 
   private final ComunicacionBajaIFrame iFrame;
   private final LoadingDialog dialog;
-  private ComunicacionBajaDao comunicacionBajaDao;
-  private SummaryDao summaryDao;
   private Preferences preferences;
-  private ComunicacionBaja comunicacionBaja;
+  private SummaryDao summaryDao;
+  private ComunicacionBajaDao comunicacionBajaDao;
+  private EventList<ComunicacionBajaDetalle> eventList;
+  private AdvancedTableModel<ComunicacionBajaDetalle> tableModel;
+  private AdvancedListSelectionModel<ComunicacionBajaDetalle> selectionModel;
 
   public ComunicacionBajaController(ComunicacionBajaIFrame iFrame, LoadingDialog dialog) {
     this.iFrame = iFrame;
@@ -69,23 +78,23 @@ public class ComunicacionBajaController {
   }
 
   public void init() {
-    iFrame.cbxTipo.addItemListener(
-        (ItemEvent ie) -> {
+    iFrame.cbxTipo.addItemListener((ItemEvent ie) -> {
           if (ie.getStateChange() == ItemEvent.SELECTED) {
             dialog.setVisible(true);
             dialog.setLocationRelativeTo(iFrame);
 
             SwingWorker worker =
-                new SwingWorker<Void, Void>() {
+                new SwingWorker<Integer, Void>() {
                   @Override
-                  protected Void doInBackground() throws Exception {
+                  protected Integer doInBackground() throws Exception {
+                    int count = 0;
                     try {
-                      TipoDocumento tipoDocumento = new TipoDocumento();
-                      tipoDocumento.setDescripcion(iFrame.cbxTipo.getSelectedItem().toString());
-                      comunicacionBaja.setTipoDocumento(tipoDocumento);
+                      TipoDocumento tipoDocumento =
+                          (TipoDocumento) iFrame.cbxTipo.getSelectedItem();
 
-                      int count = summaryDao.read(comunicacionBaja);
-                      comunicacionBaja.setCorrelativo(count + 1);
+                      Date fechaGeneracion = iFrame.dpFecha.getDate();
+
+                      count = summaryDao.count(tipoDocumento, fechaGeneracion);
                     } catch (SQLException ex) {
                       JOptionPane.showMessageDialog(
                           null,
@@ -93,7 +102,7 @@ public class ComunicacionBajaController {
                           ComunicacionBajaController.class.getName(),
                           JOptionPane.ERROR_MESSAGE);
                     }
-                    return null;
+                    return count;
                   }
 
                   @Override
@@ -101,13 +110,11 @@ public class ComunicacionBajaController {
                     try {
                       dialog.dispose();
 
-                      iFrame.tfFecha.setText(
-                          MyDateFormat.d_MMMM_Y(comunicacionBaja.getFechaEmision()));
-                      iFrame.tfSerie.setText(comunicacionBaja.getSerie());
-                      iFrame.tfCorrelativo.setText(
-                          String.valueOf(comunicacionBaja.getCorrelativo()));
+                      Date fecha = iFrame.dpFecha.getDate();
+                      iFrame.tfSerie.setText(MyDateFormat.yyyyMMdd(fecha));
 
-                      iFrame.dpDocumentoFecha.setDate(new Date());
+                      int count = get();
+                      iFrame.tfCorrelativo.setText(String.valueOf(count));
 
                       iFrame
                           .tfDocumentoSerie
@@ -117,8 +124,12 @@ public class ComunicacionBajaController {
                       if (iFrame.cbxTipo.getSelectedIndex() == 0) {
                         iFrame.cbxDocumentoTipo.setEnabled(true);
                         iFrame.cbxDocumentoTipo.setModel(
-                            new DefaultComboBoxModel<>(
-                                new String[] {"Factura", "Nota de crédito", "Nota de débito"}));
+                            new DefaultComboBoxModel(
+                                new TipoDocumento[] {
+                                  new TipoDocumento("01", "Factura"),
+                                  new TipoDocumento("07", "Nota de crédito"),
+                                  new TipoDocumento("08", "Nota de débito")
+                                }));
 
                         AbstractDocument docSerie =
                             (AbstractDocument) iFrame.tfDocumentoSerie.getDocument();
@@ -126,13 +137,16 @@ public class ComunicacionBajaController {
                       } else if (iFrame.cbxTipo.getSelectedIndex() == 1) {
                         iFrame.cbxDocumentoTipo.setEnabled(false);
                         iFrame.cbxDocumentoTipo.setModel(
-                            new DefaultComboBoxModel<>(new String[] {"Comprobante de retención"}));
+                            new DefaultComboBoxModel(
+                                new TipoDocumento[] {
+                                  new TipoDocumento("20", "Comprobante de retención")
+                                }));
 
                         AbstractDocument docSerie =
                             (AbstractDocument) iFrame.tfDocumentoSerie.getDocument();
                         docSerie.setDocumentFilter(new SerieFilter('R'));
                       }
-                    } catch (BadLocationException ex) {
+                    } catch (BadLocationException | InterruptedException | ExecutionException ex) {
                       JOptionPane.showMessageDialog(
                           null,
                           ex.getMessage(),
@@ -145,31 +159,34 @@ public class ComunicacionBajaController {
           }
         });
 
-    iFrame.dpDocumentoFecha.addActionListener(
-        (ActionEvent e) -> {
-          Date fecha = iFrame.dpDocumentoFecha.getDate();
-          comunicacionBaja.setFechaReferencia(fecha);
-        });
-
     iFrame.btnAgregar.addActionListener(
         (arg0) -> {
           try {
-            String tipo = iFrame.cbxDocumentoTipo.getSelectedItem().toString();
-            String serie = iFrame.tfDocumentoSerie.getText();
-            int numero = Integer.parseInt(iFrame.tfDocumentoCorrelativo.getText());
-            String motivo = iFrame.tfDocumentoMotivo.getText();
+            Bill documento = new Bill();
+            documento.setTipoDocumento((TipoDocumento) iFrame.cbxDocumentoTipo.getSelectedItem());
+            documento.setSerie(iFrame.tfDocumentoSerie.getText());
+            documento.setCorrelativo(Integer.parseInt(iFrame.tfDocumentoCorrelativo.getText()));
 
-            DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
-            model.addRow(new Object[] {tipo, serie, numero, motivo});
+            ComunicacionBajaDetalle detalle = new ComunicacionBajaDetalle();
+            detalle.setDocumento(documento);
+            detalle.setMotivo(iFrame.tfDocumentoMotivo.getText());
+
+            eventList.add(detalle);
+
+            MyTableResize.resize(iFrame.table);
+
+            iFrame.cbxDocumentoTipo.setSelectedIndex(0);
 
             iFrame
                 .tfDocumentoSerie
                 .getDocument()
                 .remove(0, iFrame.tfDocumentoSerie.getText().length());
+
             iFrame
                 .tfDocumentoCorrelativo
                 .getDocument()
                 .remove(0, iFrame.tfDocumentoCorrelativo.getText().length());
+
             iFrame.tfDocumentoMotivo.setText("");
 
             iFrame.btnGuardar.setEnabled(true);
@@ -198,51 +215,51 @@ public class ComunicacionBajaController {
 
     iFrame.btnNuevo.addActionListener(
         (ActionEvent arg0) -> {
-          comunicacionBaja = new ComunicacionBaja();
-          comunicacionBaja.setUbl("2.0");
-          comunicacionBaja.setVersion("1.0");
-          comunicacionBaja.setSerie(MyDateFormat.yyyyMMdd(new Date()));
-          comunicacionBaja.setFechaEmision(new Date());
-          comunicacionBaja.setFechaReferencia(new Date());
+          iFrame.dpFecha.setDate(new Date());
 
-          Empresa emisor = new Empresa();
-          emisor.setNumeroDocumentoIdentidad(preferences.get(UsuarioController.RUC, ""));
-          emisor.setTipo(preferences.getInt(UsuarioController.RUC_TIPO, 0));
-          emisor.setNombre(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
-          comunicacionBaja.setEmisor(emisor);
+          iFrame.dpDocumentoFecha.setDate(new Date());
 
-          iFrame.tfFecha.setEnabled(true);
           iFrame.cbxTipo.setEnabled(true);
-          iFrame.tfSerie.setEnabled(true);
-          iFrame.tfCorrelativo.setEnabled(true);
-          iFrame.dpDocumentoFecha.setEnabled(true);
-          iFrame.cbxDocumentoTipo.setEnabled(true);
-          iFrame.tfDocumentoSerie.setEnabled(true);
-          iFrame.tfDocumentoCorrelativo.setEnabled(true);
-          iFrame.tfDocumentoMotivo.setEnabled(true);
-          iFrame.btnAgregar.setEnabled(false);
-          iFrame.btnEliminar.setEnabled(false);
-          iFrame.table.setEnabled(true);
-          iFrame.btnNuevo.setEnabled(false);
-          iFrame.btnGuardar.setEnabled(false);
-          iFrame.btnLimpiar.setEnabled(true);
-
           iFrame.cbxTipo.setSelectedIndex(0);
+          iFrame.cbxTipo.requestFocus();
+
+          iFrame.tfSerie.setEnabled(true);
+
+          iFrame.tfCorrelativo.setEnabled(true);
+
+          iFrame.dpDocumentoFecha.setEnabled(true);
+
+          iFrame.cbxDocumentoTipo.setEnabled(true);
           iFrame.cbxDocumentoTipo.setSelectedIndex(0);
 
-          iFrame.cbxTipo.requestFocus();
+          iFrame.tfDocumentoSerie.setEnabled(true);
+
+          iFrame.tfDocumentoCorrelativo.setEnabled(true);
+
+          iFrame.tfDocumentoMotivo.setEnabled(true);
+
+          iFrame.btnAgregar.setEnabled(false);
+
+          iFrame.btnEliminar.setEnabled(false);
+
+          iFrame.table.setEnabled(true);
+
+          iFrame.btnNuevo.setEnabled(false);
+
+          iFrame.btnGuardar.setEnabled(false);
+
+          iFrame.btnLimpiar.setEnabled(true);
         });
 
-    iFrame.btnGuardar.addActionListener(
-        (arg0) -> {
+    iFrame.btnGuardar.addActionListener((arg0) -> {
           File jks = new File(preferences.get(UsuarioController.FIRMA_JKS, ""));
           if (jks.exists()) {
+            TipoDocumento tipoDocumento = (TipoDocumento) iFrame.cbxTipo.getSelectedItem();
+
             int input =
                 JOptionPane.showOptionDialog(
                     iFrame,
-                    "Seguro que desea guardar esta "
-                        + iFrame.cbxTipo.getSelectedItem().toString()
-                        + "?",
+                    "Seguro que desea guardar esta " + tipoDocumento.getDescripcion() + "?",
                     "Guardar",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
@@ -254,32 +271,29 @@ public class ComunicacionBajaController {
               dialog.setVisible(true);
               dialog.setLocationRelativeTo(iFrame);
               SwingWorker worker =
-                  new SwingWorker<Void, Void>() {
+                  new SwingWorker<ComunicacionBaja, Void>() {
                     @Override
-                    protected Void doInBackground() throws Exception {
-                      DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
-                      List<ComunicacionBajaDetalle> comunicacionBajaDetalles = new ArrayList<>();
-                      for (int i = 0; i < model.getRowCount(); i++) {
-                        ComunicacionBajaDetalle comunicacionBajaDetalle =
-                            new ComunicacionBajaDetalle();
-                        Documento documento = new Documento();
-                        String tipo = model.getValueAt(i, 0).toString();
-                        String serie = model.getValueAt(i, 1).toString();
-                        int correlativo = Integer.parseInt(model.getValueAt(i, 2).toString());
-                        String motivo = model.getValueAt(i, 3).toString();
-                        comunicacionBajaDetalle.setNumero(i + 1);
+                    protected ComunicacionBaja doInBackground() throws Exception {
+                      ComunicacionBaja comunicacionBaja = new ComunicacionBaja();
+                      comunicacionBaja.setUbl("2.0");
+                      comunicacionBaja.setVersion("1.0");
+                      comunicacionBaja.setTipoDocumento(
+                          (TipoDocumento) iFrame.cbxTipo.getSelectedItem());
+                      comunicacionBaja.setSerie(MyDateFormat.yyyyMMdd(iFrame.dpFecha.getDate()));
+                      comunicacionBaja.setCorrelativo(
+                          Integer.valueOf(iFrame.tfCorrelativo.getText()));
 
-                        TipoDocumento tipoDocumento = new TipoDocumento();
-                        tipoDocumento.setDescripcion(tipo);
-                        documento.setTipoDocumento(tipoDocumento);
+                      comunicacionBaja.setFechaEmision(iFrame.dpFecha.getDate());
+                      comunicacionBaja.setFechaReferencia(iFrame.dpDocumentoFecha.getDate());
 
-                        documento.setSerie(serie);
-                        documento.setCorrelativo(correlativo);
-                        comunicacionBajaDetalle.setDocumento(documento);
-                        comunicacionBajaDetalle.setMotivo(motivo);
-                        comunicacionBajaDetalles.add(comunicacionBajaDetalle);
-                      }
-                      comunicacionBaja.setComunicacionBajaDetalles(comunicacionBajaDetalles);
+                      Empresa emisor = new Empresa();
+                      emisor.setNumeroDocumentoIdentidad(
+                          preferences.get(UsuarioController.RUC, ""));
+                      emisor.setTipo(preferences.getInt(UsuarioController.RUC_TIPO, 0));
+                      emisor.setNombre(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
+                      comunicacionBaja.setEmisor(emisor);
+
+                      comunicacionBaja.setComunicacionBajaDetalles(eventList);
 
                       VoidedDocuments voided = new VoidedDocuments();
                       Document document = voided.getStructure(comunicacionBaja);
@@ -310,7 +324,7 @@ public class ComunicacionBajaController {
                         comunicacionBaja.setNombreZip(zip.getName());
                         comunicacionBaja.setZip(byteArray);
                         int id = summaryDao.create(comunicacionBaja);
-                        comunicacionBajaDao.create(id, comunicacionBajaDetalles);
+                        comunicacionBajaDao.create(id, eventList);
 
                         sign.delete();
                         zip.delete();
@@ -335,7 +349,7 @@ public class ComunicacionBajaController {
                             JOptionPane.ERROR_MESSAGE);
                       }
 
-                      return null;
+                      return comunicacionBaja;
                     }
 
                     @Override
@@ -345,13 +359,23 @@ public class ComunicacionBajaController {
                       if (isCancelled()) {
                         start();
                       } else {
-                        start();
+                        try {
+                          start();
 
-                        JOptionPane.showMessageDialog(
-                            iFrame,
-                            comunicacionBaja.getNombreZip() + " guardado",
-                            "Guardado",
-                            JOptionPane.INFORMATION_MESSAGE);
+                          ComunicacionBaja get = get();
+
+                          JOptionPane.showMessageDialog(
+                              iFrame,
+                              get.getNombreZip() + " guardado",
+                              "Guardado",
+                              JOptionPane.INFORMATION_MESSAGE);
+                        } catch (InterruptedException | ExecutionException ex) {
+                          JOptionPane.showMessageDialog(
+                              null,
+                              ex.getMessage(),
+                              ComunicacionBajaController.class.getName(),
+                              JOptionPane.ERROR_MESSAGE);
+                        }
                       }
                     }
                   };
@@ -396,6 +420,13 @@ public class ComunicacionBajaController {
     comunicacionBajaDao = new IComunicacionBajaDao();
     summaryDao = new ISummaryDao();
     preferences = Preferences.userRoot().node(MainController.class.getPackageName());
+    eventList = new BasicEventList<>();
+    tableModel =
+        eventTableModelWithThreadProxyList(eventList, new ComunicacionBajaDetalleTableFormat());
+    selectionModel = new DefaultEventSelectionModel<>(eventList);
+
+    iFrame.table.setModel(tableModel);
+    iFrame.table.setSelectionModel(selectionModel);
 
     iFrame.show();
 
@@ -406,8 +437,8 @@ public class ComunicacionBajaController {
     try {
       iFrame.tabbed.setSelectedIndex(0);
 
-      iFrame.tfFecha.setEnabled(false);
-      iFrame.tfFecha.setText("");
+      iFrame.dpFecha.setEnabled(false);
+      iFrame.dpFecha.setDate(null);
 
       iFrame.cbxTipo.setEnabled(false);
       iFrame.cbxTipo.setSelectedIndex(-1);
@@ -443,9 +474,7 @@ public class ComunicacionBajaController {
       iFrame.btnEliminar.setEnabled(false);
 
       iFrame.table.setEnabled(false);
-      DefaultTableModel model = (DefaultTableModel) iFrame.table.getModel();
-      model.getDataVector().removeAllElements();
-      model.fireTableDataChanged();
+      eventList.clear();
 
       iFrame.btnNuevo.setEnabled(true);
       iFrame.btnNuevo.requestFocus();
@@ -494,10 +523,15 @@ public class ComunicacionBajaController {
 
   private String getCodigoTipoDocumento(String descripcion) {
     String codigo = "";
-    if (descripcion.equalsIgnoreCase("Factura")) codigo = "01";
-    else if (descripcion.equalsIgnoreCase("Nota de crédito")) codigo = "07";
-    else if (descripcion.equalsIgnoreCase("Nota de débito")) codigo = "08";
-    else if (descripcion.equalsIgnoreCase("Comprobante de retención")) codigo = "20";
+    if (descripcion.equalsIgnoreCase("Factura")) {
+      codigo = "01";
+    } else if (descripcion.equalsIgnoreCase("Nota de crédito")) {
+      codigo = "07";
+    } else if (descripcion.equalsIgnoreCase("Nota de débito")) {
+      codigo = "08";
+    } else if (descripcion.equalsIgnoreCase("Comprobante de retención")) {
+      codigo = "20";
+    }
     return codigo;
   }
 }

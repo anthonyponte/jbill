@@ -18,10 +18,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.JOptionPane;
-import pe.gob.sunat.BillService;
-import pe.gob.sunat.BillService_Service;
-import pe.gob.sunat.StatusResponse;
-import pe.gob.sunat.StatusResponseAR;
+import sunat.gob.pe.BillService;
+import sunat.gob.pe.BillService_Service;
+import sunat.gob.pe.StatusResponse;
+import sunat.gob.pe.StatusResponseAR;
 
 /**
  * @author anthony

@@ -124,33 +124,6 @@ public class ISummaryDao implements SummaryDao {
   }
 
   @Override
-  public int read(Summary summary) throws SQLException {
-    int count = 0;
-
-    database.connect();
-
-    String query =
-        "SELECT TOP 1 CORRELATIVO "
-            + "FROM SUMMARY "
-            + "WHERE TIPO_CODIGO = ? AND FECHA_EMISION = ? "
-            + "ORDER BY CORRELATIVO DESC";
-
-    try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
-      ps.setString(1, summary.getTipoDocumento().getCodigo());
-      ps.setDate(2, new Date(summary.getFechaEmision().getTime()));
-
-      try (ResultSet rs = ps.executeQuery()) {
-        while (rs.next()) {
-          count = rs.getInt(1);
-        }
-      }
-    }
-    database.disconnect();
-
-    return count;
-  }
-
-  @Override
   public void update(int id, Summary summary) throws SQLException {
     database.connect();
 

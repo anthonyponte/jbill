@@ -61,26 +61,27 @@
             <version>1.6.5-1</version>
         </dependency>
         <dependency>
-            <groupId>com.sun.xml.ws</groupId>
-            <artifactId>jaxws-rt</artifactId>
-            <version>3.0.2</version>
-            <type>pom</type>
+            <groupId>jakarta.jws</groupId>
+            <artifactId>jakarta.jws-api</artifactId>
+            <version>3.0.0</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>jakarta.xml.ws</groupId>
             <artifactId>jakarta.xml.ws-api</artifactId>
             <version>4.0.0</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>jakarta.mail</artifactId>
+            <version>2.0.1</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
-            <artifactId>jaxws-ri</artifactId>
+            <artifactId>rt</artifactId>
             <version>3.0.2</version>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.org.apache.xml.internal</groupId>
-            <artifactId>resolver</artifactId>
-            <version>20050927</version>
         </dependency>
     </dependencies>
     <properties>
@@ -143,7 +144,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>  
+            </plugin>
             <plugin>
                 <groupId>com.sun.xml.ws</groupId>
                 <artifactId>jaxws-maven-plugin</artifactId>
@@ -158,7 +159,7 @@
                             <wsdlFiles>
                                 <wsdlFile>e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService.wsdl</wsdlFile>
                             </wsdlFiles>
-                            <packageName>pe.gob.sunat</packageName>
+                            <packageName>sunat.gob.pe</packageName>
                             <vmArgs>
                                 <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
                             </vmArgs>
@@ -171,26 +172,22 @@
                 </executions>
                 <dependencies>
                     <dependency>
-                        <groupId>jakarta.annotation</groupId>
-                        <artifactId>jakarta.annotation-api</artifactId>
-                        <version>2.1.0</version>
-                    </dependency>                    
-                    <dependency>
                         <groupId>jakarta.xml.bind</groupId>
                         <artifactId>jakarta.xml.bind-api</artifactId>
-                        <version>4.0.0</version>
-                    </dependency>                    
+                        <version>3.0.0</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>javax.transaction</groupId>
+                                <artifactId>javax.transaction-api</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
                     <dependency>
                         <groupId>jakarta.xml.ws</groupId>
                         <artifactId>jakarta.xml.ws-api</artifactId>
-                        <version>4.0.0</version>
-                    </dependency>                    
-                    <dependency>
-                        <groupId>jakarta.jws</groupId>
-                        <artifactId>jakarta.jws-api</artifactId>
                         <version>3.0.0</version>
                     </dependency>
-                </dependencies>   
+                </dependencies>
                 <configuration>
                     <sourceDestDir>${project.build.directory}/generated-sources/jaxws-wsimport</sourceDestDir>
                     <xnocompile>true</xnocompile>

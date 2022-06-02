@@ -10,13 +10,13 @@ public class ComunicacionBajaDetalle {
   private int id;
   private ComunicacionBaja comunicacionBaja;
   private int numero;
-  private Documento documento;
+  private Bill documento;
   private String motivo;
 
   public ComunicacionBajaDetalle() {}
 
   public ComunicacionBajaDetalle(
-      int id, ComunicacionBaja comunicacionBaja, int numero, Documento documento, String motivo) {
+      int id, ComunicacionBaja comunicacionBaja, int numero, Bill documento, String motivo) {
     this.id = id;
     this.comunicacionBaja = comunicacionBaja;
     this.numero = numero;
@@ -24,7 +24,7 @@ public class ComunicacionBajaDetalle {
     this.motivo = motivo;
   }
 
-  public ComunicacionBajaDetalle(int numero, Documento documento, String motivo) {
+  public ComunicacionBajaDetalle(int numero, Bill documento, String motivo) {
     this.numero = numero;
     this.documento = documento;
     this.motivo = motivo;
@@ -54,11 +54,11 @@ public class ComunicacionBajaDetalle {
     this.numero = numero;
   }
 
-  public Documento getDocumento() {
+  public Bill getDocumento() {
     return documento;
   }
 
-  public void setDocumento(Documento documento) {
+  public void setDocumento(Bill documento) {
     this.documento = documento;
   }
 
