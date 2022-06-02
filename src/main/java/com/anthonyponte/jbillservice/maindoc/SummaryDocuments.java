@@ -115,7 +115,9 @@ public class SummaryDocuments {
                     .addContent(
                         new Element("PartyIdentification", cac)
                             .addContent(
-                                new Element("ID", cbc).setText(resumenDiario.getEmisor().getNumeroDocumentoIdentidad())))
+                                new Element("ID", cbc)
+                                    .setText(
+                                        resumenDiario.getEmisor().getNumeroDocumentoIdentidad())))
                     .addContent(
                         new Element("PartyName", cac)
                             .addContent(
@@ -180,16 +182,21 @@ public class SummaryDocuments {
       if (detalle.getDocumentoReferencia() != null) {
         Element billingReference =
             new Element("BillingReference", cac)
-                .addContent(new Element("InvoiceDocumentReference", cac))
                 .addContent(
-                    new Element("ID", cbc)
-                        .setText(
-                            detalle.getDocumentoReferencia().getSerie()
-                                + "-"
-                                + detalle.getDocumentoReferencia().getCorrelativo()))
-                .addContent(
-                    new Element("DocumentTypeCode", cbc)
-                        .setText(detalle.getDocumentoReferencia().getTipoDocumento().getCodigo()));
+                    new Element("InvoiceDocumentReference", cac)
+                        .addContent(
+                            new Element("ID", cbc)
+                                .setText(
+                                    detalle.getDocumentoReferencia().getSerie()
+                                        + "-"
+                                        + detalle.getDocumentoReferencia().getCorrelativo()))
+                        .addContent(
+                            new Element("DocumentTypeCode", cbc)
+                                .setText(
+                                    detalle
+                                        .getDocumentoReferencia()
+                                        .getTipoDocumento()
+                                        .getCodigo())));
         summaryDocumentsLine.addContent(billingReference);
       }
 

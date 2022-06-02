@@ -27,6 +27,5 @@
         <de-funfried-netbeans-plugins-externalcodeformatter.spring-linefeed/>
         <org-netbeans-modules-javascript2-requirejs.enabled>true</org-netbeans-modules-javascript2-requirejs.enabled>
         <netbeans.hint.license>gpl30</netbeans.hint.license>
-        <org-netbeans-modules-maven-jaxws._5f_C_5f_billService>https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService?wsdl</org-netbeans-modules-maven-jaxws._5f_C_5f_billService>
     </properties>
 </project-shared-configuration>
