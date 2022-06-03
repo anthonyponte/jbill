@@ -31,7 +31,7 @@ import javax.swing.SwingWorker;
 import javax.swing.event.ListSelectionEvent;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
 import com.anthonyponte.jbillservice.factory.BillServiceFactory;
-import com.anthonyponte.jbillservice.idao.IBillService;
+import com.anthonyponte.jbillservice.factory.SummaryFactory;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.idao.IResumenDiarioDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
@@ -61,9 +61,8 @@ public class SummaryController {
 
   private final SummaryIFrame iFrame;
   private final LoadingDialog dialog;
-  private SummaryDao summaryDao;
-  private ComunicacionBajaDao comunicacionBajaDao;
-  private ResumenDiarioDao resumenDiarioDao;
+  private SummaryDao dao;
+  private SummaryFactory summaryFactory;
   private BillServiceFactory billServiceFactory;
   private EventList<Summary> eventList;
   private SortedList<Summary> sortedList;
@@ -122,7 +121,7 @@ public class SummaryController {
                             next.setNombreContent("R-" + next.getNombreZip());
                             next.setContent(response.getContent());
 
-                            summaryDao.update(next.getId(), next);
+                            dao.update(next.getId(), next);
 
                             list.add(next);
                           }
@@ -250,15 +249,7 @@ public class SummaryController {
                             List<Summary> list = new ArrayList<>();
                             for (int i = 0; i < selected.size(); i++) {
                               Summary get = selected.get(i);
-
-                              if (get.getTipoDocumento().getCodigo().equals("RA")
-                                  || get.getTipoDocumento().getCodigo().equals("RR")) {
-                                comunicacionBajaDao.delete(get.getId());
-                              } else if (get.getTipoDocumento().getCodigo().equals("RC")) {
-                                resumenDiarioDao.delete(get.getId());
-                              }
-
-                              summaryDao.delete(get.getId());
+                              summaryFactory.delete(get);
                               list.add(get);
                             }
                             return list;
@@ -294,9 +285,8 @@ public class SummaryController {
   }
 
   private void initComponents() {
-    summaryDao = new ISummaryDao();
-    comunicacionBajaDao = new IComunicacionBajaDao();
-    resumenDiarioDao = new IResumenDiarioDao();
+    dao = new ISummaryDao();
+    summaryFactory = new SummaryFactory();
     billServiceFactory = new BillServiceFactory();
     eventList = new BasicEventList<>();
 
@@ -390,7 +380,7 @@ public class SummaryController {
         new SwingWorker<List<Summary>, Void>() {
           @Override
           protected List<Summary> doInBackground() throws Exception {
-            List<Summary> list = summaryDao.read();
+            List<Summary> list = dao.read();
             return list;
           }
 
