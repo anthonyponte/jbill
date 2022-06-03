@@ -3,4 +3,8 @@
     <system systemId="https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService?wsdl" uri="wsdl/e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService.wsdl"/>
     <system systemId="https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService?ns1.wsdl" uri="wsdl/e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService.ns1.wsdl"/>
     <system systemId="https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService.xsd2.xsd" uri="wsdl/e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService.xsd2.xsd"/>
+    <system systemId="https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService?wsdl" uri="wsdl/e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService.wsdl"/>
+    <system systemId="https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService?ns1.wsdl" uri="wsdl/e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService.ns1.wsdl"/>
+    <system systemId="https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService?ns2.wsdl" uri="wsdl/e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService.ns2.wsdl"/>
+    <system systemId="https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService.xsd2.xsd" uri="wsdl/e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService.xsd2.xsd"/>
 </catalog>
