@@ -30,10 +30,12 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
 import javax.swing.event.ListSelectionEvent;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
+import com.anthonyponte.jbillservice.factory.BillServiceFactory;
 import com.anthonyponte.jbillservice.idao.IBillService;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.idao.IResumenDiarioDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
+import com.anthonyponte.jbillservice.model.StatusResponse;
 import com.anthonyponte.jbillservice.model.Summary;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.google.common.util.concurrent.Uninterruptibles;
@@ -53,12 +55,8 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-import sunat.gob.pe.BillService;
-import sunat.gob.pe.StatusResponse;
 
-/**
- * @author anthony
- */
+/** @author anthony */
 public class SummaryController {
 
   private final SummaryIFrame iFrame;
@@ -66,7 +64,7 @@ public class SummaryController {
   private SummaryDao summaryDao;
   private ComunicacionBajaDao comunicacionBajaDao;
   private ResumenDiarioDao resumenDiarioDao;
-  private BillService service;
+  private BillServiceFactory billServiceFactory;
   private EventList<Summary> eventList;
   private SortedList<Summary> sortedList;
   private AdvancedListSelectionModel<Summary> selectionModel;
@@ -111,12 +109,12 @@ public class SummaryController {
                         DataHandler handler = new DataHandler(source);
 
                         String ticket =
-                            service.sendSummary(
+                            billServiceFactory.sendSummary(
                                 next.getNombreZip(), handler, next.getTipoDocumento().getCodigo());
 
                         if (ticket != null) {
                           Uninterruptibles.sleepUninterruptibly(10, TimeUnit.SECONDS);
-                          StatusResponse response = service.getStatus(ticket);
+                          StatusResponse response = billServiceFactory.getStatus(ticket);
 
                           if (response.getStatusCode().equals("0")) {
                             next.setTicket(ticket);
@@ -299,7 +297,7 @@ public class SummaryController {
     summaryDao = new ISummaryDao();
     comunicacionBajaDao = new IComunicacionBajaDao();
     resumenDiarioDao = new IResumenDiarioDao();
-    service = new IBillService();
+    billServiceFactory = new BillServiceFactory();
     eventList = new BasicEventList<>();
 
     Comparator comparator =
