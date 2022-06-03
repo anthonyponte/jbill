@@ -17,8 +17,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.LayoutStyle;
 import org.kordamp.ikonli.remixicon.RemixiconAL;
+import org.kordamp.ikonli.remixicon.RemixiconMZ;
 import org.kordamp.ikonli.swing.FontIcon;
 
 /**
@@ -61,6 +63,7 @@ public class UsuarioIFrame extends JInternalFrame {
         lblClaveSolContrasena = new JLabel();
         tfClaveSolContrasena = new JPasswordField();
         tfRuc = new JTextField();
+        btnWebService = new JToggleButton();
         separator = new JSeparator();
         cbRecordar = new JCheckBox();
         btnEntrar = new JButton();
@@ -174,6 +177,10 @@ public class UsuarioIFrame extends JInternalFrame {
         tfRuc.setMinimumSize(null);
         tfRuc.setPreferredSize(new Dimension(300, 30));
 
+        btnWebService.setIcon(FontIcon.of(RemixiconMZ.TOGGLE_LINE, 16, Color.decode("#FFFFFF")));
+        btnWebService.setText("Prueba");
+        btnWebService.setPreferredSize(new Dimension(300, 30));
+
         GroupLayout pnlClaveSolLayout = new GroupLayout(pnlClaveSol);
         pnlClaveSol.setLayout(pnlClaveSolLayout);
         pnlClaveSolLayout.setHorizontalGroup(pnlClaveSolLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -187,12 +194,15 @@ public class UsuarioIFrame extends JInternalFrame {
                     .addComponent(tfRuc, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tfRazonSocial, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(tfClaveSolUsuario, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfClaveSolContrasena, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tfClaveSolContrasena, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnWebService, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlClaveSolLayout.setVerticalGroup(pnlClaveSolLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(pnlClaveSolLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(btnWebService, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblRuc)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfRuc, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -255,6 +265,7 @@ public class UsuarioIFrame extends JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public JButton btnEntrar;
     public JButton btnFirmaJks;
+    public JToggleButton btnWebService;
     public JCheckBox cbRecordar;
     public JLabel lblClaveSolContrasena;
     public JLabel lblClaveSolUsuario;

@@ -22,7 +22,6 @@ import beta.sunat.gob.pe.BillService_Service;
 import beta.sunat.gob.pe.StatusResponse;
 import beta.sunat.gob.pe.StatusResponseAR;
 import com.anthonyponte.jbillservice.controller.MainController;
-import com.anthonyponte.jbillservice.controller.SummaryController;
 import com.anthonyponte.jbillservice.controller.UsuarioController;
 import jakarta.activation.DataHandler;
 import jakarta.xml.ws.BindingProvider;

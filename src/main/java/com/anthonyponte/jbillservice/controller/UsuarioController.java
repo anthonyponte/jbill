@@ -4,7 +4,9 @@ import com.anthonyponte.jbillservice.filter.IntegerFilter;
 import com.anthonyponte.jbillservice.filter.UpperCaseFilter;
 import com.anthonyponte.jbillservice.view.MainFrame;
 import com.anthonyponte.jbillservice.view.UsuarioIFrame;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +18,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AbstractDocument;
+import org.kordamp.ikonli.remixicon.RemixiconMZ;
+import org.kordamp.ikonli.swing.FontIcon;
 
 public class UsuarioController {
 
@@ -24,6 +28,7 @@ public class UsuarioController {
   public static final String FIRMA_JKS = "FIRMA_JKS";
   public static final String FIRMA_USUARIO = "FIRMA_USUARIO";
   public static final String FIRMA_CONTRASENA = "FIRMA_CONTRASENA";
+  public static final String SUNAT_WEB_SERVICE = "SUNAT_WEB_SERVICE";
   public static final String RUC = "RUC";
   public static final String RUC_TIPO = "RUC_TIPO";
   public static final String RAZON_SOCIAL = "RAZON_SOCIAL";
@@ -71,6 +76,19 @@ public class UsuarioController {
           }
         });
 
+    iFrame.btnWebService.addItemListener(
+        (ItemEvent e) -> {
+          if (e.getStateChange() == ItemEvent.SELECTED) {
+            iFrame.btnWebService.setIcon(
+                FontIcon.of(RemixiconMZ.TOGGLE_FILL, 16, Color.decode("#FFFFFF")));
+            iFrame.btnWebService.setText("Produccion");
+          } else if (e.getStateChange() == ItemEvent.DESELECTED) {
+            iFrame.btnWebService.setIcon(
+                FontIcon.of(RemixiconMZ.TOGGLE_LINE, 16, Color.decode("#FFFFFF")));
+            iFrame.btnWebService.setText("Prueba");
+          }
+        });
+
     iFrame.btnEntrar.addActionListener(
         (ActionEvent arg0) -> {
           try {
@@ -79,6 +97,7 @@ public class UsuarioController {
               preferences.put(FIRMA_USUARIO, iFrame.tfFirmaUsuario.getText());
               preferences.put(
                   FIRMA_CONTRASENA, String.valueOf(iFrame.tfFirmaContrasena.getPassword()));
+              preferences.putBoolean(SUNAT_WEB_SERVICE, iFrame.btnWebService.isSelected());
               preferences.put(RUC, iFrame.tfRuc.getText());
               preferences.putInt(RUC_TIPO, 6);
               preferences.put(RAZON_SOCIAL, iFrame.tfRazonSocial.getText());
