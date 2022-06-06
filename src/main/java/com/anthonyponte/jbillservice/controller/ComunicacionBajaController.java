@@ -520,18 +520,4 @@ public class ComunicacionBajaController {
       iFrame.btnAgregar.setEnabled(true);
     }
   }
-
-  private String getCodigoTipoDocumento(String descripcion) {
-    String codigo = "";
-    if (descripcion.equalsIgnoreCase("Factura")) {
-      codigo = "01";
-    } else if (descripcion.equalsIgnoreCase("Nota de crédito")) {
-      codigo = "07";
-    } else if (descripcion.equalsIgnoreCase("Nota de débito")) {
-      codigo = "08";
-    } else if (descripcion.equalsIgnoreCase("Comprobante de retención")) {
-      codigo = "20";
-    }
-    return codigo;
-  }
 }
