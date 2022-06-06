@@ -87,7 +87,7 @@ public class SummaryIFrame extends JInternalFrame {
         btnEnviar.setText("Enviar");
         btnEnviar.setEnabled(false);
         btnEnviar.setMinimumSize(new Dimension(150, 30));
-        btnEnviar.setPreferredSize(new Dimension(150, 30));
+        btnEnviar.setPreferredSize(new Dimension(125, 30));
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
