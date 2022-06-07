@@ -40,6 +40,7 @@ import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 import org.joda.time.DateTime;
 import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
+import com.anthonyponte.jbillservice.tableformat.ComunicacionBajaDetalleTableFormat;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import javax.swing.JOptionPane;
 
@@ -49,7 +50,8 @@ public class ComunicacionesBajaController {
   private final ComunicacionesBajaIFrame iFrame;
   private final LoadingDialog dialog;
   private ComunicacionBajaDao dao;
-  private EventList<ComunicacionBaja> eventList;
+  private EventList<ComunicacionBaja> elEncabezado;
+  private EventList<ComunicacionBajaDetalle> elDetalle;
   private SortedList<ComunicacionBaja> sortedList;
   private AdvancedListSelectionModel<ComunicacionBaja> selectionModel;
   private AdvancedTableModel<ComunicacionBaja> tableModel;
@@ -131,29 +133,13 @@ public class ComunicacionesBajaController {
                         try {
                           dialog.dispose();
 
-                          DefaultTableModel model =
-                              (DefaultTableModel) iFrame.tblDetalle.getModel();
+                          List<ComunicacionBajaDetalle> get = get();
 
-                          for (int i = 0; i < model.getRowCount(); i++) {
-                            model.removeRow(i);
-                          }
+                          elDetalle.clear();
+                          elDetalle.addAll(get);
 
-                          List<ComunicacionBajaDetalle> list = get();
-                          Object[] row = null;
-                          for (ComunicacionBajaDetalle next : list) {
-                            String tipoCodigo = next.getDocumento().getTipoDocumento().getCodigo();
-                            String tipoDescripcion =
-                                next.getDocumento().getTipoDocumento().getDescripcion();
-                            String serie = next.getDocumento().getSerie();
-                            int correlativo = next.getDocumento().getCorrelativo();
-                            String motivo = next.getMotivo();
+                          MyTableResize.resize(iFrame.tblEncabezado);
 
-                            row =
-                                new Object[] {
-                                  tipoCodigo, tipoDescripcion, serie, correlativo, motivo
-                                };
-                          }
-                          model.addRow(row);
                         } catch (InterruptedException | ExecutionException ex) {
                           JOptionPane.showMessageDialog(
                               null,
@@ -173,14 +159,15 @@ public class ComunicacionesBajaController {
 
   private void initComponents() {
     dao = new IComunicacionBajaDao();
-    eventList = new BasicEventList<>();
+    elEncabezado = new BasicEventList<>();
+    elDetalle = new BasicEventList<>();
 
     Comparator comparator =
         (Comparator<ComunicacionBaja>)
             (ComunicacionBaja o1, ComunicacionBaja o2) ->
                 o1.getFechaEmision().compareTo(o2.getFechaEmision());
 
-    sortedList = new SortedList<>(eventList, comparator.reversed());
+    sortedList = new SortedList<>(elEncabezado, comparator.reversed());
 
     TextFilterator<ComunicacionBaja> filterator =
         (List<String> list, ComunicacionBaja comunicacionBaja) -> {
@@ -273,6 +260,10 @@ public class ComunicacionesBajaController {
     TableComparatorChooser.install(
         iFrame.tblEncabezado, sortedList, TableComparatorChooser.SINGLE_COLUMN);
 
+    AdvancedTableModel<ComunicacionBajaDetalle> tmDetalle =
+        eventTableModelWithThreadProxyList(elDetalle, new ComunicacionBajaDetalleTableFormat());
+    iFrame.tblDetalle.setModel(tmDetalle);
+
     iFrame.show();
 
     iFrame.dpMesAno.requestFocus();
@@ -300,8 +291,8 @@ public class ComunicacionesBajaController {
               dialog.dispose();
 
               List<ComunicacionBaja> get = get();
-              eventList.clear();
-              eventList.addAll(get);
+              elEncabezado.clear();
+              elEncabezado.addAll(get);
 
               MyTableResize.resize(iFrame.tblEncabezado);
 
