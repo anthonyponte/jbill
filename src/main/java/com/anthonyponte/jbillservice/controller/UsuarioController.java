@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -96,7 +97,11 @@ public class UsuarioController {
 
               iFrame.tfClaveSolContrasena.setText("");
             } catch (BadLocationException ex) {
-              Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+              JOptionPane.showMessageDialog(
+                  null,
+                  ex.getMessage(),
+                  UsuarioController.class.getName(),
+                  JOptionPane.ERROR_MESSAGE);
             }
           } else if (e.getStateChange() == ItemEvent.DESELECTED) {
             try {
@@ -105,14 +110,18 @@ public class UsuarioController {
               iFrame.btnWebService.setText("Prueba");
 
               iFrame.tfRuc.getDocument().remove(0, iFrame.tfRuc.getText().length());
-              
-               iFrame.tfRazonSocial.setText("");
+
+              iFrame.tfRazonSocial.setText("");
 
               iFrame.tfClaveSolUsuario.setText("MODDATOS");
 
               iFrame.tfClaveSolContrasena.setText("moddatos");
             } catch (BadLocationException ex) {
-              Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+              JOptionPane.showMessageDialog(
+                  null,
+                  ex.getMessage(),
+                  UsuarioController.class.getName(),
+                  JOptionPane.ERROR_MESSAGE);
             }
           }
         });
@@ -145,7 +154,11 @@ public class UsuarioController {
             frame.miResumenesDiario.setEnabled(true);
             frame.miSummary.setEnabled(true);
           } catch (BackingStoreException ex) {
-            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(
+                null,
+                ex.getMessage(),
+                UsuarioController.class.getName(),
+                JOptionPane.ERROR_MESSAGE);
           }
         });
 
