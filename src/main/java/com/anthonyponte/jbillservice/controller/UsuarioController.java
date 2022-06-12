@@ -18,6 +18,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AbstractDocument;
+import javax.swing.text.BadLocationException;
 import org.kordamp.ikonli.remixicon.RemixiconMZ;
 import org.kordamp.ikonli.swing.FontIcon;
 
@@ -82,13 +83,37 @@ public class UsuarioController {
     iFrame.btnWebService.addItemListener(
         (ItemEvent e) -> {
           if (e.getStateChange() == ItemEvent.SELECTED) {
-            iFrame.btnWebService.setIcon(
-                FontIcon.of(RemixiconMZ.TOGGLE_FILL, 16, Color.decode("#FFFFFF")));
-            iFrame.btnWebService.setText("Produccion");
+            try {
+              iFrame.btnWebService.setIcon(
+                  FontIcon.of(RemixiconMZ.TOGGLE_FILL, 16, Color.decode("#FFFFFF")));
+              iFrame.btnWebService.setText("Produccion");
+
+              iFrame.tfRuc.getDocument().remove(0, iFrame.tfRuc.getText().length());
+
+              iFrame.tfRazonSocial.setText("");
+
+              iFrame.tfClaveSolUsuario.setText("");
+
+              iFrame.tfClaveSolContrasena.setText("");
+            } catch (BadLocationException ex) {
+              Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+            }
           } else if (e.getStateChange() == ItemEvent.DESELECTED) {
-            iFrame.btnWebService.setIcon(
-                FontIcon.of(RemixiconMZ.TOGGLE_LINE, 16, Color.decode("#FFFFFF")));
-            iFrame.btnWebService.setText("Prueba");
+            try {
+              iFrame.btnWebService.setIcon(
+                  FontIcon.of(RemixiconMZ.TOGGLE_LINE, 16, Color.decode("#FFFFFF")));
+              iFrame.btnWebService.setText("Prueba");
+
+              iFrame.tfRuc.getDocument().remove(0, iFrame.tfRuc.getText().length());
+              
+               iFrame.tfRazonSocial.setText("");
+
+              iFrame.tfClaveSolUsuario.setText("MODDATOS");
+
+              iFrame.tfClaveSolContrasena.setText("moddatos");
+            } catch (BadLocationException ex) {
+              Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
+            }
           }
         });
 
@@ -146,16 +171,6 @@ public class UsuarioController {
 
     iFrame.show();
     if (!isNotRunning) {
-      AbstractDocument docRuc = (AbstractDocument) iFrame.tfRuc.getDocument();
-      docRuc.setDocumentFilter(new IntegerFilter(11));
-
-      AbstractDocument douRazonSocial = (AbstractDocument) iFrame.tfRazonSocial.getDocument();
-      douRazonSocial.setDocumentFilter(new UpperCaseFilter());
-
-      AbstractDocument docClaveSolUsuario =
-          (AbstractDocument) iFrame.tfClaveSolUsuario.getDocument();
-      docClaveSolUsuario.setDocumentFilter(new UpperCaseFilter());
-
       if (isEmpty()) {
         iFrame.tfFirmaJks.requestFocus();
         iFrame.btnWebService.setIcon(
