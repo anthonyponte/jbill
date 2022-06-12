@@ -17,7 +17,9 @@
 
 package com.anthonyponte.jbillservice.model;
 
-/** @author AnthonyPonte */
+/**
+ * @author AnthonyPonte
+ */
 public class Percepcion {
   private RegimenPercepcion regimenPercepcion;
   private double monto;

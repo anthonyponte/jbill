@@ -17,7 +17,9 @@
 
 package com.anthonyponte.jbillservice.model;
 
-/** @author AnthonyPonte */
+/**
+ * @author AnthonyPonte
+ */
 public class Operacion {
   private double total;
   private String codigo;

@@ -25,6 +25,7 @@ public class UsuarioController {
 
   private final MainFrame frame;
   private final UsuarioIFrame iFrame;
+  private final boolean isNotRunning;
   public static final String FIRMA_JKS = "FIRMA_JKS";
   public static final String FIRMA_USUARIO = "FIRMA_USUARIO";
   public static final String FIRMA_CONTRASENA = "FIRMA_CONTRASENA";
@@ -40,12 +41,14 @@ public class UsuarioController {
   private String firmaContrasena;
   private String ruc;
   private String razonSocial;
+  private boolean webService;
   private String claveSolUsuario;
   private String claveSolContrasena;
 
-  public UsuarioController(MainFrame frame, UsuarioIFrame iFrame) {
+  public UsuarioController(MainFrame frame, UsuarioIFrame iFrame, boolean isNotRunning) {
     this.frame = frame;
     this.iFrame = iFrame;
+    this.isNotRunning = isNotRunning;
     initComponents();
   }
 
@@ -137,36 +140,47 @@ public class UsuarioController {
     firmaContrasena = preferences.get(FIRMA_CONTRASENA, "");
     ruc = preferences.get(RUC, "");
     razonSocial = preferences.get(RAZON_SOCIAL, "");
+    webService = preferences.getBoolean(SUNAT_WEB_SERVICE, false);
     claveSolUsuario = preferences.get(CLAVE_SOL_USUARIO, "");
     claveSolContrasena = preferences.get(CLAVE_SOL_CONTRASENA, "");
 
     iFrame.show();
+    if (!isNotRunning) {
+      AbstractDocument docRuc = (AbstractDocument) iFrame.tfRuc.getDocument();
+      docRuc.setDocumentFilter(new IntegerFilter(11));
 
-    AbstractDocument docRuc = (AbstractDocument) iFrame.tfRuc.getDocument();
-    docRuc.setDocumentFilter(new IntegerFilter(11));
+      AbstractDocument douRazonSocial = (AbstractDocument) iFrame.tfRazonSocial.getDocument();
+      douRazonSocial.setDocumentFilter(new UpperCaseFilter());
 
-    AbstractDocument douRazonSocial = (AbstractDocument) iFrame.tfRazonSocial.getDocument();
-    douRazonSocial.setDocumentFilter(new UpperCaseFilter());
+      AbstractDocument docClaveSolUsuario =
+          (AbstractDocument) iFrame.tfClaveSolUsuario.getDocument();
+      docClaveSolUsuario.setDocumentFilter(new UpperCaseFilter());
 
-    AbstractDocument docClaveSolUsuario = (AbstractDocument) iFrame.tfClaveSolUsuario.getDocument();
-    docClaveSolUsuario.setDocumentFilter(new UpperCaseFilter());
-
-    if (isEmpty()) {
-      iFrame.tfFirmaJks.requestFocus();
-      iFrame.cbRecordar.setSelected(false);
-      iFrame.btnEntrar.setEnabled(false);
-    } else {
-      File file = new File(firmaJks);
-      if (file.exists()) iFrame.tfFirmaJks.setText(firmaJks);
-      iFrame.tfFirmaUsuario.setText(firmaUsuario);
-      iFrame.tfFirmaContrasena.setText(firmaContrasena);
-      iFrame.tfRuc.setText(ruc);
-      iFrame.tfRazonSocial.setText(razonSocial);
-      iFrame.tfClaveSolUsuario.setText(claveSolUsuario);
-      iFrame.tfClaveSolContrasena.setText(claveSolContrasena);
-      iFrame.cbRecordar.setSelected(true);
-      iFrame.btnEntrar.setEnabled(true);
-      iFrame.btnEntrar.requestFocus();
+      if (isEmpty()) {
+        iFrame.tfFirmaJks.requestFocus();
+        iFrame.btnWebService.setIcon(
+            FontIcon.of(RemixiconMZ.TOGGLE_LINE, 16, Color.decode("#FFFFFF")));
+        iFrame.btnWebService.setText("Prueba");
+        iFrame.btnWebService.setSelected(webService);
+        iFrame.cbRecordar.setSelected(false);
+        iFrame.btnEntrar.setEnabled(false);
+      } else {
+        File file = new File(firmaJks);
+        if (file.exists()) iFrame.tfFirmaJks.setText(firmaJks);
+        iFrame.tfFirmaUsuario.setText(firmaUsuario);
+        iFrame.tfFirmaContrasena.setText(firmaContrasena);
+        iFrame.btnWebService.setIcon(
+            FontIcon.of(RemixiconMZ.TOGGLE_FILL, 16, Color.decode("#FFFFFF")));
+        iFrame.btnWebService.setText("Produccion");
+        iFrame.btnWebService.setSelected(webService);
+        iFrame.tfRuc.setText(ruc);
+        iFrame.tfRazonSocial.setText(razonSocial);
+        iFrame.tfClaveSolUsuario.setText(claveSolUsuario);
+        iFrame.tfClaveSolContrasena.setText(claveSolContrasena);
+        iFrame.cbRecordar.setSelected(true);
+        iFrame.btnEntrar.setEnabled(true);
+        iFrame.btnEntrar.requestFocus();
+      }
     }
   }
 
