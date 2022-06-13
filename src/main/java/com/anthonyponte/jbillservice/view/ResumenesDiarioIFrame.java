@@ -67,7 +67,7 @@ public class ResumenesDiarioIFrame extends JInternalFrame {
         dpMesAno.setFormats(new SimpleDateFormat("MMMM y"));
         dpMesAno.setMaximumSize(null);
         dpMesAno.setMinimumSize(null);
-        dpMesAno.setPreferredSize(new Dimension(150, 30));
+        dpMesAno.setPreferredSize(new Dimension(125, 30));
         dpMesAno.getEditor().setEditable(false);
 
         tfFiltrar.setMinimumSize(new Dimension(300, 30));

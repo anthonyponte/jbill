@@ -1,10 +1,26 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Copyright (C) 2022 AnthonyPonte
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.anthonyponte.jbillservice.idao;
 
+import beta.sunat.gob.pe.BillService;
+import beta.sunat.gob.pe.BillService_Service;
+import beta.sunat.gob.pe.StatusResponse;
+import beta.sunat.gob.pe.StatusResponseAR;
 import com.anthonyponte.jbillservice.controller.MainController;
 import com.anthonyponte.jbillservice.controller.UsuarioController;
 import jakarta.activation.DataHandler;
@@ -18,15 +34,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 import javax.swing.JOptionPane;
-import sunat.gob.pe.BillService;
-import sunat.gob.pe.BillService_Service;
-import sunat.gob.pe.StatusResponse;
 
-/**
- * @author anthony
- */
-public class IBillService implements BillService {
-
+/** @author AnthonyPonte */
+public class IBetaBillService implements BillService {
   private static final Preferences PREFERENCES =
       Preferences.userRoot().node(MainController.class.getPackageName());
   private final String RUC = PREFERENCES.get(UsuarioController.RUC, "");
@@ -52,6 +62,36 @@ public class IBillService implements BillService {
     } catch (Exception ex) {
       Logger.getLogger(IBillService.class.getName()).log(Level.SEVERE, null, ex);
       JOptionPane.showMessageDialog(null, ex.getMessage(), ticket, JOptionPane.ERROR_MESSAGE);
+    }
+
+    return statusResponse;
+  }
+
+  @Override
+  public StatusResponseAR getStatusAR(
+      String rucComprobante,
+      String tipoComprobante,
+      String serieComprobante,
+      String numeroComprobante) {
+    StatusResponseAR statusResponse = null;
+
+    try {
+      BillService_Service service = new BillService_Service();
+      BillService port = service.getBillServicePort();
+      BindingProvider binding = (BindingProvider) port;
+
+      @SuppressWarnings("rawtypes")
+      List<Handler> handlers = new ArrayList<>();
+      SOAPHandler<SOAPMessageContext> handler = new ISOAPHanlder(RUC + USUARIO, CONTRASENA);
+      handlers.add(handler);
+      binding.getBinding().setHandlerChain(handlers);
+
+      statusResponse =
+          port.getStatusAR(rucComprobante, tipoComprobante, serieComprobante, numeroComprobante);
+    } catch (Exception ex) {
+      Logger.getLogger(IBillService.class.getName()).log(Level.SEVERE, null, ex);
+      JOptionPane.showMessageDialog(
+          null, ex.getMessage(), IBetaBillService.class.getName(), JOptionPane.ERROR_MESSAGE);
     }
 
     return statusResponse;

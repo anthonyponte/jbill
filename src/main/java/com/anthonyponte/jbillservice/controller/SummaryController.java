@@ -30,10 +30,12 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
 import javax.swing.event.ListSelectionEvent;
 import com.anthonyponte.jbillservice.dao.SummaryDao;
-import com.anthonyponte.jbillservice.idao.IBillService;
+import com.anthonyponte.jbillservice.factory.BillServiceFactory;
+import com.anthonyponte.jbillservice.factory.SummaryFactory;
 import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
 import com.anthonyponte.jbillservice.idao.IResumenDiarioDao;
 import com.anthonyponte.jbillservice.idao.ISummaryDao;
+import com.anthonyponte.jbillservice.model.StatusResponse;
 import com.anthonyponte.jbillservice.model.Summary;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.google.common.util.concurrent.Uninterruptibles;
@@ -53,20 +55,15 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-import sunat.gob.pe.BillService;
-import sunat.gob.pe.StatusResponse;
 
-/**
- * @author anthony
- */
+/** @author anthony */
 public class SummaryController {
 
   private final SummaryIFrame iFrame;
   private final LoadingDialog dialog;
-  private SummaryDao summaryDao;
-  private ComunicacionBajaDao comunicacionBajaDao;
-  private ResumenDiarioDao resumenDiarioDao;
-  private BillService service;
+  private SummaryDao dao;
+  private SummaryFactory summaryFactory;
+  private BillServiceFactory billServiceFactory;
   private EventList<Summary> eventList;
   private SortedList<Summary> sortedList;
   private AdvancedListSelectionModel<Summary> selectionModel;
@@ -111,12 +108,12 @@ public class SummaryController {
                         DataHandler handler = new DataHandler(source);
 
                         String ticket =
-                            service.sendSummary(
+                            billServiceFactory.sendSummary(
                                 next.getNombreZip(), handler, next.getTipoDocumento().getCodigo());
 
                         if (ticket != null) {
                           Uninterruptibles.sleepUninterruptibly(10, TimeUnit.SECONDS);
-                          StatusResponse response = service.getStatus(ticket);
+                          StatusResponse response = billServiceFactory.getStatus(ticket);
 
                           if (response.getStatusCode().equals("0")) {
                             next.setTicket(ticket);
@@ -124,7 +121,7 @@ public class SummaryController {
                             next.setNombreContent("R-" + next.getNombreZip());
                             next.setContent(response.getContent());
 
-                            summaryDao.update(next.getId(), next);
+                            dao.update(next.getId(), next);
 
                             list.add(next);
                           }
@@ -252,15 +249,7 @@ public class SummaryController {
                             List<Summary> list = new ArrayList<>();
                             for (int i = 0; i < selected.size(); i++) {
                               Summary get = selected.get(i);
-
-                              if (get.getTipoDocumento().getCodigo().equals("RA")
-                                  || get.getTipoDocumento().getCodigo().equals("RR")) {
-                                comunicacionBajaDao.delete(get.getId());
-                              } else if (get.getTipoDocumento().getCodigo().equals("RC")) {
-                                resumenDiarioDao.delete(get.getId());
-                              }
-
-                              summaryDao.delete(get.getId());
+                              summaryFactory.delete(get);
                               list.add(get);
                             }
                             return list;
@@ -296,10 +285,9 @@ public class SummaryController {
   }
 
   private void initComponents() {
-    summaryDao = new ISummaryDao();
-    comunicacionBajaDao = new IComunicacionBajaDao();
-    resumenDiarioDao = new IResumenDiarioDao();
-    service = new IBillService();
+    dao = new ISummaryDao();
+    summaryFactory = new SummaryFactory();
+    billServiceFactory = new BillServiceFactory();
     eventList = new BasicEventList<>();
 
     Comparator comparator =
@@ -392,7 +380,7 @@ public class SummaryController {
         new SwingWorker<List<Summary>, Void>() {
           @Override
           protected List<Summary> doInBackground() throws Exception {
-            List<Summary> list = summaryDao.read();
+            List<Summary> list = dao.read();
             return list;
           }
 
