@@ -1,15 +1,11 @@
 package com.anthonyponte.jbillservice.controller;
 
-import com.anthonyponte.jbillservice.filter.IntegerFilter;
-import com.anthonyponte.jbillservice.filter.UpperCaseFilter;
 import com.anthonyponte.jbillservice.view.MainFrame;
 import com.anthonyponte.jbillservice.view.UsuarioIFrame;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import javax.swing.JFileChooser;
@@ -18,7 +14,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.AbstractDocument;
 import javax.swing.text.BadLocationException;
 import org.kordamp.ikonli.remixicon.RemixiconMZ;
 import org.kordamp.ikonli.swing.FontIcon;
@@ -186,26 +181,38 @@ public class UsuarioController {
     if (!isNotRunning) {
       if (isEmpty()) {
         iFrame.tfFirmaJks.requestFocus();
-        iFrame.btnWebService.setIcon(
-            FontIcon.of(RemixiconMZ.TOGGLE_LINE, 16, Color.decode("#FFFFFF")));
-        iFrame.btnWebService.setText("Prueba");
+        //
+        //        iFrame.btnWebService.setIcon(
+        //            FontIcon.of(RemixiconMZ.TOGGLE_LINE, 16, Color.decode("#FFFFFF")));
+        //        iFrame.btnWebService.setText("Prueba");
         iFrame.btnWebService.setSelected(webService);
+
         iFrame.cbRecordar.setSelected(false);
+
         iFrame.btnEntrar.setEnabled(false);
       } else {
         File file = new File(firmaJks);
         if (file.exists()) iFrame.tfFirmaJks.setText(firmaJks);
+
         iFrame.tfFirmaUsuario.setText(firmaUsuario);
+
         iFrame.tfFirmaContrasena.setText(firmaContrasena);
-        iFrame.btnWebService.setIcon(
-            FontIcon.of(RemixiconMZ.TOGGLE_FILL, 16, Color.decode("#FFFFFF")));
-        iFrame.btnWebService.setText("Produccion");
+
+        //        iFrame.btnWebService.setIcon(
+        //            FontIcon.of(RemixiconMZ.TOGGLE_FILL, 16, Color.decode("#FFFFFF")));
+        //        iFrame.btnWebService.setText("Produccion");
         iFrame.btnWebService.setSelected(webService);
+
         iFrame.tfRuc.setText(ruc);
+
         iFrame.tfRazonSocial.setText(razonSocial);
+
         iFrame.tfClaveSolUsuario.setText(claveSolUsuario);
+
         iFrame.tfClaveSolContrasena.setText(claveSolContrasena);
+
         iFrame.cbRecordar.setSelected(true);
+
         iFrame.btnEntrar.setEnabled(true);
         iFrame.btnEntrar.requestFocus();
       }
