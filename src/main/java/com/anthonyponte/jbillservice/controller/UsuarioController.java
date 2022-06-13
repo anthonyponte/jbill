@@ -88,8 +88,10 @@ public class UsuarioController {
 
               iFrame.tfRazonSocial.setText("");
 
+              iFrame.tfClaveSolUsuario.setEnabled(true);
               iFrame.tfClaveSolUsuario.setText("");
 
+              iFrame.tfClaveSolContrasena.setEnabled(true);
               iFrame.tfClaveSolContrasena.setText("");
             } catch (BadLocationException ex) {
               JOptionPane.showMessageDialog(
@@ -108,8 +110,10 @@ public class UsuarioController {
 
               iFrame.tfRazonSocial.setText("");
 
+              iFrame.tfClaveSolUsuario.setEnabled(false);
               iFrame.tfClaveSolUsuario.setText("MODDATOS");
 
+              iFrame.tfClaveSolContrasena.setEnabled(false);
               iFrame.tfClaveSolContrasena.setText("moddatos");
             } catch (BadLocationException ex) {
               JOptionPane.showMessageDialog(
@@ -179,13 +183,18 @@ public class UsuarioController {
 
     iFrame.show();
     if (!isNotRunning) {
+      if (webService) {
+        iFrame.btnWebService.setIcon(
+            FontIcon.of(RemixiconMZ.TOGGLE_FILL, 16, Color.decode("#FFFFFF")));
+        iFrame.btnWebService.setText("Produccion");
+      } else {
+        iFrame.btnWebService.setIcon(
+            FontIcon.of(RemixiconMZ.TOGGLE_LINE, 16, Color.decode("#FFFFFF")));
+        iFrame.btnWebService.setText("Prueba");
+      }
+
       if (isEmpty()) {
         iFrame.tfFirmaJks.requestFocus();
-        //
-        //        iFrame.btnWebService.setIcon(
-        //            FontIcon.of(RemixiconMZ.TOGGLE_LINE, 16, Color.decode("#FFFFFF")));
-        //        iFrame.btnWebService.setText("Prueba");
-        iFrame.btnWebService.setSelected(webService);
 
         iFrame.cbRecordar.setSelected(false);
 
@@ -197,11 +206,6 @@ public class UsuarioController {
         iFrame.tfFirmaUsuario.setText(firmaUsuario);
 
         iFrame.tfFirmaContrasena.setText(firmaContrasena);
-
-        //        iFrame.btnWebService.setIcon(
-        //            FontIcon.of(RemixiconMZ.TOGGLE_FILL, 16, Color.decode("#FFFFFF")));
-        //        iFrame.btnWebService.setText("Produccion");
-        iFrame.btnWebService.setSelected(webService);
 
         iFrame.tfRuc.setText(ruc);
 

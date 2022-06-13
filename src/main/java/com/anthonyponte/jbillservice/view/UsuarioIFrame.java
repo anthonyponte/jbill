@@ -162,6 +162,7 @@ public class UsuarioIFrame extends JInternalFrame {
         lblClaveSolUsuario.setFont(lblClaveSolUsuario.getFont().deriveFont(lblClaveSolUsuario.getFont().getStyle() | Font.BOLD, lblClaveSolUsuario.getFont().getSize()-2));
         lblClaveSolUsuario.setText("Usuario");
 
+        tfClaveSolUsuario.setEnabled(false);
         tfClaveSolUsuario.setMaximumSize(null);
         tfClaveSolUsuario.setMinimumSize(null);
         tfClaveSolUsuario.setName(""); // NOI18N
@@ -171,6 +172,7 @@ public class UsuarioIFrame extends JInternalFrame {
         lblClaveSolContrasena.setLabelFor(tfClaveSolContrasena);
         lblClaveSolContrasena.setText("Contraseña");
 
+        tfClaveSolContrasena.setEnabled(false);
         tfClaveSolContrasena.setMaximumSize(null);
         tfClaveSolContrasena.setMinimumSize(null);
         tfClaveSolContrasena.setName(""); // NOI18N
