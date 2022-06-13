@@ -193,6 +193,8 @@ public class UsuarioController {
         iFrame.btnWebService.setText("Prueba");
       }
 
+      iFrame.btnWebService.setSelected(webService);
+
       if (isEmpty()) {
         iFrame.tfFirmaJks.requestFocus();
 
