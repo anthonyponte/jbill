@@ -1,6 +1,18 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Copyright (C) 2022 AnthonyPonte
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package com.anthonyponte.jbillservice.controller;
@@ -20,10 +32,13 @@ import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import com.anthonyponte.jbillservice.custom.MyDateFormat;
 import com.anthonyponte.jbillservice.custom.MyTableResize;
-import com.anthonyponte.jbillservice.idao.IComunicacionBajaDao;
-import com.anthonyponte.jbillservice.model.ComunicacionBaja;
-import com.anthonyponte.jbillservice.model.ComunicacionBajaDetalle;
-import com.anthonyponte.jbillservice.view.ComunicacionesBajaIFrame;
+import com.anthonyponte.jbillservice.dao.ResumenDiarioDao;
+import com.anthonyponte.jbillservice.idao.IResumenDiarioDao;
+import com.anthonyponte.jbillservice.model.ResumenDiario;
+import com.anthonyponte.jbillservice.model.ResumenDiarioDetalle;
+import com.anthonyponte.jbillservice.tableformat.ResumenDiarioDetalleTableFormat;
+import com.anthonyponte.jbillservice.view.LoadingDialog;
+import com.anthonyponte.jbillservice.view.ResumenesIFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -31,32 +46,28 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JFileChooser;
-import javax.swing.SwingWorker;
-import javax.swing.table.DefaultTableModel;
-import org.joda.time.DateTime;
-import com.anthonyponte.jbillservice.dao.ComunicacionBajaDao;
-import com.anthonyponte.jbillservice.tableformat.ComunicacionBajaDetalleTableFormat;
-import com.anthonyponte.jbillservice.view.LoadingDialog;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
+import org.joda.time.DateTime;
 
 /** @author AnthonyPonte */
-public class ComunicacionesBajaController {
-
-  private final ComunicacionesBajaIFrame iFrame;
+public class ResumenesController {
+  private final ResumenesIFrame iFrame;
   private final LoadingDialog dialog;
-  private ComunicacionBajaDao dao;
-  private EventList<ComunicacionBaja> elEncabezado;
-  private EventList<ComunicacionBajaDetalle> elDetalle;
-  private SortedList<ComunicacionBaja> sortedList;
-  private AdvancedListSelectionModel<ComunicacionBaja> selectionModel;
-  private AdvancedTableModel<ComunicacionBaja> tableModel;
+  private ResumenDiarioDao dao;
+  private EventList<ResumenDiario> eventList;
+  private EventList<ResumenDiarioDetalle> elDetalle;
+  private SortedList<ResumenDiario> sortedList;
+  private AdvancedListSelectionModel<ResumenDiario> selectionModel;
+  private AdvancedTableModel<ResumenDiario> tableModel;
 
-  public ComunicacionesBajaController(ComunicacionesBajaIFrame iFrame, LoadingDialog dialog) {
+  public ResumenesController(ResumenesIFrame iFrame, LoadingDialog dialog) {
     this.iFrame = iFrame;
     this.dialog = dialog;
     initComponents();
@@ -69,14 +80,13 @@ public class ComunicacionesBajaController {
           start(date);
         });
 
-    iFrame.tblEncabezado.addMouseListener(
-        new MouseAdapter() {
+    iFrame.tblEncabezado.addMouseListener(new MouseAdapter() {
           @Override
           public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {
               int column = iFrame.tblEncabezado.columnAtPoint(e.getPoint());
               if (column == 8 || column == 11) {
-                ComunicacionBaja selected = selectionModel.getSelected().get(0);
+                ResumenDiario selected = selectionModel.getSelected().get(0);
 
                 JFileChooser chooser = new JFileChooser();
                 chooser.setCurrentDirectory(new File("."));
@@ -101,56 +111,32 @@ public class ComunicacionesBajaController {
 
                     fos.flush();
                   } catch (FileNotFoundException ex) {
-                    JOptionPane.showMessageDialog(
-                        null,
+                    JOptionPane.showMessageDialog(null,
                         ex.getMessage(),
-                        ComunicacionesBajaController.class.getName(),
+                        ResumenesController.class.getName(),
                         JOptionPane.ERROR_MESSAGE);
                   } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(
-                        null,
+                    JOptionPane.showMessageDialog(null,
                         ex.getMessage(),
-                        ComunicacionesBajaController.class.getName(),
+                        ResumenesController.class.getName(),
                         JOptionPane.ERROR_MESSAGE);
                   }
                 }
-
               } else {
-                dialog.setVisible(true);
-                dialog.setLocationRelativeTo(iFrame);
+                try {
+                  ResumenDiario selected = selectionModel.getSelected().get(0);
+                  List<ResumenDiarioDetalle> get = dao.read(selected);
 
-                SwingWorker worker =
-                    new SwingWorker<List<ComunicacionBajaDetalle>, Void>() {
-                      @Override
-                      protected List<ComunicacionBajaDetalle> doInBackground() throws Exception {
-                        ComunicacionBaja selected = selectionModel.getSelected().get(0);
-                        List<ComunicacionBajaDetalle> list = dao.read(selected);
-                        return list;
-                      }
+                  elDetalle.clear();
+                  elDetalle.addAll(get);
 
-                      @Override
-                      protected void done() {
-                        try {
-                          dialog.dispose();
-
-                          List<ComunicacionBajaDetalle> get = get();
-
-                          elDetalle.clear();
-                          elDetalle.addAll(get);
-
-                          MyTableResize.resize(iFrame.tblEncabezado);
-
-                        } catch (InterruptedException | ExecutionException ex) {
-                          JOptionPane.showMessageDialog(
-                              null,
-                              ex.getMessage(),
-                              ComunicacionesBajaController.class.getName(),
-                              JOptionPane.ERROR_MESSAGE);
-                        }
-                      }
-                    };
-
-                worker.execute();
+                  MyTableResize.resize(iFrame.tblDetalle);
+                } catch (SQLException ex) {
+                  JOptionPane.showMessageDialog(null,
+                      ex.getMessage(),
+                      ResumenesController.class.getName(),
+                      JOptionPane.ERROR_MESSAGE);
+                }
               }
             }
           }
@@ -158,31 +144,31 @@ public class ComunicacionesBajaController {
   }
 
   private void initComponents() {
-    dao = new IComunicacionBajaDao();
-    elEncabezado = new BasicEventList<>();
+    dao = new IResumenDiarioDao();
+    eventList = new BasicEventList<>();
     elDetalle = new BasicEventList<>();
 
     Comparator comparator =
-        (Comparator<ComunicacionBaja>)
-            (ComunicacionBaja o1, ComunicacionBaja o2) ->
+        (Comparator<ResumenDiario>)
+            (ResumenDiario o1, ResumenDiario o2) ->
                 o1.getFechaEmision().compareTo(o2.getFechaEmision());
 
-    sortedList = new SortedList<>(elEncabezado, comparator.reversed());
+    sortedList = new SortedList<>(eventList, comparator.reversed());
 
-    TextFilterator<ComunicacionBaja> filterator =
-        (List<String> list, ComunicacionBaja comunicacionBaja) -> {
-          list.add(comunicacionBaja.getTipoDocumento().getCodigo());
-          list.add(comunicacionBaja.getTipoDocumento().getDescripcion());
-          list.add(String.valueOf(comunicacionBaja.getCorrelativo()));
+    TextFilterator<ResumenDiario> filterator =
+        (List<String> list, ResumenDiario resumenDiario) -> {
+          list.add(resumenDiario.getTipoDocumento().getCodigo());
+          list.add(resumenDiario.getTipoDocumento().getDescripcion());
+          list.add(String.valueOf(resumenDiario.getCorrelativo()));
         };
 
-    MatcherEditor<ComunicacionBaja> matcherEditor =
+    MatcherEditor<ResumenDiario> matcherEditor =
         new TextComponentMatcherEditor<>(iFrame.tfFiltrar, filterator);
 
-    FilterList<ComunicacionBaja> filterList = new FilterList<>(sortedList, matcherEditor);
+    FilterList<ResumenDiario> filterList = new FilterList<>(sortedList, matcherEditor);
 
-    TableFormat<ComunicacionBaja> tableFormat =
-        new TableFormat<ComunicacionBaja>() {
+    TableFormat<ResumenDiario> tableFormat =
+        new TableFormat<ResumenDiario>() {
           @Override
           public int getColumnCount() {
             return 12;
@@ -220,32 +206,32 @@ public class ComunicacionesBajaController {
           }
 
           @Override
-          public Object getColumnValue(ComunicacionBaja comunicacionBaja, int column) {
+          public Object getColumnValue(ResumenDiario resumenDiario, int column) {
             switch (column) {
               case 0:
-                return comunicacionBaja.getTipoDocumento().getCodigo();
+                return resumenDiario.getTipoDocumento().getCodigo();
               case 1:
-                return comunicacionBaja.getTipoDocumento().getDescripcion();
+                return resumenDiario.getTipoDocumento().getDescripcion();
               case 2:
-                return comunicacionBaja.getSerie();
+                return resumenDiario.getSerie();
               case 3:
-                return String.valueOf(comunicacionBaja.getCorrelativo());
+                return String.valueOf(resumenDiario.getCorrelativo());
               case 4:
-                return MyDateFormat.d_MMMM_Y(comunicacionBaja.getFechaEmision());
+                return MyDateFormat.d_MMMM_Y(resumenDiario.getFechaEmision());
               case 5:
-                return MyDateFormat.d_MMMM_Y(comunicacionBaja.getFechaReferencia());
+                return MyDateFormat.d_MMMM_Y(resumenDiario.getFechaReferencia());
               case 6:
-                return comunicacionBaja.getEmisor().getNumeroDocumentoIdentidad();
+                return resumenDiario.getEmisor().getNumeroDocumentoIdentidad();
               case 7:
-                return comunicacionBaja.getEmisor().getNombre();
+                return resumenDiario.getEmisor().getNombre();
               case 8:
-                return comunicacionBaja.getNombreZip();
+                return resumenDiario.getNombreZip();
               case 9:
-                return comunicacionBaja.getTicket();
+                return resumenDiario.getTicket();
               case 10:
-                return comunicacionBaja.getStatusCode();
+                return resumenDiario.getStatusCode();
               case 11:
-                return comunicacionBaja.getNombreContent();
+                return resumenDiario.getNombreContent();
             }
             throw new IllegalStateException("Unexpected column: " + column);
           }
@@ -260,9 +246,9 @@ public class ComunicacionesBajaController {
     TableComparatorChooser.install(
         iFrame.tblEncabezado, sortedList, TableComparatorChooser.SINGLE_COLUMN);
 
-    AdvancedTableModel<ComunicacionBajaDetalle> tmDetalle =
-        eventTableModelWithThreadProxyList(elDetalle, new ComunicacionBajaDetalleTableFormat());
-    iFrame.tblDetalle.setModel(tmDetalle);
+    AdvancedTableModel<ResumenDiarioDetalle> ttmDetalle =
+        eventTableModelWithThreadProxyList(elDetalle, new ResumenDiarioDetalleTableFormat());
+    iFrame.tblDetalle.setModel(ttmDetalle);
 
     iFrame.show();
 
@@ -277,11 +263,11 @@ public class ComunicacionesBajaController {
     dialog.setLocationRelativeTo(iFrame);
 
     SwingWorker worker =
-        new SwingWorker<List<ComunicacionBaja>, Void>() {
+        new SwingWorker<List<ResumenDiario>, Void>() {
           @Override
-          protected List<ComunicacionBaja> doInBackground() throws Exception {
+          protected List<ResumenDiario> doInBackground() throws Exception {
             DateTime dateTime = new DateTime(date);
-            List<ComunicacionBaja> list = dao.read(dateTime);
+            List<ResumenDiario> list = dao.read(dateTime);
             return list;
           }
 
@@ -290,19 +276,18 @@ public class ComunicacionesBajaController {
             try {
               dialog.dispose();
 
-              List<ComunicacionBaja> get = get();
-              elEncabezado.clear();
-              elEncabezado.addAll(get);
+              List<ResumenDiario> get = get();
+              eventList.clear();
+              eventList.addAll(get);
 
               MyTableResize.resize(iFrame.tblEncabezado);
 
               if (!get.isEmpty()) iFrame.tfFiltrar.requestFocus();
               else iFrame.dpMesAno.requestFocus();
             } catch (InterruptedException | ExecutionException ex) {
-              JOptionPane.showMessageDialog(
-                  null,
+              JOptionPane.showMessageDialog(null,
                   ex.getMessage(),
-                  ComunicacionesBajaController.class.getName(),
+                  ResumenesController.class.getName(),
                   JOptionPane.ERROR_MESSAGE);
             }
           }

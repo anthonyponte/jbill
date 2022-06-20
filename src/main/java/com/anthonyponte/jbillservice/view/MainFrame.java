@@ -55,8 +55,8 @@ public class MainFrame extends JFrame {
         miComunicacionBaja = new JMenuItem();
         miResumenDiario = new JMenuItem();
         menuVer = new JMenu();
-        miComunicacionesBaja = new JMenuItem();
-        miResumenesDiario = new JMenuItem();
+        miComunicaciones = new JMenuItem();
+        miResumenes = new JMenuItem();
         menuBillService = new JMenu();
         miSummary = new JMenuItem();
         menuSalir = new JMenuItem();
@@ -98,13 +98,13 @@ public class MainFrame extends JFrame {
         menuVer.setText("Ver");
         menuVer.setEnabled(false);
 
-        miComunicacionesBaja.setText("Comunicaciones de baja");
-        miComunicacionesBaja.setEnabled(false);
-        menuVer.add(miComunicacionesBaja);
+        miComunicaciones.setText("Comunicaciones");
+        miComunicaciones.setEnabled(false);
+        menuVer.add(miComunicaciones);
 
-        miResumenesDiario.setText("Resumenes diario");
-        miResumenesDiario.setEnabled(false);
-        menuVer.add(miResumenesDiario);
+        miResumenes.setText("Resumenes");
+        miResumenes.setEnabled(false);
+        menuVer.add(miResumenes);
 
         menuMain.add(menuVer);
 
@@ -154,9 +154,9 @@ public class MainFrame extends JFrame {
     public JMenuItem menuSalir;
     public JMenu menuVer;
     public JMenuItem miComunicacionBaja;
-    public JMenuItem miComunicacionesBaja;
+    public JMenuItem miComunicaciones;
     public JMenuItem miResumenDiario;
-    public JMenuItem miResumenesDiario;
+    public JMenuItem miResumenes;
     public JMenuItem miSummary;
     // End of variables declaration//GEN-END:variables
 }

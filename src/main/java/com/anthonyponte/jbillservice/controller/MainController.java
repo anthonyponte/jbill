@@ -8,10 +8,10 @@ import com.anthonyponte.jbillservice.view.SummaryIFrame;
 import com.anthonyponte.jbillservice.view.MainFrame;
 import com.anthonyponte.jbillservice.view.UsuarioIFrame;
 import com.anthonyponte.jbillservice.view.ComunicacionBajaIFrame;
-import com.anthonyponte.jbillservice.view.ComunicacionesBajaIFrame;
+import com.anthonyponte.jbillservice.view.ComunicacionesIFrame;
 import com.anthonyponte.jbillservice.view.LoadingDialog;
 import com.anthonyponte.jbillservice.view.ResumenDiarioIFrame;
-import com.anthonyponte.jbillservice.view.ResumenesDiarioIFrame;
+import com.anthonyponte.jbillservice.view.ResumenesIFrame;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -35,8 +35,8 @@ public class MainController {
   private ComunicacionBajaIFrame comunicacionBajaIFrame;
   private ResumenDiarioIFrame resumenDiarioIFrame;
   private SummaryIFrame summaryIFrame;
-  private ComunicacionesBajaIFrame comunicacionesBajaIFrame;
-  private ResumenesDiarioIFrame resumenesDiarioIFrame;
+  private ComunicacionesIFrame comunicacionesIFrame;
+  private ResumenesIFrame resumenesIFrame;
   private LoadingDialog dialog;
   private Server server = null;
   private final String ALIAS = "jbs";
@@ -48,7 +48,7 @@ public class MainController {
   }
 
   public void init() {
- frame.menuEntrar.addActionListener(
+    frame.menuEntrar.addActionListener(
         (ActionEvent arg0) -> {
           if (isIframeClosed(usuarioIFrame)) {
             usuarioIFrame = new UsuarioIFrame();
@@ -84,27 +84,27 @@ public class MainController {
           }
         });
 
-    frame.miComunicacionesBaja.addActionListener(
+    frame.miComunicaciones.addActionListener(
         (ActionEvent arg0) -> {
-          if (isIframeClosed(comunicacionesBajaIFrame)) {
-            comunicacionesBajaIFrame = new ComunicacionesBajaIFrame();
-            frame.dpane.add(comunicacionesBajaIFrame);
-            comunicacionesBajaIFrame.setLocation(centerIFrame(comunicacionesBajaIFrame));
-            new ComunicacionesBajaController(comunicacionesBajaIFrame, dialog).init();
+          if (isIframeClosed(comunicacionesIFrame)) {
+            comunicacionesIFrame = new ComunicacionesIFrame();
+            frame.dpane.add(comunicacionesIFrame);
+            comunicacionesIFrame.setLocation(centerIFrame(comunicacionesIFrame));
+            new ComunicacionesController(comunicacionesIFrame, dialog).init();
           } else {
-            iframeClosed(comunicacionesBajaIFrame);
+            iframeClosed(comunicacionesIFrame);
           }
         });
 
-    frame.miResumenesDiario.addActionListener(
+    frame.miResumenes.addActionListener(
         (ActionEvent arg0) -> {
-          if (isIframeClosed(resumenesDiarioIFrame)) {
-            resumenesDiarioIFrame = new ResumenesDiarioIFrame();
-            frame.dpane.add(resumenesDiarioIFrame);
-            resumenesDiarioIFrame.setLocation(centerIFrame(resumenesDiarioIFrame));
-            new ResumenesDiarioController(resumenesDiarioIFrame, dialog).init();
+          if (isIframeClosed(resumenesIFrame)) {
+            resumenesIFrame = new ResumenesIFrame();
+            frame.dpane.add(resumenesIFrame);
+            resumenesIFrame.setLocation(centerIFrame(resumenesIFrame));
+            new ResumenesController(resumenesIFrame, dialog).init();
           } else {
-            iframeClosed(resumenesDiarioIFrame);
+            iframeClosed(resumenesIFrame);
           }
         });
 
@@ -156,9 +156,9 @@ public class MainController {
 
   private void initComponents() {
     dialog = new LoadingDialog(frame, false);
-    
+
     frame.setVisible(true);
-    
+
     start();
   }
 

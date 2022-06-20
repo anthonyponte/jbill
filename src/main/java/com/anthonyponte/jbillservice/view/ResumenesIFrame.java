@@ -26,12 +26,12 @@ import org.kordamp.ikonli.swing.FontIcon;
  *
  * @author AnthonyPonte
  */
-public class ComunicacionesBajaIFrame extends JInternalFrame {
+public class ResumenesIFrame extends JInternalFrame {
 
     /**
      * Creates new form TablaIFrame
      */
-    public ComunicacionesBajaIFrame() {
+    public ResumenesIFrame() {
         initComponents();
     }
 
@@ -57,7 +57,7 @@ public class ComunicacionesBajaIFrame extends JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Comunicaciones de baja");
+        setTitle("Resumenes");
         setFrameIcon(FontIcon.of(RemixiconAL.CALENDAR_2_LINE, 16, Color.decode("#FACADE")));
         setMaximumSize(null);
         setMinimumSize(new Dimension(800, 600));
@@ -102,26 +102,12 @@ public class ComunicacionesBajaIFrame extends JInternalFrame {
 
             },
             new String [] {
-                "Tipo Codigo", "Tipo Descripcion", "Serie", "Correlativo", "Motivo"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
+        tblDetalle.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         tblDetalle.getTableHeader().setReorderingAllowed(false);
         scrllDetalle.setViewportView(tblDetalle);
-        if (tblDetalle.getColumnModel().getColumnCount() > 0) {
-            tblDetalle.getColumnModel().getColumn(0).setResizable(false);
-            tblDetalle.getColumnModel().getColumn(1).setResizable(false);
-            tblDetalle.getColumnModel().getColumn(2).setResizable(false);
-            tblDetalle.getColumnModel().getColumn(3).setResizable(false);
-            tblDetalle.getColumnModel().getColumn(4).setResizable(false);
-        }
 
         spltPane.setRightComponent(scrllDetalle);
 

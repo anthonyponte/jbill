@@ -52,18 +52,18 @@
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="miComunicacionesBaja">
+                <MenuItem class="javax.swing.JMenuItem" name="miComunicaciones">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Comunicaciones de baja"/>
+                    <Property name="text" type="java.lang.String" value="Comunicaciones"/>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="miResumenesDiario">
+                <MenuItem class="javax.swing.JMenuItem" name="miResumenes">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Resumenes diario"/>
+                    <Property name="text" type="java.lang.String" value="Resumenes"/>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </MenuItem>
