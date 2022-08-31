@@ -8,26 +8,30 @@ package com.anthonyponte.jbill.model;
  * @author anthony
  */
 public class ComunicacionDetalle {
-
   private int id;
   private Summary summary;
   private int numero;
-  private Bill documento;
+  private Tipo tipoDocumento;
+  private String serie;
+  private int correlativo;
   private String motivo;
 
   public ComunicacionDetalle() {}
 
-  public ComunicacionDetalle(int id, Summary summary, int numero, Bill documento, String motivo) {
+  public ComunicacionDetalle(
+      int id,
+      Summary summary,
+      int numero,
+      Tipo tipoDocumento,
+      String serie,
+      int correlativo,
+      String motivo) {
     this.id = id;
     this.summary = summary;
     this.numero = numero;
-    this.documento = documento;
-    this.motivo = motivo;
-  }
-
-  public ComunicacionDetalle(int numero, Bill documento, String motivo) {
-    this.numero = numero;
-    this.documento = documento;
+    this.tipoDocumento = tipoDocumento;
+    this.serie = serie;
+    this.correlativo = correlativo;
     this.motivo = motivo;
   }
 
@@ -55,12 +59,28 @@ public class ComunicacionDetalle {
     this.numero = numero;
   }
 
-  public Bill getDocumento() {
-    return documento;
+  public Tipo getTipoDocumento() {
+    return tipoDocumento;
   }
 
-  public void setDocumento(Bill documento) {
-    this.documento = documento;
+  public void setTipoDocumento(Tipo tipoDocumento) {
+    this.tipoDocumento = tipoDocumento;
+  }
+
+  public String getSerie() {
+    return serie;
+  }
+
+  public void setSerie(String serie) {
+    this.serie = serie;
+  }
+
+  public int getCorrelativo() {
+    return correlativo;
+  }
+
+  public void setCorrelativo(int correlativo) {
+    this.correlativo = correlativo;
   }
 
   public String getMotivo() {
@@ -80,8 +100,12 @@ public class ComunicacionDetalle {
         + summary
         + ", numero="
         + numero
-        + ", documento="
-        + documento
+        + ", tipoDocumento="
+        + tipoDocumento
+        + ", serie="
+        + serie
+        + ", correlativo="
+        + correlativo
         + ", motivo="
         + motivo
         + '}';

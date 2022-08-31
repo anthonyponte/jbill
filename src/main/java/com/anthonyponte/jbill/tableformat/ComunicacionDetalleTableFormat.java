@@ -20,7 +20,9 @@ package com.anthonyponte.jbill.tableformat;
 import ca.odell.glazedlists.gui.TableFormat;
 import com.anthonyponte.jbill.model.ComunicacionDetalle;
 
-/** @author AnthonyPonte */
+/**
+ * @author AnthonyPonte
+ */
 public class ComunicacionDetalleTableFormat implements TableFormat<ComunicacionDetalle> {
 
   @Override
@@ -47,11 +49,11 @@ public class ComunicacionDetalleTableFormat implements TableFormat<ComunicacionD
   public Object getColumnValue(ComunicacionDetalle baseObject, int column) {
     switch (column) {
       case 0:
-        return baseObject.getDocumento().getTipo().getDescripcion();
+        return baseObject.getTipoDocumento().getDescripcion();
       case 1:
-        return baseObject.getDocumento().getSerie();
+        return baseObject.getSerie();
       case 2:
-        return baseObject.getDocumento().getCorrelativo();
+        return baseObject.getCorrelativo();
       case 3:
         return baseObject.getMotivo();
     }

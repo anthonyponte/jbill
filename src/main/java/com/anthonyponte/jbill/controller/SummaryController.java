@@ -107,7 +107,7 @@ public class SummaryController {
                 if (column == 8) {
                   chooser.setSelectedFile(new File(selected.getNombreZip()));
                 } else if (column == 11) {
-                  chooser.setSelectedFile(new File(selected.getNombreContent()));
+                  chooser.setSelectedFile(new File(selected.getNombreCdr()));
                 }
 
                 int result = chooser.showSaveDialog(iFrame);
@@ -119,7 +119,7 @@ public class SummaryController {
                     if (column == 8) {
                       fos.write(selected.getZip());
                     } else if (column == 11) {
-                      fos.write(selected.getContent());
+                      fos.write(selected.getCdr());
                     }
 
                     fos.flush();
@@ -141,15 +141,15 @@ public class SummaryController {
                 try {
                   Summary selected = selectionModel.getSelected().get(0);
 
-                  if (selected.getTipo().getCodigo().equals("RA")
-                      || selected.getTipo().getCodigo().equals("RR")) {
+                  if (selected.getTipoDocumento().getCodigo().equals("RA")
+                      || selected.getTipoDocumento().getCodigo().equals("RR")) {
                     List<ComunicacionDetalle> detalles = comunicacionDetalleDao.read(selected);
 
                     iFrame.tblDetalle.setModel(modelComunicacionDetalle);
 
                     comunicacionDetalles.clear();
                     comunicacionDetalles.addAll(detalles);
-                  } else if (selected.getTipo().getCodigo().equals("RC")) {
+                  } else if (selected.getTipoDocumento().getCodigo().equals("RC")) {
                     List<ResumenDetalle> detalles = resumenDetalleDao.read(selected);
 
                     iFrame.tblDetalle.setModel(modelResumenDetalle);
@@ -188,8 +188,8 @@ public class SummaryController {
 
     TextFilterator<Summary> filterator =
         (List<String> list, Summary summary) -> {
-          list.add(summary.getTipo().getCodigo());
-          list.add(summary.getTipo().getDescripcion());
+          list.add(summary.getTipoDocumento().getCodigo());
+          list.add(summary.getTipoDocumento().getDescripcion());
           list.add(String.valueOf(summary.getCorrelativo()));
         };
 

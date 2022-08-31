@@ -20,7 +20,9 @@ package com.anthonyponte.jbill.tableformat;
 import ca.odell.glazedlists.gui.TableFormat;
 import com.anthonyponte.jbill.model.ResumenDetalle;
 
-/** @author AnthonyPonte */
+/**
+ * @author AnthonyPonte
+ */
 public class ResumenDetalleTableFormat implements TableFormat<ResumenDetalle> {
 
   @Override
@@ -84,78 +86,75 @@ public class ResumenDetalleTableFormat implements TableFormat<ResumenDetalle> {
   }
 
   @Override
-  public Object getColumnValue(ResumenDetalle detalle, int column) {
+  public Object getColumnValue(ResumenDetalle baseObject, int column) {
     switch (column) {
       case 0:
-        return detalle.getDocumento().getSerie();
+        return baseObject.getSerie();
       case 1:
-        return detalle.getDocumento().getCorrelativo();
+        return baseObject.getCorrelativo();
       case 2:
-        return detalle.getDocumento().getTipo().getDescripcion();
+        return baseObject.getTipoDocumento().getDescripcion();
       case 3:
-        if (detalle.getAdquiriente() != null)
-          return detalle.getAdquiriente().getNumero();
+        if (baseObject.getAdquiriente() != null) return baseObject.getAdquiriente().getNumero();
         else return "";
       case 4:
-        if (detalle.getDocumentoReferencia() != null)
-          return detalle.getDocumentoReferencia().getSerie();
+        if (baseObject.getSerieReferencia().isEmpty()) return baseObject.getSerieReferencia();
         else return "";
       case 5:
-        if (detalle.getDocumentoReferencia() != null)
-          return detalle.getDocumentoReferencia().getCorrelativo();
+        if (baseObject.getCorrelativoReferencia() > 0) return baseObject.getCorrelativoReferencia();
         else return "";
       case 6:
-        if (detalle.getDocumentoReferencia() != null)
-          return detalle.getDocumentoReferencia().getTipo().getDescripcion();
+        if (baseObject.getTipoDocumentoReferencia() != null)
+          return baseObject.getTipoDocumentoReferencia().getDescripcion();
         else return "";
       case 7:
-        if (detalle.getPercepcion() != null)
-          return detalle.getPercepcion().getRegimenPercepcion().getDescripcion();
+        if (baseObject.getPercepcion() != null)
+          return baseObject.getPercepcion().getRegimenPercepcion().getDescripcion();
         else return "";
       case 8:
-        if (detalle.getPercepcion() != null)
-          return detalle.getPercepcion().getRegimenPercepcion().getPorcentaje();
+        if (baseObject.getPercepcion() != null)
+          return baseObject.getPercepcion().getRegimenPercepcion().getPorcentaje();
         else return "";
       case 9:
-        if (detalle.getPercepcion() != null) return detalle.getPercepcion().getMonto();
+        if (baseObject.getPercepcion() != null) return baseObject.getPercepcion().getMonto();
         else return "";
       case 10:
-        if (detalle.getPercepcion() != null) return detalle.getPercepcion().getMontoTotal();
+        if (baseObject.getPercepcion() != null) return baseObject.getPercepcion().getMontoTotal();
         else return "";
       case 11:
-        return detalle.getEstado().getDescripcion();
+        return baseObject.getEstado().getDescripcion();
       case 12:
-        return detalle.getImporteTotal();
+        return baseObject.getImporteTotal();
       case 13:
-        return detalle.getMoneda().getDescripcion();
+        return baseObject.getMoneda().getDescripcion();
       case 14:
-        if (detalle.getGravadas() != null) return detalle.getGravadas().getTotal();
+        if (baseObject.getGravadas() != null) return baseObject.getGravadas().getTotal();
         else return "";
       case 15:
-        if (detalle.getExoneradas() != null) return detalle.getExoneradas().getTotal();
+        if (baseObject.getExoneradas() != null) return baseObject.getExoneradas().getTotal();
         else return "";
       case 16:
-        if (detalle.getInafectas() != null) return detalle.getInafectas().getTotal();
+        if (baseObject.getInafectas() != null) return baseObject.getInafectas().getTotal();
         else return "";
       case 17:
-        if (detalle.getGratuitas() != null) return detalle.getGratuitas().getTotal();
+        if (baseObject.getGratuitas() != null) return baseObject.getGratuitas().getTotal();
         else return "";
       case 18:
-        if (detalle.getExportacion() != null) return detalle.getExportacion().getTotal();
+        if (baseObject.getExportacion() != null) return baseObject.getExportacion().getTotal();
         else return "";
       case 19:
-        if (detalle.getOtrosCargos() != null) return detalle.getOtrosCargos().getTotal();
+        if (baseObject.getOtrosCargos() != null) return baseObject.getOtrosCargos().getTotal();
         else return "";
       case 20:
-        return detalle.getIgv().getTotal();
+        return baseObject.getIgv().getTotal();
       case 21:
-        if (detalle.getIsc() != null) return detalle.getIsc().getTotal();
+        if (baseObject.getIsc() != null) return baseObject.getIsc().getTotal();
         else return "";
       case 22:
-        if (detalle.getOtrosTributos() != null) return detalle.getOtrosTributos().getTotal();
+        if (baseObject.getOtrosTributos() != null) return baseObject.getOtrosTributos().getTotal();
         else return "";
       case 23:
-        if (detalle.getImpuestoBolsa() != null) return detalle.getImpuestoBolsa().getTotal();
+        if (baseObject.getImpuestoBolsa() != null) return baseObject.getImpuestoBolsa().getTotal();
         else return "";
     }
     throw new IllegalStateException("Unexpected column: " + column);

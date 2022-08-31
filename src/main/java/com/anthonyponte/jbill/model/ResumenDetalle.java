@@ -24,11 +24,15 @@ public class ResumenDetalle {
   private int id;
   private Summary summary;
   private int numero;
-  private Bill documento;
+  private Tipo tipoDocumento;
+  private String serie;
+  private int correlativo;
   private Empresa adquiriente;
-  private Bill documentoReferencia;
+  private Tipo tipoDocumentoReferencia;
+  private String serieReferencia;
+  private int correlativoReferencia;
   private Percepcion percepcion;
-  private Estado estado;
+  private Tipo estado;
   private double importeTotal;
   private Tipo moneda;
   private Operacion gravadas;
@@ -48,11 +52,15 @@ public class ResumenDetalle {
       int id,
       Summary summary,
       int numero,
-      Bill documento,
+      Tipo tipoDocumento,
+      String serie,
+      int correlativo,
       Empresa adquiriente,
-      Bill documentoReferencia,
+      Tipo tipoDocumentoReferencia,
+      String serieReferencia,
+      int correlativoReferencia,
       Percepcion percepcion,
-      Estado estado,
+      Tipo estado,
       double importeTotal,
       Tipo moneda,
       Operacion gravadas,
@@ -68,9 +76,13 @@ public class ResumenDetalle {
     this.id = id;
     this.summary = summary;
     this.numero = numero;
-    this.documento = documento;
+    this.tipoDocumento = tipoDocumento;
+    this.serie = serie;
+    this.correlativo = correlativo;
     this.adquiriente = adquiriente;
-    this.documentoReferencia = documentoReferencia;
+    this.tipoDocumentoReferencia = tipoDocumentoReferencia;
+    this.serieReferencia = serieReferencia;
+    this.correlativoReferencia = correlativoReferencia;
     this.percepcion = percepcion;
     this.estado = estado;
     this.importeTotal = importeTotal;
@@ -111,12 +123,28 @@ public class ResumenDetalle {
     this.numero = numero;
   }
 
-  public Bill getDocumento() {
-    return documento;
+  public Tipo getTipoDocumento() {
+    return tipoDocumento;
   }
 
-  public void setDocumento(Bill documento) {
-    this.documento = documento;
+  public void setTipoDocumento(Tipo tipoDocumento) {
+    this.tipoDocumento = tipoDocumento;
+  }
+
+  public String getSerie() {
+    return serie;
+  }
+
+  public void setSerie(String serie) {
+    this.serie = serie;
+  }
+
+  public int getCorrelativo() {
+    return correlativo;
+  }
+
+  public void setCorrelativo(int correlativo) {
+    this.correlativo = correlativo;
   }
 
   public Empresa getAdquiriente() {
@@ -127,12 +155,28 @@ public class ResumenDetalle {
     this.adquiriente = adquiriente;
   }
 
-  public Bill getDocumentoReferencia() {
-    return documentoReferencia;
+  public Tipo getTipoDocumentoReferencia() {
+    return tipoDocumentoReferencia;
   }
 
-  public void setDocumentoReferencia(Bill documentoReferencia) {
-    this.documentoReferencia = documentoReferencia;
+  public void setTipoDocumentoReferencia(Tipo tipoDocumentoReferencia) {
+    this.tipoDocumentoReferencia = tipoDocumentoReferencia;
+  }
+
+  public String getSerieReferencia() {
+    return serieReferencia;
+  }
+
+  public void setSerieReferencia(String serieReferencia) {
+    this.serieReferencia = serieReferencia;
+  }
+
+  public int getCorrelativoReferencia() {
+    return correlativoReferencia;
+  }
+
+  public void setCorrelativoReferencia(int correlativoReferencia) {
+    this.correlativoReferencia = correlativoReferencia;
   }
 
   public Percepcion getPercepcion() {
@@ -143,11 +187,11 @@ public class ResumenDetalle {
     this.percepcion = percepcion;
   }
 
-  public Estado getEstado() {
+  public Tipo getEstado() {
     return estado;
   }
 
-  public void setEstado(Estado estado) {
+  public void setEstado(Tipo estado) {
     this.estado = estado;
   }
 
@@ -256,12 +300,20 @@ public class ResumenDetalle {
         + summary
         + ", numero="
         + numero
-        + ", documento="
-        + documento
+        + ", tipoDocumento="
+        + tipoDocumento
+        + ", serie="
+        + serie
+        + ", correlativo="
+        + correlativo
         + ", adquiriente="
         + adquiriente
-        + ", documentoReferencia="
-        + documentoReferencia
+        + ", tipoDocumentoReferencia="
+        + tipoDocumentoReferencia
+        + ", serieReferencia="
+        + serieReferencia
+        + ", correlativoReferencia="
+        + correlativoReferencia
         + ", percepcion="
         + percepcion
         + ", estado="

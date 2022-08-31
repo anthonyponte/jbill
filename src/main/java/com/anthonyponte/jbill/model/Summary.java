@@ -26,7 +26,7 @@ public class Summary {
   private int id;
   private String ubl;
   private String version;
-  private Tipo tipo;
+  private Tipo tipoDocumento;
   private String serie;
   private int correlativo;
   private Date fechaEmision;
@@ -36,58 +36,29 @@ public class Summary {
   private byte[] zip;
   private String ticket;
   private String statusCode;
-  private String nombreContent;
-  private byte[] content;
+  private String nombreCdr;
+  private byte[] cdr;
   private Date fechaIngreso;
 
   public Summary() {}
 
   public Summary(
-      int id,
       String ubl,
       String version,
-      Tipo tipo,
+      Tipo tipoDocumento,
       String serie,
       int correlativo,
       Date fechaEmision,
       Date fechaReferencia,
-      Empresa emisor,
-      String nombreZip,
-      byte[] zip) {
-    this.id = id;
+      Empresa emisor) {
     this.ubl = ubl;
     this.version = version;
-    this.tipo = tipo;
+    this.tipoDocumento = tipoDocumento;
     this.serie = serie;
     this.correlativo = correlativo;
     this.fechaEmision = fechaEmision;
     this.fechaReferencia = fechaReferencia;
     this.emisor = emisor;
-    this.nombreZip = nombreZip;
-    this.zip = zip;
-  }
-
-  public Summary(
-      String ubl,
-      String version,
-      Tipo tipo,
-      String serie,
-      int correlativo,
-      Date fechaEmision,
-      Date fechaReferencia,
-      Empresa emisor,
-      String nombreZip,
-      byte[] zip) {
-    this.ubl = ubl;
-    this.version = version;
-    this.tipo = tipo;
-    this.serie = serie;
-    this.correlativo = correlativo;
-    this.fechaEmision = fechaEmision;
-    this.fechaReferencia = fechaReferencia;
-    this.emisor = emisor;
-    this.nombreZip = nombreZip;
-    this.zip = zip;
   }
 
   public int getId() {
@@ -114,12 +85,12 @@ public class Summary {
     this.version = version;
   }
 
-  public Tipo getTipo() {
-    return tipo;
+  public Tipo getTipoDocumento() {
+    return tipoDocumento;
   }
 
-  public void setTipo(Tipo tipo) {
-    this.tipo = tipo;
+  public void setTipoDocumento(Tipo tipoDocumento) {
+    this.tipoDocumento = tipoDocumento;
   }
 
   public String getSerie() {
@@ -194,20 +165,20 @@ public class Summary {
     this.statusCode = statusCode;
   }
 
-  public String getNombreContent() {
-    return nombreContent;
+  public String getNombreCdr() {
+    return nombreCdr;
   }
 
-  public void setNombreContent(String nombreContent) {
-    this.nombreContent = nombreContent;
+  public void setNombreCdr(String nombreCdr) {
+    this.nombreCdr = nombreCdr;
   }
 
-  public byte[] getContent() {
-    return content;
+  public byte[] getCdr() {
+    return cdr;
   }
 
-  public void setContent(byte[] content) {
-    this.content = content;
+  public void setCdr(byte[] cdr) {
+    this.cdr = cdr;
   }
 
   public Date getFechaIngreso() {
@@ -227,8 +198,8 @@ public class Summary {
         + ubl
         + ", version="
         + version
-        + ", tipo="
-        + tipo
+        + ", tipoDocumento="
+        + tipoDocumento
         + ", serie="
         + serie
         + ", correlativo="
@@ -247,10 +218,10 @@ public class Summary {
         + ticket
         + ", statusCode="
         + statusCode
-        + ", nombreContent="
-        + nombreContent
-        + ", content="
-        + content
+        + ", nombreCdr="
+        + nombreCdr
+        + ", cdr="
+        + cdr
         + ", fechaIngreso="
         + fechaIngreso
         + '}';

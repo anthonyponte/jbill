@@ -32,9 +32,7 @@ import com.anthonyponte.jbill.filter.IntegerFilter;
 import com.anthonyponte.jbill.idao.IResumenDetalleDao;
 import com.anthonyponte.jbill.idao.ISummaryDao;
 import com.anthonyponte.jbill.maindoc.SummaryDocuments;
-import com.anthonyponte.jbill.model.Bill;
 import com.anthonyponte.jbill.model.Empresa;
-import com.anthonyponte.jbill.model.Estado;
 import com.anthonyponte.jbill.model.Impuesto;
 import com.anthonyponte.jbill.model.Operacion;
 import com.anthonyponte.jbill.model.OtrosCargos;
@@ -82,7 +80,7 @@ public class ResumenController {
   private final LoadingDialog dialog;
   private Preferences preferences;
   private SummaryDao summaryDao;
-  private ResumenDetalleDao resumenDiarioDao;
+  private ResumenDetalleDao resumenDetalleDao;
   private EventList<ResumenDetalle> eventList;
   private AdvancedTableModel<ResumenDetalle> tableModel;
   private AdvancedListSelectionModel<ResumenDetalle> selectionModel;
@@ -229,62 +227,61 @@ public class ResumenController {
                   new SwingWorker<Resumen, Void>() {
                     @Override
                     protected Resumen doInBackground() throws Exception {
-                      Resumen resumenDiario = null;
+                      Resumen resumen = null;
                       try {
-                        resumenDiario = new Resumen();
-                        resumenDiario.setUbl("2.0");
-                        resumenDiario.setVersion("1.1");
+                        resumen = new Resumen();
+                        resumen.setUbl("2.0");
+                        resumen.setVersion("1.1");
 
-                        resumenDiario.setTipo((Tipo) iFrame.cbxTipo.getSelectedItem());
-                        resumenDiario.setSerie(
-                            MyDateFormat.yyyyMMdd(iFrame.dpFechaGeneracion.getDate()));
-                        resumenDiario.setCorrelativo(
-                            Integer.valueOf(iFrame.tfCorrelativo.getText()));
+                        resumen.setTipoDocumento((Tipo) iFrame.cbxTipo.getSelectedItem());
+                        resumen.setSerie(MyDateFormat.yyyyMMdd(iFrame.dpFechaGeneracion.getDate()));
+                        resumen.setCorrelativo(Integer.valueOf(iFrame.tfCorrelativo.getText()));
 
-                        resumenDiario.setFechaEmision(iFrame.dpFechaGeneracion.getDate());
-                        resumenDiario.setFechaReferencia(iFrame.dpFechaEmision.getDate());
+                        resumen.setFechaEmision(iFrame.dpFechaGeneracion.getDate());
+                        resumen.setFechaReferencia(iFrame.dpFechaEmision.getDate());
 
                         Empresa emisor = new Empresa();
                         emisor.setNumero(preferences.get(UsuarioController.RUC, ""));
 
-                        Tipo tipo = new Tipo();
-                        tipo.setCodigo(preferences.get(UsuarioController.RUC_TIPO, ""));
-                        emisor.setTipo(tipo);
+                        Tipo tipoDocumentoIdentidad = new Tipo();
+                        tipoDocumentoIdentidad.setCodigo(
+                            preferences.get(UsuarioController.RUC_TIPO, ""));
+                        emisor.setTipoDocumentoIdentidad(tipoDocumentoIdentidad);
 
                         emisor.setNombre(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
-                        resumenDiario.setEmisor(emisor);
+                        resumen.setEmisor(emisor);
 
-                        resumenDiario.setDetalles(eventList);
+                        resumen.setDetalles(eventList);
 
                         SummaryDocuments summaryDocuments = new SummaryDocuments();
-                        Document document = summaryDocuments.getStructure(resumenDiario);
+                        Document document = summaryDocuments.getStructure(resumen);
 
                         File xml =
                             MyFileCreator.create(
-                                resumenDiario.getTipo().getCodigo(),
-                                resumenDiario.getSerie(),
-                                resumenDiario.getCorrelativo(),
+                                resumen.getTipoDocumento().getCodigo(),
+                                resumen.getSerie(),
+                                resumen.getCorrelativo(),
                                 document);
 
                         File sign =
                             MyFileCreator.sign(
-                                resumenDiario.getTipo().getCodigo(),
-                                resumenDiario.getSerie(),
-                                resumenDiario.getCorrelativo(),
+                                resumen.getTipoDocumento().getCodigo(),
+                                resumen.getSerie(),
+                                resumen.getCorrelativo(),
                                 xml);
 
                         File zip =
                             MyFileCreator.compress(
-                                resumenDiario.getTipo().getCodigo(),
-                                resumenDiario.getSerie(),
-                                resumenDiario.getCorrelativo(),
+                                resumen.getTipoDocumento().getCodigo(),
+                                resumen.getSerie(),
+                                resumen.getCorrelativo(),
                                 sign);
 
                         byte[] byteArray = Files.readAllBytes(zip.toPath());
-                        resumenDiario.setNombreZip(zip.getName());
-                        resumenDiario.setZip(byteArray);
-                        int id = summaryDao.create(resumenDiario);
-                        resumenDiarioDao.create(id, eventList);
+                        resumen.setNombreZip(zip.getName());
+                        resumen.setZip(byteArray);
+                        int id = summaryDao.create(resumen);
+                        resumenDetalleDao.create(id, eventList);
 
                         sign.delete();
                         zip.delete();
@@ -308,7 +305,7 @@ public class ResumenController {
                             ResumenController.class.getName(),
                             JOptionPane.ERROR_MESSAGE);
                       }
-                      return resumenDiario;
+                      return resumen;
                     }
 
                     @Override
@@ -496,30 +493,27 @@ public class ResumenController {
           try {
             ResumenDetalle detalle = new ResumenDetalle();
 
-            Bill documento = new Bill();
-            documento.setSerie(iFrame.tfDocumentoSerie.getText());
-            documento.setCorrelativo(Integer.valueOf(iFrame.tfDocumentoCorrelativo.getText()));
-            documento.setTipo((Tipo) iFrame.cbxDocumentoTipo.getSelectedItem());
-            detalle.setDocumento(documento);
+            detalle.setSerie(iFrame.tfDocumentoSerie.getText());
+            detalle.setCorrelativo(Integer.valueOf(iFrame.tfDocumentoCorrelativo.getText()));
+            detalle.setTipoDocumento((Tipo) iFrame.cbxDocumentoTipo.getSelectedItem());
 
             if (iFrame.cbxDocumentoIdentidadTipo.getSelectedIndex() >= 0
                 && !iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()) {
               Empresa adquiriente = new Empresa();
               adquiriente.setNumero(iFrame.tfDocumentoIdentidadNumero.getText());
-              adquiriente.setTipo((Tipo) iFrame.cbxDocumentoIdentidadTipo.getSelectedItem());
+              adquiriente.setTipoDocumentoIdentidad(
+                  (Tipo) iFrame.cbxDocumentoIdentidadTipo.getSelectedItem());
               detalle.setAdquiriente(adquiriente);
             }
 
             if (iFrame.cbxDocumentoReferenciaTipo.getSelectedIndex() >= 0
                 && !iFrame.tfDocumentoReferenciaSerie.getText().isEmpty()
                 && !iFrame.tfDocumentoReferenciaCorrelativo.getText().isEmpty()) {
-              Bill documentoReferencia = new Bill();
-              documentoReferencia.setSerie(iFrame.tfDocumentoReferenciaSerie.getText());
-              documentoReferencia.setCorrelativo(
+              detalle.setSerieReferencia(iFrame.tfDocumentoReferenciaSerie.getText());
+              detalle.setCorrelativoReferencia(
                   Integer.valueOf(iFrame.tfDocumentoReferenciaCorrelativo.getText()));
-              documentoReferencia.setTipo(
+              detalle.setTipoDocumentoReferencia(
                   (Tipo) iFrame.cbxDocumentoReferenciaTipo.getSelectedItem());
-              detalle.setDocumentoReferencia(documentoReferencia);
             }
 
             if (iFrame.cbxPercepcionRegimen.getSelectedIndex() >= 0) {
@@ -533,7 +527,7 @@ public class ResumenController {
               detalle.setPercepcion(percepcion);
             }
 
-            detalle.setEstado((Estado) iFrame.cbxEstado.getSelectedItem());
+            detalle.setEstado((Tipo) iFrame.cbxEstado.getSelectedItem());
 
             Number importeTotal = (Number) iFrame.tfImporteTotal.getValue();
             detalle.setImporteTotal(importeTotal.doubleValue());
@@ -738,7 +732,7 @@ public class ResumenController {
 
   private void initComponents() {
     summaryDao = new ISummaryDao();
-    resumenDiarioDao = new IResumenDetalleDao();
+    resumenDetalleDao = new IResumenDetalleDao();
     preferences = Preferences.userRoot().node(MainController.class.getPackageName());
     eventList = new BasicEventList<>();
 
@@ -808,25 +802,24 @@ public class ResumenController {
           public Object getColumnValue(ResumenDetalle detalle, int column) {
             switch (column) {
               case 0:
-                return detalle.getDocumento().getSerie();
+                return detalle.getSerie();
               case 1:
-                return detalle.getDocumento().getCorrelativo();
+                return detalle.getCorrelativo();
               case 2:
-                return detalle.getDocumento().getTipo().getDescripcion();
+                return detalle.getTipoDocumento().getDescripcion();
               case 3:
                 if (detalle.getAdquiriente() != null) return detalle.getAdquiriente().getNumero();
                 else return "";
               case 4:
-                if (detalle.getDocumentoReferencia() != null)
-                  return detalle.getDocumentoReferencia().getSerie();
+                if (detalle.getSerieReferencia().isEmpty()) return detalle.getSerieReferencia();
                 else return "";
               case 5:
-                if (detalle.getDocumentoReferencia() != null)
-                  return detalle.getDocumentoReferencia().getCorrelativo();
+                if (detalle.getCorrelativoReferencia() > 0)
+                  return detalle.getCorrelativoReferencia();
                 else return "";
               case 6:
-                if (detalle.getDocumentoReferencia() != null)
-                  return detalle.getDocumentoReferencia().getTipo().getDescripcion();
+                if (detalle.getTipoDocumentoReferencia() != null)
+                  return detalle.getTipoDocumentoReferencia().getDescripcion();
                 else return "";
               case 7:
                 if (detalle.getPercepcion() != null)

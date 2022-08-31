@@ -29,10 +29,11 @@ public class SummaryFactory {
   }
 
   public void delete(Summary summary) throws SQLException {
-    if (summary.getTipo().getCodigo().equals("RA") || summary.getTipo().getCodigo().equals("RR")) {
+    if (summary.getTipoDocumento().getCodigo().equals("RA")
+        || summary.getTipoDocumento().getCodigo().equals("RR")) {
       comunicacionDetalleDao.delete(summary.getId());
       summaryDao.delete(summary.getId());
-    } else if (summary.getTipo().getCodigo().equals("RC")) {
+    } else if (summary.getTipoDocumento().getCodigo().equals("RC")) {
       resumenDetalleDao.delete(summary.getId());
       summaryDao.delete(summary.getId());
     }

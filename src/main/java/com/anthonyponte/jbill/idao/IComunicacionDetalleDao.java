@@ -6,13 +6,11 @@
 package com.anthonyponte.jbill.idao;
 
 import com.anthonyponte.jbill.custom.MyHsqldbConnection;
-import com.anthonyponte.jbill.model.Comunicacion;
 import com.anthonyponte.jbill.model.ComunicacionDetalle;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import com.anthonyponte.jbill.model.Bill;
 import java.util.ArrayList;
 import com.anthonyponte.jbill.model.Tipo;
 import com.anthonyponte.jbill.dao.ComunicacionDetalleDao;
@@ -30,8 +28,7 @@ public class IComunicacionDetalleDao implements ComunicacionDetalleDao {
   }
 
   @Override
-  public void create(int id, List<ComunicacionDetalle> comunicacionBajaDetalles)
-      throws SQLException {
+  public void create(int id, List<ComunicacionDetalle> detalles) throws SQLException {
     database.connect();
 
     String queryDetalle =
@@ -42,14 +39,14 @@ public class IComunicacionDetalleDao implements ComunicacionDetalleDao {
 
     try (PreparedStatement ps = database.getConnection().prepareStatement(queryDetalle)) {
 
-      for (int i = 0; i < comunicacionBajaDetalles.size(); i++) {
-        ComunicacionDetalle get = comunicacionBajaDetalles.get(i);
+      for (int i = 0; i < detalles.size(); i++) {
+        ComunicacionDetalle get = detalles.get(i);
         ps.setInt(1, id);
         ps.setInt(2, i + 1);
-        ps.setString(3, get.getDocumento().getTipo().getCodigo());
-        ps.setString(4, get.getDocumento().getTipo().getDescripcion());
-        ps.setString(5, get.getDocumento().getSerie());
-        ps.setInt(6, get.getDocumento().getCorrelativo());
+        ps.setString(3, get.getTipoDocumento().getCodigo());
+        ps.setString(4, get.getTipoDocumento().getDescripcion());
+        ps.setString(5, get.getSerie());
+        ps.setInt(6, get.getCorrelativo());
         ps.setString(7, get.getMotivo());
         ps.addBatch();
       }
@@ -78,27 +75,24 @@ public class IComunicacionDetalleDao implements ComunicacionDetalleDao {
 
       try (ResultSet rs = ps.executeQuery()) {
         while (rs.next()) {
-          ComunicacionDetalle comunicacionBajaDetalle = new ComunicacionDetalle();
+          ComunicacionDetalle detalle = new ComunicacionDetalle();
 
-          comunicacionBajaDetalle.setSummary(summary);
+          detalle.setSummary(summary);
 
-          comunicacionBajaDetalle.setId(rs.getInt(1));
-          comunicacionBajaDetalle.setNumero(rs.getInt(2));
+          detalle.setId(rs.getInt(1));
+          detalle.setNumero(rs.getInt(2));
 
-          Bill documento = new Bill();
+          Tipo tipoDocumento = new Tipo();
+          tipoDocumento.setCodigo(rs.getString(3));
+          tipoDocumento.setDescripcion(rs.getString(4));
+          detalle.setTipoDocumento(tipoDocumento);
 
-          Tipo tipo = new Tipo();
-          tipo.setCodigo(rs.getString(3));
-          tipo.setDescripcion(rs.getString(4));
-          documento.setTipo(tipo);
+          detalle.setSerie(rs.getString(5));
+          detalle.setCorrelativo(rs.getInt(6));
 
-          documento.setSerie(rs.getString(5));
-          documento.setCorrelativo(rs.getInt(6));
-          comunicacionBajaDetalle.setDocumento(documento);
+          detalle.setMotivo(rs.getString(7));
 
-          comunicacionBajaDetalle.setMotivo(rs.getString(7));
-
-          list.add(comunicacionBajaDetalle);
+          list.add(detalle);
         }
       }
     }

@@ -20,17 +20,22 @@ package com.anthonyponte.jbill.model;
 /**
  * @author AnthonyPonte
  */
-public class Operacion {
+public class Operacion extends Tipo {
   private double total;
-  private String codigo;
-  private String descripcion;
 
   public Operacion() {}
 
-  public Operacion(double total, String codigo, String descripcion) {
+  public Operacion(String codigo, String descripcion) {
+    super(codigo, descripcion);
+  }
+
+  public Operacion(double total) {
     this.total = total;
-    this.codigo = codigo;
-    this.descripcion = descripcion;
+  }
+
+  public Operacion(double total, String codigo, String descripcion) {
+    super(codigo, descripcion);
+    this.total = total;
   }
 
   public double getTotal() {
@@ -41,31 +46,8 @@ public class Operacion {
     this.total = total;
   }
 
-  public String getCodigo() {
-    return codigo;
-  }
-
-  public void setCodigo(String codigo) {
-    this.codigo = codigo;
-  }
-
-  public String getDescripcion() {
-    return descripcion;
-  }
-
-  public void setDescripcion(String descripcion) {
-    this.descripcion = descripcion;
-  }
-
   @Override
   public String toString() {
-    return "Operacion{"
-        + "total="
-        + total
-        + ", codigo="
-        + codigo
-        + ", descripcion="
-        + descripcion
-        + '}';
+    return "Operacion{" + "total=" + total + '}';
   }
 }

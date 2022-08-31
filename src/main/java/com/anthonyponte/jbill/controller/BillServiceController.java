@@ -74,7 +74,8 @@ public class BillServiceController {
   }
 
   public void init() {
-    iFrame.btnEnviar.addActionListener((var e) -> {
+    iFrame.btnEnviar.addActionListener(
+        (var e) -> {
           int seleccionados = selectionModel.getSelected().size();
           int input =
               JOptionPane.showOptionDialog(
@@ -106,7 +107,7 @@ public class BillServiceController {
 
                         String ticket =
                             billServiceFactory.sendSummary(
-                                next.getNombreZip(), handler, next.getTipo().getCodigo());
+                                next.getNombreZip(), handler, next.getTipoDocumento().getCodigo());
 
                         if (ticket != null) {
                           Uninterruptibles.sleepUninterruptibly(10, TimeUnit.SECONDS);
@@ -115,8 +116,8 @@ public class BillServiceController {
                           if (response.getStatusCode().equals("0")) {
                             next.setTicket(ticket);
                             next.setStatusCode(response.getStatusCode());
-                            next.setNombreContent("R-" + next.getNombreZip());
-                            next.setContent(response.getContent());
+                            next.setNombreCdr("R-" + next.getNombreZip());
+                            next.setCdr(response.getContent());
 
                             dao.update(next.getId(), next);
 
@@ -142,7 +143,8 @@ public class BillServiceController {
                           "Enviados",
                           JOptionPane.INFORMATION_MESSAGE);
                     } catch (InterruptedException | ExecutionException ex) {
-                      JOptionPane.showMessageDialog(null,
+                      JOptionPane.showMessageDialog(
+                          null,
                           ex.getMessage(),
                           BillServiceController.class.getName(),
                           JOptionPane.ERROR_MESSAGE);
@@ -153,7 +155,8 @@ public class BillServiceController {
           }
         });
 
-    iFrame.table.addMouseListener(new MouseAdapter() {
+    iFrame.table.addMouseListener(
+        new MouseAdapter() {
           @Override
           public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {
@@ -175,12 +178,14 @@ public class BillServiceController {
 
                     fos.flush();
                   } catch (FileNotFoundException ex) {
-                    JOptionPane.showMessageDialog(null,
+                    JOptionPane.showMessageDialog(
+                        null,
                         ex.getMessage(),
                         BillServiceController.class.getName(),
                         JOptionPane.ERROR_MESSAGE);
                   } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null,
+                    JOptionPane.showMessageDialog(
+                        null,
                         ex.getMessage(),
                         BillServiceController.class.getName(),
                         JOptionPane.ERROR_MESSAGE);
@@ -211,7 +216,8 @@ public class BillServiceController {
     iFrame
         .table
         .getActionMap()
-        .put("DELETE",
+        .put(
+            "DELETE",
             new AbstractAction() {
               @Override
               public void actionPerformed(ActionEvent ae) {
@@ -261,7 +267,8 @@ public class BillServiceController {
                                   "Eliminados",
                                   JOptionPane.INFORMATION_MESSAGE);
                             } catch (InterruptedException | ExecutionException ex) {
-                              JOptionPane.showMessageDialog(null,
+                              JOptionPane.showMessageDialog(
+                                  null,
                                   ex.getMessage(),
                                   BillServiceController.class.getName(),
                                   JOptionPane.ERROR_MESSAGE);
@@ -289,8 +296,8 @@ public class BillServiceController {
 
     TextFilterator<Summary> textFilterator =
         (List<String> list, Summary summary) -> {
-          list.add(summary.getTipo().getCodigo());
-          list.add(summary.getTipo().getDescripcion());
+          list.add(summary.getTipoDocumento().getCodigo());
+          list.add(summary.getTipoDocumento().getDescripcion());
           list.add(String.valueOf(summary.getCorrelativo()));
         };
 
@@ -335,9 +342,9 @@ public class BillServiceController {
               case 1:
                 return summary.getEmisor().getNumero();
               case 2:
-                return summary.getTipo().getCodigo();
+                return summary.getTipoDocumento().getCodigo();
               case 3:
-                return summary.getTipo().getDescripcion();
+                return summary.getTipoDocumento().getDescripcion();
               case 4:
                 return summary.getSerie();
               case 5:
@@ -388,7 +395,8 @@ public class BillServiceController {
 
               if (!get.isEmpty()) iFrame.tfFiltrar.requestFocus();
             } catch (InterruptedException | ExecutionException ex) {
-              JOptionPane.showMessageDialog(null,
+              JOptionPane.showMessageDialog(
+                  null,
                   ex.getMessage(),
                   BillServiceController.class.getName(),
                   JOptionPane.ERROR_MESSAGE);

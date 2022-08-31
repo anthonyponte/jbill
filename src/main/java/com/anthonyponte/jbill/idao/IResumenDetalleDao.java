@@ -18,9 +18,7 @@
 package com.anthonyponte.jbill.idao;
 
 import com.anthonyponte.jbill.custom.MyHsqldbConnection;
-import com.anthonyponte.jbill.model.Bill;
 import com.anthonyponte.jbill.model.Empresa;
-import com.anthonyponte.jbill.model.Estado;
 import com.anthonyponte.jbill.model.Impuesto;
 import com.anthonyponte.jbill.model.Operacion;
 import com.anthonyponte.jbill.model.OtrosCargos;
@@ -80,26 +78,28 @@ public class IResumenDetalleDao implements ResumenDetalleDao {
         ResumenDetalle get = detalles.get(i);
         ps.setInt(1, id);
         ps.setInt(2, i + 1);
-        ps.setString(3, get.getDocumento().getSerie());
-        ps.setInt(4, get.getDocumento().getCorrelativo());
-        ps.setString(5, get.getDocumento().getTipo().getCodigo());
-        ps.setString(6, get.getDocumento().getTipo().getDescripcion());
+        ps.setString(3, get.getSerie());
+        ps.setInt(4, get.getCorrelativo());
+        ps.setString(5, get.getTipoDocumento().getCodigo());
+        ps.setString(6, get.getTipoDocumento().getDescripcion());
 
         if (get.getAdquiriente() != null) {
           ps.setString(7, get.getAdquiriente().getNumero());
-          ps.setString(8, get.getAdquiriente().getTipo().getCodigo());
-          ps.setString(9, get.getAdquiriente().getTipo().getDescripcion());
+          ps.setString(8, get.getAdquiriente().getTipoDocumentoIdentidad().getCodigo());
+          ps.setString(9, get.getAdquiriente().getTipoDocumentoIdentidad().getDescripcion());
         } else {
           ps.setNull(7, Types.INTEGER);
           ps.setNull(8, Types.VARCHAR);
           ps.setNull(9, Types.VARCHAR);
         }
 
-        if (get.getDocumentoReferencia() != null) {
-          ps.setString(10, get.getDocumentoReferencia().getSerie());
-          ps.setInt(11, get.getDocumentoReferencia().getCorrelativo());
-          ps.setString(12, get.getDocumentoReferencia().getTipo().getCodigo());
-          ps.setString(13, get.getDocumentoReferencia().getTipo().getDescripcion());
+        if (!get.getSerieReferencia().isEmpty()
+            && get.getCorrelativoReferencia() > 0
+            && get.getTipoDocumentoReferencia() != null) {
+          ps.setString(10, get.getSerieReferencia());
+          ps.setInt(11, get.getCorrelativoReferencia());
+          ps.setString(12, get.getTipoDocumentoReferencia().getCodigo());
+          ps.setString(13, get.getTipoDocumentoReferencia().getDescripcion());
         } else {
           ps.setNull(10, Types.VARCHAR);
           ps.setNull(11, Types.INTEGER);
@@ -277,16 +277,13 @@ public class IResumenDetalleDao implements ResumenDetalleDao {
           detalle.setId(rs.getInt(1));
           detalle.setNumero(rs.getInt(2));
 
-          Bill documento = new Bill();
-          documento.setSerie(rs.getString(3));
-          documento.setCorrelativo(rs.getInt(4));
+          detalle.setSerie(rs.getString(3));
+          detalle.setCorrelativo(rs.getInt(4));
 
           Tipo tipoDocumento = new Tipo();
           tipoDocumento.setCodigo(rs.getString(5));
           tipoDocumento.setDescripcion(rs.getString(6));
-          documento.setTipo(tipoDocumento);
-
-          detalle.setDocumento(documento);
+          detalle.setTipoDocumento(tipoDocumento);
 
           rs.getString(7);
           if (!rs.wasNull()) {
@@ -296,23 +293,20 @@ public class IResumenDetalleDao implements ResumenDetalleDao {
             Tipo tipoDocumentoIdentidad = new Tipo();
             tipoDocumentoIdentidad.setCodigo(rs.getString(8));
             tipoDocumentoIdentidad.setDescripcion(rs.getString(9));
-            adquiriente.setTipo(tipoDocumentoIdentidad);
+            adquiriente.setTipoDocumentoIdentidad(tipoDocumentoIdentidad);
 
             detalle.setAdquiriente(adquiriente);
           }
 
           rs.getString(10);
           if (!rs.wasNull()) {
-            Bill documentoReferencia = new Bill();
-            documentoReferencia.setSerie(rs.getString(10));
-            documentoReferencia.setCorrelativo(rs.getInt(11));
+            detalle.setSerieReferencia(rs.getString(10));
+            detalle.setCorrelativoReferencia(rs.getInt(11));
 
             Tipo tipoDocumentoReferencia = new Tipo();
             tipoDocumentoReferencia.setCodigo(rs.getString(12));
             tipoDocumentoReferencia.setDescripcion(rs.getString(13));
-            documentoReferencia.setTipo(tipoDocumentoReferencia);
-
-            detalle.setDocumentoReferencia(documentoReferencia);
+            detalle.setTipoDocumentoReferencia(tipoDocumentoReferencia);
           }
 
           rs.getString(14);
@@ -332,7 +326,7 @@ public class IResumenDetalleDao implements ResumenDetalleDao {
             detalle.setPercepcion(percepcion);
           }
 
-          Estado estado = new Estado();
+          Tipo estado = new Tipo();
           estado.setCodigo(rs.getString(20));
           estado.setDescripcion(rs.getString(21));
           detalle.setEstado(estado);

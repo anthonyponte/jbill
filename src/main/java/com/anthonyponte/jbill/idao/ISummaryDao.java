@@ -58,14 +58,14 @@ public class ISummaryDao implements SummaryDao {
 
       ps.setString(1, summary.getUbl());
       ps.setString(2, summary.getVersion());
-      ps.setString(3, summary.getTipo().getCodigo());
-      ps.setString(4, summary.getTipo().getDescripcion());
+      ps.setString(3, summary.getTipoDocumento().getCodigo());
+      ps.setString(4, summary.getTipoDocumento().getDescripcion());
       ps.setString(5, summary.getSerie());
       ps.setInt(6, summary.getCorrelativo());
       ps.setDate(7, new Date(summary.getFechaEmision().getTime()));
       ps.setDate(8, new Date(summary.getFechaReferencia().getTime()));
       ps.setString(9, summary.getEmisor().getNumero());
-      ps.setString(10, summary.getEmisor().getTipo().getCodigo());
+      ps.setString(10, summary.getEmisor().getTipoDocumentoIdentidad().getCodigo());
       ps.setString(11, summary.getEmisor().getNombre());
       ps.setString(12, summary.getNombreZip());
       ps.setBytes(13, summary.getZip());
@@ -111,7 +111,7 @@ public class ISummaryDao implements SummaryDao {
           Tipo tipo = new Tipo();
           tipo.setCodigo(rs.getString(4));
           tipo.setDescripcion(rs.getString(5));
-          summary.setTipo(tipo);
+          summary.setTipoDocumento(tipo);
 
           summary.setSerie(rs.getString(6));
           summary.setCorrelativo(rs.getInt(7));
@@ -154,7 +154,7 @@ public class ISummaryDao implements SummaryDao {
           Tipo tipo = new Tipo();
           tipo.setCodigo(rs.getString(2));
           tipo.setDescripcion(rs.getString(3));
-          summary.setTipo(tipo);
+          summary.setTipoDocumento(tipo);
 
           summary.setSerie(rs.getString(4));
           summary.setCorrelativo(rs.getInt(5));
@@ -170,8 +170,8 @@ public class ISummaryDao implements SummaryDao {
           summary.setZip(rs.getBytes(11));
           summary.setTicket(rs.getString(12));
           summary.setStatusCode(rs.getString(13));
-          summary.setNombreContent(rs.getString(14));
-          summary.setContent(rs.getBytes(15));
+          summary.setNombreCdr(rs.getString(14));
+          summary.setCdr(rs.getBytes(15));
           list.add(summary);
         }
       }
@@ -195,8 +195,8 @@ public class ISummaryDao implements SummaryDao {
 
       ps.setString(1, summary.getTicket());
       ps.setString(2, summary.getStatusCode());
-      ps.setString(3, summary.getNombreContent());
-      ps.setBytes(4, summary.getContent());
+      ps.setString(3, summary.getNombreCdr());
+      ps.setBytes(4, summary.getCdr());
       ps.setInt(5, id);
 
       ps.executeUpdate();

@@ -17,34 +17,25 @@
 
 package com.anthonyponte.jbill.model;
 
-/** @author anthony */
-public class RegimenPercepcion {
-  private String codigo;
-  private String descripcion;
+/**
+ * @author anthony
+ */
+public class RegimenPercepcion extends Tipo {
   private double porcentaje;
 
   public RegimenPercepcion() {}
 
-  public RegimenPercepcion(String codigo, String descripcion, double porcentaje) {
-    this.codigo = codigo;
-    this.descripcion = descripcion;
+  public RegimenPercepcion(String codigo, String descripcion) {
+    super(codigo, descripcion);
+  }
+
+  public RegimenPercepcion(double porcentaje) {
     this.porcentaje = porcentaje;
   }
 
-  public String getCodigo() {
-    return codigo;
-  }
-
-  public void setCodigo(String codigo) {
-    this.codigo = codigo;
-  }
-
-  public String getDescripcion() {
-    return descripcion;
-  }
-
-  public void setDescripcion(String descripcion) {
-    this.descripcion = descripcion;
+  public RegimenPercepcion(double porcentaje, String codigo, String descripcion) {
+    super(codigo, descripcion);
+    this.porcentaje = porcentaje;
   }
 
   public double getPorcentaje() {
@@ -57,13 +48,6 @@ public class RegimenPercepcion {
 
   @Override
   public String toString() {
-    return "RegimenPercepcion{"
-        + "codigo="
-        + codigo
-        + ", descripcion="
-        + descripcion
-        + ", porcentaje="
-        + porcentaje
-        + '}';
+    return "RegimenPercepcion{" + "porcentaje=" + porcentaje + '}';
   }
 }

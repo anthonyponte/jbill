@@ -17,19 +17,27 @@
 
 package com.anthonyponte.jbill.model;
 
-/** @author AnthonyPonte */
-public class Impuesto {
+/**
+ * @author AnthonyPonte
+ */
+public class Impuesto extends Tipo {
   private double total;
-  private String codigo;
-  private String descripcion;
   private String codigoInternacional;
 
   public Impuesto() {}
 
-  public Impuesto(double total, String codigo, String descripcion, String codigoInternacional) {
+  public Impuesto(String codigo, String descripcion) {
+    super(codigo, descripcion);
+  }
+
+  public Impuesto(double total, String codigoInternacional) {
     this.total = total;
-    this.codigo = codigo;
-    this.descripcion = descripcion;
+    this.codigoInternacional = codigoInternacional;
+  }
+
+  public Impuesto(double total, String codigoInternacional, String codigo, String descripcion) {
+    super(codigo, descripcion);
+    this.total = total;
     this.codigoInternacional = codigoInternacional;
   }
 
@@ -39,22 +47,6 @@ public class Impuesto {
 
   public void setTotal(double total) {
     this.total = total;
-  }
-
-  public String getCodigo() {
-    return codigo;
-  }
-
-  public void setCodigo(String codigo) {
-    this.codigo = codigo;
-  }
-
-  public String getDescripcion() {
-    return descripcion;
-  }
-
-  public void setDescripcion(String descripcion) {
-    this.descripcion = descripcion;
   }
 
   public String getCodigoInternacional() {
@@ -67,15 +59,6 @@ public class Impuesto {
 
   @Override
   public String toString() {
-    return "Impuesto{"
-        + "total="
-        + total
-        + ", codigo="
-        + codigo
-        + ", descripcion="
-        + descripcion
-        + ", codigoInternacional="
-        + codigoInternacional
-        + '}';
+    return "Impuesto{" + "total=" + total + ", codigoInternacional=" + codigoInternacional + '}';
   }
 }

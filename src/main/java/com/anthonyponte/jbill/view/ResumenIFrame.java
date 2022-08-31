@@ -6,7 +6,6 @@ package com.anthonyponte.jbill.view;
 
 import com.anthonyponte.jbill.filter.IntegerFilter;
 import com.anthonyponte.jbill.filter.SerieFilter;
-import com.anthonyponte.jbill.model.Estado;
 import com.anthonyponte.jbill.model.RegimenPercepcion;
 import com.anthonyponte.jbill.model.Tipo;
 import java.awt.Color;
@@ -208,8 +207,8 @@ public class ResumenIFrame extends JInternalFrame {
                 JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (value instanceof Tipo) {
-                    Tipo tipo = (Tipo) value;
-                    setText(tipo.getDescripcion());
+                    Tipo documentoTipo = (Tipo) value;
+                    setText(documentoTipo.getDescripcion());
                 }
                 return this;
             }
@@ -267,10 +266,10 @@ public class ResumenIFrame extends JInternalFrame {
         lblEstado.setFont(lblEstado.getFont().deriveFont(lblEstado.getFont().getStyle() | Font.BOLD, lblEstado.getFont().getSize()-2));
         lblEstado.setText("Estado *");
 
-        cbxEstado.setModel(new DefaultComboBoxModel(new Estado[] {
-            new Estado("1", "Adicionar"),
-            new Estado("2", "Modificar"),
-            new Estado("3", "Anulado")
+        cbxEstado.setModel(new DefaultComboBoxModel(new Tipo[] {
+            new Tipo("1", "Adicionar"),
+            new Tipo("2", "Modificar"),
+            new Tipo("3", "Anulado")
         }));
         cbxEstado.setEnabled(false);
         cbxEstado.setMaximumSize(null);
@@ -280,8 +279,8 @@ public class ResumenIFrame extends JInternalFrame {
             public Component getListCellRendererComponent(
                 JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                if (value instanceof Estado) {
-                    Estado estado = (Estado) value;
+                if (value instanceof Tipo) {
+                    Tipo estado = (Tipo) value;
                     setText(estado.getDescripcion());
                 }
                 return this;
@@ -720,9 +719,9 @@ cbxMoneda.setRenderer(new DefaultListCellRenderer(){
     pnlPercepcion.setMaximumSize(null);
 
     cbxPercepcionRegimen.setModel(new DefaultComboBoxModel(new RegimenPercepcion[] {
-        new RegimenPercepcion("01", "Percepción Venta Interna", 2),
-        new RegimenPercepcion("02", "Percepción a la adquisición de combustible", 1),
-        new RegimenPercepcion("03", "Percepción realizada al agente de percepción con tasa especial", 0.5)
+        new RegimenPercepcion(2, "01", "Percepción Venta Interna"),
+        new RegimenPercepcion(1, "02", "Percepción a la adquisición de combustible"),
+        new RegimenPercepcion(0.5, "03", "Percepción realizada al agente de percepción con tasa especial")
     }));
     cbxPercepcionRegimen.setEnabled(false);
     cbxPercepcionRegimen.setMaximumSize(null);

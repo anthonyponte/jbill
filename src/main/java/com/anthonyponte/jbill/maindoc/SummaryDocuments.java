@@ -89,7 +89,7 @@ public class SummaryDocuments {
     Element id =
         new Element("ID", cbc)
             .setText(
-                resumen.getTipo().getCodigo()
+                resumen.getTipoDocumento().getCodigo()
                     + "-"
                     + resumen.getSerie()
                     + "-"
@@ -138,7 +138,7 @@ public class SummaryDocuments {
                     .setText(resumen.getEmisor().getNumero()))
             .addContent(
                 new Element("AdditionalAccountID", cbc)
-                    .setText(resumen.getEmisor().getTipo().getCodigo()))
+                    .setText(resumen.getEmisor().getTipoDocumentoIdentidad().getCodigo()))
             .addContent(
                 new Element("Party", cac)
                     .addContent(
@@ -156,13 +156,10 @@ public class SummaryDocuments {
               .addContent(new Element("LineID", cbc).setText(String.valueOf(i + 1)))
               .addContent(
                   new Element("DocumentTypeCode", cbc)
-                      .setText(detalle.getDocumento().getTipo().getCodigo()))
+                      .setText(detalle.getTipoDocumento().getCodigo()))
               .addContent(
                   new Element("ID", cbc)
-                      .setText(
-                          detalle.getDocumento().getSerie()
-                              + "-"
-                              + detalle.getDocumento().getCorrelativo()));
+                      .setText(detalle.getSerie() + "-" + detalle.getCorrelativo()));
 
       if (detalle.getAdquiriente() != null) {
         Element accountingCustomerParty =
@@ -172,11 +169,13 @@ public class SummaryDocuments {
                         .setText(detalle.getAdquiriente().getNumero()))
                 .addContent(
                     new Element("AdditionalAccountID", cbc)
-                        .setText(String.valueOf(detalle.getAdquiriente().getTipo())));
+                        .setText(detalle.getAdquiriente().getTipoDocumentoIdentidad().getCodigo()));
         summaryDocumentsLine.addContent(accountingCustomerParty);
       }
 
-      if (detalle.getDocumentoReferencia() != null) {
+      if (!detalle.getSerieReferencia().isEmpty()
+          && detalle.getCorrelativoReferencia() > 0
+          && detalle.getTipoDocumentoReferencia() != null) {
         Element billingReference =
             new Element("BillingReference", cac)
                 .addContent(
@@ -184,12 +183,12 @@ public class SummaryDocuments {
                         .addContent(
                             new Element("ID", cbc)
                                 .setText(
-                                    detalle.getDocumentoReferencia().getSerie()
+                                    detalle.getSerieReferencia()
                                         + "-"
-                                        + detalle.getDocumentoReferencia().getCorrelativo()))
+                                        + detalle.getCorrelativoReferencia()))
                         .addContent(
                             new Element("DocumentTypeCode", cbc)
-                                .setText(detalle.getDocumentoReferencia().getTipo().getCodigo())));
+                                .setText(detalle.getTipoDocumentoReferencia().getCodigo())));
         summaryDocumentsLine.addContent(billingReference);
       }
 

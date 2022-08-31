@@ -15,7 +15,6 @@ import com.anthonyponte.jbill.custom.MyFileCreator;
 import com.anthonyponte.jbill.custom.MyTableResize;
 import com.anthonyponte.jbill.idao.IComunicacionDetalleDao;
 import com.anthonyponte.jbill.model.ComunicacionDetalle;
-import com.anthonyponte.jbill.model.Bill;
 import com.anthonyponte.jbill.view.ComunicacionIFrame;
 import java.awt.event.ActionEvent;
 import java.util.Date;
@@ -68,7 +67,7 @@ public class ComunicacionController {
   private final LoadingDialog dialog;
   private Preferences preferences;
   private SummaryDao summaryDao;
-  private ComunicacionDetalleDao comunicacionBajaDao;
+  private ComunicacionDetalleDao comunicacionDetalleDao;
   private EventList<ComunicacionDetalle> eventList;
   private AdvancedTableModel<ComunicacionDetalle> tableModel;
   private AdvancedListSelectionModel<ComunicacionDetalle> selectionModel;
@@ -162,13 +161,10 @@ public class ComunicacionController {
     iFrame.btnAgregar.addActionListener(
         (arg0) -> {
           try {
-            Bill documento = new Bill();
-            documento.setTipo((Tipo) iFrame.cbxDocumentoTipo.getSelectedItem());
-            documento.setSerie(iFrame.tfDocumentoSerie.getText());
-            documento.setCorrelativo(Integer.parseInt(iFrame.tfDocumentoCorrelativo.getText()));
-
             ComunicacionDetalle detalle = new ComunicacionDetalle();
-            detalle.setDocumento(documento);
+            detalle.setTipoDocumento((Tipo) iFrame.cbxDocumentoTipo.getSelectedItem());
+            detalle.setSerie(iFrame.tfDocumentoSerie.getText());
+            detalle.setCorrelativo(Integer.parseInt(iFrame.tfDocumentoCorrelativo.getText()));
             detalle.setMotivo(iFrame.tfDocumentoMotivo.getText());
 
             eventList.add(detalle);
@@ -275,59 +271,59 @@ public class ComunicacionController {
                   new SwingWorker<Comunicacion, Void>() {
                     @Override
                     protected Comunicacion doInBackground() throws Exception {
-                      Comunicacion comunicacionBaja = new Comunicacion();
-                      comunicacionBaja.setUbl("2.0");
-                      comunicacionBaja.setVersion("1.0");
-                      comunicacionBaja.setTipo((Tipo) iFrame.cbxTipo.getSelectedItem());
-                      comunicacionBaja.setSerie(MyDateFormat.yyyyMMdd(iFrame.dpFecha.getDate()));
-                      comunicacionBaja.setCorrelativo(
-                          Integer.valueOf(iFrame.tfCorrelativo.getText()));
+                      Comunicacion comunicacion = new Comunicacion();
+                      comunicacion.setUbl("2.0");
+                      comunicacion.setVersion("1.0");
+                      comunicacion.setTipoDocumento((Tipo) iFrame.cbxTipo.getSelectedItem());
+                      comunicacion.setSerie(MyDateFormat.yyyyMMdd(iFrame.dpFecha.getDate()));
+                      comunicacion.setCorrelativo(Integer.valueOf(iFrame.tfCorrelativo.getText()));
 
-                      comunicacionBaja.setFechaEmision(iFrame.dpFecha.getDate());
-                      comunicacionBaja.setFechaReferencia(iFrame.dpDocumentoFecha.getDate());
+                      comunicacion.setFechaEmision(iFrame.dpFecha.getDate());
+                      comunicacion.setFechaReferencia(iFrame.dpDocumentoFecha.getDate());
 
                       Empresa emisor = new Empresa();
                       emisor.setNumero(preferences.get(UsuarioController.RUC, ""));
 
-                      Tipo tipo = new Tipo();
-                      tipo.setCodigo(preferences.get(UsuarioController.RUC_TIPO, ""));
-                      emisor.setTipo(tipo);
+                      Tipo tipoDocumentoIdentidad = new Tipo();
+                      tipoDocumentoIdentidad.setCodigo(
+                          preferences.get(UsuarioController.RUC_TIPO, ""));
+                      emisor.setTipoDocumentoIdentidad(tipoDocumentoIdentidad);
 
                       emisor.setNombre(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
-                      comunicacionBaja.setEmisor(emisor);
+                      comunicacion.setEmisor(emisor);
 
-                      comunicacionBaja.setDetalles(eventList);
+                      comunicacion.setDetalles(eventList);
 
                       VoidedDocuments voided = new VoidedDocuments();
-                      Document document = voided.getStructure(comunicacionBaja);
+                      Document document = voided.getStructure(comunicacion);
 
                       try {
                         File xml =
                             MyFileCreator.create(
-                                comunicacionBaja.getTipo().getCodigo(),
-                                comunicacionBaja.getSerie(),
-                                comunicacionBaja.getCorrelativo(),
+                                comunicacion.getTipoDocumento().getCodigo(),
+                                comunicacion.getSerie(),
+                                comunicacion.getCorrelativo(),
                                 document);
 
                         File sign =
                             MyFileCreator.sign(
-                                comunicacionBaja.getTipo().getCodigo(),
-                                comunicacionBaja.getSerie(),
-                                comunicacionBaja.getCorrelativo(),
+                                comunicacion.getTipoDocumento().getCodigo(),
+                                comunicacion.getSerie(),
+                                comunicacion.getCorrelativo(),
                                 xml);
 
                         File zip =
                             MyFileCreator.compress(
-                                comunicacionBaja.getTipo().getCodigo(),
-                                comunicacionBaja.getSerie(),
-                                comunicacionBaja.getCorrelativo(),
+                                comunicacion.getTipoDocumento().getCodigo(),
+                                comunicacion.getSerie(),
+                                comunicacion.getCorrelativo(),
                                 sign);
 
                         byte[] byteArray = Files.readAllBytes(zip.toPath());
-                        comunicacionBaja.setNombreZip(zip.getName());
-                        comunicacionBaja.setZip(byteArray);
-                        int id = summaryDao.create(comunicacionBaja);
-                        comunicacionBajaDao.create(id, eventList);
+                        comunicacion.setNombreZip(zip.getName());
+                        comunicacion.setZip(byteArray);
+                        int id = summaryDao.create(comunicacion);
+                        comunicacionDetalleDao.create(id, eventList);
 
                         sign.delete();
                         zip.delete();
@@ -352,7 +348,7 @@ public class ComunicacionController {
                             JOptionPane.ERROR_MESSAGE);
                       }
 
-                      return comunicacionBaja;
+                      return comunicacion;
                     }
 
                     @Override
@@ -420,7 +416,7 @@ public class ComunicacionController {
   }
 
   private void initComponents() {
-    comunicacionBajaDao = new IComunicacionDetalleDao();
+    comunicacionDetalleDao = new IComunicacionDetalleDao();
     summaryDao = new ISummaryDao();
     preferences = Preferences.userRoot().node(MainController.class.getPackageName());
     eventList = new BasicEventList<>();

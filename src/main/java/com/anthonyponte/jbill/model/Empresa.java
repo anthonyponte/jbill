@@ -9,24 +9,24 @@ package com.anthonyponte.jbill.model;
  * @author AnthonyPonte
  */
 public class Empresa {
-  private Tipo tipo;
+  private Tipo tipoDocumentoIdentidad;
   private String numero;
   private String nombre;
 
   public Empresa() {}
 
-  public Empresa(Tipo tipo, String numero, String nombre) {
-    this.tipo = tipo;
+  public Empresa(Tipo tipoDocumentoIdentidad, String numero, String nombre) {
+    this.tipoDocumentoIdentidad = tipoDocumentoIdentidad;
     this.numero = numero;
     this.nombre = nombre;
   }
 
-  public Tipo getTipo() {
-    return tipo;
+  public Tipo getTipoDocumentoIdentidad() {
+    return tipoDocumentoIdentidad;
   }
 
-  public void setTipo(Tipo tipo) {
-    this.tipo = tipo;
+  public void setTipoDocumentoIdentidad(Tipo tipoDocumentoIdentidad) {
+    this.tipoDocumentoIdentidad = tipoDocumentoIdentidad;
   }
 
   public String getNumero() {
@@ -47,6 +47,13 @@ public class Empresa {
 
   @Override
   public String toString() {
-    return "Empresa{" + "tipo=" + tipo + ", numero=" + numero + ", nombre=" + nombre + '}';
+    return "Empresa{"
+        + "tipoDocumentoIdentidad="
+        + tipoDocumentoIdentidad
+        + ", numero="
+        + numero
+        + ", nombre="
+        + nombre
+        + '}';
   }
 }

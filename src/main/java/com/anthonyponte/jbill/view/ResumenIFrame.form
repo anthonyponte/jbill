@@ -293,7 +293,7 @@
                   <Dimension value="[150, 30]"/>
                 </Property>
                 <Property name="renderer" type="javax.swing.ListCellRenderer" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new DefaultListCellRenderer(){&#xa;    @Override&#xa;    public Component getListCellRendererComponent(&#xa;        JList&lt;?&gt; list, Object value, int index, boolean isSelected, boolean cellHasFocus) {&#xa;        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);&#xa;        if (value instanceof Tipo) {&#xa;            Tipo tipo = (Tipo) value;&#xa;            setText(tipo.getDescripcion());&#xa;        }&#xa;        return this;&#xa;    }&#xa;}" type="code"/>
+                  <Connection code="new DefaultListCellRenderer(){&#xa;    @Override&#xa;    public Component getListCellRendererComponent(&#xa;        JList&lt;?&gt; list, Object value, int index, boolean isSelected, boolean cellHasFocus) {&#xa;        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);&#xa;        if (value instanceof Tipo) {&#xa;            Tipo documentoTipo = (Tipo) value;&#xa;            setText(documentoTipo.getDescripcion());&#xa;        }&#xa;        return this;&#xa;    }&#xa;}" type="code"/>
                 </Property>
               </Properties>
               <AuxValues>
@@ -377,7 +377,7 @@
             <Component class="javax.swing.JComboBox" name="cbxEstado">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new DefaultComboBoxModel(new Estado[] {&#xa;    new Estado(&quot;1&quot;, &quot;Adicionar&quot;),&#xa;    new Estado(&quot;2&quot;, &quot;Modificar&quot;),&#xa;    new Estado(&quot;3&quot;, &quot;Anulado&quot;)&#xa;})" type="code"/>
+                  <Connection code="new DefaultComboBoxModel(new Tipo[] {&#xa;    new Tipo(&quot;1&quot;, &quot;Adicionar&quot;),&#xa;    new Tipo(&quot;2&quot;, &quot;Modificar&quot;),&#xa;    new Tipo(&quot;3&quot;, &quot;Anulado&quot;)&#xa;})" type="code"/>
                 </Property>
                 <Property name="enabled" type="boolean" value="false"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -387,7 +387,7 @@
                   <Dimension value="[150, 30]"/>
                 </Property>
                 <Property name="renderer" type="javax.swing.ListCellRenderer" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new DefaultListCellRenderer(){&#xa;    @Override&#xa;    public Component getListCellRendererComponent(&#xa;        JList&lt;?&gt; list, Object value, int index, boolean isSelected, boolean cellHasFocus) {&#xa;        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);&#xa;        if (value instanceof Estado) {&#xa;            Estado estado = (Estado) value;&#xa;            setText(estado.getDescripcion());&#xa;        }&#xa;        return this;&#xa;    }&#xa;}" type="code"/>
+                  <Connection code="new DefaultListCellRenderer(){&#xa;    @Override&#xa;    public Component getListCellRendererComponent(&#xa;        JList&lt;?&gt; list, Object value, int index, boolean isSelected, boolean cellHasFocus) {&#xa;        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);&#xa;        if (value instanceof Tipo) {&#xa;            Tipo estado = (Tipo) value;&#xa;            setText(estado.getDescripcion());&#xa;        }&#xa;        return this;&#xa;    }&#xa;}" type="code"/>
                 </Property>
               </Properties>
               <AuxValues>
@@ -1259,7 +1259,7 @@
                         <Component class="javax.swing.JComboBox" name="cbxPercepcionRegimen">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                              <Connection code="new DefaultComboBoxModel(new RegimenPercepcion[] {&#xa;    new RegimenPercepcion(&quot;01&quot;, &quot;Percepci&#xf3;n Venta Interna&quot;, 2),&#xa;    new RegimenPercepcion(&quot;02&quot;, &quot;Percepci&#xf3;n a la adquisici&#xf3;n de combustible&quot;, 1),&#xa;    new RegimenPercepcion(&quot;03&quot;, &quot;Percepci&#xf3;n realizada al agente de percepci&#xf3;n con tasa especial&quot;, 0.5)&#xa;})" type="code"/>
+                              <Connection code="new DefaultComboBoxModel(new RegimenPercepcion[] {&#xa;    new RegimenPercepcion(2, &quot;01&quot;, &quot;Percepci&#xf3;n Venta Interna&quot;),&#xa;    new RegimenPercepcion(1, &quot;02&quot;, &quot;Percepci&#xf3;n a la adquisici&#xf3;n de combustible&quot;),&#xa;    new RegimenPercepcion(0.5, &quot;03&quot;, &quot;Percepci&#xf3;n realizada al agente de percepci&#xf3;n con tasa especial&quot;)&#xa;})" type="code"/>
                             </Property>
                             <Property name="enabled" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">

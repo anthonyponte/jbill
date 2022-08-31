@@ -225,7 +225,7 @@
             <Component class="javax.swing.JComboBox" name="cbxTipo">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new DefaultComboBoxModel(new com.anthonyponte.jbill.model.Tipo[] {&#xd;&#xa;    new com.anthonyponte.jbill.model.Tipo(&quot;RA&quot;, &quot;Comunicaci&#xf3;n de baja&quot;),&#xd;&#xa;    new com.anthonyponte.jbill.model.Tipo(&quot;RR&quot;, &quot;Resumen de reversiones&quot;)&#xd;&#xa;})" type="code"/>
+                  <Connection code="new DefaultComboBoxModel(new Tipo[] {&#xa;    new Tipo(&quot;RA&quot;, &quot;Comunicaci&#xf3;n de baja&quot;),&#xa;    new Tipo(&quot;RR&quot;, &quot;Resumen de reversiones&quot;)&#xa;})" type="code"/>
                 </Property>
                 <Property name="selectedIndex" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="-1" type="code"/>
@@ -238,7 +238,7 @@
                   <Dimension value="[150, 30]"/>
                 </Property>
                 <Property name="renderer" type="javax.swing.ListCellRenderer" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new DefaultListCellRenderer(){&#xa;    @Override&#xa;    public Component getListCellRendererComponent(&#xa;        JList&lt;?&gt; list, Object value, int index, boolean isSelected, boolean cellHasFocus) {&#xa;        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);&#xa;        if (value instanceof com.anthonyponte.jbill.model.Tipo) {&#xa;            com.anthonyponte.jbill.model.Tipo tipoDocumento = (com.anthonyponte.jbill.model.Tipo) value;&#xa;            setText(tipoDocumento.getDescripcion());&#xa;        }&#xa;        return this;&#xa;    }&#xa;}" type="code"/>
+                  <Connection code="new DefaultListCellRenderer(){&#xa;    @Override&#xa;    public Component getListCellRendererComponent(&#xa;        JList&lt;?&gt; list, Object value, int index, boolean isSelected, boolean cellHasFocus) {&#xa;        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);&#xa;        if (value instanceof Tipo) {&#xa;            Tipo tipoDocumento = (Tipo) value;&#xa;            setText(tipoDocumento.getDescripcion());&#xa;        }&#xa;        return this;&#xa;    }&#xa;}" type="code"/>
                 </Property>
               </Properties>
               <AuxValues>

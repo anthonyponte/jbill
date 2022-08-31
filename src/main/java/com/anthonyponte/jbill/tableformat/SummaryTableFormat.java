@@ -66,9 +66,9 @@ public class SummaryTableFormat implements TableFormat<Summary> {
   public Object getColumnValue(Summary e, int i) {
     switch (i) {
       case 0:
-        return e.getTipo().getCodigo();
+        return e.getTipoDocumento().getCodigo();
       case 1:
-        return e.getTipo().getDescripcion();
+        return e.getTipoDocumento().getDescripcion();
       case 2:
         return e.getSerie();
       case 3:
@@ -88,7 +88,7 @@ public class SummaryTableFormat implements TableFormat<Summary> {
       case 10:
         return e.getStatusCode();
       case 11:
-        return e.getNombreContent();
+        return e.getNombreCdr();
     }
     throw new IllegalStateException("Unexpected column: " + i);
   }

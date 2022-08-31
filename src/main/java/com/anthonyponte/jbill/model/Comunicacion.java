@@ -29,53 +29,15 @@ public class Comunicacion extends Summary {
   public Comunicacion() {}
 
   public Comunicacion(
-      int id,
       String ubl,
       String version,
-      Tipo tipo,
+      Tipo tipoDocumento,
       String serie,
       int correlativo,
       Date fechaEmision,
       Date fechaReferencia,
-      Empresa emisor,
-      String nombreZip,
-      byte[] zip) {
-    super(
-        id,
-        ubl,
-        version,
-        tipo,
-        serie,
-        correlativo,
-        fechaEmision,
-        fechaReferencia,
-        emisor,
-        nombreZip,
-        zip);
-  }
-
-  public Comunicacion(
-      String ubl,
-      String version,
-      Tipo tipo,
-      String serie,
-      int correlativo,
-      Date fechaEmision,
-      Date fechaReferencia,
-      Empresa emisor,
-      String nombreZip,
-      byte[] zip) {
-    super(
-        ubl,
-        version,
-        tipo,
-        serie,
-        correlativo,
-        fechaEmision,
-        fechaReferencia,
-        emisor,
-        nombreZip,
-        zip);
+      Empresa emisor) {
+    super(ubl, version, tipoDocumento, serie, correlativo, fechaEmision, fechaReferencia, emisor);
   }
 
   public Comunicacion(List<ComunicacionDetalle> detalles) {
@@ -84,55 +46,15 @@ public class Comunicacion extends Summary {
 
   public Comunicacion(
       List<ComunicacionDetalle> detalles,
-      int id,
       String ubl,
       String version,
-      Tipo tipo,
+      Tipo tipoDocumento,
       String serie,
       int correlativo,
       Date fechaEmision,
       Date fechaReferencia,
-      Empresa emisor,
-      String nombreZip,
-      byte[] zip) {
-    super(
-        id,
-        ubl,
-        version,
-        tipo,
-        serie,
-        correlativo,
-        fechaEmision,
-        fechaReferencia,
-        emisor,
-        nombreZip,
-        zip);
-    this.detalles = detalles;
-  }
-
-  public Comunicacion(
-      List<ComunicacionDetalle> detalles,
-      String ubl,
-      String version,
-      Tipo tipo,
-      String serie,
-      int correlativo,
-      Date fechaEmision,
-      Date fechaReferencia,
-      Empresa emisor,
-      String nombreZip,
-      byte[] zip) {
-    super(
-        ubl,
-        version,
-        tipo,
-        serie,
-        correlativo,
-        fechaEmision,
-        fechaReferencia,
-        emisor,
-        nombreZip,
-        zip);
+      Empresa emisor) {
+    super(ubl, version, tipoDocumento, serie, correlativo, fechaEmision, fechaReferencia, emisor);
     this.detalles = detalles;
   }
 

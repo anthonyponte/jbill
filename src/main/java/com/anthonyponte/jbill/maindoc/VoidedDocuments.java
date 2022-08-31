@@ -10,7 +10,6 @@ import com.anthonyponte.jbill.controller.UsuarioController;
 import com.anthonyponte.jbill.custom.MyDateFormat;
 import com.anthonyponte.jbill.model.Comunicacion;
 import com.anthonyponte.jbill.model.ComunicacionDetalle;
-import com.anthonyponte.jbill.model.Summary;
 import java.util.prefs.Preferences;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -78,7 +77,7 @@ public class VoidedDocuments {
     Element id =
         new Element("ID", cbc)
             .setText(
-                comunicacion.getTipo().getCodigo()
+                comunicacion.getTipoDocumento().getCodigo()
                     + "-"
                     + comunicacion.getSerie()
                     + "-"
@@ -130,7 +129,7 @@ public class VoidedDocuments {
                     .setText(comunicacion.getEmisor().getNumero()))
             .addContent(
                 new Element("AdditionalAccountID", cbc)
-                    .setText(comunicacion.getEmisor().getTipo().getCodigo()))
+                    .setText(comunicacion.getEmisor().getTipoDocumentoIdentidad().getCodigo()))
             .addContent(
                 new Element("Party", cac)
                     .addContent(
@@ -148,12 +147,11 @@ public class VoidedDocuments {
               .addContent(new Element("LineID", cbc).setText(String.valueOf(i + 1)))
               .addContent(
                   new Element("DocumentTypeCode", cbc)
-                      .setText(detalle.getDocumento().getTipo().getCodigo()))
-              .addContent(
-                  new Element("DocumentSerialID", sac).setText(detalle.getDocumento().getSerie()))
+                      .setText(detalle.getTipoDocumento().getCodigo()))
+              .addContent(new Element("DocumentSerialID", sac).setText(detalle.getSerie()))
               .addContent(
                   new Element("DocumentNumberID", sac)
-                      .setText(String.valueOf(detalle.getDocumento().getCorrelativo())))
+                      .setText(String.valueOf(detalle.getCorrelativo())))
               .addContent(new Element("VoidReasonDescription", sac).setText(detalle.getMotivo()));
 
       document.getRootElement().addContent(voidedDocumentsLine);
