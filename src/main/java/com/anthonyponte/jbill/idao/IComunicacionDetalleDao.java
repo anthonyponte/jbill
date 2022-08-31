@@ -13,20 +13,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import com.anthonyponte.jbill.model.Bill;
-import com.anthonyponte.jbill.model.Empresa;
 import java.util.ArrayList;
-import org.joda.time.DateTime;
 import com.anthonyponte.jbill.model.Tipo;
-import com.anthonyponte.jbill.dao.ComunicacionDao;
+import com.anthonyponte.jbill.dao.ComunicacionDetalleDao;
+import com.anthonyponte.jbill.model.Summary;
 
 /**
  * @author anthony
  */
-public class IComunicacionDao implements ComunicacionDao {
+public class IComunicacionDetalleDao implements ComunicacionDetalleDao {
 
   private final MyHsqldbConnection database;
 
-  public IComunicacionDao() {
+  public IComunicacionDetalleDao() {
     this.database = new MyHsqldbConnection();
   }
 
@@ -62,65 +61,8 @@ public class IComunicacionDao implements ComunicacionDao {
   }
 
   @Override
-  public List<Comunicacion> read(DateTime dateTime) throws SQLException {
-    List<Comunicacion> list = new ArrayList<>();
-
-    database.connect();
-
-    String query =
-        "SELECT "
-            + "ID, TIPO_CODIGO, TIPO_DESCRIPCION, SERIE, CORRELATIVO, FECHA_EMISION, "
-            + "FECHA_REFERENCIA, RUC, RAZON_SOCIAL, ZIP_NOMBRE, ZIP, TICKET,  STATUS_CODE, "
-            + "CONTENT_NOMBRE, CONTENT "
-            + "FROM SUMMARY "
-            + "WHERE MONTH(FECHA_EMISION) = ? AND YEAR(FECHA_EMISION) = ? AND TICKET IS NOT NULL "
-            + "AND STATUS_CODE IS NOT NULL AND CONTENT_NOMBRE IS NOT NULL AND CONTENT IS NOT NULL "
-            + "AND (TIPO_CODIGO = 'RA' OR TIPO_CODIGO = 'RR') "
-            + "ORDER BY FECHA_EMISION DESC";
-
-    try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
-      ps.setInt(1, dateTime.getMonthOfYear());
-      ps.setInt(2, dateTime.getYear());
-
-      try (ResultSet rs = ps.executeQuery()) {
-        while (rs.next()) {
-          Comunicacion comunicacionBaja = new Comunicacion();
-          comunicacionBaja.setId(rs.getInt(1));
-
-          Tipo tipo = new Tipo();
-          tipo.setCodigo(rs.getString(2));
-          tipo.setDescripcion(rs.getString(3));
-          comunicacionBaja.setTipo(tipo);
-
-          comunicacionBaja.setSerie(rs.getString(4));
-          comunicacionBaja.setCorrelativo(rs.getInt(5));
-          comunicacionBaja.setFechaEmision(rs.getDate(6));
-          comunicacionBaja.setFechaReferencia(rs.getDate(7));
-
-          Empresa emisor = new Empresa();
-          emisor.setNumero(rs.getString(8));
-          emisor.setNombre(rs.getString(9));
-          comunicacionBaja.setEmisor(emisor);
-
-          comunicacionBaja.setNombreZip(rs.getString(10));
-          comunicacionBaja.setZip(rs.getBytes(11));
-          comunicacionBaja.setTicket(rs.getString(12));
-          comunicacionBaja.setStatusCode(rs.getString(13));
-          comunicacionBaja.setNombreContent(rs.getString(14));
-          comunicacionBaja.setContent(rs.getBytes(15));
-          list.add(comunicacionBaja);
-        }
-      }
-    }
-
-    database.disconnect();
-
-    return list;
-  }
-
-  @Override
-  public List<ComunicacionDetalle> read(Comunicacion comunicacionBaja) throws SQLException {
-    List<ComunicacionDetalle> comunicacionBajaDetalles = new ArrayList<>();
+  public List<ComunicacionDetalle> read(Summary summary) throws SQLException {
+    List<ComunicacionDetalle> list = new ArrayList<>();
 
     database.connect();
 
@@ -132,13 +74,13 @@ public class IComunicacionDao implements ComunicacionDao {
 
     try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
 
-      ps.setInt(1, comunicacionBaja.getId());
+      ps.setInt(1, summary.getId());
 
       try (ResultSet rs = ps.executeQuery()) {
         while (rs.next()) {
           ComunicacionDetalle comunicacionBajaDetalle = new ComunicacionDetalle();
 
-          comunicacionBajaDetalle.setComunicacionBaja(comunicacionBaja);
+          comunicacionBajaDetalle.setSummary(summary);
 
           comunicacionBajaDetalle.setId(rs.getInt(1));
           comunicacionBajaDetalle.setNumero(rs.getInt(2));
@@ -156,14 +98,14 @@ public class IComunicacionDao implements ComunicacionDao {
 
           comunicacionBajaDetalle.setMotivo(rs.getString(7));
 
-          comunicacionBajaDetalles.add(comunicacionBajaDetalle);
+          list.add(comunicacionBajaDetalle);
         }
       }
     }
 
     database.disconnect();
 
-    return comunicacionBajaDetalles;
+    return list;
   }
 
   @Override

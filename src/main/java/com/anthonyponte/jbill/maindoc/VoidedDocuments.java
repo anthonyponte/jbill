@@ -10,6 +10,7 @@ import com.anthonyponte.jbill.controller.UsuarioController;
 import com.anthonyponte.jbill.custom.MyDateFormat;
 import com.anthonyponte.jbill.model.Comunicacion;
 import com.anthonyponte.jbill.model.ComunicacionDetalle;
+import com.anthonyponte.jbill.model.Summary;
 import java.util.prefs.Preferences;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -24,7 +25,7 @@ public class VoidedDocuments {
       Preferences.userRoot().node(MainController.class.getPackageName());
   private Document document;
 
-  public Document getStructure(Comunicacion comunicacionBaja) {
+  public Document getStructure(Comunicacion comunicacion) {
 
     document = new Document();
 
@@ -67,31 +68,31 @@ public class VoidedDocuments {
                 new Element("UBLExtension", ext).addContent(new Element("ExtensionContent", ext)));
     document.getRootElement().addContent(ublExtensions);
 
-    Element ublVersionID = new Element("UBLVersionID", cbc).setText(comunicacionBaja.getUbl());
+    Element ublVersionID = new Element("UBLVersionID", cbc).setText(comunicacion.getUbl());
     document.getRootElement().addContent(ublVersionID);
 
     Element customizationID =
-        new Element("CustomizationID", cbc).setText(comunicacionBaja.getVersion());
+        new Element("CustomizationID", cbc).setText(comunicacion.getVersion());
     document.getRootElement().addContent(customizationID);
 
     Element id =
         new Element("ID", cbc)
             .setText(
-                comunicacionBaja.getTipo().getCodigo()
+                comunicacion.getTipo().getCodigo()
                     + "-"
-                    + comunicacionBaja.getSerie()
+                    + comunicacion.getSerie()
                     + "-"
-                    + comunicacionBaja.getCorrelativo());
+                    + comunicacion.getCorrelativo());
     document.getRootElement().addContent(id);
 
     Element referenceDate =
         new Element("ReferenceDate", cbc)
-            .setText(MyDateFormat.yyyy_MM_dd(comunicacionBaja.getFechaReferencia()));
+            .setText(MyDateFormat.yyyy_MM_dd(comunicacion.getFechaReferencia()));
     document.getRootElement().addContent(referenceDate);
 
     Element issueDate =
         new Element("IssueDate", cbc)
-            .setText(MyDateFormat.yyyy_MM_dd(comunicacionBaja.getFechaEmision()));
+            .setText(MyDateFormat.yyyy_MM_dd(comunicacion.getFechaEmision()));
     document.getRootElement().addContent(issueDate);
 
     Element signature =
@@ -105,12 +106,12 @@ public class VoidedDocuments {
                         new Element("PartyIdentification", cac)
                             .addContent(
                                 new Element("ID", cbc)
-                                    .setText(comunicacionBaja.getEmisor().getNumero())))
+                                    .setText(comunicacion.getEmisor().getNumero())))
                     .addContent(
                         new Element("PartyName", cac)
                             .addContent(
                                 new Element("Name", cbc)
-                                    .setText(comunicacionBaja.getEmisor().getNombre()))))
+                                    .setText(comunicacion.getEmisor().getNombre()))))
             .addContent(
                 new Element("DigitalSignatureAttachment", cac)
                     .addContent(
@@ -126,21 +127,21 @@ public class VoidedDocuments {
         new Element("AccountingSupplierParty", cac)
             .addContent(
                 new Element("CustomerAssignedAccountID", cbc)
-                    .setText(comunicacionBaja.getEmisor().getNumero()))
+                    .setText(comunicacion.getEmisor().getNumero()))
             .addContent(
                 new Element("AdditionalAccountID", cbc)
-                    .setText(String.valueOf(comunicacionBaja.getEmisor().getTipo())))
+                    .setText(comunicacion.getEmisor().getTipo().getCodigo()))
             .addContent(
                 new Element("Party", cac)
                     .addContent(
                         new Element("PartyLegalEntity", cac)
                             .addContent(
                                 new Element("RegistrationName", cbc)
-                                    .setText(comunicacionBaja.getEmisor().getNombre()))));
+                                    .setText(comunicacion.getEmisor().getNombre()))));
     document.getRootElement().addContent(accountingSupplierParty);
 
-    for (int i = 0; i < comunicacionBaja.getComunicacionBajaDetalles().size(); i++) {
-      ComunicacionDetalle detalle = comunicacionBaja.getComunicacionBajaDetalles().get(i);
+    for (int i = 0; i < comunicacion.getDetalles().size(); i++) {
+      ComunicacionDetalle detalle = comunicacion.getDetalles().get(i);
 
       Element voidedDocumentsLine =
           new Element("VoidedDocumentsLine", sac)

@@ -20,9 +20,11 @@ package com.anthonyponte.jbill.model;
 import java.util.Date;
 import java.util.List;
 
-/** @author AnthonyPonte */
+/**
+ * @author AnthonyPonte
+ */
 public class Resumen extends Summary {
-  private List<ResumenDetalle> resumenDiarioDetalles;
+  private List<ResumenDetalle> detalles;
 
   public Resumen() {}
 
@@ -30,7 +32,7 @@ public class Resumen extends Summary {
       int id,
       String ubl,
       String version,
-      Tipo tipoDocumento,
+      Tipo tipo,
       String serie,
       int correlativo,
       Date fechaEmision,
@@ -42,7 +44,7 @@ public class Resumen extends Summary {
         id,
         ubl,
         version,
-        tipoDocumento,
+        tipo,
         serie,
         correlativo,
         fechaEmision,
@@ -55,7 +57,7 @@ public class Resumen extends Summary {
   public Resumen(
       String ubl,
       String version,
-      Tipo tipoDocumento,
+      Tipo tipo,
       String serie,
       int correlativo,
       Date fechaEmision,
@@ -66,7 +68,7 @@ public class Resumen extends Summary {
     super(
         ubl,
         version,
-        tipoDocumento,
+        tipo,
         serie,
         correlativo,
         fechaEmision,
@@ -76,20 +78,74 @@ public class Resumen extends Summary {
         zip);
   }
 
-  public List<ResumenDetalle> getResumenDiarioDetalles() {
-    return resumenDiarioDetalles;
+  public Resumen(List<ResumenDetalle> detalles) {
+    this.detalles = detalles;
   }
 
-  public void setResumenDiarioDetalles(List<ResumenDetalle> resumenDiarioDetalles) {
-    this.resumenDiarioDetalles = resumenDiarioDetalles;
+  public Resumen(
+      List<ResumenDetalle> detalles,
+      int id,
+      String ubl,
+      String version,
+      Tipo tipo,
+      String serie,
+      int correlativo,
+      Date fechaEmision,
+      Date fechaReferencia,
+      Empresa emisor,
+      String nombreZip,
+      byte[] zip) {
+    super(
+        id,
+        ubl,
+        version,
+        tipo,
+        serie,
+        correlativo,
+        fechaEmision,
+        fechaReferencia,
+        emisor,
+        nombreZip,
+        zip);
+    this.detalles = detalles;
+  }
+
+  public Resumen(
+      List<ResumenDetalle> detalles,
+      String ubl,
+      String version,
+      Tipo tipo,
+      String serie,
+      int correlativo,
+      Date fechaEmision,
+      Date fechaReferencia,
+      Empresa emisor,
+      String nombreZip,
+      byte[] zip) {
+    super(
+        ubl,
+        version,
+        tipo,
+        serie,
+        correlativo,
+        fechaEmision,
+        fechaReferencia,
+        emisor,
+        nombreZip,
+        zip);
+    this.detalles = detalles;
+  }
+
+  public List<ResumenDetalle> getDetalles() {
+    return detalles;
+  }
+
+  public void setDetalles(List<ResumenDetalle> detalles) {
+    this.detalles = detalles;
   }
 
   @Override
   public String toString() {
-    return super.toString()
-        + " ResumenDiario{"
-        + "resumenDiarioDetalles="
-        + resumenDiarioDetalles
-        + '}';
+    return "Resumen{" + "detalles=" + detalles + '}';
   }
 }

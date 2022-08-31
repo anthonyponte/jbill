@@ -17,21 +17,18 @@
 
 package com.anthonyponte.jbill.dao;
 
-import com.anthonyponte.jbill.model.Resumen;
 import com.anthonyponte.jbill.model.ResumenDetalle;
+import com.anthonyponte.jbill.model.Summary;
 import java.sql.SQLException;
 import java.util.List;
-import org.joda.time.DateTime;
 
 /**
  * @author anthony
  */
-public interface ResumenDao {
-  public void create(int id, List<ResumenDetalle> resumenDiarioDetalles) throws SQLException;
+public interface ResumenDetalleDao {
+  public void create(int id, List<ResumenDetalle> detalles) throws SQLException;
 
-  public List<Resumen> read(DateTime dateTime) throws SQLException;
-
-  public List<ResumenDetalle> read(Resumen resumenDiario) throws SQLException;
+  public List<ResumenDetalle> read(Summary summary) throws SQLException;
 
   public void delete(int id) throws SQLException;
 }

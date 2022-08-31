@@ -31,11 +31,10 @@ public class MainController {
 
   private final MainFrame frame;
   private UsuarioIFrame usuarioIFrame;
-  private ComunicacionIFrame comunicacionBajaIFrame;
-  private ResumenIFrame resumenDiarioIFrame;
+  private ComunicacionIFrame comunicacionIFrame;
+  private ResumenIFrame resumenIFrame;
+  private SummaryIFrame summaryIFrame;
   private BillServiceIFrame billServiceIFrame;
-  private SummaryIFrame comunicacionTableIFrame;
-  private SummaryIFrame resumenTableIFrame;
   private LoadingDialog dialog;
   private Server server = null;
   private final String ALIAS = "jb";
@@ -60,55 +59,42 @@ public class MainController {
           }
         });
 
-    frame.miComunicacionBaja.addActionListener(
+    frame.miComunicacion.addActionListener(
         (ActionEvent arg0) -> {
-          if (isIframeClosed(comunicacionBajaIFrame)) {
-            comunicacionBajaIFrame = new ComunicacionIFrame();
-            comunicacionBajaIFrame.setTitle(frame.miComunicacionBaja.getText());
-            frame.dpane.add(comunicacionBajaIFrame);
-            comunicacionBajaIFrame.setLocation(centerIFrame(comunicacionBajaIFrame));
-            new ComunicacionController(comunicacionBajaIFrame, dialog).init();
+          if (isIframeClosed(comunicacionIFrame)) {
+            comunicacionIFrame = new ComunicacionIFrame();
+            comunicacionIFrame.setTitle(frame.miComunicacion.getText());
+            frame.dpane.add(comunicacionIFrame);
+            comunicacionIFrame.setLocation(centerIFrame(comunicacionIFrame));
+            new ComunicacionController(comunicacionIFrame, dialog).init();
           } else {
-            iframeClosed(comunicacionBajaIFrame);
+            iframeClosed(comunicacionIFrame);
           }
         });
 
-    frame.miResumenDiario.addActionListener(
+    frame.miResumen.addActionListener(
         (ActionEvent arg0) -> {
-          if (isIframeClosed(resumenDiarioIFrame)) {
-            resumenDiarioIFrame = new ResumenIFrame();
-            resumenDiarioIFrame.setTitle(frame.miResumenDiario.getText());
-            frame.dpane.add(resumenDiarioIFrame);
-            resumenDiarioIFrame.setLocation(centerIFrame(resumenDiarioIFrame));
-            new ResumenController(resumenDiarioIFrame, dialog).init();
+          if (isIframeClosed(resumenIFrame)) {
+            resumenIFrame = new ResumenIFrame();
+            resumenIFrame.setTitle(frame.miResumen.getText());
+            frame.dpane.add(resumenIFrame);
+            resumenIFrame.setLocation(centerIFrame(resumenIFrame));
+            new ResumenController(resumenIFrame, dialog).init();
           } else {
-            iframeClosed(resumenDiarioIFrame);
+            iframeClosed(resumenIFrame);
           }
         });
 
-    frame.miComunicaciones.addActionListener(
+    frame.miSummary.addActionListener(
         (ActionEvent arg0) -> {
-          if (isIframeClosed(comunicacionTableIFrame)) {
-            comunicacionTableIFrame = new SummaryIFrame();
-            comunicacionTableIFrame.setTitle(frame.miComunicaciones.getText());
-            frame.dpane.add(comunicacionTableIFrame);
-            comunicacionTableIFrame.setLocation(centerIFrame(comunicacionTableIFrame));
-            new ComunicacionTableController(comunicacionTableIFrame, dialog).init();
+          if (isIframeClosed(summaryIFrame)) {
+            summaryIFrame = new SummaryIFrame();
+            summaryIFrame.setTitle(frame.miSummary.getText());
+            frame.dpane.add(summaryIFrame);
+            summaryIFrame.setLocation(centerIFrame(summaryIFrame));
+            new SummaryController(summaryIFrame, dialog).init();
           } else {
-            iframeClosed(comunicacionTableIFrame);
-          }
-        });
-
-    frame.miResumenes.addActionListener(
-        (ActionEvent arg0) -> {
-          if (isIframeClosed(resumenTableIFrame)) {
-            resumenTableIFrame = new SummaryIFrame();
-            resumenTableIFrame.setTitle(frame.miResumenes.getText());
-            frame.dpane.add(resumenTableIFrame);
-            resumenTableIFrame.setLocation(centerIFrame(resumenTableIFrame));
-            new ResumenTableController(resumenTableIFrame, dialog).init();
-          } else {
-            iframeClosed(resumenTableIFrame);
+            iframeClosed(summaryIFrame);
           }
         });
 

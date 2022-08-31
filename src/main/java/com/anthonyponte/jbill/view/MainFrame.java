@@ -52,11 +52,10 @@ public class MainFrame extends JFrame {
         menuMain = new JMenu();
         miEntrar = new JMenuItem();
         menuNuevo = new JMenu();
-        miComunicacionBaja = new JMenuItem();
-        miResumenDiario = new JMenuItem();
+        miComunicacion = new JMenuItem();
+        miResumen = new JMenuItem();
         menuVer = new JMenu();
-        miComunicaciones = new JMenuItem();
-        miResumenes = new JMenuItem();
+        miSummary = new JMenuItem();
         miBillService = new JMenuItem();
         menuSalir = new JMenuItem();
 
@@ -84,26 +83,22 @@ public class MainFrame extends JFrame {
         menuNuevo.setText("Nuevo");
         menuNuevo.setEnabled(false);
 
-        miComunicacionBaja.setText("Comunicacion de baja");
-        miComunicacionBaja.setEnabled(false);
-        menuNuevo.add(miComunicacionBaja);
+        miComunicacion.setText("Comunicacion");
+        miComunicacion.setEnabled(false);
+        menuNuevo.add(miComunicacion);
 
-        miResumenDiario.setText("Resumen diario");
-        miResumenDiario.setEnabled(false);
-        menuNuevo.add(miResumenDiario);
+        miResumen.setText("Resumen");
+        miResumen.setEnabled(false);
+        menuNuevo.add(miResumen);
 
         menuMain.add(menuNuevo);
 
         menuVer.setText("Ver");
         menuVer.setEnabled(false);
 
-        miComunicaciones.setText("Comunicaciones");
-        miComunicaciones.setEnabled(false);
-        menuVer.add(miComunicaciones);
-
-        miResumenes.setText("Resumenes");
-        miResumenes.setEnabled(false);
-        menuVer.add(miResumenes);
+        miSummary.setText("Summary");
+        miSummary.setEnabled(false);
+        menuVer.add(miSummary);
 
         menuMain.add(menuVer);
 
@@ -146,10 +141,9 @@ public class MainFrame extends JFrame {
     public JMenuItem menuSalir;
     public JMenu menuVer;
     public JMenuItem miBillService;
-    public JMenuItem miComunicacionBaja;
-    public JMenuItem miComunicaciones;
+    public JMenuItem miComunicacion;
     public JMenuItem miEntrar;
-    public JMenuItem miResumenDiario;
-    public JMenuItem miResumenes;
+    public JMenuItem miResumen;
+    public JMenuItem miSummary;
     // End of variables declaration//GEN-END:variables
 }

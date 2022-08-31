@@ -28,6 +28,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.joda.time.DateTime;
 
 /**
  * @author AnthonyPonte
@@ -120,6 +121,62 @@ public class ISummaryDao implements SummaryDao {
         }
       }
     }
+    database.disconnect();
+
+    return list;
+  }
+
+  @Override
+  public List<Summary> read(DateTime fecha) throws SQLException {
+    List<Summary> list = new ArrayList<>();
+
+    database.connect();
+
+    String query =
+        "SELECT "
+            + "ID, TIPO_CODIGO, TIPO_DESCRIPCION, SERIE, CORRELATIVO, FECHA_EMISION, "
+            + "FECHA_REFERENCIA, RUC, RAZON_SOCIAL, ZIP_NOMBRE, ZIP, TICKET,  STATUS_CODE, "
+            + "CONTENT_NOMBRE, CONTENT "
+            + "FROM SUMMARY "
+            + "WHERE MONTH(FECHA_EMISION) = ? AND YEAR(FECHA_EMISION) = ? AND TICKET IS NOT NULL "
+            + "AND STATUS_CODE IS NOT NULL AND CONTENT_NOMBRE IS NOT NULL AND CONTENT IS NOT NULL "
+            + "ORDER BY FECHA_EMISION DESC";
+
+    try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
+      ps.setInt(1, fecha.getMonthOfYear());
+      ps.setInt(2, fecha.getYear());
+
+      try (ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+          Summary summary = new Summary();
+          summary.setId(rs.getInt(1));
+
+          Tipo tipo = new Tipo();
+          tipo.setCodigo(rs.getString(2));
+          tipo.setDescripcion(rs.getString(3));
+          summary.setTipo(tipo);
+
+          summary.setSerie(rs.getString(4));
+          summary.setCorrelativo(rs.getInt(5));
+          summary.setFechaEmision(rs.getDate(6));
+          summary.setFechaReferencia(rs.getDate(7));
+
+          Empresa emisor = new Empresa();
+          emisor.setNumero(rs.getString(8));
+          emisor.setNombre(rs.getString(9));
+          summary.setEmisor(emisor);
+
+          summary.setNombreZip(rs.getString(10));
+          summary.setZip(rs.getBytes(11));
+          summary.setTicket(rs.getString(12));
+          summary.setStatusCode(rs.getString(13));
+          summary.setNombreContent(rs.getString(14));
+          summary.setContent(rs.getBytes(15));
+          list.add(summary);
+        }
+      }
+    }
+
     database.disconnect();
 
     return list;

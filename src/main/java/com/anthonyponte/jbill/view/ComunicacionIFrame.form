@@ -5,7 +5,7 @@
     <Property name="closable" type="boolean" value="true"/>
     <Property name="iconifiable" type="boolean" value="true"/>
     <Property name="frameIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-      <Connection code="FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode(&quot;#f7d117&quot;))" type="code"/>
+      <Connection code="FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode(&quot;#FACADE&quot;))" type="code"/>
     </Property>
     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="null"/>

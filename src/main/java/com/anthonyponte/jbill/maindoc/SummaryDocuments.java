@@ -37,7 +37,7 @@ public class SummaryDocuments {
       Preferences.userRoot().node(MainController.class.getPackageName());
   private Document document;
 
-  public Document getStructure(Resumen resumenDiario) {
+  public Document getStructure(Resumen resumen) {
 
     document = new Document();
 
@@ -80,31 +80,29 @@ public class SummaryDocuments {
                 new Element("UBLExtension", ext).addContent(new Element("ExtensionContent", ext)));
     document.getRootElement().addContent(ublExtensions);
 
-    Element ublVersionID = new Element("UBLVersionID", cbc).setText(resumenDiario.getUbl());
+    Element ublVersionID = new Element("UBLVersionID", cbc).setText(resumen.getUbl());
     document.getRootElement().addContent(ublVersionID);
 
-    Element customizationID =
-        new Element("CustomizationID", cbc).setText(resumenDiario.getVersion());
+    Element customizationID = new Element("CustomizationID", cbc).setText(resumen.getVersion());
     document.getRootElement().addContent(customizationID);
 
     Element id =
         new Element("ID", cbc)
             .setText(
-                resumenDiario.getTipo().getCodigo()
+                resumen.getTipo().getCodigo()
                     + "-"
-                    + resumenDiario.getSerie()
+                    + resumen.getSerie()
                     + "-"
-                    + resumenDiario.getCorrelativo());
+                    + resumen.getCorrelativo());
     document.getRootElement().addContent(id);
 
     Element referenceDate =
         new Element("ReferenceDate", cbc)
-            .setText(MyDateFormat.yyyy_MM_dd(resumenDiario.getFechaReferencia()));
+            .setText(MyDateFormat.yyyy_MM_dd(resumen.getFechaReferencia()));
     document.getRootElement().addContent(referenceDate);
 
     Element issueDate =
-        new Element("IssueDate", cbc)
-            .setText(MyDateFormat.yyyy_MM_dd(resumenDiario.getFechaEmision()));
+        new Element("IssueDate", cbc).setText(MyDateFormat.yyyy_MM_dd(resumen.getFechaEmision()));
     document.getRootElement().addContent(issueDate);
 
     Element signature =
@@ -117,13 +115,11 @@ public class SummaryDocuments {
                     .addContent(
                         new Element("PartyIdentification", cac)
                             .addContent(
-                                new Element("ID", cbc)
-                                    .setText(resumenDiario.getEmisor().getNumero())))
+                                new Element("ID", cbc).setText(resumen.getEmisor().getNumero())))
                     .addContent(
                         new Element("PartyName", cac)
                             .addContent(
-                                new Element("Name", cbc)
-                                    .setText(resumenDiario.getEmisor().getNombre()))))
+                                new Element("Name", cbc).setText(resumen.getEmisor().getNombre()))))
             .addContent(
                 new Element("DigitalSignatureAttachment", cac)
                     .addContent(
@@ -139,21 +135,21 @@ public class SummaryDocuments {
         new Element("AccountingSupplierParty", cac)
             .addContent(
                 new Element("CustomerAssignedAccountID", cbc)
-                    .setText(resumenDiario.getEmisor().getNumero()))
+                    .setText(resumen.getEmisor().getNumero()))
             .addContent(
                 new Element("AdditionalAccountID", cbc)
-                    .setText(String.valueOf(resumenDiario.getEmisor().getTipo())))
+                    .setText(resumen.getEmisor().getTipo().getCodigo()))
             .addContent(
                 new Element("Party", cac)
                     .addContent(
                         new Element("PartyLegalEntity", cac)
                             .addContent(
                                 new Element("RegistrationName", cbc)
-                                    .setText(resumenDiario.getEmisor().getNombre()))));
+                                    .setText(resumen.getEmisor().getNombre()))));
     document.getRootElement().addContent(accountingSupplierParty);
 
-    for (int i = 0; i < resumenDiario.getResumenDiarioDetalles().size(); i++) {
-      ResumenDetalle detalle = resumenDiario.getResumenDiarioDetalles().get(i);
+    for (int i = 0; i < resumen.getDetalles().size(); i++) {
+      ResumenDetalle detalle = resumen.getDetalles().get(i);
 
       Element summaryDocumentsLine =
           new Element("SummaryDocumentsLine", sac)

@@ -26,7 +26,6 @@ import com.anthonyponte.jbill.model.Operacion;
 import com.anthonyponte.jbill.model.OtrosCargos;
 import com.anthonyponte.jbill.model.Percepcion;
 import com.anthonyponte.jbill.model.RegimenPercepcion;
-import com.anthonyponte.jbill.model.Resumen;
 import com.anthonyponte.jbill.model.ResumenDetalle;
 import com.anthonyponte.jbill.model.Tipo;
 import java.sql.PreparedStatement;
@@ -35,22 +34,22 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import org.joda.time.DateTime;
-import com.anthonyponte.jbill.dao.ResumenDao;
+import com.anthonyponte.jbill.dao.ResumenDetalleDao;
+import com.anthonyponte.jbill.model.Summary;
 
 /**
  * @author anthony
  */
-public class IResumenDao implements ResumenDao {
+public class IResumenDetalleDao implements ResumenDetalleDao {
 
   private final MyHsqldbConnection database;
 
-  public IResumenDao() {
+  public IResumenDetalleDao() {
     this.database = new MyHsqldbConnection();
   }
 
   @Override
-  public void create(int id, List<ResumenDetalle> resumenDiarioDetalles) throws SQLException {
+  public void create(int id, List<ResumenDetalle> detalles) throws SQLException {
     database.connect();
 
     String queryDetalle =
@@ -77,8 +76,8 @@ public class IResumenDao implements ResumenDao {
 
     try (PreparedStatement ps = database.getConnection().prepareStatement(queryDetalle)) {
 
-      for (int i = 0; i < resumenDiarioDetalles.size(); i++) {
-        ResumenDetalle get = resumenDiarioDetalles.get(i);
+      for (int i = 0; i < detalles.size(); i++) {
+        ResumenDetalle get = detalles.get(i);
         ps.setInt(1, id);
         ps.setInt(2, i + 1);
         ps.setString(3, get.getDocumento().getSerie());
@@ -241,65 +240,8 @@ public class IResumenDao implements ResumenDao {
   }
 
   @Override
-  public List<Resumen> read(DateTime dateTime) throws SQLException {
-    List<Resumen> list = new ArrayList<>();
-
-    database.connect();
-
-    String query =
-        "SELECT "
-            + "ID, TIPO_CODIGO, TIPO_DESCRIPCION, SERIE, CORRELATIVO, FECHA_EMISION, "
-            + "FECHA_REFERENCIA, RUC, RAZON_SOCIAL, ZIP_NOMBRE, ZIP, TICKET,  STATUS_CODE, "
-            + "CONTENT_NOMBRE, CONTENT "
-            + "FROM SUMMARY "
-            + "WHERE MONTH(FECHA_EMISION) = ? AND YEAR(FECHA_EMISION) = ? AND TICKET IS NOT NULL "
-            + "AND STATUS_CODE IS NOT NULL AND CONTENT_NOMBRE IS NOT NULL AND CONTENT IS NOT NULL "
-            + "AND TIPO_CODIGO = 'RC' "
-            + "ORDER BY FECHA_EMISION DESC";
-
-    try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
-      ps.setInt(1, dateTime.getMonthOfYear());
-      ps.setInt(2, dateTime.getYear());
-
-      try (ResultSet rs = ps.executeQuery()) {
-        while (rs.next()) {
-          Resumen resumenDiario = new Resumen();
-          resumenDiario.setId(rs.getInt(1));
-
-          Tipo tipo = new Tipo();
-          tipo.setCodigo(rs.getString(2));
-          tipo.setDescripcion(rs.getString(3));
-          resumenDiario.setTipo(tipo);
-
-          resumenDiario.setSerie(rs.getString(4));
-          resumenDiario.setCorrelativo(rs.getInt(5));
-          resumenDiario.setFechaEmision(rs.getDate(6));
-          resumenDiario.setFechaReferencia(rs.getDate(7));
-
-          Empresa emisor = new Empresa();
-          emisor.setNumero(rs.getString(8));
-          emisor.setNombre(rs.getString(9));
-          resumenDiario.setEmisor(emisor);
-
-          resumenDiario.setNombreZip(rs.getString(10));
-          resumenDiario.setZip(rs.getBytes(11));
-          resumenDiario.setTicket(rs.getString(12));
-          resumenDiario.setStatusCode(rs.getString(13));
-          resumenDiario.setNombreContent(rs.getString(14));
-          resumenDiario.setContent(rs.getBytes(15));
-          list.add(resumenDiario);
-        }
-      }
-    }
-
-    database.disconnect();
-
-    return list;
-  }
-
-  @Override
-  public List<ResumenDetalle> read(Resumen resumenDiario) throws SQLException {
-    List<ResumenDetalle> resumenDiarioDetalles = new ArrayList<>();
+  public List<ResumenDetalle> read(Summary summary) throws SQLException {
+    List<ResumenDetalle> list = new ArrayList<>();
 
     database.connect();
 
@@ -325,15 +267,15 @@ public class IResumenDao implements ResumenDao {
 
     try (PreparedStatement ps = database.getConnection().prepareStatement(query)) {
 
-      ps.setInt(1, resumenDiario.getId());
+      ps.setInt(1, summary.getId());
 
       try (ResultSet rs = ps.executeQuery()) {
         while (rs.next()) {
-          ResumenDetalle resumenDiarioDetalle = new ResumenDetalle();
+          ResumenDetalle detalle = new ResumenDetalle();
 
-          resumenDiarioDetalle.setResumenDiario(resumenDiario);
-          resumenDiarioDetalle.setId(rs.getInt(1));
-          resumenDiarioDetalle.setNumero(rs.getInt(2));
+          detalle.setSummary(summary);
+          detalle.setId(rs.getInt(1));
+          detalle.setNumero(rs.getInt(2));
 
           Bill documento = new Bill();
           documento.setSerie(rs.getString(3));
@@ -344,7 +286,7 @@ public class IResumenDao implements ResumenDao {
           tipoDocumento.setDescripcion(rs.getString(6));
           documento.setTipo(tipoDocumento);
 
-          resumenDiarioDetalle.setDocumento(documento);
+          detalle.setDocumento(documento);
 
           rs.getString(7);
           if (!rs.wasNull()) {
@@ -356,7 +298,7 @@ public class IResumenDao implements ResumenDao {
             tipoDocumentoIdentidad.setDescripcion(rs.getString(9));
             adquiriente.setTipo(tipoDocumentoIdentidad);
 
-            resumenDiarioDetalle.setAdquiriente(adquiriente);
+            detalle.setAdquiriente(adquiriente);
           }
 
           rs.getString(10);
@@ -370,7 +312,7 @@ public class IResumenDao implements ResumenDao {
             tipoDocumentoReferencia.setDescripcion(rs.getString(13));
             documentoReferencia.setTipo(tipoDocumentoReferencia);
 
-            resumenDiarioDetalle.setDocumentoReferencia(documentoReferencia);
+            detalle.setDocumentoReferencia(documentoReferencia);
           }
 
           rs.getString(14);
@@ -387,20 +329,20 @@ public class IResumenDao implements ResumenDao {
             percepcion.setMontoTotal(rs.getDouble(18));
             percepcion.setBase(rs.getDouble(19));
 
-            resumenDiarioDetalle.setPercepcion(percepcion);
+            detalle.setPercepcion(percepcion);
           }
 
           Estado estado = new Estado();
           estado.setCodigo(rs.getString(20));
           estado.setDescripcion(rs.getString(21));
-          resumenDiarioDetalle.setEstado(estado);
+          detalle.setEstado(estado);
 
-          resumenDiarioDetalle.setImporteTotal(rs.getDouble(22));
+          detalle.setImporteTotal(rs.getDouble(22));
 
           Tipo moneda = new Tipo();
           moneda.setCodigo(rs.getString(23));
           moneda.setDescripcion(rs.getString(24));
-          resumenDiarioDetalle.setMoneda(moneda);
+          detalle.setMoneda(moneda);
 
           rs.getString(25);
           if (!rs.wasNull()) {
@@ -408,7 +350,7 @@ public class IResumenDao implements ResumenDao {
             gravadas.setTotal(rs.getDouble(25));
             gravadas.setCodigo(rs.getString(26));
             gravadas.setDescripcion(rs.getString(27));
-            resumenDiarioDetalle.setGravadas(gravadas);
+            detalle.setGravadas(gravadas);
           }
 
           rs.getString(28);
@@ -417,7 +359,7 @@ public class IResumenDao implements ResumenDao {
             exoneradas.setTotal(rs.getDouble(28));
             exoneradas.setCodigo(rs.getString(29));
             exoneradas.setDescripcion(rs.getString(30));
-            resumenDiarioDetalle.setExoneradas(exoneradas);
+            detalle.setExoneradas(exoneradas);
           }
 
           rs.getString(31);
@@ -426,7 +368,7 @@ public class IResumenDao implements ResumenDao {
             inafectas.setTotal(rs.getDouble(31));
             inafectas.setCodigo(rs.getString(32));
             inafectas.setDescripcion(rs.getString(33));
-            resumenDiarioDetalle.setInafectas(inafectas);
+            detalle.setInafectas(inafectas);
           }
 
           rs.getString(34);
@@ -435,7 +377,7 @@ public class IResumenDao implements ResumenDao {
             gratuitas.setTotal(rs.getDouble(34));
             gratuitas.setCodigo(rs.getString(35));
             gratuitas.setDescripcion(rs.getString(36));
-            resumenDiarioDetalle.setGratuitas(gratuitas);
+            detalle.setGratuitas(gratuitas);
           }
 
           rs.getString(37);
@@ -444,7 +386,7 @@ public class IResumenDao implements ResumenDao {
             exportacion.setTotal(rs.getDouble(37));
             exportacion.setCodigo(rs.getString(38));
             exportacion.setDescripcion(rs.getString(39));
-            resumenDiarioDetalle.setExportacion(exportacion);
+            detalle.setExportacion(exportacion);
           }
 
           rs.getString(40);
@@ -452,7 +394,7 @@ public class IResumenDao implements ResumenDao {
             OtrosCargos otrosCargos = new OtrosCargos();
             otrosCargos.setIndicador(rs.getBoolean(40));
             otrosCargos.setTotal(rs.getDouble(41));
-            resumenDiarioDetalle.setOtrosCargos(otrosCargos);
+            detalle.setOtrosCargos(otrosCargos);
           }
 
           Impuesto igv = new Impuesto();
@@ -460,7 +402,7 @@ public class IResumenDao implements ResumenDao {
           igv.setCodigo(rs.getString(43));
           igv.setDescripcion(rs.getString(44));
           igv.setCodigoInternacional(rs.getString(45));
-          resumenDiarioDetalle.setIgv(igv);
+          detalle.setIgv(igv);
 
           rs.getString(46);
           if (!rs.wasNull()) {
@@ -469,7 +411,7 @@ public class IResumenDao implements ResumenDao {
             isc.setCodigo(rs.getString(47));
             isc.setDescripcion(rs.getString(48));
             isc.setCodigoInternacional(rs.getString(49));
-            resumenDiarioDetalle.setIsc(isc);
+            detalle.setIsc(isc);
           }
 
           rs.getString(50);
@@ -479,7 +421,7 @@ public class IResumenDao implements ResumenDao {
             otrosTributos.setCodigo(rs.getString(51));
             otrosTributos.setDescripcion(rs.getString(52));
             otrosTributos.setCodigoInternacional(rs.getString(53));
-            resumenDiarioDetalle.setOtrosTributos(otrosTributos);
+            detalle.setOtrosTributos(otrosTributos);
           }
 
           rs.getString(54);
@@ -489,17 +431,17 @@ public class IResumenDao implements ResumenDao {
             impuestoBolsa.setCodigo(rs.getString(55));
             impuestoBolsa.setDescripcion(rs.getString(56));
             impuestoBolsa.setCodigoInternacional(rs.getString(57));
-            resumenDiarioDetalle.setImpuestoBolsa(impuestoBolsa);
+            detalle.setImpuestoBolsa(impuestoBolsa);
           }
 
-          resumenDiarioDetalles.add(resumenDiarioDetalle);
+          list.add(detalle);
         }
       }
     }
 
     database.disconnect();
 
-    return resumenDiarioDetalles;
+    return list;
   }
 
   @Override

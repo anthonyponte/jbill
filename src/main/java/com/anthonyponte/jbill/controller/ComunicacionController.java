@@ -13,7 +13,7 @@ import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThr
 import com.anthonyponte.jbill.custom.MyDateFormat;
 import com.anthonyponte.jbill.custom.MyFileCreator;
 import com.anthonyponte.jbill.custom.MyTableResize;
-import com.anthonyponte.jbill.idao.IComunicacionDao;
+import com.anthonyponte.jbill.idao.IComunicacionDetalleDao;
 import com.anthonyponte.jbill.model.ComunicacionDetalle;
 import com.anthonyponte.jbill.model.Bill;
 import com.anthonyponte.jbill.view.ComunicacionIFrame;
@@ -57,7 +57,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.jdom2.Document;
 import org.xml.sax.SAXException;
-import com.anthonyponte.jbill.dao.ComunicacionDao;
+import com.anthonyponte.jbill.dao.ComunicacionDetalleDao;
 
 /**
  * @author anthony
@@ -68,7 +68,7 @@ public class ComunicacionController {
   private final LoadingDialog dialog;
   private Preferences preferences;
   private SummaryDao summaryDao;
-  private ComunicacionDao comunicacionBajaDao;
+  private ComunicacionDetalleDao comunicacionBajaDao;
   private EventList<ComunicacionDetalle> eventList;
   private AdvancedTableModel<ComunicacionDetalle> tableModel;
   private AdvancedListSelectionModel<ComunicacionDetalle> selectionModel;
@@ -296,7 +296,7 @@ public class ComunicacionController {
                       emisor.setNombre(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
                       comunicacionBaja.setEmisor(emisor);
 
-                      comunicacionBaja.setComunicacionBajaDetalles(eventList);
+                      comunicacionBaja.setDetalles(eventList);
 
                       VoidedDocuments voided = new VoidedDocuments();
                       Document document = voided.getStructure(comunicacionBaja);
@@ -420,7 +420,7 @@ public class ComunicacionController {
   }
 
   private void initComponents() {
-    comunicacionBajaDao = new IComunicacionDao();
+    comunicacionBajaDao = new IComunicacionDetalleDao();
     summaryDao = new ISummaryDao();
     preferences = Preferences.userRoot().node(MainController.class.getPackageName());
     eventList = new BasicEventList<>();

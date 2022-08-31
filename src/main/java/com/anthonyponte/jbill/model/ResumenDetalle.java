@@ -17,10 +17,12 @@
 
 package com.anthonyponte.jbill.model;
 
-/** @author AnthonyPonte */
+/**
+ * @author AnthonyPonte
+ */
 public class ResumenDetalle {
   private int id;
-  private Resumen resumenDiario;
+  private Summary summary;
   private int numero;
   private Bill documento;
   private Empresa adquiriente;
@@ -44,7 +46,7 @@ public class ResumenDetalle {
 
   public ResumenDetalle(
       int id,
-      Resumen resumenDiario,
+      Summary summary,
       int numero,
       Bill documento,
       Empresa adquiriente,
@@ -64,7 +66,7 @@ public class ResumenDetalle {
       Impuesto otrosTributos,
       Impuesto impuestoBolsa) {
     this.id = id;
-    this.resumenDiario = resumenDiario;
+    this.summary = summary;
     this.numero = numero;
     this.documento = documento;
     this.adquiriente = adquiriente;
@@ -93,12 +95,12 @@ public class ResumenDetalle {
     this.id = id;
   }
 
-  public Resumen getResumenDiario() {
-    return resumenDiario;
+  public Summary getSummary() {
+    return summary;
   }
 
-  public void setResumenDiario(Resumen resumenDiario) {
-    this.resumenDiario = resumenDiario;
+  public void setSummary(Summary summary) {
+    this.summary = summary;
   }
 
   public int getNumero() {
@@ -247,16 +249,16 @@ public class ResumenDetalle {
 
   @Override
   public String toString() {
-    return "ResumenDiarioDetalle{"
+    return "ResumenDetalle{"
         + "id="
         + id
-        + ", resumenDiario="
-        + resumenDiario
+        + ", summary="
+        + summary
         + ", numero="
         + numero
         + ", documento="
         + documento
-        + ", remitente="
+        + ", adquiriente="
         + adquiriente
         + ", documentoReferencia="
         + documentoReferencia

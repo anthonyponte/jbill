@@ -6,34 +6,34 @@
 package com.anthonyponte.jbill.factory;
 
 import com.anthonyponte.jbill.dao.SummaryDao;
-import com.anthonyponte.jbill.idao.IComunicacionDao;
-import com.anthonyponte.jbill.idao.IResumenDao;
+import com.anthonyponte.jbill.idao.IComunicacionDetalleDao;
+import com.anthonyponte.jbill.idao.IResumenDetalleDao;
 import com.anthonyponte.jbill.idao.ISummaryDao;
 import com.anthonyponte.jbill.model.Summary;
 import java.sql.SQLException;
-import com.anthonyponte.jbill.dao.ComunicacionDao;
-import com.anthonyponte.jbill.dao.ResumenDao;
+import com.anthonyponte.jbill.dao.ResumenDetalleDao;
+import com.anthonyponte.jbill.dao.ComunicacionDetalleDao;
 
 /**
  * @author AnthonyPonte
  */
 public class SummaryFactory {
   private final SummaryDao summaryDao;
-  private final ComunicacionDao comunicacionBajaDao;
-  private final ResumenDao resumenDiarioDao;
+  private final ComunicacionDetalleDao comunicacionDetalleDao;
+  private final ResumenDetalleDao resumenDetalleDao;
 
   public SummaryFactory() {
     summaryDao = new ISummaryDao();
-    comunicacionBajaDao = new IComunicacionDao();
-    resumenDiarioDao = new IResumenDao();
+    comunicacionDetalleDao = new IComunicacionDetalleDao();
+    resumenDetalleDao = new IResumenDetalleDao();
   }
 
   public void delete(Summary summary) throws SQLException {
     if (summary.getTipo().getCodigo().equals("RA") || summary.getTipo().getCodigo().equals("RR")) {
-      comunicacionBajaDao.delete(summary.getId());
+      comunicacionDetalleDao.delete(summary.getId());
       summaryDao.delete(summary.getId());
     } else if (summary.getTipo().getCodigo().equals("RC")) {
-      resumenDiarioDao.delete(summary.getId());
+      resumenDetalleDao.delete(summary.getId());
       summaryDao.delete(summary.getId());
     }
   }

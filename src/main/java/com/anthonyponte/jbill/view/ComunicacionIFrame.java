@@ -89,7 +89,7 @@ public class ComunicacionIFrame extends JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setFrameIcon(FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode("#f7d117")));
+        setFrameIcon(FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode("#FACADE")));
         setMaximumSize(null);
         setMinimumSize(null);
 

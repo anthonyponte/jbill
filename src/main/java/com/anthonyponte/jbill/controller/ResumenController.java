@@ -29,7 +29,7 @@ import com.anthonyponte.jbill.custom.MyFileCreator;
 import com.anthonyponte.jbill.custom.MyTableResize;
 import com.anthonyponte.jbill.dao.SummaryDao;
 import com.anthonyponte.jbill.filter.IntegerFilter;
-import com.anthonyponte.jbill.idao.IResumenDao;
+import com.anthonyponte.jbill.idao.IResumenDetalleDao;
 import com.anthonyponte.jbill.idao.ISummaryDao;
 import com.anthonyponte.jbill.maindoc.SummaryDocuments;
 import com.anthonyponte.jbill.model.Bill;
@@ -72,7 +72,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import org.jdom2.Document;
 import org.xml.sax.SAXException;
-import com.anthonyponte.jbill.dao.ResumenDao;
+import com.anthonyponte.jbill.dao.ResumenDetalleDao;
 
 /**
  * @author anthony
@@ -82,7 +82,7 @@ public class ResumenController {
   private final LoadingDialog dialog;
   private Preferences preferences;
   private SummaryDao summaryDao;
-  private ResumenDao resumenDiarioDao;
+  private ResumenDetalleDao resumenDiarioDao;
   private EventList<ResumenDetalle> eventList;
   private AdvancedTableModel<ResumenDetalle> tableModel;
   private AdvancedListSelectionModel<ResumenDetalle> selectionModel;
@@ -254,7 +254,7 @@ public class ResumenController {
                         emisor.setNombre(preferences.get(UsuarioController.RAZON_SOCIAL, ""));
                         resumenDiario.setEmisor(emisor);
 
-                        resumenDiario.setResumenDiarioDetalles(eventList);
+                        resumenDiario.setDetalles(eventList);
 
                         SummaryDocuments summaryDocuments = new SummaryDocuments();
                         Document document = summaryDocuments.getStructure(resumenDiario);
@@ -738,7 +738,7 @@ public class ResumenController {
 
   private void initComponents() {
     summaryDao = new ISummaryDao();
-    resumenDiarioDao = new IResumenDao();
+    resumenDiarioDao = new IResumenDetalleDao();
     preferences = Preferences.userRoot().node(MainController.class.getPackageName());
     eventList = new BasicEventList<>();
 

@@ -4,21 +4,22 @@
  */
 package com.anthonyponte.jbill.model;
 
-/** @author anthony */
+/**
+ * @author anthony
+ */
 public class ComunicacionDetalle {
 
   private int id;
-  private Comunicacion comunicacionBaja;
+  private Summary summary;
   private int numero;
   private Bill documento;
   private String motivo;
 
   public ComunicacionDetalle() {}
 
-  public ComunicacionDetalle(
-      int id, Comunicacion comunicacionBaja, int numero, Bill documento, String motivo) {
+  public ComunicacionDetalle(int id, Summary summary, int numero, Bill documento, String motivo) {
     this.id = id;
-    this.comunicacionBaja = comunicacionBaja;
+    this.summary = summary;
     this.numero = numero;
     this.documento = documento;
     this.motivo = motivo;
@@ -38,12 +39,12 @@ public class ComunicacionDetalle {
     this.id = id;
   }
 
-  public Comunicacion getComunicacionBaja() {
-    return comunicacionBaja;
+  public Summary getSummary() {
+    return summary;
   }
 
-  public void setComunicacionBaja(Comunicacion comunicacionBaja) {
-    this.comunicacionBaja = comunicacionBaja;
+  public void setSummary(Summary summary) {
+    this.summary = summary;
   }
 
   public int getNumero() {
@@ -72,11 +73,11 @@ public class ComunicacionDetalle {
 
   @Override
   public String toString() {
-    return "ComunicacionBajaDetalle{"
+    return "ComunicacionDetalle{"
         + "id="
         + id
-        + ", comunicacionBaja="
-        + comunicacionBaja
+        + ", summary="
+        + summary
         + ", numero="
         + numero
         + ", documento="

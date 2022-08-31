@@ -30,8 +30,8 @@ import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThr
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import com.anthonyponte.jbill.custom.MyTableResize;
-import com.anthonyponte.jbill.idao.IResumenDao;
-import com.anthonyponte.jbill.model.Resumen;
+import com.anthonyponte.jbill.dao.ComunicacionDetalleDao;
+import com.anthonyponte.jbill.dao.ResumenDetalleDao;
 import com.anthonyponte.jbill.model.ResumenDetalle;
 import com.anthonyponte.jbill.tableformat.ResumenDetalleTableFormat;
 import com.anthonyponte.jbill.view.LoadingDialog;
@@ -43,7 +43,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -52,23 +51,35 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import org.joda.time.DateTime;
-import com.anthonyponte.jbill.dao.ResumenDao;
+import com.anthonyponte.jbill.dao.SummaryDao;
+import com.anthonyponte.jbill.idao.IComunicacionDetalleDao;
+import com.anthonyponte.jbill.idao.IResumenDetalleDao;
+import com.anthonyponte.jbill.idao.ISummaryDao;
+import com.anthonyponte.jbill.model.ComunicacionDetalle;
+import com.anthonyponte.jbill.model.Summary;
+import com.anthonyponte.jbill.tableformat.ComunicacionDetalleTableFormat;
 import com.anthonyponte.jbill.tableformat.SummaryTableFormat;
+import java.sql.SQLException;
 
 /**
  * @author AnthonyPonte
  */
-public class ResumenTableController {
+public class SummaryController {
   private final SummaryIFrame iFrame;
   private final LoadingDialog dialog;
-  private ResumenDao dao;
-  private EventList<Resumen> eventList;
-  private EventList<ResumenDetalle> elDetalle;
-  private SortedList<Resumen> sortedList;
-  private AdvancedListSelectionModel<Resumen> selectionModel;
-  private AdvancedTableModel<Resumen> tableModel;
+  private SummaryDao summaryDao;
+  private ComunicacionDetalleDao comunicacionDetalleDao;
+  private ResumenDetalleDao resumenDetalleDao;
+  private EventList<Summary> summarys;
+  private EventList<ComunicacionDetalle> comunicacionDetalles;
+  private EventList<ResumenDetalle> resumenDetalles;
+  private SortedList<Summary> sortedList;
+  private AdvancedListSelectionModel<Summary> selectionModel;
+  private AdvancedTableModel<Summary> modelSummary;
+  private AdvancedTableModel<ComunicacionDetalle> modelComunicacionDetalle;
+  private AdvancedTableModel<ResumenDetalle> modelResumenDetalle;
 
-  public ResumenTableController(SummaryIFrame iFrame, LoadingDialog dialog) {
+  public SummaryController(SummaryIFrame iFrame, LoadingDialog dialog) {
     this.iFrame = iFrame;
     this.dialog = dialog;
     initComponents();
@@ -88,7 +99,7 @@ public class ResumenTableController {
             if (e.getClickCount() == 2) {
               int column = iFrame.tblEncabezado.columnAtPoint(e.getPoint());
               if (column == 8 || column == 11) {
-                Resumen selected = selectionModel.getSelected().get(0);
+                Summary selected = selectionModel.getSelected().get(0);
 
                 JFileChooser chooser = new JFileChooser();
                 chooser.setCurrentDirectory(new File("."));
@@ -116,30 +127,42 @@ public class ResumenTableController {
                     JOptionPane.showMessageDialog(
                         null,
                         ex.getMessage(),
-                        ResumenTableController.class.getName(),
+                        SummaryController.class.getName(),
                         JOptionPane.ERROR_MESSAGE);
                   } catch (IOException ex) {
                     JOptionPane.showMessageDialog(
                         null,
                         ex.getMessage(),
-                        ResumenTableController.class.getName(),
+                        SummaryController.class.getName(),
                         JOptionPane.ERROR_MESSAGE);
                   }
                 }
               } else {
                 try {
-                  Resumen selected = selectionModel.getSelected().get(0);
-                  List<ResumenDetalle> get = dao.read(selected);
+                  Summary selected = selectionModel.getSelected().get(0);
 
-                  elDetalle.clear();
-                  elDetalle.addAll(get);
+                  if (selected.getTipo().getCodigo().equals("RA")
+                      || selected.getTipo().getCodigo().equals("RR")) {
+                    List<ComunicacionDetalle> detalles = comunicacionDetalleDao.read(selected);
 
+                    iFrame.tblDetalle.setModel(modelComunicacionDetalle);
+
+                    comunicacionDetalles.clear();
+                    comunicacionDetalles.addAll(detalles);
+                  } else if (selected.getTipo().getCodigo().equals("RC")) {
+                    List<ResumenDetalle> detalles = resumenDetalleDao.read(selected);
+
+                    iFrame.tblDetalle.setModel(modelResumenDetalle);
+
+                    resumenDetalles.clear();
+                    resumenDetalles.addAll(detalles);
+                  }
                   MyTableResize.resize(iFrame.tblDetalle);
                 } catch (SQLException ex) {
                   JOptionPane.showMessageDialog(
                       null,
                       ex.getMessage(),
-                      ResumenTableController.class.getName(),
+                      SummaryController.class.getName(),
                       JOptionPane.ERROR_MESSAGE);
                 }
               }
@@ -149,40 +172,47 @@ public class ResumenTableController {
   }
 
   private void initComponents() {
-    dao = new IResumenDao();
-    eventList = new BasicEventList<>();
-    elDetalle = new BasicEventList<>();
+    summaryDao = new ISummaryDao();
+    comunicacionDetalleDao = new IComunicacionDetalleDao();
+    resumenDetalleDao = new IResumenDetalleDao();
+
+    summarys = new BasicEventList<>();
+    resumenDetalles = new BasicEventList<>();
+    comunicacionDetalles = new BasicEventList<>();
 
     Comparator comparator =
-        (Comparator<Resumen>)
-            (Resumen o1, Resumen o2) -> o1.getFechaEmision().compareTo(o2.getFechaEmision());
+        (Comparator<Summary>)
+            (Summary o1, Summary o2) -> o1.getFechaEmision().compareTo(o2.getFechaEmision());
 
-    sortedList = new SortedList<>(eventList, comparator.reversed());
+    sortedList = new SortedList<>(summarys, comparator.reversed());
 
-    TextFilterator<Resumen> filterator =
-        (List<String> list, Resumen resumenDiario) -> {
-          list.add(resumenDiario.getTipo().getCodigo());
-          list.add(resumenDiario.getTipo().getDescripcion());
-          list.add(String.valueOf(resumenDiario.getCorrelativo()));
+    TextFilterator<Summary> filterator =
+        (List<String> list, Summary summary) -> {
+          list.add(summary.getTipo().getCodigo());
+          list.add(summary.getTipo().getDescripcion());
+          list.add(String.valueOf(summary.getCorrelativo()));
         };
 
-    MatcherEditor<Resumen> matcherEditor =
+    MatcherEditor<Summary> matcherEditor =
         new TextComponentMatcherEditor<>(iFrame.tfFiltrar, filterator);
 
-    FilterList<Resumen> filterList = new FilterList<>(sortedList, matcherEditor);
+    FilterList<Summary> filterList = new FilterList<>(sortedList, matcherEditor);
 
-    tableModel = eventTableModelWithThreadProxyList(filterList, new SummaryTableFormat());
+    modelSummary = eventTableModelWithThreadProxyList(filterList, new SummaryTableFormat());
     selectionModel = new DefaultEventSelectionModel<>(filterList);
 
-    iFrame.tblEncabezado.setModel(tableModel);
+    iFrame.tblEncabezado.setModel(modelSummary);
     iFrame.tblEncabezado.setSelectionModel(selectionModel);
 
     TableComparatorChooser.install(
         iFrame.tblEncabezado, sortedList, TableComparatorChooser.SINGLE_COLUMN);
 
-    AdvancedTableModel<ResumenDetalle> ttmDetalle =
-        eventTableModelWithThreadProxyList(elDetalle, new ResumenDetalleTableFormat());
-    iFrame.tblDetalle.setModel(ttmDetalle);
+    modelResumenDetalle =
+        eventTableModelWithThreadProxyList(resumenDetalles, new ResumenDetalleTableFormat());
+
+    modelComunicacionDetalle =
+        eventTableModelWithThreadProxyList(
+            comunicacionDetalles, new ComunicacionDetalleTableFormat());
 
     iFrame.show();
 
@@ -197,11 +227,11 @@ public class ResumenTableController {
     dialog.setLocationRelativeTo(iFrame);
 
     SwingWorker worker =
-        new SwingWorker<List<Resumen>, Void>() {
+        new SwingWorker<List<Summary>, Void>() {
           @Override
-          protected List<Resumen> doInBackground() throws Exception {
-            DateTime dateTime = new DateTime(date);
-            List<Resumen> list = dao.read(dateTime);
+          protected List<Summary> doInBackground() throws Exception {
+            DateTime fecha = new DateTime(date);
+            List<Summary> list = summaryDao.read(fecha);
             return list;
           }
 
@@ -210,9 +240,9 @@ public class ResumenTableController {
             try {
               dialog.dispose();
 
-              List<Resumen> get = get();
-              eventList.clear();
-              eventList.addAll(get);
+              List<Summary> get = get();
+              summarys.clear();
+              summarys.addAll(get);
 
               MyTableResize.resize(iFrame.tblEncabezado);
 
@@ -222,7 +252,7 @@ public class ResumenTableController {
               JOptionPane.showMessageDialog(
                   null,
                   ex.getMessage(),
-                  ResumenTableController.class.getName(),
+                  SummaryController.class.getName(),
                   JOptionPane.ERROR_MESSAGE);
             }
           }
