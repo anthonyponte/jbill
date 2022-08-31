@@ -71,6 +71,9 @@ import javax.xml.transform.TransformerException;
 import org.jdom2.Document;
 import org.xml.sax.SAXException;
 import com.anthonyponte.jbill.dao.ResumenDetalleDao;
+import com.anthonyponte.jbill.idao.IBillService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author anthony
@@ -111,6 +114,8 @@ public class ResumenController {
 
                     count = summaryDao.count(tipoDocumento, fechaGeneracion);
                   } catch (SQLException ex) {
+                    Logger.getLogger(ResumenController.class.getName()).log(Level.SEVERE, null, ex);
+
                     JOptionPane.showMessageDialog(
                         null,
                         ex.getMessage(),
@@ -190,6 +195,8 @@ public class ResumenController {
 
                     iFrame.btnLimpiar.setEnabled(true);
                   } catch (InterruptedException | ExecutionException ex) {
+                    Logger.getLogger(ResumenController.class.getName()).log(Level.SEVERE, null, ex);
+
                     JOptionPane.showMessageDialog(
                         null,
                         ex.getMessage(),
@@ -299,6 +306,9 @@ public class ResumenController {
                           | SQLException ex) {
                         cancel(true);
 
+                        Logger.getLogger(ResumenController.class.getName())
+                            .log(Level.SEVERE, null, ex);
+
                         JOptionPane.showMessageDialog(
                             null,
                             ex.getMessage(),
@@ -325,6 +335,9 @@ public class ResumenController {
                               "Guardado",
                               JOptionPane.INFORMATION_MESSAGE);
                         } catch (InterruptedException | ExecutionException ex) {
+                          Logger.getLogger(ResumenController.class.getName())
+                              .log(Level.SEVERE, null, ex);
+
                           JOptionPane.showMessageDialog(
                               null,
                               ex.getMessage(),
@@ -377,6 +390,8 @@ public class ResumenController {
 
                 enabled();
               } catch (BadLocationException ex) {
+                Logger.getLogger(ResumenController.class.getName()).log(Level.SEVERE, null, ex);
+
                 JOptionPane.showMessageDialog(
                     null,
                     ex.getMessage(),
@@ -404,6 +419,8 @@ public class ResumenController {
 
                 enabled();
               } catch (BadLocationException ex) {
+                Logger.getLogger(ResumenController.class.getName()).log(Level.SEVERE, null, ex);
+
                 JOptionPane.showMessageDialog(
                     null,
                     ex.getMessage(),
@@ -433,6 +450,8 @@ public class ResumenController {
 
               iFrame.tfDocumentoIdentidadNumero.requestFocus();
             } catch (BadLocationException ex) {
+              Logger.getLogger(ResumenController.class.getName()).log(Level.SEVERE, null, ex);
+
               JOptionPane.showMessageDialog(
                   null,
                   ex.getMessage(),
@@ -686,6 +705,8 @@ public class ResumenController {
 
             iFrame.btnGuardar.setEnabled(true);
           } catch (BadLocationException ex) {
+            Logger.getLogger(ResumenController.class.getName()).log(Level.SEVERE, null, ex);
+
             JOptionPane.showMessageDialog(
                 null,
                 ex.getMessage(),
@@ -1015,6 +1036,8 @@ public class ResumenController {
 
       iFrame.btnLimpiar.setEnabled(false);
     } catch (BadLocationException ex) {
+      Logger.getLogger(ResumenController.class.getName()).log(Level.SEVERE, null, ex);
+
       JOptionPane.showMessageDialog(
           null, ex.getMessage(), ResumenController.class.getName(), JOptionPane.ERROR_MESSAGE);
     }
@@ -1190,6 +1213,8 @@ public class ResumenController {
 
         enabled();
       } catch (BadLocationException ex) {
+        Logger.getLogger(ResumenController.class.getName()).log(Level.SEVERE, null, ex);
+
         JOptionPane.showMessageDialog(
             null, ex.getMessage(), ResumenController.class.getName(), JOptionPane.ERROR_MESSAGE);
       }
