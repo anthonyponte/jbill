@@ -66,9 +66,9 @@ public class SummaryTableFormat implements TableFormat<Summary> {
   public Object getColumnValue(Summary e, int i) {
     switch (i) {
       case 0:
-        return e.getTipoDocumento().getCodigo();
+        return e.getTipo().getCodigo();
       case 1:
-        return e.getTipoDocumento().getDescripcion();
+        return e.getTipo().getDescripcion();
       case 2:
         return e.getSerie();
       case 3:

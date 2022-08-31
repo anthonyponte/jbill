@@ -77,7 +77,7 @@ public class VoidedDocuments {
     Element id =
         new Element("ID", cbc)
             .setText(
-                comunicacionBaja.getTipoDocumento().getCodigo()
+                comunicacionBaja.getTipo().getCodigo()
                     + "-"
                     + comunicacionBaja.getSerie()
                     + "-"

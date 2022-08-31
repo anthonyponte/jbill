@@ -35,7 +35,7 @@ import com.anthonyponte.jbill.model.Resumen;
 import com.anthonyponte.jbill.model.ResumenDetalle;
 import com.anthonyponte.jbill.tableformat.ResumenDetalleTableFormat;
 import com.anthonyponte.jbill.view.LoadingDialog;
-import com.anthonyponte.jbill.view.TableIFrame;
+import com.anthonyponte.jbill.view.SummaryIFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -59,7 +59,7 @@ import com.anthonyponte.jbill.tableformat.SummaryTableFormat;
  * @author AnthonyPonte
  */
 public class ResumenTableController {
-  private final TableIFrame iFrame;
+  private final SummaryIFrame iFrame;
   private final LoadingDialog dialog;
   private ResumenDao dao;
   private EventList<Resumen> eventList;
@@ -68,7 +68,7 @@ public class ResumenTableController {
   private AdvancedListSelectionModel<Resumen> selectionModel;
   private AdvancedTableModel<Resumen> tableModel;
 
-  public ResumenTableController(TableIFrame iFrame, LoadingDialog dialog) {
+  public ResumenTableController(SummaryIFrame iFrame, LoadingDialog dialog) {
     this.iFrame = iFrame;
     this.dialog = dialog;
     initComponents();
@@ -161,8 +161,8 @@ public class ResumenTableController {
 
     TextFilterator<Resumen> filterator =
         (List<String> list, Resumen resumenDiario) -> {
-          list.add(resumenDiario.getTipoDocumento().getCodigo());
-          list.add(resumenDiario.getTipoDocumento().getDescripcion());
+          list.add(resumenDiario.getTipo().getCodigo());
+          list.add(resumenDiario.getTipo().getDescripcion());
           list.add(String.valueOf(resumenDiario.getCorrelativo()));
         };
 

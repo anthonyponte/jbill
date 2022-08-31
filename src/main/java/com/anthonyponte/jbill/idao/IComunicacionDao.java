@@ -87,10 +87,10 @@ public class IComunicacionDao implements ComunicacionDao {
           Comunicacion comunicacionBaja = new Comunicacion();
           comunicacionBaja.setId(rs.getInt(1));
 
-          Tipo tipoDocumento = new Tipo();
-          tipoDocumento.setCodigo(rs.getString(2));
-          tipoDocumento.setDescripcion(rs.getString(3));
-          comunicacionBaja.setTipoDocumento(tipoDocumento);
+          Tipo tipo = new Tipo();
+          tipo.setCodigo(rs.getString(2));
+          tipo.setDescripcion(rs.getString(3));
+          comunicacionBaja.setTipo(tipo);
 
           comunicacionBaja.setSerie(rs.getString(4));
           comunicacionBaja.setCorrelativo(rs.getInt(5));

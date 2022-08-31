@@ -10,9 +10,13 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLaf;
 import javax.swing.SwingUtilities;
 
-/** @author anthony */
+/**
+ * @author anthony
+ */
 public class Main {
-  /** @param args the command line arguments */
+  /**
+   * @param args the command line arguments
+   */
   public static void main(String[] args) {
     SwingUtilities.invokeLater(
         () -> {

@@ -4,7 +4,6 @@
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
     <Property name="iconifiable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Resumen diario"/>
     <Property name="frameIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
       <Connection code="FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode(&quot;#FACADE&quot;))" type="code"/>
     </Property>

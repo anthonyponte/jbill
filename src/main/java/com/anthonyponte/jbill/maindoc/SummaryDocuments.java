@@ -90,7 +90,7 @@ public class SummaryDocuments {
     Element id =
         new Element("ID", cbc)
             .setText(
-                resumenDiario.getTipoDocumento().getCodigo()
+                resumenDiario.getTipo().getCodigo()
                     + "-"
                     + resumenDiario.getSerie()
                     + "-"

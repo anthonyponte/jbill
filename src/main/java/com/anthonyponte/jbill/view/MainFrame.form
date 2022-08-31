@@ -9,7 +9,7 @@
             <Property name="text" type="java.lang.String" value="Menu"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="menuEntrar">
+            <MenuItem class="javax.swing.JMenuItem" name="miEntrar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Entrar"/>
               </Properties>
@@ -69,20 +69,12 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <Menu class="javax.swing.JMenu" name="menuBillService">
+            <MenuItem class="javax.swing.JMenuItem" name="miBillService">
               <Properties>
                 <Property name="text" type="java.lang.String" value="BillService"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="miSummary">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Summary"/>
-                    <Property name="enabled" type="boolean" value="false"/>
-                  </Properties>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuSalir">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Salir"/>

@@ -57,8 +57,8 @@ public class ISummaryDao implements SummaryDao {
 
       ps.setString(1, summary.getUbl());
       ps.setString(2, summary.getVersion());
-      ps.setString(3, summary.getTipoDocumento().getCodigo());
-      ps.setString(4, summary.getTipoDocumento().getDescripcion());
+      ps.setString(3, summary.getTipo().getCodigo());
+      ps.setString(4, summary.getTipo().getDescripcion());
       ps.setString(5, summary.getSerie());
       ps.setInt(6, summary.getCorrelativo());
       ps.setDate(7, new Date(summary.getFechaEmision().getTime()));
@@ -107,10 +107,10 @@ public class ISummaryDao implements SummaryDao {
           emisor.setNumero(rs.getString(3));
           summary.setEmisor(emisor);
 
-          Tipo tipoDocumento = new Tipo();
-          tipoDocumento.setCodigo(rs.getString(4));
-          tipoDocumento.setDescripcion(rs.getString(5));
-          summary.setTipoDocumento(tipoDocumento);
+          Tipo tipo = new Tipo();
+          tipo.setCodigo(rs.getString(4));
+          tipo.setDescripcion(rs.getString(5));
+          summary.setTipo(tipo);
 
           summary.setSerie(rs.getString(6));
           summary.setCorrelativo(rs.getInt(7));

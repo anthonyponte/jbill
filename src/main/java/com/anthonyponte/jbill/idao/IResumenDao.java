@@ -266,10 +266,10 @@ public class IResumenDao implements ResumenDao {
           Resumen resumenDiario = new Resumen();
           resumenDiario.setId(rs.getInt(1));
 
-          Tipo tipoDocumento = new Tipo();
-          tipoDocumento.setCodigo(rs.getString(2));
-          tipoDocumento.setDescripcion(rs.getString(3));
-          resumenDiario.setTipoDocumento(tipoDocumento);
+          Tipo tipo = new Tipo();
+          tipo.setCodigo(rs.getString(2));
+          tipo.setDescripcion(rs.getString(3));
+          resumenDiario.setTipo(tipo);
 
           resumenDiario.setSerie(rs.getString(4));
           resumenDiario.setCorrelativo(rs.getInt(5));

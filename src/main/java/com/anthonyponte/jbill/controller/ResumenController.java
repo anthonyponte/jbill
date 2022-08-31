@@ -235,7 +235,7 @@ public class ResumenController {
                         resumenDiario.setUbl("2.0");
                         resumenDiario.setVersion("1.1");
 
-                        resumenDiario.setTipoDocumento((Tipo) iFrame.cbxTipo.getSelectedItem());
+                        resumenDiario.setTipo((Tipo) iFrame.cbxTipo.getSelectedItem());
                         resumenDiario.setSerie(
                             MyDateFormat.yyyyMMdd(iFrame.dpFechaGeneracion.getDate()));
                         resumenDiario.setCorrelativo(
@@ -261,21 +261,21 @@ public class ResumenController {
 
                         File xml =
                             MyFileCreator.create(
-                                resumenDiario.getTipoDocumento().getCodigo(),
+                                resumenDiario.getTipo().getCodigo(),
                                 resumenDiario.getSerie(),
                                 resumenDiario.getCorrelativo(),
                                 document);
 
                         File sign =
                             MyFileCreator.sign(
-                                resumenDiario.getTipoDocumento().getCodigo(),
+                                resumenDiario.getTipo().getCodigo(),
                                 resumenDiario.getSerie(),
                                 resumenDiario.getCorrelativo(),
                                 xml);
 
                         File zip =
                             MyFileCreator.compress(
-                                resumenDiario.getTipoDocumento().getCodigo(),
+                                resumenDiario.getTipo().getCodigo(),
                                 resumenDiario.getSerie(),
                                 resumenDiario.getCorrelativo(),
                                 sign);

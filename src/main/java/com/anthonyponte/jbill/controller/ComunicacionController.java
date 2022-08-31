@@ -278,7 +278,7 @@ public class ComunicacionController {
                       Comunicacion comunicacionBaja = new Comunicacion();
                       comunicacionBaja.setUbl("2.0");
                       comunicacionBaja.setVersion("1.0");
-                      comunicacionBaja.setTipoDocumento((Tipo) iFrame.cbxTipo.getSelectedItem());
+                      comunicacionBaja.setTipo((Tipo) iFrame.cbxTipo.getSelectedItem());
                       comunicacionBaja.setSerie(MyDateFormat.yyyyMMdd(iFrame.dpFecha.getDate()));
                       comunicacionBaja.setCorrelativo(
                           Integer.valueOf(iFrame.tfCorrelativo.getText()));
@@ -304,21 +304,21 @@ public class ComunicacionController {
                       try {
                         File xml =
                             MyFileCreator.create(
-                                comunicacionBaja.getTipoDocumento().getCodigo(),
+                                comunicacionBaja.getTipo().getCodigo(),
                                 comunicacionBaja.getSerie(),
                                 comunicacionBaja.getCorrelativo(),
                                 document);
 
                         File sign =
                             MyFileCreator.sign(
-                                comunicacionBaja.getTipoDocumento().getCodigo(),
+                                comunicacionBaja.getTipo().getCodigo(),
                                 comunicacionBaja.getSerie(),
                                 comunicacionBaja.getCorrelativo(),
                                 xml);
 
                         File zip =
                             MyFileCreator.compress(
-                                comunicacionBaja.getTipoDocumento().getCodigo(),
+                                comunicacionBaja.getTipo().getCodigo(),
                                 comunicacionBaja.getSerie(),
                                 comunicacionBaja.getCorrelativo(),
                                 sign);

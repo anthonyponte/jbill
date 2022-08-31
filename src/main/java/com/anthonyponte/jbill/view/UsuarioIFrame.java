@@ -73,7 +73,6 @@ public class UsuarioIFrame extends JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Entrar");
         setFrameIcon(FontIcon.of(RemixiconAL.LOGIN_BOX_LINE, 16, Color.decode("#FACADE")));
         setMaximumSize(null);
         setMinimumSize(null);

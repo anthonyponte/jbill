@@ -4,32 +4,32 @@
  */
 package com.anthonyponte.jbill.view;
 
-import com.anthonyponte.jbill.filter.LetterNumberFilter;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.GroupLayout;
-import javax.swing.JButton;
 import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.AbstractDocument;
+import org.jdesktop.swingx.JXDatePicker;
 import org.kordamp.ikonli.remixicon.RemixiconAL;
-import org.kordamp.ikonli.remixicon.RemixiconMZ;
 import org.kordamp.ikonli.swing.FontIcon;
 
 /**
  *
- * @author anthony
+ * @author AnthonyPonte
  */
 public class SummaryIFrame extends JInternalFrame {
 
     /**
-     * Creates new form BillServiceIFrame
+     * Creates new form TablaIFrame
      */
     public SummaryIFrame() {
         initComponents();
@@ -44,32 +44,43 @@ public class SummaryIFrame extends JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dpMesAno = new JXDatePicker();
         separator = new JSeparator();
         tfFiltrar = new JTextField();
-        scrllPane = new JScrollPane();
-        table = new JTable();
-        btnEnviar = new JButton();
+        spltPane = new JSplitPane();
+        scrllEncabezado = new JScrollPane();
+        tblEncabezado = new JTable();
+        scrllDetalle = new JScrollPane();
+        tblDetalle = new JTable();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Summary");
-        setFrameIcon(FontIcon.of(RemixiconMZ.SEND_PLANE_LINE, 16, Color.decode("#FACADE")));
+        setFrameIcon(FontIcon.of(RemixiconAL.CALENDAR_2_LINE, 16, Color.decode("#FACADE")));
         setMaximumSize(null);
         setMinimumSize(new Dimension(800, 600));
         setPreferredSize(new Dimension(800, 600));
 
-        tfFiltrar.setMaximumSize(null);
-        tfFiltrar.setMinimumSize(new Dimension(150, 30));
-        tfFiltrar.setPreferredSize(new Dimension(150, 30));
-        AbstractDocument document = (AbstractDocument) tfFiltrar.getDocument();
-        document.setDocumentFilter(new LetterNumberFilter());
+        dpMesAno.setDate(new Date());
+        dpMesAno.setFormats(new SimpleDateFormat("MMMM y"));
+        dpMesAno.setMaximumSize(null);
+        dpMesAno.setMinimumSize(null);
+        dpMesAno.setPreferredSize(new Dimension(125, 30));
+        dpMesAno.getEditor().setEditable(false);
+
+        tfFiltrar.setMinimumSize(new Dimension(300, 30));
+        tfFiltrar.setPreferredSize(new Dimension(300, 30));
         tfFiltrar.putClientProperty("JTextField.leadingIcon", FontIcon.of(RemixiconAL.FILTER_LINE, 16, Color.decode("#FFFFFF")));
         tfFiltrar.putClientProperty("JTextField.placeholderText", "Filtrar");
         tfFiltrar.putClientProperty("JTextField.showClearButton", true);
 
-        table.setModel(new DefaultTableModel(
+        spltPane.setDividerLocation(300);
+        spltPane.setDividerSize(6);
+        spltPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        spltPane.setResizeWeight(1.0);
+
+        tblEncabezado.setModel(new DefaultTableModel(
             new Object [][] {
 
             },
@@ -77,17 +88,27 @@ public class SummaryIFrame extends JInternalFrame {
 
             }
         ));
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        table.setColumnSelectionAllowed(true);
-        table.getTableHeader().setReorderingAllowed(false);
-        scrllPane.setViewportView(table);
-        table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        tblEncabezado.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tblEncabezado.setColumnSelectionAllowed(true);
+        tblEncabezado.getTableHeader().setReorderingAllowed(false);
+        scrllEncabezado.setViewportView(tblEncabezado);
+        tblEncabezado.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        btnEnviar.setIcon(FontIcon.of(RemixiconMZ.SEND_PLANE_LINE, 16, Color.decode("#FFFFFF")));
-        btnEnviar.setText("Enviar");
-        btnEnviar.setEnabled(false);
-        btnEnviar.setMinimumSize(new Dimension(150, 30));
-        btnEnviar.setPreferredSize(new Dimension(125, 30));
+        spltPane.setLeftComponent(scrllEncabezado);
+
+        tblDetalle.setModel(new DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        tblDetalle.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tblDetalle.getTableHeader().setReorderingAllowed(false);
+        scrllDetalle.setViewportView(tblDetalle);
+
+        spltPane.setRightComponent(scrllDetalle);
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,25 +116,25 @@ public class SummaryIFrame extends JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(scrllPane, GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
-                    .addComponent(tfFiltrar, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(separator, GroupLayout.Alignment.TRAILING)
+                    .addComponent(tfFiltrar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(spltPane, GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+                    .addComponent(separator)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnEnviar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dpMesAno, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnEnviar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addComponent(dpMesAno, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tfFiltrar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrllPane, GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
+                .addComponent(spltPane, GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -121,10 +142,13 @@ public class SummaryIFrame extends JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public JButton btnEnviar;
-    public JScrollPane scrllPane;
+    public JXDatePicker dpMesAno;
+    public JScrollPane scrllDetalle;
+    public JScrollPane scrllEncabezado;
     public JSeparator separator;
-    public JTable table;
+    public JSplitPane spltPane;
+    public JTable tblDetalle;
+    public JTable tblEncabezado;
     public JTextField tfFiltrar;
     // End of variables declaration//GEN-END:variables
 }

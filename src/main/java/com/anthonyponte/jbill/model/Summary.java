@@ -19,12 +19,14 @@ package com.anthonyponte.jbill.model;
 
 import java.util.Date;
 
-/** @author AnthonyPonte */
+/**
+ * @author AnthonyPonte
+ */
 public class Summary {
   private int id;
   private String ubl;
   private String version;
-  private Tipo tipoDocumento;
+  private Tipo tipo;
   private String serie;
   private int correlativo;
   private Date fechaEmision;
@@ -44,7 +46,7 @@ public class Summary {
       int id,
       String ubl,
       String version,
-      Tipo tipoDocumento,
+      Tipo tipo,
       String serie,
       int correlativo,
       Date fechaEmision,
@@ -55,7 +57,7 @@ public class Summary {
     this.id = id;
     this.ubl = ubl;
     this.version = version;
-    this.tipoDocumento = tipoDocumento;
+    this.tipo = tipo;
     this.serie = serie;
     this.correlativo = correlativo;
     this.fechaEmision = fechaEmision;
@@ -68,7 +70,7 @@ public class Summary {
   public Summary(
       String ubl,
       String version,
-      Tipo tipoDocumento,
+      Tipo tipo,
       String serie,
       int correlativo,
       Date fechaEmision,
@@ -78,7 +80,7 @@ public class Summary {
       byte[] zip) {
     this.ubl = ubl;
     this.version = version;
-    this.tipoDocumento = tipoDocumento;
+    this.tipo = tipo;
     this.serie = serie;
     this.correlativo = correlativo;
     this.fechaEmision = fechaEmision;
@@ -112,12 +114,12 @@ public class Summary {
     this.version = version;
   }
 
-  public Tipo getTipoDocumento() {
-    return tipoDocumento;
+  public Tipo getTipo() {
+    return tipo;
   }
 
-  public void setTipoDocumento(Tipo tipoDocumento) {
-    this.tipoDocumento = tipoDocumento;
+  public void setTipo(Tipo tipo) {
+    this.tipo = tipo;
   }
 
   public String getSerie() {
@@ -225,8 +227,8 @@ public class Summary {
         + ubl
         + ", version="
         + version
-        + ", tipoDocumento="
-        + tipoDocumento
+        + ", tipo="
+        + tipo
         + ", serie="
         + serie
         + ", correlativo="

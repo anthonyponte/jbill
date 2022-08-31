@@ -146,12 +146,11 @@ public class UsuarioController {
             iFrame.dispose();
             frame.menuNuevo.setEnabled(true);
             frame.menuVer.setEnabled(true);
-            frame.menuBillService.setEnabled(true);
             frame.miComunicacionBaja.setEnabled(true);
             frame.miResumenDiario.setEnabled(true);
             frame.miComunicaciones.setEnabled(true);
             frame.miResumenes.setEnabled(true);
-            frame.miSummary.setEnabled(true);
+            frame.miBillService.setEnabled(true);
           } catch (BackingStoreException ex) {
             JOptionPane.showMessageDialog(
                 null,

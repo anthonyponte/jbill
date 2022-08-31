@@ -14,7 +14,9 @@ import java.sql.SQLException;
 import com.anthonyponte.jbill.dao.ComunicacionDao;
 import com.anthonyponte.jbill.dao.ResumenDao;
 
-/** @author AnthonyPonte */
+/**
+ * @author AnthonyPonte
+ */
 public class SummaryFactory {
   private final SummaryDao summaryDao;
   private final ComunicacionDao comunicacionBajaDao;
@@ -27,11 +29,10 @@ public class SummaryFactory {
   }
 
   public void delete(Summary summary) throws SQLException {
-    if (summary.getTipoDocumento().getCodigo().equals("RA")
-        || summary.getTipoDocumento().getCodigo().equals("RR")) {
+    if (summary.getTipo().getCodigo().equals("RA") || summary.getTipo().getCodigo().equals("RR")) {
       comunicacionBajaDao.delete(summary.getId());
       summaryDao.delete(summary.getId());
-    } else if (summary.getTipoDocumento().getCodigo().equals("RC")) {
+    } else if (summary.getTipo().getCodigo().equals("RC")) {
       resumenDiarioDao.delete(summary.getId());
       summaryDao.delete(summary.getId());
     }

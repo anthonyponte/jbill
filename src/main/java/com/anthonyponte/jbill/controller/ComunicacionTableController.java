@@ -10,7 +10,6 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.TextFilterator;
-import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.matchers.MatcherEditor;
 import ca.odell.glazedlists.swing.AdvancedListSelectionModel;
 import ca.odell.glazedlists.swing.AdvancedTableModel;
@@ -18,7 +17,6 @@ import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThreadProxyList;
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
-import com.anthonyponte.jbill.custom.MyDateFormat;
 import com.anthonyponte.jbill.custom.MyTableResize;
 import com.anthonyponte.jbill.idao.IComunicacionDao;
 import com.anthonyponte.jbill.model.Comunicacion;
@@ -39,7 +37,7 @@ import javax.swing.SwingWorker;
 import org.joda.time.DateTime;
 import com.anthonyponte.jbill.tableformat.ComunicacionDetalleTableFormat;
 import com.anthonyponte.jbill.view.LoadingDialog;
-import com.anthonyponte.jbill.view.TableIFrame;
+import com.anthonyponte.jbill.view.SummaryIFrame;
 import javax.swing.JOptionPane;
 import com.anthonyponte.jbill.dao.ComunicacionDao;
 import com.anthonyponte.jbill.tableformat.SummaryTableFormat;
@@ -49,7 +47,7 @@ import com.anthonyponte.jbill.tableformat.SummaryTableFormat;
  */
 public class ComunicacionTableController {
 
-  private final TableIFrame iFrame;
+  private final SummaryIFrame iFrame;
   private final LoadingDialog dialog;
   private ComunicacionDao dao;
   private EventList<Comunicacion> elEncabezado;
@@ -58,7 +56,7 @@ public class ComunicacionTableController {
   private AdvancedListSelectionModel<Comunicacion> selectionModel;
   private AdvancedTableModel<Comunicacion> tableModel;
 
-  public ComunicacionTableController(TableIFrame iFrame, LoadingDialog dialog) {
+  public ComunicacionTableController(SummaryIFrame iFrame, LoadingDialog dialog) {
     this.iFrame = iFrame;
     this.dialog = dialog;
     initComponents();
@@ -173,8 +171,8 @@ public class ComunicacionTableController {
 
     TextFilterator<Comunicacion> filterator =
         (List<String> list, Comunicacion comunicacionBaja) -> {
-          list.add(comunicacionBaja.getTipoDocumento().getCodigo());
-          list.add(comunicacionBaja.getTipoDocumento().getDescripcion());
+          list.add(comunicacionBaja.getTipo().getCodigo());
+          list.add(comunicacionBaja.getTipo().getDescripcion());
           list.add(String.valueOf(comunicacionBaja.getCorrelativo()));
         };
 

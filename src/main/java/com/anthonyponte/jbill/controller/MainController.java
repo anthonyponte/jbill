@@ -4,13 +4,13 @@
  */
 package com.anthonyponte.jbill.controller;
 
-import com.anthonyponte.jbill.view.SummaryIFrame;
+import com.anthonyponte.jbill.view.BillServiceIFrame;
 import com.anthonyponte.jbill.view.MainFrame;
 import com.anthonyponte.jbill.view.UsuarioIFrame;
 import com.anthonyponte.jbill.view.ComunicacionIFrame;
 import com.anthonyponte.jbill.view.LoadingDialog;
 import com.anthonyponte.jbill.view.ResumenIFrame;
-import com.anthonyponte.jbill.view.TableIFrame;
+import com.anthonyponte.jbill.view.SummaryIFrame;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -33,9 +33,9 @@ public class MainController {
   private UsuarioIFrame usuarioIFrame;
   private ComunicacionIFrame comunicacionBajaIFrame;
   private ResumenIFrame resumenDiarioIFrame;
-  private SummaryIFrame summaryIFrame;
-  private TableIFrame comunicacionTableIFrame;
-  private TableIFrame resumenTableIFrame;
+  private BillServiceIFrame billServiceIFrame;
+  private SummaryIFrame comunicacionTableIFrame;
+  private SummaryIFrame resumenTableIFrame;
   private LoadingDialog dialog;
   private Server server = null;
   private final String ALIAS = "jb";
@@ -47,10 +47,11 @@ public class MainController {
   }
 
   public void init() {
-    frame.menuEntrar.addActionListener(
+    frame.miEntrar.addActionListener(
         (ActionEvent arg0) -> {
           if (isIframeClosed(usuarioIFrame)) {
             usuarioIFrame = new UsuarioIFrame();
+            usuarioIFrame.setTitle(frame.miEntrar.getText());
             frame.dpane.add(usuarioIFrame);
             usuarioIFrame.setLocation(centerIFrame(usuarioIFrame));
             new UsuarioController(frame, usuarioIFrame, server.isNotRunning()).init();
@@ -63,6 +64,7 @@ public class MainController {
         (ActionEvent arg0) -> {
           if (isIframeClosed(comunicacionBajaIFrame)) {
             comunicacionBajaIFrame = new ComunicacionIFrame();
+            comunicacionBajaIFrame.setTitle(frame.miComunicacionBaja.getText());
             frame.dpane.add(comunicacionBajaIFrame);
             comunicacionBajaIFrame.setLocation(centerIFrame(comunicacionBajaIFrame));
             new ComunicacionController(comunicacionBajaIFrame, dialog).init();
@@ -75,6 +77,7 @@ public class MainController {
         (ActionEvent arg0) -> {
           if (isIframeClosed(resumenDiarioIFrame)) {
             resumenDiarioIFrame = new ResumenIFrame();
+            resumenDiarioIFrame.setTitle(frame.miResumenDiario.getText());
             frame.dpane.add(resumenDiarioIFrame);
             resumenDiarioIFrame.setLocation(centerIFrame(resumenDiarioIFrame));
             new ResumenController(resumenDiarioIFrame, dialog).init();
@@ -86,7 +89,8 @@ public class MainController {
     frame.miComunicaciones.addActionListener(
         (ActionEvent arg0) -> {
           if (isIframeClosed(comunicacionTableIFrame)) {
-            comunicacionTableIFrame = new TableIFrame();
+            comunicacionTableIFrame = new SummaryIFrame();
+            comunicacionTableIFrame.setTitle(frame.miComunicaciones.getText());
             frame.dpane.add(comunicacionTableIFrame);
             comunicacionTableIFrame.setLocation(centerIFrame(comunicacionTableIFrame));
             new ComunicacionTableController(comunicacionTableIFrame, dialog).init();
@@ -98,7 +102,8 @@ public class MainController {
     frame.miResumenes.addActionListener(
         (ActionEvent arg0) -> {
           if (isIframeClosed(resumenTableIFrame)) {
-            resumenTableIFrame = new TableIFrame();
+            resumenTableIFrame = new SummaryIFrame();
+            resumenTableIFrame.setTitle(frame.miResumenes.getText());
             frame.dpane.add(resumenTableIFrame);
             resumenTableIFrame.setLocation(centerIFrame(resumenTableIFrame));
             new ResumenTableController(resumenTableIFrame, dialog).init();
@@ -107,15 +112,16 @@ public class MainController {
           }
         });
 
-    frame.miSummary.addActionListener(
+    frame.miBillService.addActionListener(
         (ActionEvent arg0) -> {
-          if (isIframeClosed(summaryIFrame)) {
-            summaryIFrame = new SummaryIFrame();
-            frame.dpane.add(summaryIFrame);
-            summaryIFrame.setLocation(centerIFrame(summaryIFrame));
-            new SummaryController(summaryIFrame, dialog).init();
+          if (isIframeClosed(billServiceIFrame)) {
+            billServiceIFrame = new BillServiceIFrame();
+            billServiceIFrame.setTitle(frame.miBillService.getText());
+            frame.dpane.add(billServiceIFrame);
+            billServiceIFrame.setLocation(centerIFrame(billServiceIFrame));
+            new BillServiceController(billServiceIFrame, dialog).init();
           } else {
-            iframeClosed(summaryIFrame);
+            iframeClosed(billServiceIFrame);
           }
         });
 

@@ -149,7 +149,6 @@ public class ResumenIFrame extends JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setTitle("Resumen diario");
         setFrameIcon(FontIcon.of(RemixiconAL.ADD_LINE, 16, Color.decode("#FACADE")));
         setMaximumSize(null);
 
