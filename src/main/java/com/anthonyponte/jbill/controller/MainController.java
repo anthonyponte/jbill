@@ -38,8 +38,8 @@ public class MainController {
   private TableIFrame resumenTableIFrame;
   private LoadingDialog dialog;
   private Server server = null;
-  private final String ALIAS = "jbs";
-  private final String DATABASE = "jbillservice";
+  private final String ALIAS = "jb";
+  private final String DATABASE = "jbill";
 
   public MainController(MainFrame frame) {
     this.frame = frame;

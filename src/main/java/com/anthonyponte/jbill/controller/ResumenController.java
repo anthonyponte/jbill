@@ -1052,12 +1052,8 @@ public class ResumenController {
             || iFrame.tfDocumentoCorrelativo.getText().isEmpty()
             || iFrame.tfDocumentoIdentidadNumero.getText().isEmpty()) {
           iFrame.btnAgregar.setEnabled(false);
-          System.out.println(
-              "com.anthonyponte.jbillservice.controller.ResumenDiarioController.enabled() .setEnabled(false)");
         } else {
           iFrame.btnAgregar.setEnabled(true);
-          System.out.println(
-              "com.anthonyponte.jbillservice.controller.ResumenDiarioController.enabled() .setEnabled(true)");
         }
       } else {
         if (iFrame.tfDocumentoSerie.getText().isEmpty()

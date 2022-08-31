@@ -11,7 +11,9 @@ import java.sql.SQLException;
 import java.util.List;
 import org.joda.time.DateTime;
 
-/** @author anthony */
+/**
+ * @author anthony
+ */
 public interface ComunicacionDao {
   public void create(int id, List<ComunicacionDetalle> comunicacionBajaDetalles)
       throws SQLException;

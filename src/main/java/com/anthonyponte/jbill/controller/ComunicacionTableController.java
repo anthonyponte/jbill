@@ -42,8 +42,11 @@ import com.anthonyponte.jbill.view.LoadingDialog;
 import com.anthonyponte.jbill.view.TableIFrame;
 import javax.swing.JOptionPane;
 import com.anthonyponte.jbill.dao.ComunicacionDao;
+import com.anthonyponte.jbill.tableformat.SummaryTableFormat;
 
-/** @author AnthonyPonte */
+/**
+ * @author AnthonyPonte
+ */
 public class ComunicacionTableController {
 
   private final TableIFrame iFrame;
@@ -68,7 +71,8 @@ public class ComunicacionTableController {
           start(date);
         });
 
-    iFrame.tblEncabezado.addMouseListener(new MouseAdapter() {
+    iFrame.tblEncabezado.addMouseListener(
+        new MouseAdapter() {
           @Override
           public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {
@@ -99,12 +103,14 @@ public class ComunicacionTableController {
 
                     fos.flush();
                   } catch (FileNotFoundException ex) {
-                    JOptionPane.showMessageDialog(null,
+                    JOptionPane.showMessageDialog(
+                        null,
                         ex.getMessage(),
                         ComunicacionTableController.class.getName(),
                         JOptionPane.ERROR_MESSAGE);
                   } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null,
+                    JOptionPane.showMessageDialog(
+                        null,
                         ex.getMessage(),
                         ComunicacionTableController.class.getName(),
                         JOptionPane.ERROR_MESSAGE);
@@ -137,7 +143,8 @@ public class ComunicacionTableController {
                           MyTableResize.resize(iFrame.tblDetalle);
 
                         } catch (InterruptedException | ExecutionException ex) {
-                          JOptionPane.showMessageDialog(null,
+                          JOptionPane.showMessageDialog(
+                              null,
                               ex.getMessage(),
                               ComunicacionTableController.class.getName(),
                               JOptionPane.ERROR_MESSAGE);
@@ -176,77 +183,7 @@ public class ComunicacionTableController {
 
     FilterList<Comunicacion> filterList = new FilterList<>(sortedList, matcherEditor);
 
-    TableFormat<Comunicacion> tableFormat =
-        new TableFormat<Comunicacion>() {
-          @Override
-          public int getColumnCount() {
-            return 12;
-          }
-
-          @Override
-          public String getColumnName(int column) {
-            switch (column) {
-              case 0:
-                return "Tipo Codigo";
-              case 1:
-                return "Tipo Descripcion";
-              case 2:
-                return "Serie";
-              case 3:
-                return "Correlativo";
-              case 4:
-                return "Fecha Emision";
-              case 5:
-                return "Fecha Referencia";
-              case 6:
-                return "RUC";
-              case 7:
-                return "Razon Social";
-              case 8:
-                return "Zip";
-              case 9:
-                return "Ticket";
-              case 10:
-                return "Status Code";
-              case 11:
-                return "CDR";
-            }
-            throw new IllegalStateException("Unexpected column: " + column);
-          }
-
-          @Override
-          public Object getColumnValue(Comunicacion comunicacionBaja, int column) {
-            switch (column) {
-              case 0:
-                return comunicacionBaja.getTipoDocumento().getCodigo();
-              case 1:
-                return comunicacionBaja.getTipoDocumento().getDescripcion();
-              case 2:
-                return comunicacionBaja.getSerie();
-              case 3:
-                return String.valueOf(comunicacionBaja.getCorrelativo());
-              case 4:
-                return MyDateFormat.d_MMMM_Y(comunicacionBaja.getFechaEmision());
-              case 5:
-                return MyDateFormat.d_MMMM_Y(comunicacionBaja.getFechaReferencia());
-              case 6:
-                return comunicacionBaja.getEmisor().getNumero();
-              case 7:
-                return comunicacionBaja.getEmisor().getNombre();
-              case 8:
-                return comunicacionBaja.getNombreZip();
-              case 9:
-                return comunicacionBaja.getTicket();
-              case 10:
-                return comunicacionBaja.getStatusCode();
-              case 11:
-                return comunicacionBaja.getNombreContent();
-            }
-            throw new IllegalStateException("Unexpected column: " + column);
-          }
-        };
-
-    tableModel = eventTableModelWithThreadProxyList(filterList, tableFormat);
+    tableModel = eventTableModelWithThreadProxyList(filterList, new SummaryTableFormat());
     selectionModel = new DefaultEventSelectionModel<>(filterList);
 
     iFrame.tblEncabezado.setModel(tableModel);
@@ -294,7 +231,8 @@ public class ComunicacionTableController {
               if (!get.isEmpty()) iFrame.tfFiltrar.requestFocus();
               else iFrame.dpMesAno.requestFocus();
             } catch (InterruptedException | ExecutionException ex) {
-              JOptionPane.showMessageDialog(null,
+              JOptionPane.showMessageDialog(
+                  null,
                   ex.getMessage(),
                   ComunicacionTableController.class.getName(),
                   JOptionPane.ERROR_MESSAGE);

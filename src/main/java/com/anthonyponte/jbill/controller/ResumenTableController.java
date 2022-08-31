@@ -22,7 +22,6 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.TextFilterator;
-import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.matchers.MatcherEditor;
 import ca.odell.glazedlists.swing.AdvancedListSelectionModel;
 import ca.odell.glazedlists.swing.AdvancedTableModel;
@@ -30,7 +29,6 @@ import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import static ca.odell.glazedlists.swing.GlazedListsSwing.eventTableModelWithThreadProxyList;
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
-import com.anthonyponte.jbill.custom.MyDateFormat;
 import com.anthonyponte.jbill.custom.MyTableResize;
 import com.anthonyponte.jbill.idao.IResumenDao;
 import com.anthonyponte.jbill.model.Resumen;
@@ -55,8 +53,11 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import org.joda.time.DateTime;
 import com.anthonyponte.jbill.dao.ResumenDao;
+import com.anthonyponte.jbill.tableformat.SummaryTableFormat;
 
-/** @author AnthonyPonte */
+/**
+ * @author AnthonyPonte
+ */
 public class ResumenTableController {
   private final TableIFrame iFrame;
   private final LoadingDialog dialog;
@@ -80,7 +81,8 @@ public class ResumenTableController {
           start(date);
         });
 
-    iFrame.tblEncabezado.addMouseListener(new MouseAdapter() {
+    iFrame.tblEncabezado.addMouseListener(
+        new MouseAdapter() {
           @Override
           public void mouseClicked(MouseEvent e) {
             if (e.getClickCount() == 2) {
@@ -111,12 +113,14 @@ public class ResumenTableController {
 
                     fos.flush();
                   } catch (FileNotFoundException ex) {
-                    JOptionPane.showMessageDialog(null,
+                    JOptionPane.showMessageDialog(
+                        null,
                         ex.getMessage(),
                         ResumenTableController.class.getName(),
                         JOptionPane.ERROR_MESSAGE);
                   } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(null,
+                    JOptionPane.showMessageDialog(
+                        null,
                         ex.getMessage(),
                         ResumenTableController.class.getName(),
                         JOptionPane.ERROR_MESSAGE);
@@ -132,7 +136,8 @@ public class ResumenTableController {
 
                   MyTableResize.resize(iFrame.tblDetalle);
                 } catch (SQLException ex) {
-                  JOptionPane.showMessageDialog(null,
+                  JOptionPane.showMessageDialog(
+                      null,
                       ex.getMessage(),
                       ResumenTableController.class.getName(),
                       JOptionPane.ERROR_MESSAGE);
@@ -150,8 +155,7 @@ public class ResumenTableController {
 
     Comparator comparator =
         (Comparator<Resumen>)
-            (Resumen o1, Resumen o2) ->
-                o1.getFechaEmision().compareTo(o2.getFechaEmision());
+            (Resumen o1, Resumen o2) -> o1.getFechaEmision().compareTo(o2.getFechaEmision());
 
     sortedList = new SortedList<>(eventList, comparator.reversed());
 
@@ -167,77 +171,7 @@ public class ResumenTableController {
 
     FilterList<Resumen> filterList = new FilterList<>(sortedList, matcherEditor);
 
-    TableFormat<Resumen> tableFormat =
-        new TableFormat<Resumen>() {
-          @Override
-          public int getColumnCount() {
-            return 12;
-          }
-
-          @Override
-          public String getColumnName(int column) {
-            switch (column) {
-              case 0:
-                return "Tipo Codigo";
-              case 1:
-                return "Tipo Descripcion";
-              case 2:
-                return "Serie";
-              case 3:
-                return "Correlativo";
-              case 4:
-                return "Fecha Emision";
-              case 5:
-                return "Fecha Referencia";
-              case 6:
-                return "RUC";
-              case 7:
-                return "Razon Social";
-              case 8:
-                return "Zip";
-              case 9:
-                return "Ticket";
-              case 10:
-                return "Status Code";
-              case 11:
-                return "CDR";
-            }
-            throw new IllegalStateException("Unexpected column: " + column);
-          }
-
-          @Override
-          public Object getColumnValue(Resumen resumenDiario, int column) {
-            switch (column) {
-              case 0:
-                return resumenDiario.getTipoDocumento().getCodigo();
-              case 1:
-                return resumenDiario.getTipoDocumento().getDescripcion();
-              case 2:
-                return resumenDiario.getSerie();
-              case 3:
-                return String.valueOf(resumenDiario.getCorrelativo());
-              case 4:
-                return MyDateFormat.d_MMMM_Y(resumenDiario.getFechaEmision());
-              case 5:
-                return MyDateFormat.d_MMMM_Y(resumenDiario.getFechaReferencia());
-              case 6:
-                return resumenDiario.getEmisor().getNumero();
-              case 7:
-                return resumenDiario.getEmisor().getNombre();
-              case 8:
-                return resumenDiario.getNombreZip();
-              case 9:
-                return resumenDiario.getTicket();
-              case 10:
-                return resumenDiario.getStatusCode();
-              case 11:
-                return resumenDiario.getNombreContent();
-            }
-            throw new IllegalStateException("Unexpected column: " + column);
-          }
-        };
-
-    tableModel = eventTableModelWithThreadProxyList(filterList, tableFormat);
+    tableModel = eventTableModelWithThreadProxyList(filterList, new SummaryTableFormat());
     selectionModel = new DefaultEventSelectionModel<>(filterList);
 
     iFrame.tblEncabezado.setModel(tableModel);
@@ -285,7 +219,8 @@ public class ResumenTableController {
               if (!get.isEmpty()) iFrame.tfFiltrar.requestFocus();
               else iFrame.dpMesAno.requestFocus();
             } catch (InterruptedException | ExecutionException ex) {
-              JOptionPane.showMessageDialog(null,
+              JOptionPane.showMessageDialog(
+                  null,
                   ex.getMessage(),
                   ResumenTableController.class.getName(),
                   JOptionPane.ERROR_MESSAGE);
