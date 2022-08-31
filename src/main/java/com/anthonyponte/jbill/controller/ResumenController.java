@@ -71,7 +71,6 @@ import javax.xml.transform.TransformerException;
 import org.jdom2.Document;
 import org.xml.sax.SAXException;
 import com.anthonyponte.jbill.dao.ResumenDetalleDao;
-import com.anthonyponte.jbill.idao.IBillService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
