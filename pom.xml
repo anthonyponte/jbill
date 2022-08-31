@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
     
     <!-- The Basics -->
-    <groupId>com.anthonyponte.jbillservice</groupId>
-    <artifactId>JBillService</artifactId>
+    <groupId>com.anthonyponte.jbill</groupId>
+    <artifactId>JBill</artifactId>
     <version>1.3.1</version>
     <dependencies>           
         <dependency>
@@ -219,6 +219,6 @@
     </build>
     
     <!-- More Project Information -->
-    <name>JBillService</name>
+    <name>JBill</name>
     <description>Implementación java del servicio web de envió de SUNAT</description>
 </project>
