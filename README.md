@@ -1,7 +1,7 @@
 ![logo](https://github.com/anthonyrponte/JBillService/blob/master/res/logo.png)
 # JBill
 Implementación java del servicio web de envio de SUNAT 
-![2022-05-26_10_07_27-JBillService](https://github.com/anthonyponte/jbill/blob/master/res/2022-09-01_14-09-23.png)
+![2022-09-01_14-09-23](https://github.com/anthonyponte/jbill/blob/master/res/2022-09-01_14-09-23.png)
 ## Requisitos
 Java 11
 ## Caraterísticas
