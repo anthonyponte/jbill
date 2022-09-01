@@ -93,7 +93,7 @@ public class IResumenDetalleDao implements ResumenDetalleDao {
           ps.setNull(9, Types.VARCHAR);
         }
 
-        if (!get.getSerieReferencia().isEmpty()
+        if (get.getSerieReferencia() != null
             && get.getCorrelativoReferencia() > 0
             && get.getTipoDocumentoReferencia() != null) {
           ps.setString(10, get.getSerieReferencia());

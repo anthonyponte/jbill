@@ -98,7 +98,7 @@ public class ResumenDetalleTableFormat implements TableFormat<ResumenDetalle> {
         if (baseObject.getAdquiriente() != null) return baseObject.getAdquiriente().getNumero();
         else return "";
       case 4:
-        if (baseObject.getSerieReferencia().isEmpty()) return baseObject.getSerieReferencia();
+        if (baseObject.getSerieReferencia() != null) return baseObject.getSerieReferencia();
         else return "";
       case 5:
         if (baseObject.getCorrelativoReferencia() > 0) return baseObject.getCorrelativoReferencia();

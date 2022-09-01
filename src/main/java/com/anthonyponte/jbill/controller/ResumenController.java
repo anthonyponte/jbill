@@ -831,7 +831,7 @@ public class ResumenController {
                 if (detalle.getAdquiriente() != null) return detalle.getAdquiriente().getNumero();
                 else return "";
               case 4:
-                if (detalle.getSerieReferencia().isEmpty()) return detalle.getSerieReferencia();
+                if (detalle.getSerieReferencia() != null) return detalle.getSerieReferencia();
                 else return "";
               case 5:
                 if (detalle.getCorrelativoReferencia() > 0)

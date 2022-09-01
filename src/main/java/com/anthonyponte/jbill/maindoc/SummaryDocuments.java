@@ -173,7 +173,7 @@ public class SummaryDocuments {
         summaryDocumentsLine.addContent(accountingCustomerParty);
       }
 
-      if (!detalle.getSerieReferencia().isEmpty()
+      if (detalle.getSerieReferencia() != null
           && detalle.getCorrelativoReferencia() > 0
           && detalle.getTipoDocumentoReferencia() != null) {
         Element billingReference =
