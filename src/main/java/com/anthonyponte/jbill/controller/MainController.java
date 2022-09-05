@@ -154,19 +154,11 @@ public class MainController {
   }
 
   private void start() {
-    try {
-      HsqlProperties properties = new HsqlProperties();
-      properties.setProperty("server.database.0", "file:./hsqldb/" + DATABASE);
-      properties.setProperty("server.dbname.0", ALIAS);
-
-      server = new Server();
-      server.setProperties(properties);
-      server.setTrace(true);
-      server.start();
-    } catch (IOException | ServerAcl.AclFormatException ex) {
-      JOptionPane.showMessageDialog(
-          null, ex.getMessage(), MainController.class.getName(), JOptionPane.ERROR_MESSAGE);
-    }
+    server = new Server();
+    server.setDatabaseName(0, ALIAS);
+    server.setDatabasePath(0, "file:" + System.getProperty("user.dir") + "/hsqldb/" + DATABASE);
+    server.setTrace(true);
+    server.start();
   }
 
   private void finnish() {
