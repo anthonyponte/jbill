@@ -17,12 +17,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.beans.PropertyVetoException;
-import java.io.IOException;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import org.hsqldb.Server;
-import org.hsqldb.persist.HsqlProperties;
-import org.hsqldb.server.ServerAcl;
 
 /**
  * @author anthony
